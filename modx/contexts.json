@@ -1,0 +1,14 @@
+[
+    {
+        "key": "mgr",
+        "name": "Manager",
+        "description": "The default manager or administration context for content management activity.",
+        "rank": 0
+    },
+    {
+        "key": "web",
+        "name": "Website",
+        "description": "The default front-end context for your web site.",
+        "rank": 0
+    }
+]

@@ -1,0 +1,23 @@
+<div class="section-block tests-block">
+    <div class="page-content d-flex flex-column h-100">
+        <div class="test-card position-relative w-100 d-flex flex-column">
+            <div class="test-header">
+                <img src="theme/images/training/tests/logo-scanport.svg" alt="Сканпорт" class="img-svg">
+            </div>
+            <div class="test-content text-left text-md-center mb-auto my-md-auto">
+                 <div class="test-title">
+                    Добро пожаловать в тест по материалам Модуля 1: Рынок AutoID
+                </div>
+                <p class="test-subtitle mt-2 mt-md-0">
+                    Кликните "Начать тест" для продолжения
+                </p>
+            </div>
+            <div class="test-footer text-center text-md-end">
+                <button href="#" class="btn btn-test">
+                    <span>Начать тест</span>
+                    <img src="theme/images/training/tests/arrow-right-ico.svg" class="img-svg d-none d-sm-block">
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

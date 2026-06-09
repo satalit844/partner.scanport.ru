@@ -1,0 +1,13 @@
+--- training/js/mgr/widgets/course.tabs.js	2026-03-24 13:46:13.000000000 +0000
++++ training_patch/training/js/mgr/widgets/course.tabs.js	2026-03-24 15:33:56.904348341 +0000
+@@ -19,6 +19,10 @@
+             title: 'Модули',
+             xtype: 'training-grid-course-modules',
+             courseId: this.courseId
++        }, {
++            title: 'Доступ',
++            xtype: 'training-grid-course-access',
++            courseId: this.courseId
+         }]
+     });
+ 

@@ -1,0 +1,52 @@
+Stage39 short check
+============================================================
+OK   UserTest snippet found
+OK   trainingActivityPage found
+OK   action.php exists
+OK   UserTest class exists
+FAIL UserTest local pdoFetch marker
+FAIL UserTest local UserTest marker
+OK   UserTest empty POST guard
+OK   UserTest unsafe save removed
+OK   UserTest class public config
+OK   trainingActivityPage no getService usertest
+FAIL UserTest snippet no getService usertest
+OK   action.php ajax wrapper
+------------------------------------------------------------
+RESULT: FAIL
+FAILED: UserTest local pdoFetch marker, UserTest local UserTest marker, UserTest snippet no getService usertest
+
+
+--- action.php first 80 lines ---
+
+<?php
+
+define('MODX_API_MODE', true);
+require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/index.php';
+
+$modx->getService('error', 'error.modError');
+$modx->setLogLevel(modX::LOG_LEVEL_ERROR);
+$html = $modx->runSnippet('UserTest', array('check_ajax'=>1));
+
+echo $modx->toJSON(array(
+        'success' => true,
+        'html'    => $html,
+    ));
+
+
+--- UserTest related lines ---
+
+    9: $pdoFetch = $modx->getService('pdoFetch');
+   13: if (!$UserTest = $modx->getService('usertest', 'UserTest', $modx->getOption('usertest_core_path', null,
+  662: $answer_step = $UserTest->fooClearPostGet('answer_step', 'fooStrClear');
+  663: unset($_POST['answer_step']);
+  772: $hasPostedQuestion = $isPostRequest && isset($_POST['question']) && is_array($_POST['question']) && !empty($_POST['question']);
+  773: if ($hasPostedQuestion && $answer_step !== '' && $answer_step !== 'start') {
+  774:     $curStep = $answer_step;
+ 1171: if($answer_step != "start" and !$skip_save && $hasPostedQuestion){
+ 1180:     $resStep = $answer_step;
+ 1536:         $time_last_step = !empty($_SESSION['UserTest'][$id]['time_last_step'])
+ 1537:             ? (int)$_SESSION['UserTest'][$id]['time_last_step']
+ 1539:         $_SESSION['UserTest'][$id]['time_last_step'] = time();
+ 1540:         $time = time() - $time_last_step;
+ 1568:         if (!empty($questions) && is_array($questions) && !empty($questions_post) && (string)$answer_step === (string)$curStep2) {

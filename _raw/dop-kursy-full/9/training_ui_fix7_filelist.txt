@@ -1,0 +1,3 @@
+assets/components/training/js/mgr/training.js
+assets/components/training/js/mgr/widgets/module.video.grid.js
+assets/components/training/js/mgr/widgets/module.slide.grid.js

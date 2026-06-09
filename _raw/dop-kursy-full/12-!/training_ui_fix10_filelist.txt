@@ -1,0 +1,4 @@
+assets/components/training/js/mgr/widgets/module.slide.grid.js
+assets/components/training/js/mgr/widgets/module.video.grid.js
+core/components/training/controllers/home.class.php
+core/components/training/processors/mgr/course/presentation/process.class.php

@@ -1,0 +1,51 @@
+<div class="section-block tests-block results-block">
+    <div class="page-content d-flex flex-column h-100">
+        <div class="test-card position-relative w-100 d-flex flex-column">
+            <div class="test-header d-flex align-items-center justify-content-between mb-4">
+                <img src="theme/images/training/tests/logo-scanport.svg" alt="Сканпорт" class="img-svg">
+                <button type="button" class="btn btn-list-test mt-2 d-flex d-md-none">
+                    <img src="theme/images/training/tests/list-ico.svg" class="img-svg">
+                    <span>Посмотреть тест</span>
+                </button>
+            </div>
+            <div class="test-content-list text-left mb-auto">
+                <div class="test-question d-flex align-items-center gap-2 gap-lg-3 mb-4 ">
+                    <img src="theme/images/training/tests/circle-x.svg" class="img-svg"><span>Вы не прошли тест</span>
+                </div>
+                <div class="test-result-list d-flex flex-column gap-3 mb-4">
+                    <div class="test-result-item">
+                        <div class="result-label">
+                            Набрано:
+                        </div>
+                        <div class="result-value">
+                            18.23% (30 баллов)
+                        </div>
+                    </div>
+                    <div class="test-result-item">
+                        <div class="result-label">
+                            Проходной балл:
+                        </div>
+                        <div class="result-value">
+                            80% (120 баллов)
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-list-test mt-2 d-none d-md-flex">
+                        <img src="theme/images/training/tests/list-ico.svg" class="img-svg">
+                        <span>Посмотреть тест</span>
+                    </button>
+                </div>
+            </div>
+            <div class="test-footer d-flex flex-wrap align-items-center justify-content-end gap-2 gap-sm-4">
+                <button type="button" class="btn btn-test btn-reload-test col-auto">
+                    <img src="theme/images/training/tests/rotate-ccw.svg" class="img-svg d-block d-sm-none">
+                    <span>Пройти тест заново</span>
+                    <img src="theme/images/training/tests/arrow-rotate-ico.svg" class="img-svg d-none d-sm-block">
+                </button>
+                <button type="button" class="btn btn-test col-auto">
+                    <span>Закрыть</span>
+                    <img src="theme/images/training/tests/arrow-right-ico.svg" class="img-svg d-none d-sm-block">
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

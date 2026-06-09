@@ -1,0 +1,1318 @@
+[
+    {
+        "path": "core/components/training/controllers/mgr/index.php",
+        "size": 236
+    },
+    {
+        "path": "core/components/training/controllers/mgr/practices.class.php",
+        "size": 1113
+    },
+    {
+        "path": "core/components/training/controllers/mgr/practices.php",
+        "size": 68
+    },
+    {
+        "path": "core/components/training/controllers/index.php",
+        "size": 236
+    },
+    {
+        "path": "core/components/training/controllers/default/practices.class.php",
+        "size": 177
+    },
+    {
+        "path": "core/components/training/controllers/default/practices.php",
+        "size": 68
+    },
+    {
+        "path": "core/components/training/controllers/home.class.php",
+        "size": 4415
+    },
+    {
+        "path": "core/components/training/controllers/practices.php",
+        "size": 6007
+    },
+    {
+        "path": "core/components/training/practices",
+        "size": 71
+    },
+    {
+        "path": "core/components/training/docs/media_pipeline_stage.txt",
+        "size": 2123
+    },
+    {
+        "path": "core/components/training/elements/chunks/training/certificates/modal.tpl",
+        "size": 767
+    },
+    {
+        "path": "core/components/training/elements/chunks/training/certificates/item.tpl",
+        "size": 836
+    },
+    {
+        "path": "core/components/training/elements/chunks/training/certificates/page.tpl",
+        "size": 938
+    },
+    {
+        "path": "core/components/training/elements/chunks/training/certificates/user-select.tpl",
+        "size": 360
+    },
+    {
+        "path": "core/components/training/elements/chunks/training/manage/request-course-email.tpl",
+        "size": 840
+    },
+    {
+        "path": "core/components/training/elements/chunks/training/manage/courses.tpl",
+        "size": 3745
+    },
+    {
+        "path": "core/components/training/elements/chunks/training/manage/course-access-modal.tpl",
+        "size": 3030
+    },
+    {
+        "path": "core/components/training/elements/chunks/training/manage/request-course-modal.tpl",
+        "size": 448
+    },
+    {
+        "path": "core/components/training/elements/chunks/training/manage/request-course-form.tpl",
+        "size": 5533
+    },
+    {
+        "path": "core/components/training/elements/chunks/training/player/page.tpl",
+        "size": 9607
+    },
+    {
+        "path": "core/components/training/elements/chunks/training/practice/message.tpl",
+        "size": 625
+    },
+    {
+        "path": "core/components/training/elements/chunks/training/practice/page.tpl",
+        "size": 2022
+    },
+    {
+        "path": "core/components/training/elements/chunks/training/course/module.tpl",
+        "size": 1264
+    },
+    {
+        "path": "core/components/training/elements/chunks/training/course/lesson.tpl",
+        "size": 399
+    },
+    {
+        "path": "core/components/training/elements/chunks/training/course/page.tpl",
+        "size": 3581
+    },
+    {
+        "path": "core/components/training/elements/chunks/training/activity/instruction.tpl",
+        "size": 1272
+    },
+    {
+        "path": "core/components/training/elements/chunks/training/activity/error.tpl",
+        "size": 579
+    },
+    {
+        "path": "core/components/training/elements/chunks/training/activity/usertest.tpl",
+        "size": 27783
+    },
+    {
+        "path": "core/components/training/elements/chunks/training/activity/start.tpl",
+        "size": 1219
+    },
+    {
+        "path": "core/components/training/elements/chunks/training/activity/usertest.error.tpl",
+        "size": 2031
+    },
+    {
+        "path": "core/components/training/elements/chunks/training/activity/practice.tpl",
+        "size": 2149
+    },
+    {
+        "path": "core/components/training/elements/chunks/training/history/table-row.tpl",
+        "size": 873
+    },
+    {
+        "path": "core/components/training/elements/chunks/training/history/page.tpl",
+        "size": 1481
+    },
+    {
+        "path": "core/components/training/elements/chunks/training/history/user-select.tpl",
+        "size": 277
+    },
+    {
+        "path": "core/components/training/elements/chunks/training/history/card.tpl",
+        "size": 1311
+    },
+    {
+        "path": "core/components/training/elements/chunks/training/mycourses/item.tpl",
+        "size": 356
+    },
+    {
+        "path": "core/components/training/elements/chunks/training/mycourses/page.tpl",
+        "size": 1206
+    },
+    {
+        "path": "core/components/training/elements/snippets/snippet.trainingMyCourses.php",
+        "size": 8905
+    },
+    {
+        "path": "core/components/training/elements/snippets/snippet.trainingCertificatesPage.php",
+        "size": 108
+    },
+    {
+        "path": "core/components/training/elements/snippets/snippet.trainingMenuRender.php",
+        "size": 102
+    },
+    {
+        "path": "core/components/training/elements/snippets/snippet.trainingManageCoursesPage.php",
+        "size": 109
+    },
+    {
+        "path": "core/components/training/elements/snippets/snippet.trainingMenuAccess.php",
+        "size": 102
+    },
+    {
+        "path": "core/components/training/elements/snippets/snippet.trainingManageCertificatesPage.php",
+        "size": 114
+    },
+    {
+        "path": "core/components/training/elements/snippets/snippet.trainingActivityPage.php",
+        "size": 15032
+    },
+    {
+        "path": "core/components/training/elements/snippets/snippet.trainingManageHistoryPage.php",
+        "size": 487
+    },
+    {
+        "path": "core/components/training/elements/snippets/snippet.trainingCoursePage.php",
+        "size": 35240
+    },
+    {
+        "path": "core/components/training/elements/snippets/trainingCertificatesPage.php",
+        "size": 4270
+    },
+    {
+        "path": "core/components/training/elements/snippets/_certificateHelper.php",
+        "size": 17095
+    },
+    {
+        "path": "core/components/training/elements/snippets/snippet.trainingPlayerPage.php",
+        "size": 2054
+    },
+    {
+        "path": "core/components/training/elements/snippets/trainingMenuRender.php",
+        "size": 6986
+    },
+    {
+        "path": "core/components/training/elements/snippets/_historyHelper.php",
+        "size": 21314
+    },
+    {
+        "path": "core/components/training/elements/snippets/snippet.trainingHasTrainingMenuAccess.php",
+        "size": 113
+    },
+    {
+        "path": "core/components/training/elements/snippets/trainingMenuAccess.php",
+        "size": 5479
+    },
+    {
+        "path": "core/components/training/elements/snippets/snippet.trainingHistoryPage.php",
+        "size": 465
+    },
+    {
+        "path": "core/components/training/elements/snippets/trainingPracticePage.php",
+        "size": 28651
+    },
+    {
+        "path": "core/components/training/elements/snippets/trainingManageCoursesPage.php",
+        "size": 11928
+    },
+    {
+        "path": "core/components/training/elements/snippets/trainingHasTrainingMenuAccess.php",
+        "size": 2887
+    },
+    {
+        "path": "core/components/training/elements/snippets/trainingManageCertificatesPage.php",
+        "size": 10515
+    },
+    {
+        "path": "core/components/training/elements/plugins/plugin.usertest_ckeditor_safe.php",
+        "size": 953
+    },
+    {
+        "path": "core/components/training/plugins/plugin.training_init.php",
+        "size": 425
+    },
+    {
+        "path": "core/components/training/js/mgr/widgets/module.tabs.js",
+        "size": 15430
+    },
+    {
+        "path": "core/components/training/js/mgr/widgets/course.grid.js",
+        "size": 12394
+    },
+    {
+        "path": "core/components/training/js/mgr/widgets/course.certificate.grid.js",
+        "size": 13482
+    },
+    {
+        "path": "core/components/training/js/mgr/widgets/course.tabs.js",
+        "size": 6970
+    },
+    {
+        "path": "core/components/training/js/mgr/training.js",
+        "size": 16636
+    },
+    {
+        "path": "core/components/training/processors/mgr/managerlink/getlist.class.php",
+        "size": 2097
+    },
+    {
+        "path": "core/components/training/processors/mgr/managerlink/users.class.php",
+        "size": 2135
+    },
+    {
+        "path": "core/components/training/processors/mgr/managerlink/update.class.php",
+        "size": 1671
+    },
+    {
+        "path": "core/components/training/processors/mgr/managerlink/remove.class.php",
+        "size": 1158
+    },
+    {
+        "path": "core/components/training/processors/mgr/managerlink/create.class.php",
+        "size": 1610
+    },
+    {
+        "path": "core/components/training/processors/mgr/managerlink/_helpers.php",
+        "size": 1274
+    },
+    {
+        "path": "core/components/training/processors/mgr/lesson/videos/getlist.class.php",
+        "size": 2297
+    },
+    {
+        "path": "core/components/training/processors/mgr/lesson/quality/update.class.php",
+        "size": 2386
+    },
+    {
+        "path": "core/components/training/processors/mgr/lesson/quality/remove.class.php",
+        "size": 1405
+    },
+    {
+        "path": "core/components/training/processors/mgr/lesson/quality/create.class.php",
+        "size": 2797
+    },
+    {
+        "path": "core/components/training/processors/mgr/lesson/video/transcode.class.php",
+        "size": 9031
+    },
+    {
+        "path": "core/components/training/processors/mgr/lesson/video/reorder.class.php",
+        "size": 1604
+    },
+    {
+        "path": "core/components/training/processors/mgr/lesson/video/update.class.php",
+        "size": 4197
+    },
+    {
+        "path": "core/components/training/processors/mgr/lesson/video/remove.class.php",
+        "size": 2692
+    },
+    {
+        "path": "core/components/training/processors/mgr/lesson/video/create.class.php",
+        "size": 4589
+    },
+    {
+        "path": "core/components/training/processors/mgr/lesson/video/files.class.php",
+        "size": 1253
+    },
+    {
+        "path": "core/components/training/processors/mgr/lesson/presentation/process.class.php",
+        "size": 10188
+    },
+    {
+        "path": "core/components/training/processors/mgr/lesson/_video_helper.php",
+        "size": 13507
+    },
+    {
+        "path": "core/components/training/processors/mgr/lesson/slide/available.class.php",
+        "size": 1132
+    },
+    {
+        "path": "core/components/training/processors/mgr/lesson/slide/autotimecodes.class.php",
+        "size": 1020
+    },
+    {
+        "path": "core/components/training/processors/mgr/lesson/slide/reorder.class.php",
+        "size": 1933
+    },
+    {
+        "path": "core/components/training/processors/mgr/lesson/slide/import.class.php",
+        "size": 3097
+    },
+    {
+        "path": "core/components/training/processors/mgr/lesson/slide/update.class.php",
+        "size": 1986
+    },
+    {
+        "path": "core/components/training/processors/mgr/lesson/slide/remove.class.php",
+        "size": 1069
+    },
+    {
+        "path": "core/components/training/processors/mgr/lesson/slide/create.class.php",
+        "size": 2659
+    },
+    {
+        "path": "core/components/training/processors/mgr/lesson/qualities/getlist.class.php",
+        "size": 1381
+    },
+    {
+        "path": "core/components/training/processors/mgr/lesson/slides/getlist.class.php",
+        "size": 1805
+    },
+    {
+        "path": "core/components/training/processors/mgr/practice/practices/remove.php",
+        "size": 1369
+    },
+    {
+        "path": "core/components/training/processors/mgr/practice/practices/getlist.class.php",
+        "size": 5011
+    },
+    {
+        "path": "core/components/training/processors/mgr/practice/practices/update.php",
+        "size": 3177
+    },
+    {
+        "path": "core/components/training/processors/mgr/practice/practices/create.php",
+        "size": 2980
+    },
+    {
+        "path": "core/components/training/processors/mgr/practice/practices/update.class.php",
+        "size": 3177
+    },
+    {
+        "path": "core/components/training/processors/mgr/practice/practices/remove.class.php",
+        "size": 1369
+    },
+    {
+        "path": "core/components/training/processors/mgr/practice/practices/create.class.php",
+        "size": 2980
+    },
+    {
+        "path": "core/components/training/processors/mgr/practice/practices/getlist.php",
+        "size": 5011
+    },
+    {
+        "path": "core/components/training/processors/mgr/practice/modules/getlist.class.php",
+        "size": 2607
+    },
+    {
+        "path": "core/components/training/processors/mgr/practice/modules/getlist.php",
+        "size": 2607
+    },
+    {
+        "path": "core/components/training/processors/mgr/practice/attempts/getlist.class.php",
+        "size": 7901
+    },
+    {
+        "path": "core/components/training/processors/mgr/practice/attempts/status.class.php",
+        "size": 3960
+    },
+    {
+        "path": "core/components/training/processors/mgr/practice/attempts/status.php",
+        "size": 3960
+    },
+    {
+        "path": "core/components/training/processors/mgr/practice/attempts/getlist.php",
+        "size": 7901
+    },
+    {
+        "path": "core/components/training/processors/mgr/practice/courses/getlist.class.php",
+        "size": 2370
+    },
+    {
+        "path": "core/components/training/processors/mgr/practice/courses/getlist.php",
+        "size": 2370
+    },
+    {
+        "path": "core/components/training/processors/mgr/practice/_helper.php",
+        "size": 7724
+    },
+    {
+        "path": "core/components/training/processors/mgr/practice/messages/getlist.class.php",
+        "size": 4840
+    },
+    {
+        "path": "core/components/training/processors/mgr/practice/messages/create.php",
+        "size": 5472
+    },
+    {
+        "path": "core/components/training/processors/mgr/practice/messages/create.class.php",
+        "size": 5472
+    },
+    {
+        "path": "core/components/training/processors/mgr/practice/messages/getlist.php",
+        "size": 4840
+    },
+    {
+        "path": "core/components/training/processors/mgr/course/getlist.class.php",
+        "size": 2202
+    },
+    {
+        "path": "core/components/training/processors/mgr/course/access/getlist.class.php",
+        "size": 4228
+    },
+    {
+        "path": "core/components/training/processors/mgr/course/access/groups.class.php",
+        "size": 1336
+    },
+    {
+        "path": "core/components/training/processors/mgr/course/access/syncusers.class.php",
+        "size": 706
+    },
+    {
+        "path": "core/components/training/processors/mgr/course/access/users.class.php",
+        "size": 2137
+    },
+    {
+        "path": "core/components/training/processors/mgr/course/access/update.class.php",
+        "size": 3509
+    },
+    {
+        "path": "core/components/training/processors/mgr/course/access/remove.class.php",
+        "size": 1823
+    },
+    {
+        "path": "core/components/training/processors/mgr/course/access/create.class.php",
+        "size": 3040
+    },
+    {
+        "path": "core/components/training/processors/mgr/course/access/_helpers.php",
+        "size": 3241
+    },
+    {
+        "path": "core/components/training/processors/mgr/course/modules/getlist.class.php",
+        "size": 2987
+    },
+    {
+        "path": "core/components/training/processors/mgr/course/presentation/process.class.php",
+        "size": 8389
+    },
+    {
+        "path": "core/components/training/processors/mgr/course/presentation/files.class.php",
+        "size": 1693
+    },
+    {
+        "path": "core/components/training/processors/mgr/course/sync.class.php",
+        "size": 4405
+    },
+    {
+        "path": "core/components/training/processors/mgr/course/disable.class.php",
+        "size": 462
+    },
+    {
+        "path": "core/components/training/processors/mgr/course/enable.class.php",
+        "size": 460
+    },
+    {
+        "path": "core/components/training/processors/mgr/course/certificates/getlist.class.php",
+        "size": 3614
+    },
+    {
+        "path": "core/components/training/processors/mgr/course/certificates/getlist.php",
+        "size": 114
+    },
+    {
+        "path": "core/components/training/processors/mgr/course/update.class.php",
+        "size": 2346
+    },
+    {
+        "path": "core/components/training/processors/mgr/course/get.class.php",
+        "size": 3573
+    },
+    {
+        "path": "core/components/training/processors/mgr/course/certificate/generate.class.php",
+        "size": 1833
+    },
+    {
+        "path": "core/components/training/processors/mgr/course/certificate/update.class.php",
+        "size": 2869
+    },
+    {
+        "path": "core/components/training/processors/mgr/course/certificate/get.class.php",
+        "size": 2319
+    },
+    {
+        "path": "core/components/training/processors/mgr/media/cleanup.class.php",
+        "size": 4026
+    },
+    {
+        "path": "core/components/training/processors/mgr/_media_helper.php",
+        "size": 39898
+    },
+    {
+        "path": "core/components/training/processors/mgr/module/videos/getlist.class.php",
+        "size": 1170
+    },
+    {
+        "path": "core/components/training/processors/mgr/module/testlinks/getlist.class.php",
+        "size": 4975
+    },
+    {
+        "path": "core/components/training/processors/mgr/module/video/transcode.class.php",
+        "size": 8450
+    },
+    {
+        "path": "core/components/training/processors/mgr/module/video/update.class.php",
+        "size": 2549
+    },
+    {
+        "path": "core/components/training/processors/mgr/module/video/remove.class.php",
+        "size": 2088
+    },
+    {
+        "path": "core/components/training/processors/mgr/module/video/create.class.php",
+        "size": 3586
+    },
+    {
+        "path": "core/components/training/processors/mgr/module/video/files.class.php",
+        "size": 1785
+    },
+    {
+        "path": "core/components/training/processors/mgr/module/presentation/process.class.php",
+        "size": 6483
+    },
+    {
+        "path": "core/components/training/processors/mgr/module/presentation/files.class.php",
+        "size": 1693
+    },
+    {
+        "path": "core/components/training/processors/mgr/module/testlink/tests.class.php",
+        "size": 2446
+    },
+    {
+        "path": "core/components/training/processors/mgr/module/testlink/practices.class.php",
+        "size": 2953
+    },
+    {
+        "path": "core/components/training/processors/mgr/module/testlink/update.class.php",
+        "size": 4074
+    },
+    {
+        "path": "core/components/training/processors/mgr/module/testlink/remove.class.php",
+        "size": 1263
+    },
+    {
+        "path": "core/components/training/processors/mgr/module/testlink/create.class.php",
+        "size": 3762
+    },
+    {
+        "path": "core/components/training/processors/mgr/module/testlink/_helpers.php",
+        "size": 5281
+    },
+    {
+        "path": "core/components/training/processors/mgr/module/testlink/practices.php",
+        "size": 2953
+    },
+    {
+        "path": "core/components/training/processors/mgr/module/disable.class.php",
+        "size": 547
+    },
+    {
+        "path": "core/components/training/processors/mgr/module/lesson/update.class.php",
+        "size": 1947
+    },
+    {
+        "path": "core/components/training/processors/mgr/module/lesson/remove.class.php",
+        "size": 3135
+    },
+    {
+        "path": "core/components/training/processors/mgr/module/lesson/create.class.php",
+        "size": 2241
+    },
+    {
+        "path": "core/components/training/processors/mgr/module/lesson/get.class.php",
+        "size": 1337
+    },
+    {
+        "path": "core/components/training/processors/mgr/module/enable.class.php",
+        "size": 545
+    },
+    {
+        "path": "core/components/training/processors/mgr/module/update.class.php",
+        "size": 3317
+    },
+    {
+        "path": "core/components/training/processors/mgr/module/slide/available.class.php",
+        "size": 1390
+    },
+    {
+        "path": "core/components/training/processors/mgr/module/slide/autotimecodes.class.php",
+        "size": 1546
+    },
+    {
+        "path": "core/components/training/processors/mgr/module/slide/import.class.php",
+        "size": 3023
+    },
+    {
+        "path": "core/components/training/processors/mgr/module/slide/update.class.php",
+        "size": 1925
+    },
+    {
+        "path": "core/components/training/processors/mgr/module/slide/remove.class.php",
+        "size": 2024
+    },
+    {
+        "path": "core/components/training/processors/mgr/module/slide/create.class.php",
+        "size": 2232
+    },
+    {
+        "path": "core/components/training/processors/mgr/module/slide/_helpers.php",
+        "size": 8470
+    },
+    {
+        "path": "core/components/training/processors/mgr/module/get.class.php",
+        "size": 5132
+    },
+    {
+        "path": "core/components/training/processors/mgr/module/slides/getlist.class.php",
+        "size": 1719
+    },
+    {
+        "path": "core/components/training/processors/mgr/module/lessons/getlist.class.php",
+        "size": 1358
+    },
+    {
+        "path": "core/components/training/processors/web/player/progress.class.php",
+        "size": 5560
+    },
+    {
+        "path": "core/components/training/processors/web/player/get.class.php",
+        "size": 20289
+    },
+    {
+        "path": "core/components/training/processors/web/practice/submit.class.php",
+        "size": 30542
+    },
+    {
+        "path": "core/components/training/processors/web/course/unassign.class.php",
+        "size": 1860
+    },
+    {
+        "path": "core/components/training/processors/web/course/assign.class.php",
+        "size": 2613
+    },
+    {
+        "path": "core/components/training/processors/web/course/assignableusers.class.php",
+        "size": 18642
+    },
+    {
+        "path": "core/components/training/processors/web/course/mycourses.class.php",
+        "size": 8183
+    },
+    {
+        "path": "core/components/training/processors/web/_helpers.php",
+        "size": 26239
+    },
+    {
+        "path": "core/components/training/templates/mgr/practices.tpl",
+        "size": 42
+    },
+    {
+        "path": "core/components/training/templates/home.tpl",
+        "size": 40
+    },
+    {
+        "path": "core/components/training/_migrations/20260330_module_lessons.php",
+        "size": 7333
+    },
+    {
+        "path": "core/components/training/index.class.php",
+        "size": 691
+    },
+    {
+        "path": "core/components/training/practices.php",
+        "size": 71
+    },
+    {
+        "path": "core/components/training/model/training/trainingmodulevideo.class.php",
+        "size": 59
+    },
+    {
+        "path": "core/components/training/model/training/trainingtestlink.class.php",
+        "size": 56
+    },
+    {
+        "path": "core/components/training/model/training/traininguserlessonprogress.class.php",
+        "size": 66
+    },
+    {
+        "path": "core/components/training/model/training/training.class.php",
+        "size": 1707
+    },
+    {
+        "path": "core/components/training/model/training/trainingusercourse.class.php",
+        "size": 58
+    },
+    {
+        "path": "core/components/training/model/training/traininguserteststatus.class.php",
+        "size": 62
+    },
+    {
+        "path": "core/components/training/model/training/trainingmodule.class.php",
+        "size": 54
+    },
+    {
+        "path": "core/components/training/model/training/trainingcourse.class.php",
+        "size": 54
+    },
+    {
+        "path": "core/components/training/model/training/trainingcourseaccess.class.php",
+        "size": 60
+    },
+    {
+        "path": "core/components/training/model/training/services/trainingprogress.class.php",
+        "size": 96087
+    },
+    {
+        "path": "core/components/training/model/training/services/trainingcertificate.class.php",
+        "size": 39994
+    },
+    {
+        "path": "core/components/training/model/training/trainingusermoduleprogress.class.php",
+        "size": 66
+    },
+    {
+        "path": "core/components/training/model/training/metadata.mysql.php",
+        "size": 429
+    },
+    {
+        "path": "core/components/training/model/training/trainingmodulelesson.class.php",
+        "size": 61
+    },
+    {
+        "path": "core/components/training/model/training/traininglessonvideo.class.php",
+        "size": 59
+    },
+    {
+        "path": "core/components/training/model/training/traininglessonslide.class.php",
+        "size": 59
+    },
+    {
+        "path": "core/components/training/model/training/trainingmoduleslide.class.php",
+        "size": 59
+    },
+    {
+        "path": "core/components/training/model/training/mysql/trainingmodulevideo.map.inc.php",
+        "size": 3998
+    },
+    {
+        "path": "core/components/training/model/training/mysql/trainingusermoduleprogress.map.inc.php",
+        "size": 4221
+    },
+    {
+        "path": "core/components/training/model/training/mysql/trainingmodulevideo.class.php",
+        "size": 136
+    },
+    {
+        "path": "core/components/training/model/training/mysql/trainingtestlink.class.php",
+        "size": 127
+    },
+    {
+        "path": "core/components/training/model/training/mysql/traininguserlessonprogress.class.php",
+        "size": 157
+    },
+    {
+        "path": "core/components/training/model/training/mysql/traininglesson.map.inc.php",
+        "size": 5410
+    },
+    {
+        "path": "core/components/training/model/training/mysql/trainingusercourse.class.php",
+        "size": 133
+    },
+    {
+        "path": "core/components/training/model/training/mysql/traininglessonvideo.map.inc.php",
+        "size": 3318
+    },
+    {
+        "path": "core/components/training/model/training/mysql/traininguserteststatus.class.php",
+        "size": 145
+    },
+    {
+        "path": "core/components/training/model/training/mysql/trainingmodule.class.php",
+        "size": 121
+    },
+    {
+        "path": "core/components/training/model/training/mysql/trainingcourseaccess.map.inc.php",
+        "size": 3715
+    },
+    {
+        "path": "core/components/training/model/training/mysql/traininguserteststatus.map.inc.php",
+        "size": 4078
+    },
+    {
+        "path": "core/components/training/model/training/mysql/trainingcourse.class.php",
+        "size": 121
+    },
+    {
+        "path": "core/components/training/model/training/mysql/trainingcourseaccess.class.php",
+        "size": 139
+    },
+    {
+        "path": "core/components/training/model/training/mysql/trainingtestlink.map.inc.php",
+        "size": 4388
+    },
+    {
+        "path": "core/components/training/model/training/mysql/trainingusermoduleprogress.class.php",
+        "size": 157
+    },
+    {
+        "path": "core/components/training/model/training/mysql/traininglessonslide.map.inc.php",
+        "size": 2720
+    },
+    {
+        "path": "core/components/training/model/training/mysql/trainingmodulelesson.class.php",
+        "size": 140
+    },
+    {
+        "path": "core/components/training/model/training/mysql/trainingcourse.map.inc.php",
+        "size": 3379
+    },
+    {
+        "path": "core/components/training/model/training/mysql/trainingusercourse.map.inc.php",
+        "size": 3839
+    },
+    {
+        "path": "core/components/training/model/training/mysql/traininglessonvideo.class.php",
+        "size": 136
+    },
+    {
+        "path": "core/components/training/model/training/mysql/trainingmodule.map.inc.php",
+        "size": 4886
+    },
+    {
+        "path": "core/components/training/model/training/mysql/traininglessonslide.class.php",
+        "size": 136
+    },
+    {
+        "path": "core/components/training/model/training/mysql/traininguserlessonprogress.map.inc.php",
+        "size": 4221
+    },
+    {
+        "path": "core/components/training/model/training/mysql/trainingmoduleslide.class.php",
+        "size": 136
+    },
+    {
+        "path": "core/components/training/model/training/mysql/trainingusermanagerlink.map.inc.php",
+        "size": 3019
+    },
+    {
+        "path": "core/components/training/model/training/mysql/trainingusermanagerlink.class.php",
+        "size": 149
+    },
+    {
+        "path": "core/components/training/model/training/mysql/trainingmodulelesson.map.inc.php",
+        "size": 4774
+    },
+    {
+        "path": "core/components/training/model/training/mysql/traininglesson.class.php",
+        "size": 121
+    },
+    {
+        "path": "core/components/training/model/training/mysql/trainingmoduleslide.map.inc.php",
+        "size": 3401
+    },
+    {
+        "path": "core/components/training/model/training/trainingusermanagerlink.class.php",
+        "size": 64
+    },
+    {
+        "path": "core/components/training/model/training/traininglesson.class.php",
+        "size": 54
+    },
+    {
+        "path": "core/components/training/model/schema/training.mysql.schema.xml",
+        "size": 23309
+    },
+    {
+        "path": "core/components/training/lexicon/ru/default.inc.php",
+        "size": 3296
+    },
+    {
+        "path": "assets/components/training/web.connector.php",
+        "size": 2987
+    },
+    {
+        "path": "assets/components/training/css/mgr/certificates.css",
+        "size": 1980
+    },
+    {
+        "path": "assets/components/training/css/mgr/practices.css",
+        "size": 1072
+    },
+    {
+        "path": "assets/components/training/connector.php",
+        "size": 717
+    },
+    {
+        "path": "assets/components/training/usertest/action-safe-wrapper.stub.php",
+        "size": 3751
+    },
+    {
+        "path": "assets/components/training/js/mgr/sections/lesson.js",
+        "size": 405
+    },
+    {
+        "path": "assets/components/training/js/mgr/sections/module.js",
+        "size": 408
+    },
+    {
+        "path": "assets/components/training/js/mgr/sections/home.js",
+        "size": 409
+    },
+    {
+        "path": "assets/components/training/js/mgr/sections/course.js",
+        "size": 421
+    },
+    {
+        "path": "assets/components/training/js/mgr/practices/practices.panel.js",
+        "size": 47599
+    },
+    {
+        "path": "assets/components/training/js/mgr/widgets/module.tabs.js",
+        "size": 6124
+    },
+    {
+        "path": "assets/components/training/js/mgr/widgets/module.slide.grid.js",
+        "size": 12343
+    },
+    {
+        "path": "assets/components/training/js/mgr/widgets/module.testlink.grid.js",
+        "size": 19974
+    },
+    {
+        "path": "assets/components/training/js/mgr/widgets/module.panel.js",
+        "size": 762
+    },
+    {
+        "path": "assets/components/training/js/mgr/widgets/lesson.video.grid.js",
+        "size": 14164
+    },
+    {
+        "path": "assets/components/training/js/mgr/widgets/home.panel.js",
+        "size": 1299
+    },
+    {
+        "path": "assets/components/training/js/mgr/widgets/course.grid.js",
+        "size": 12374
+    },
+    {
+        "path": "assets/components/training/js/mgr/widgets/manager.link.grid.js",
+        "size": 18686
+    },
+    {
+        "path": "assets/components/training/js/mgr/widgets/lesson.tabs.js",
+        "size": 9162
+    },
+    {
+        "path": "assets/components/training/js/mgr/widgets/module.lesson.grid.js",
+        "size": 8376
+    },
+    {
+        "path": "assets/components/training/js/mgr/widgets/lesson.panel.js",
+        "size": 806
+    },
+    {
+        "path": "assets/components/training/js/mgr/widgets/course.access.grid.js",
+        "size": 24300
+    },
+    {
+        "path": "assets/components/training/js/mgr/widgets/course.certificate.grid.js",
+        "size": 17081
+    },
+    {
+        "path": "assets/components/training/js/mgr/widgets/module.video.grid.js",
+        "size": 13430
+    },
+    {
+        "path": "assets/components/training/js/mgr/widgets/course.panel.js",
+        "size": 712
+    },
+    {
+        "path": "assets/components/training/js/mgr/widgets/course.tabs.js",
+        "size": 6970
+    },
+    {
+        "path": "assets/components/training/js/mgr/widgets/module.grid.js",
+        "size": 5138
+    },
+    {
+        "path": "assets/components/training/js/mgr/usertest-ckeditor-safe.js",
+        "size": 4034
+    },
+    {
+        "path": "assets/components/training/js/mgr/training.js",
+        "size": 16636
+    },
+    {
+        "path": "assets/components/training/stage39_check.txt",
+        "size": 2153
+    },
+    {
+        "path": "theme/css/swiper-bundle.min.css",
+        "size": 18448
+    },
+    {
+        "path": "theme/css/style.css",
+        "size": 53149
+    },
+    {
+        "path": "theme/css/bootstrap.min.css",
+        "size": 292879
+    },
+    {
+        "path": "theme/css/training.css",
+        "size": 271236
+    },
+    {
+        "path": "theme/js/swiper-bundle.min.js",
+        "size": 149160
+    },
+    {
+        "path": "theme/js/app-training.js",
+        "size": 157096
+    },
+    {
+        "path": "theme/js/jquery-ui.min.js",
+        "size": 255084
+    },
+    {
+        "path": "theme/js/bootstrap.bundle.min.js",
+        "size": 80669
+    },
+    {
+        "path": "theme/js/jquery-3.7.1.min.js",
+        "size": 87532
+    },
+    {
+        "path": "theme/js/jquery-migrate-3.4.1.min.js",
+        "size": 13576
+    },
+    {
+        "path": "theme/js/app.js",
+        "size": 47469
+    },
+    {
+        "path": "theme/images/training/arrow-pub-ico.svg",
+        "size": 464
+    },
+    {
+        "path": "theme/images/training/circle-check.svg",
+        "size": 327
+    },
+    {
+        "path": "theme/images/training/circle-x.svg",
+        "size": 330
+    },
+    {
+        "path": "theme/images/training/tests/list-ico.svg",
+        "size": 359
+    },
+    {
+        "path": "theme/images/training/tests/circle-x.svg",
+        "size": 330
+    },
+    {
+        "path": "theme/images/training/tests/circle-alert.svg",
+        "size": 330
+    },
+    {
+        "path": "theme/images/training/tests/arrow-right-ico.svg",
+        "size": 208
+    },
+    {
+        "path": "theme/images/training/tests/arrow-rotate-ico.svg",
+        "size": 705
+    },
+    {
+        "path": "theme/images/training/tests/close-modal.svg",
+        "size": 193
+    },
+    {
+        "path": "theme/images/training/tests/circle-check-big.svg",
+        "size": 641
+    },
+    {
+        "path": "theme/images/training/tests/rotate-ccw.svg",
+        "size": 919
+    },
+    {
+        "path": "theme/images/training/tests/logo-scanport.svg",
+        "size": 112751
+    },
+    {
+        "path": "theme/images/training/tests/check-ico.svg",
+        "size": 174
+    },
+    {
+        "path": "theme/images/training/circle-alert.svg",
+        "size": 330
+    },
+    {
+        "path": "theme/images/training/lesson-ico.svg",
+        "size": 1123
+    },
+    {
+        "path": "theme/images/training/lock-keyhole.svg",
+        "size": 818
+    },
+    {
+        "path": "theme/images/training/curses/clock-ico.svg",
+        "size": 451
+    },
+    {
+        "path": "theme/images/training/curses/play-ico.png",
+        "size": 1744
+    },
+    {
+        "path": "theme/images/training/curses/image_1.jpg",
+        "size": 58540
+    },
+    {
+        "path": "theme/images/training/curses/user-ico.svg",
+        "size": 790
+    },
+    {
+        "path": "theme/images/training/curses/shapka-ico.png",
+        "size": 4906
+    },
+    {
+        "path": "theme/images/training/curses/arrow-down-ico.svg",
+        "size": 208
+    },
+    {
+        "path": "theme/images/training/curses/arrow-up-ico.svg",
+        "size": 461
+    },
+    {
+        "path": "theme/images/training/curses/lock-keyhole-ico.svg",
+        "size": 598
+    },
+    {
+        "path": "theme/images/training/image_1.jpg",
+        "size": 9606
+    },
+    {
+        "path": "theme/images/training/user-ico.svg",
+        "size": 791
+    },
+    {
+        "path": "theme/images/training/image_3.jpg",
+        "size": 6032
+    },
+    {
+        "path": "theme/images/training/image_2.jpg",
+        "size": 7378
+    },
+    {
+        "path": "theme/images/training/player/arrows-angle-expand-ico.svg",
+        "size": 460
+    },
+    {
+        "path": "theme/images/training/player/settings-ico.svg",
+        "size": 1033
+    },
+    {
+        "path": "theme/images/training/player/play-ico.svg",
+        "size": 272
+    },
+    {
+        "path": "theme/images/training/player/volume-up-ico.svg",
+        "size": 693
+    },
+    {
+        "path": "theme/images/training/player/full-screen-ico.svg",
+        "size": 460
+    },
+    {
+        "path": "theme/images/training/player/pause-ico.svg",
+        "size": 287
+    },
+    {
+        "path": "theme/images/training/player/img-slide-1.jpg",
+        "size": 381033
+    },
+    {
+        "path": "theme/images/training/player/volume-ico.svg",
+        "size": 458
+    },
+    {
+        "path": "theme/images/training/player/arrows-angle-contract-ico.svg",
+        "size": 461
+    },
+    {
+        "path": "theme/images/training/player/arrow-left.svg",
+        "size": 208
+    },
+    {
+        "path": "theme/images/training/player/volume-mute-ico.svg",
+        "size": 489
+    },
+    {
+        "path": "theme/images/training/player/search-ico.svg",
+        "size": 323
+    },
+    {
+        "path": "theme/images/training/player/arrow-clockwise-ico.svg",
+        "size": 349
+    },
+    {
+        "path": "theme/images/training/player/img-slide.jpg",
+        "size": 9606
+    },
+    {
+        "path": "theme/images/training/player/arrow-right-from-line-ico.svg",
+        "size": 235
+    },
+    {
+        "path": "theme/images/training/player/reload-ico.svg",
+        "size": 349
+    },
+    {
+        "path": "theme/images/training/gaika-ico.svg",
+        "size": 1123
+    },
+    {
+        "path": "theme/images/training/all-course/image-2.png",
+        "size": 96052
+    },
+    {
+        "path": "theme/images/training/all-course/list-icon.svg",
+        "size": 1584
+    },
+    {
+        "path": "theme/images/training/all-course/download-ico.svg",
+        "size": 435
+    },
+    {
+        "path": "theme/images/training/all-course/search-ico.svg",
+        "size": 392
+    },
+    {
+        "path": "theme/images/training/all-course/image-1.png",
+        "size": 71406
+    },
+    {
+        "path": "theme/images/training/image_4.jpg",
+        "size": 7273
+    },
+    {
+        "path": "theme/images/training/sert/sert-logo.svg",
+        "size": 1578
+    },
+    {
+        "path": "theme/images/training/sert/image_1.jpg",
+        "size": 454464
+    },
+    {
+        "path": "theme/images/training/history/arrow-up.svg",
+        "size": 226
+    }
+]

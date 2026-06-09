@@ -1,0 +1,43 @@
+/* Практические задания держим на стандартных классах MODX/ExtJS.
+   Здесь только точечные правки для длинных сообщений и ссылок файлов. */
+
+.training-practice-message-cell,
+.training-practice-files-cell {
+    white-space: normal;
+    line-height: 1.45;
+}
+
+.training-practice-message-cell {
+    max-height: 140px;
+    overflow: auto;
+}
+
+.training-practice-files-cell a {
+    display: inline-block;
+    margin: 0 8px 4px 0;
+}
+
+
+/* MODX manager cosmetic cleanup for practical attempts */
+.training-practice-message-cell,
+.training-practice-files-cell{
+    white-space: normal;
+    line-height: 1.45;
+}
+.training-practice-message-cell{
+    max-height: 140px;
+    overflow: auto;
+}
+.training-practice-files-cell a{
+    display:inline-block;
+    margin:0 8px 4px 0;
+}
+#training-panel-practices .x-panel-body{
+    background:#fff;
+}
+#training-panel-practices .x-toolbar{
+    padding:8px;
+}
+#training-panel-practices .x-grid3-row-selected{
+    background:#f1f5f8 !important;
+}

@@ -1,0 +1,77 @@
+<div class="section-block tests-block">
+    <div class="page-content d-flex flex-column h-100">
+        <div class="test-card position-relative w-100 d-flex flex-column">
+            <div class="test-header mb-4">
+                <img src="theme/images/training/tests/logo-scanport.svg" alt="Сканпорт" class="img-svg">
+            </div>
+            <div class="test-content-list text-left mb-4">
+                 <div class="test-question mb-4">
+                    Автоматическая идентификация или AIDC - это:
+                </div>
+                <div class="test-answer d-flex flex-column gap-3">
+                    <div class="form-label">
+                        <label class="custom-radio-test">
+                            <input type="radio" name="answer_1" value="1" checked>
+                            <span class="radio-mark"></span>
+                            <div class="text-answer">Идентификация объектов и сбор данных о них</div>
+                        </label>
+                    </div>
+                    <div class="form-label">
+                        <label class="custom-radio-test">
+                            <input type="radio" name="answer_1" class="input-label" value="2">
+                            <span class="radio-mark"></span>
+                            <div class="text-answer">Идентификация объектов, сбор данных о них и обработка данных автоматизированными системами</div>
+                        </label>
+                    </div>
+                    <div class="form-label">
+                        <label class="custom-radio-test">
+                            <input type="radio" name="answer_1" class="input-label" value="3" checked>
+                            <span class="radio-mark"></span>
+                            <div class="text-answer">Идентификация объектов и сбор данных о них</div>
+                        </label>
+                    </div>
+                    <div class="form-label">
+                        <label class="custom-checkbox-test">
+                            <input type="checkbox" name="answer_1" class="input-label" value="4">
+                            <span class="checkbox-mark"></span>
+                            <div class="text-answer">Идентификация объектов, сбор данных о них и обработка данных автоматизированными системами</div>
+                        </label>
+                    </div>
+                    <div class="form-label">
+                        <label class="custom-checkbox-test">
+                            <input type="checkbox" name="answer_1" class="input-label" value="5" checked>
+                            <span class="checkbox-mark"></span>
+                            <div class="text-answer">Идентификация объектов, сбор данных о них и обработка данных автоматизированными системами</div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="result-test d-flex align-items-center gap-3 mb-auto">
+                <div class="btn btn-info-check">
+                    <img src="theme/images/training/tests/circle-check-big.svg" class="img-svg">
+                    <span>Правильно</span>
+                </div>
+                <div class="btn btn-info-x">
+                    <img src="theme/images/training/tests/circle-x.svg" class="img-svg">
+                    <span>Неправильно</span>
+                </div>
+            </div>
+            <div class="test-footer d-flex flex-wrap align-items-center justify-content-between ">
+                <button type="button" class="btn btn-list-test col mb-2 mb-sm-0">
+                    <img src="theme/images/training/tests/list-ico.svg" class="img-svg">
+                    <span>Список вопросов</span>
+                </button>
+                <div class="text-info-test ms-auto me-4 col-auto mb-2 mb-sm-0">
+                    <span class="d-none d-lg-inline-block">Набрано баллов</span>
+                    <span> 0 из 15</span>
+                    <span class="balls-text d-block d-lg-none">Баллы</span>
+                </div>
+                <button type="button" class="btn btn-test col-auto">
+                    <span>Продолжить</span>
+                    <img src="theme/images/training/tests/arrow-right-ico.svg" class="img-svg d-none d-sm-block">
+                </button>
+                
+            </div>
+        </div>
+    </div>
+</div>

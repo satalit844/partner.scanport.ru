@@ -1,0 +1,14 @@
+/* training player progress/gradient hotfix */
+.training-player[data-training-page="player"] .player-controls__progress{
+    margin-bottom: 12px;
+}
+
+.training-player[data-training-page="player"] .player-controls{
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.28) 0%,
+        rgba(0, 0, 0, 0.16) 35%,
+        rgba(0, 0, 0, 0.08) 65%,
+        rgba(0, 0, 0, 0) 100%
+    );
+}

@@ -1,0 +1,26 @@
+<div class="section-block tests-block">
+    <div class="page-content d-flex flex-column h-100">
+        <div class="test-card position-relative w-100 d-flex flex-column">
+            <div class="test-header mb-4">
+                <img src="theme/images/training/tests/logo-scanport.svg" alt="Сканпорт" class="img-svg">
+            </div>
+            <div class="test-content-list text-left mb-auto">
+                 <div class="test-title mb-4">
+                    Инструкция по прохождению теста
+                </div>
+                <ul class="test-list mb-5">
+                    <li>Перед ответом внимательно прочитайте текст вопроса</li>
+                    <li>Затем выберите правильный вариант ответа. В некоторых вопросах может быть несколько правильных ответов</li>
+                    <li>Нажмите кнопку <span>“Ответить”</span> для подтверждения ответа</li>
+                    <li>Для просмотра и выбора вопросов используйте </span>Список</span> вопросов слева вверх</li>
+                </ul>
+            </div>
+            <div class="test-footer text-center text-md-end">
+                <button href="#" class="btn btn-test">
+                    <span>Продолжить</span>
+                    <img src="theme/images/training/tests/arrow-right-ico.svg" class="img-svg d-none d-sm-block">
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

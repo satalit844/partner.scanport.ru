@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model package="training" baseClass="xPDOObject" platform="mysql" defaultEngine="InnoDB" version="1.1">
+
+    <object class="TrainingCourse" table="training_courses" extends="xPDOSimpleObject">
+        <field key="resource_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="is_active" dbtype="tinyint" precision="1" phptype="boolean" null="false" default="1" />
+        <field key="is_sequential" dbtype="tinyint" precision="1" phptype="boolean" null="false" default="1" />
+        <field key="source_presentation" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+        <field key="presentation_pdf" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+        <field key="slides_dir" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+        <field key="presentation_status" dbtype="varchar" precision="32" phptype="string" null="false" default="none" />
+        <field key="createdon" dbtype="datetime" phptype="datetime" null="true" />
+        <field key="updatedon" dbtype="datetime" phptype="datetime" null="true" />
+
+        <index alias="resource_id" name="resource_id" primary="false" unique="true" type="BTREE">
+            <column key="resource_id" collation="A" null="false" />
+        </index>
+
+        <aggregate alias="Resource" class="modResource" local="resource_id" foreign="id" cardinality="one" owner="foreign" />
+        <composite alias="Modules" class="TrainingModule" local="id" foreign="course_id" cardinality="many" owner="local" />
+        <composite alias="Accesses" class="TrainingCourseAccess" local="id" foreign="course_id" cardinality="many" owner="local" />
+        <composite alias="UserCourses" class="TrainingUserCourse" local="id" foreign="course_id" cardinality="many" owner="local" />
+        <composite alias="TestLinks" class="TrainingTestLink" local="id" foreign="course_id" cardinality="many" owner="local" />
+    </object>
+
+    <object class="TrainingModule" table="training_modules" extends="xPDOSimpleObject">
+        <field key="course_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="resource_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="is_active" dbtype="tinyint" precision="1" phptype="boolean" null="false" default="1" />
+        <field key="is_required" dbtype="tinyint" precision="1" phptype="boolean" null="false" default="1" />
+        <field key="duration_seconds" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="video_status" dbtype="varchar" precision="32" phptype="string" null="false" default="none" />
+        <field key="presentation_status" dbtype="varchar" precision="32" phptype="string" null="false" default="none" />
+        <field key="source_video" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+        <field key="source_presentation" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+        <field key="presentation_pdf" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+        <field key="slides_dir" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+        <field key="createdon" dbtype="datetime" phptype="datetime" null="true" />
+        <field key="updatedon" dbtype="datetime" phptype="datetime" null="true" />
+
+        <index alias="course_id" name="course_id" primary="false" unique="false" type="BTREE">
+            <column key="course_id" collation="A" null="false" />
+        </index>
+        <index alias="resource_id" name="resource_id" primary="false" unique="true" type="BTREE">
+            <column key="resource_id" collation="A" null="false" />
+        </index>
+
+        <aggregate alias="Course" class="TrainingCourse" local="course_id" foreign="id" cardinality="one" owner="foreign" />
+        <aggregate alias="Resource" class="modResource" local="resource_id" foreign="id" cardinality="one" owner="foreign" />
+
+        <composite alias="Lessons" class="TrainingModuleLesson" local="id" foreign="module_id" cardinality="many" owner="local" />
+        <composite alias="Videos" class="TrainingModuleVideo" local="id" foreign="module_id" cardinality="many" owner="local" />
+        <composite alias="Slides" class="TrainingModuleSlide" local="id" foreign="module_id" cardinality="many" owner="local" />
+        <composite alias="Progresses" class="TrainingUserModuleProgress" local="id" foreign="module_id" cardinality="many" owner="local" />
+        <composite alias="TestLinks" class="TrainingTestLink" local="id" foreign="module_id" cardinality="many" owner="local" />
+    </object>
+
+    <object class="TrainingModuleLesson" table="training_module_lessons" extends="xPDOSimpleObject">
+        <field key="module_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="title" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+        <field key="description" dbtype="text" phptype="string" null="true" />
+        <field key="sort_order" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="preview_image" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+        <field key="source_video" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+        <field key="duration_seconds" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="video_status" dbtype="varchar" precision="32" phptype="string" null="false" default="none" />
+        <field key="source_presentation" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+        <field key="presentation_pdf" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+        <field key="slides_dir" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+        <field key="presentation_status" dbtype="varchar" precision="32" phptype="string" null="false" default="none" />
+        <field key="is_default" dbtype="tinyint" precision="1" phptype="boolean" null="false" default="0" />
+        <field key="is_active" dbtype="tinyint" precision="1" phptype="boolean" null="false" default="1" />
+        <field key="createdon" dbtype="datetime" phptype="datetime" null="true" />
+        <field key="updatedon" dbtype="datetime" phptype="datetime" null="true" />
+
+        <index alias="module_id" name="module_id" primary="false" unique="false" type="BTREE">
+            <column key="module_id" collation="A" null="false" />
+        </index>
+        <index alias="module_sort" name="module_sort" primary="false" unique="false" type="BTREE">
+            <column key="module_id" collation="A" null="false" />
+            <column key="sort_order" collation="A" null="false" />
+        </index>
+
+        <aggregate alias="Module" class="TrainingModule" local="module_id" foreign="id" cardinality="one" owner="foreign" />
+
+        <composite alias="Videos" class="TrainingModuleVideo" local="id" foreign="lesson_id" cardinality="many" owner="local" />
+        <composite alias="Slides" class="TrainingModuleSlide" local="id" foreign="lesson_id" cardinality="many" owner="local" />
+    </object>
+
+    <object class="TrainingModuleVideo" table="training_module_videos" extends="xPDOSimpleObject">
+        <field key="module_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="lesson_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="quality" dbtype="varchar" precision="16" phptype="string" null="false" default="" />
+        <field key="mime" dbtype="varchar" precision="64" phptype="string" null="false" default="video/mp4" />
+        <field key="file_path" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+        <field key="width" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="height" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="bitrate" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="filesize" dbtype="bigint" precision="20" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="is_default" dbtype="tinyint" precision="1" phptype="boolean" null="false" default="0" />
+        <field key="is_active" dbtype="tinyint" precision="1" phptype="boolean" null="false" default="1" />
+
+        <index alias="module_id" name="module_id" primary="false" unique="false" type="BTREE">
+            <column key="module_id" collation="A" null="false" />
+        </index>
+        <index alias="lesson_id" name="lesson_id" primary="false" unique="false" type="BTREE">
+            <column key="lesson_id" collation="A" null="false" />
+        </index>
+        <index alias="lesson_quality" name="lesson_quality" primary="false" unique="true" type="BTREE">
+            <column key="lesson_id" collation="A" null="false" />
+            <column key="quality" collation="A" null="false" />
+        </index>
+
+        <aggregate alias="Module" class="TrainingModule" local="module_id" foreign="id" cardinality="one" owner="foreign" />
+        <aggregate alias="Lesson" class="TrainingModuleLesson" local="lesson_id" foreign="id" cardinality="one" owner="foreign" />
+    </object>
+
+    <object class="TrainingModuleSlide" table="training_module_slides" extends="xPDOSimpleObject">
+        <field key="module_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="lesson_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="slide_no" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="image" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+        <field key="timecode_ms" dbtype="bigint" precision="20" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="is_active" dbtype="tinyint" precision="1" phptype="boolean" null="false" default="1" />
+
+        <index alias="module_id" name="module_id" primary="false" unique="false" type="BTREE">
+            <column key="module_id" collation="A" null="false" />
+        </index>
+        <index alias="lesson_id" name="lesson_id" primary="false" unique="false" type="BTREE">
+            <column key="lesson_id" collation="A" null="false" />
+        </index>
+        <index alias="lesson_slide" name="lesson_slide" primary="false" unique="true" type="BTREE">
+            <column key="lesson_id" collation="A" null="false" />
+            <column key="slide_no" collation="A" null="false" />
+        </index>
+        <index alias="lesson_timecode" name="lesson_timecode" primary="false" unique="false" type="BTREE">
+            <column key="lesson_id" collation="A" null="false" />
+            <column key="timecode_ms" collation="A" null="false" />
+        </index>
+
+        <aggregate alias="Module" class="TrainingModule" local="module_id" foreign="id" cardinality="one" owner="foreign" />
+        <aggregate alias="Lesson" class="TrainingModuleLesson" local="lesson_id" foreign="id" cardinality="one" owner="foreign" />
+    </object>
+
+    <object class="TrainingCourseAccess" table="training_course_access" extends="xPDOSimpleObject">
+        <field key="course_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="principal_type" dbtype="varchar" precision="16" phptype="string" null="false" default="user" />
+        <field key="principal_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="access_role" dbtype="varchar" precision="16" phptype="string" null="false" default="employee" />
+        <field key="assigned_by" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="active_from" dbtype="datetime" phptype="datetime" null="true" />
+        <field key="active_to" dbtype="datetime" phptype="datetime" null="true" />
+        <field key="is_active" dbtype="tinyint" precision="1" phptype="boolean" null="false" default="1" />
+        <field key="createdon" dbtype="datetime" phptype="datetime" null="true" />
+
+        <index alias="course_id" name="course_id" primary="false" unique="false" type="BTREE">
+            <column key="course_id" collation="A" null="false" />
+        </index>
+        <index alias="principal" name="principal" primary="false" unique="false" type="BTREE">
+            <column key="principal_type" collation="A" null="false" />
+            <column key="principal_id" collation="A" null="false" />
+        </index>
+        <index alias="course_principal" name="course_principal" primary="false" unique="true" type="BTREE">
+            <column key="course_id" collation="A" null="false" />
+            <column key="principal_type" collation="A" null="false" />
+            <column key="principal_id" collation="A" null="false" />
+        </index>
+
+        <aggregate alias="Course" class="TrainingCourse" local="course_id" foreign="id" cardinality="one" owner="foreign" />
+        <aggregate alias="AssignedByUser" class="modUser" local="assigned_by" foreign="id" cardinality="one" owner="foreign" />
+    </object>
+
+    <object class="TrainingUserCourse" table="training_user_courses" extends="xPDOSimpleObject">
+        <field key="course_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="user_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="access_role" dbtype="varchar" precision="16" phptype="string" null="false" default="employee" />
+        <field key="status" dbtype="varchar" precision="32" phptype="string" null="false" default="assigned" />
+        <field key="current_module_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="progress_percent" dbtype="decimal" precision="5,2" phptype="float" null="false" default="0.00" />
+        <field key="completed_modules" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="total_modules" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="startedon" dbtype="datetime" phptype="datetime" null="true" />
+        <field key="completedon" dbtype="datetime" phptype="datetime" null="true" />
+        <field key="last_activity" dbtype="datetime" phptype="datetime" null="true" />
+
+        <index alias="course_user" name="course_user" primary="false" unique="true" type="BTREE">
+            <column key="course_id" collation="A" null="false" />
+            <column key="user_id" collation="A" null="false" />
+        </index>
+        <index alias="user_id" name="user_id" primary="false" unique="false" type="BTREE">
+            <column key="user_id" collation="A" null="false" />
+        </index>
+
+        <aggregate alias="Course" class="TrainingCourse" local="course_id" foreign="id" cardinality="one" owner="foreign" />
+        <aggregate alias="User" class="modUser" local="user_id" foreign="id" cardinality="one" owner="foreign" />
+        <aggregate alias="CurrentModule" class="TrainingModule" local="current_module_id" foreign="id" cardinality="one" owner="foreign" />
+    </object>
+
+    <object class="TrainingUserModuleProgress" table="training_user_module_progress" extends="xPDOSimpleObject">
+        <field key="course_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="module_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="user_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="status" dbtype="varchar" precision="32" phptype="string" null="false" default="not_started" />
+        <field key="current_time" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="max_time" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="watched_seconds" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="duration_seconds" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="progress_percent" dbtype="decimal" precision="5,2" phptype="float" null="false" default="0.00" />
+        <field key="completed" dbtype="tinyint" precision="1" phptype="boolean" null="false" default="0" />
+        <field key="completedon" dbtype="datetime" phptype="datetime" null="true" />
+        <field key="last_watch" dbtype="datetime" phptype="datetime" null="true" />
+
+        <index alias="module_user" name="module_user" primary="false" unique="true" type="BTREE">
+            <column key="module_id" collation="A" null="false" />
+            <column key="user_id" collation="A" null="false" />
+        </index>
+        <index alias="course_user" name="course_user" primary="false" unique="false" type="BTREE">
+            <column key="course_id" collation="A" null="false" />
+            <column key="user_id" collation="A" null="false" />
+        </index>
+
+        <aggregate alias="Course" class="TrainingCourse" local="course_id" foreign="id" cardinality="one" owner="foreign" />
+        <aggregate alias="Module" class="TrainingModule" local="module_id" foreign="id" cardinality="one" owner="foreign" />
+        <aggregate alias="User" class="modUser" local="user_id" foreign="id" cardinality="one" owner="foreign" />
+    </object>
+
+    <object class="TrainingTestLink" table="training_test_links" extends="xPDOSimpleObject">
+        <field key="course_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="module_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="usertest_test_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="link_type" dbtype="varchar" precision="32" phptype="string" null="false" default="module" />
+        <field key="sort_order" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="is_required" dbtype="tinyint" precision="1" phptype="boolean" null="false" default="1" />
+        <field key="max_attempts" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="min_pass_percent" dbtype="decimal" precision="5,2" phptype="float" null="false" default="0.00" />
+        <field key="block_next_module_until_passed" dbtype="tinyint" precision="1" phptype="boolean" null="false" default="0" />
+        <field key="createdon" dbtype="datetime" phptype="datetime" null="true" />
+
+        <index alias="course_id" name="course_id" primary="false" unique="false" type="BTREE">
+            <column key="course_id" collation="A" null="false" />
+        </index>
+        <index alias="module_id" name="module_id" primary="false" unique="false" type="BTREE">
+            <column key="module_id" collation="A" null="false" />
+        </index>
+        <index alias="usertest_test_id" name="usertest_test_id" primary="false" unique="false" type="BTREE">
+            <column key="usertest_test_id" collation="A" null="false" />
+        </index>
+        <index alias="unique_link" name="unique_link" primary="false" unique="true" type="BTREE">
+            <column key="course_id" collation="A" null="false" />
+            <column key="module_id" collation="A" null="false" />
+            <column key="usertest_test_id" collation="A" null="false" />
+            <column key="link_type" collation="A" null="false" />
+        </index>
+
+        <aggregate alias="Course" class="TrainingCourse" local="course_id" foreign="id" cardinality="one" owner="foreign" />
+        <aggregate alias="Module" class="TrainingModule" local="module_id" foreign="id" cardinality="one" owner="foreign" />
+    </object>
+
+    <object class="TrainingUserTestStatus" table="training_user_test_status" extends="xPDOSimpleObject">
+        <field key="course_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="module_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="usertest_test_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="user_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="last_result_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="attempts" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="passed" dbtype="tinyint" precision="1" phptype="boolean" null="false" default="0" />
+        <field key="status" dbtype="varchar" precision="32" phptype="string" null="false" default="not_started" />
+        <field key="last_score" dbtype="decimal" precision="7,2" phptype="float" null="false" default="0.00" />
+        <field key="last_passedon" dbtype="datetime" phptype="datetime" null="true" />
+        <field key="updatedon" dbtype="datetime" phptype="datetime" null="true" />
+
+        <index alias="test_user" name="test_user" primary="false" unique="true" type="BTREE">
+            <column key="usertest_test_id" collation="A" null="false" />
+            <column key="user_id" collation="A" null="false" />
+            <column key="module_id" collation="A" null="false" />
+        </index>
+        <index alias="course_user" name="course_user" primary="false" unique="false" type="BTREE">
+            <column key="course_id" collation="A" null="false" />
+            <column key="user_id" collation="A" null="false" />
+        </index>
+
+        <aggregate alias="Course" class="TrainingCourse" local="course_id" foreign="id" cardinality="one" owner="foreign" />
+        <aggregate alias="Module" class="TrainingModule" local="module_id" foreign="id" cardinality="one" owner="foreign" />
+        <aggregate alias="User" class="modUser" local="user_id" foreign="id" cardinality="one" owner="foreign" />
+    </object>
+
+</model>

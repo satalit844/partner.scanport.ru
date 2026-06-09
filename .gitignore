@@ -1,0 +1,11 @@
+_db/
+_resources/
+assets/components/training/practices/
+assets/components/training/uploads/
+assets/components/training/certificates/
+assets/components/training/courses/
+core/cache/
+*.log
+*.sql.gz
+*.bak
+.DS_Store

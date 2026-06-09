@@ -1,0 +1,254 @@
+[
+    {
+        "table": "modx_partnerstraining_certificate_templates",
+        "rows": 1,
+        "schema_exported": true,
+        "data_exported": false,
+        "reason": "sensitive table/columns"
+    },
+    {
+        "table": "modx_partnerstraining_course_access",
+        "rows": 5,
+        "schema_exported": true,
+        "data_exported": false,
+        "reason": "sensitive table/columns"
+    },
+    {
+        "table": "modx_partnerstraining_courses",
+        "rows": 2,
+        "schema_exported": true,
+        "data_exported": true,
+        "reason": "safe reference table"
+    },
+    {
+        "table": "modx_partnerstraining_lesson_videos",
+        "rows": 452,
+        "schema_exported": true,
+        "data_exported": false,
+        "reason": "sensitive table/columns"
+    },
+    {
+        "table": "modx_partnerstraining_module_lessons",
+        "rows": 27,
+        "schema_exported": true,
+        "data_exported": false,
+        "reason": "sensitive table/columns"
+    },
+    {
+        "table": "modx_partnerstraining_module_slides",
+        "rows": 471,
+        "schema_exported": true,
+        "data_exported": true,
+        "reason": "safe reference table"
+    },
+    {
+        "table": "modx_partnerstraining_module_videos",
+        "rows": 1356,
+        "schema_exported": true,
+        "data_exported": true,
+        "reason": "safe reference table"
+    },
+    {
+        "table": "modx_partnerstraining_modules",
+        "rows": 6,
+        "schema_exported": true,
+        "data_exported": true,
+        "reason": "safe reference table"
+    },
+    {
+        "table": "modx_partnerstraining_practice_attempts",
+        "rows": 12,
+        "schema_exported": true,
+        "data_exported": false,
+        "reason": "sensitive table/columns"
+    },
+    {
+        "table": "modx_partnerstraining_practice_files",
+        "rows": 11,
+        "schema_exported": true,
+        "data_exported": false,
+        "reason": "sensitive table/columns"
+    },
+    {
+        "table": "modx_partnerstraining_practice_messages",
+        "rows": 38,
+        "schema_exported": true,
+        "data_exported": false,
+        "reason": "sensitive table/columns"
+    },
+    {
+        "table": "modx_partnerstraining_practices",
+        "rows": 8,
+        "schema_exported": true,
+        "data_exported": false,
+        "reason": "sensitive table/columns"
+    },
+    {
+        "table": "modx_partnerstraining_test_links",
+        "rows": 13,
+        "schema_exported": true,
+        "data_exported": true,
+        "reason": "safe reference table"
+    },
+    {
+        "table": "modx_partnerstraining_user_certificates",
+        "rows": 1,
+        "schema_exported": true,
+        "data_exported": false,
+        "reason": "sensitive table/columns"
+    },
+    {
+        "table": "modx_partnerstraining_user_courses",
+        "rows": 8,
+        "schema_exported": true,
+        "data_exported": false,
+        "reason": "sensitive table/columns"
+    },
+    {
+        "table": "modx_partnerstraining_user_lesson_progress",
+        "rows": 48,
+        "schema_exported": true,
+        "data_exported": false,
+        "reason": "sensitive table/columns"
+    },
+    {
+        "table": "modx_partnerstraining_user_lesson_video_progress",
+        "rows": 682,
+        "schema_exported": true,
+        "data_exported": false,
+        "reason": "sensitive table/columns"
+    },
+    {
+        "table": "modx_partnerstraining_user_manager_link",
+        "rows": 5,
+        "schema_exported": true,
+        "data_exported": false,
+        "reason": "sensitive table/columns"
+    },
+    {
+        "table": "modx_partnerstraining_user_module_progress",
+        "rows": 24,
+        "schema_exported": true,
+        "data_exported": false,
+        "reason": "sensitive table/columns"
+    },
+    {
+        "table": "modx_partnerstraining_user_test_status",
+        "rows": 8512,
+        "schema_exported": true,
+        "data_exported": false,
+        "reason": "sensitive table/columns"
+    },
+    {
+        "table": "modx_partnerstraining_usertest_bad_results_backup",
+        "rows": 1,
+        "schema_exported": true,
+        "data_exported": false,
+        "reason": "sensitive table/columns"
+    },
+    {
+        "table": "modx_partnersusertest_answers",
+        "rows": 487,
+        "schema_exported": true,
+        "data_exported": false,
+        "reason": "sensitive table/columns"
+    },
+    {
+        "table": "modx_partnersusertest_categorys",
+        "rows": 0,
+        "schema_exported": true,
+        "data_exported": false,
+        "reason": "sensitive table/columns"
+    },
+    {
+        "table": "modx_partnersusertest_groups",
+        "rows": 1,
+        "schema_exported": true,
+        "data_exported": false,
+        "reason": "sensitive table/columns"
+    },
+    {
+        "table": "modx_partnersusertest_groups_link",
+        "rows": 1,
+        "schema_exported": true,
+        "data_exported": false,
+        "reason": "sensitive table/columns"
+    },
+    {
+        "table": "modx_partnersusertest_questions",
+        "rows": 119,
+        "schema_exported": true,
+        "data_exported": false,
+        "reason": "sensitive table/columns"
+    },
+    {
+        "table": "modx_partnersusertest_result_categorys",
+        "rows": 0,
+        "schema_exported": true,
+        "data_exported": false,
+        "reason": "sensitive table/columns"
+    },
+    {
+        "table": "modx_partnersusertest_result_invites",
+        "rows": 0,
+        "schema_exported": true,
+        "data_exported": false,
+        "reason": "sensitive table/columns"
+    },
+    {
+        "table": "modx_partnersusertest_result_status",
+        "rows": 4,
+        "schema_exported": true,
+        "data_exported": false,
+        "reason": "sensitive table/columns"
+    },
+    {
+        "table": "modx_partnersusertest_resultanswers",
+        "rows": 212,
+        "schema_exported": true,
+        "data_exported": false,
+        "reason": "sensitive table/columns"
+    },
+    {
+        "table": "modx_partnersusertest_results",
+        "rows": 31,
+        "schema_exported": true,
+        "data_exported": false,
+        "reason": "sensitive table/columns"
+    },
+    {
+        "table": "modx_partnersusertest_test_question_link",
+        "rows": 112,
+        "schema_exported": true,
+        "data_exported": false,
+        "reason": "sensitive table/columns"
+    },
+    {
+        "table": "modx_partnersusertest_test_variant_link",
+        "rows": 2,
+        "schema_exported": true,
+        "data_exported": false,
+        "reason": "sensitive table/columns"
+    },
+    {
+        "table": "modx_partnersusertest_tests",
+        "rows": 8,
+        "schema_exported": true,
+        "data_exported": false,
+        "reason": "sensitive table/columns"
+    },
+    {
+        "table": "modx_partnersusertest_variant_sets",
+        "rows": 2,
+        "schema_exported": true,
+        "data_exported": false,
+        "reason": "sensitive table/columns"
+    },
+    {
+        "table": "modx_partnersusertest_variants",
+        "rows": 2,
+        "schema_exported": true,
+        "data_exported": false,
+        "reason": "sensitive table/columns"
+    }
+]

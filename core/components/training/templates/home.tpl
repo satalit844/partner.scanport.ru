@@ -1,0 +1,1 @@
+<div id="training-panel-home-div"></div>

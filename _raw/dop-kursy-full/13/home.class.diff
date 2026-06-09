@@ -1,0 +1,10 @@
+--- training/controllers/home.class.php	2026-03-24 14:59:00.000000000 +0000
++++ training_patch/training/controllers/home.class.php	2026-03-24 15:33:58.234670801 +0000
+@@ -69,6 +69,7 @@
+         $this->addJavascript($assetsUrl . 'widgets/course.panel.js');
+         $this->addJavascript($assetsUrl . 'widgets/course.tabs.js');
+         $this->addJavascript($assetsUrl . 'widgets/module.grid.js');
++        $this->addJavascript($assetsUrl . 'widgets/course.access.grid.js');
+         $this->addJavascript($assetsUrl . 'widgets/module.panel.js');
+         $this->addJavascript($assetsUrl . 'widgets/module.tabs.js');
+         $this->addJavascript($assetsUrl . 'widgets/module.video.grid.js');

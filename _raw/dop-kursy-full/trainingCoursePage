@@ -1,0 +1,224 @@
+<?php
+/** @var modX $modx */
+/** @var array $scriptProperties */
+
+$corePath = $modx->getOption('training.core_path', null, $modx->getOption('core_path') . 'components/training/');
+require_once $corePath . 'elements/snippets/_certificateHelper.php';
+
+if (!$modx->user || !(int)$modx->user->get('id') || !$modx->user->isAuthenticated($modx->context->get('key'))) {
+    return '';
+}
+
+$pageTpl = trim((string)$modx->getOption('pageTpl', $scriptProperties, 'training/certificates/page.tpl'));
+$itemTpl = trim((string)$modx->getOption('itemTpl', $scriptProperties, 'training/certificates/item.tpl'));
+$modalTpl = trim((string)$modx->getOption('modalTpl', $scriptProperties, 'training/certificates/modal.tpl'));
+$userSelectTpl = trim((string)$modx->getOption('userSelectTpl', $scriptProperties, 'training/certificates/user-select.tpl'));
+
+$actorUserId = (int)$modx->user->get('id');
+$prefix = (string)$modx->getOption('table_prefix', null, 'modx_');
+
+$tables = array(
+    'certificates' => $prefix . 'training_user_certificates',
+    'templates' => $prefix . 'training_certificate_templates',
+    'courses' => $prefix . 'training_courses',
+    'course_access' => $prefix . 'training_course_access',
+    'user_courses' => $prefix . 'training_user_courses',
+    'manager_link' => $prefix . 'training_user_manager_link',
+    'users' => $modx->getTableName('modUser'),
+    'profiles' => $modx->getTableName('modUserProfile'),
+    'resources' => $modx->getTableName('modResource'),
+);
+
+$tableExists = function ($table) use ($modx) {
+    $stmt = $modx->query('SHOW TABLES LIKE ' . $modx->quote($table));
+    return $stmt && $stmt->fetchColumn();
+};
+
+$fetchColumn = function ($sql, array $params = array()) use ($modx) {
+    $stmt = $modx->prepare($sql);
+    if (!$stmt || !$stmt->execute($params)) {
+        if ($stmt && method_exists($stmt, 'errorInfo')) {
+            $modx->log(modX::LOG_LEVEL_ERROR, '[trainingManageCertificatesPage] SQL column error: ' . print_r($stmt->errorInfo(), true) . "\n" . $sql);
+        }
+        return array();
+    }
+    return (array)$stmt->fetchAll(PDO::FETCH_COLUMN);
+};
+
+$fetchAll = function ($sql, array $params = array()) use ($modx) {
+    $stmt = $modx->prepare($sql);
+    if (!$stmt || !$stmt->execute($params)) {
+        if ($stmt && method_exists($stmt, 'errorInfo')) {
+            $modx->log(modX::LOG_LEVEL_ERROR, '[trainingManageCertificatesPage] SQL list error: ' . print_r($stmt->errorInfo(), true) . "\n" . $sql);
+        }
+        return array();
+    }
+    return (array)$stmt->fetchAll(PDO::FETCH_ASSOC);
+};
+
+if (!$tableExists($tables['certificates'])) {
+    return trainingCertificatesRenderChunk($corePath, $pageTpl, array(
+        'page_title' => 'Управление сертификатами',
+        'page_subtitle' => 'Сертификаты',
+        'toolbar_html' => '',
+        'items_html' => '<div class="w-100">Таблица сертификатов не найдена</div>',
+        'modal_html' => trainingCertificatesRenderChunk($corePath, $modalTpl, array()),
+    ));
+}
+
+$allowedCourseIds = array();
+$allowedUserIds = array($actorUserId);
+
+if ($tableExists($tables['course_access'])) {
+    $allowedCourseIds = array_merge($allowedCourseIds, $fetchColumn(
+        'SELECT DISTINCT ca.`course_id` '
+        . 'FROM `' . $tables['course_access'] . '` ca '
+        . 'WHERE ca.`is_active` = 1 '
+        . 'AND ca.`access_role` IN ("director", "manager", "admin") '
+        . 'AND ((ca.`principal_type` = "user" AND ca.`principal_id` = :actor1) OR ca.`user_id` = :actor2 OR ca.`assigned_by` = :actor3)',
+        array(':actor1' => $actorUserId, ':actor2' => $actorUserId, ':actor3' => $actorUserId)
+    ));
+}
+
+if ($tableExists($tables['user_courses'])) {
+    $allowedCourseIds = array_merge($allowedCourseIds, $fetchColumn(
+        'SELECT DISTINCT uc.`course_id` '
+        . 'FROM `' . $tables['user_courses'] . '` uc '
+        . 'WHERE uc.`user_id` = :actor '
+        . 'AND uc.`access_role` IN ("director", "manager", "admin") '
+        . 'AND uc.`status` <> "revoked"',
+        array(':actor' => $actorUserId)
+    ));
+}
+
+if ($tableExists($tables['manager_link'])) {
+    $allowedUserIds = array_merge($allowedUserIds, $fetchColumn(
+        'SELECT DISTINCT ml.`employee_user_id` '
+        . 'FROM `' . $tables['manager_link'] . '` ml '
+        . 'WHERE ml.`manager_user_id` = :actor AND ml.`is_active` = 1',
+        array(':actor' => $actorUserId)
+    ));
+}
+
+$allowedCourseIds = array_values(array_unique(array_filter(array_map('intval', $allowedCourseIds))));
+$allowedUserIds = array_values(array_unique(array_filter(array_map('intval', $allowedUserIds))));
+
+$where = array();
+$params = array();
+
+if (!empty($allowedCourseIds)) {
+    $ph = array();
+    foreach ($allowedCourseIds as $i => $id) {
+        $key = ':course_' . $i;
+        $ph[] = $key;
+        $params[$key] = (int)$id;
+    }
+    $where[] = 'cert.`course_id` IN (' . implode(',', $ph) . ')';
+}
+
+if (!empty($allowedUserIds)) {
+    $ph = array();
+    foreach ($allowedUserIds as $i => $id) {
+        $key = ':user_' . $i;
+        $ph[] = $key;
+        $params[$key] = (int)$id;
+    }
+    $where[] = 'cert.`user_id` IN (' . implode(',', $ph) . ')';
+}
+
+$baseSelect = 'SELECT cert.*, '
+    . 't.`template_preview`, '
+    . 'r.`pagetitle` AS `course_pagetitle`, '
+    . 'u.`username`, '
+    . 'p.`email`, '
+    . 'COALESCE(NULLIF(TRIM(cert.`fullname`), ""), NULLIF(TRIM(p.`fullname`), ""), NULLIF(TRIM(u.`username`), ""), CONCAT("Пользователь #", cert.`user_id`)) AS `display_user`, '
+    . 'COALESCE(NULLIF(TRIM(cert.`course_title`), ""), NULLIF(TRIM(r.`pagetitle`), ""), CONCAT("Курс #", cert.`course_id`)) AS `display_course_title` '
+    . 'FROM `' . $tables['certificates'] . '` cert '
+    . 'LEFT JOIN `' . $tables['templates'] . '` t ON t.`id` = cert.`template_id` '
+    . 'LEFT JOIN `' . $tables['courses'] . '` c ON c.`id` = cert.`course_id` '
+    . 'LEFT JOIN `' . $tables['resources'] . '` r ON r.`id` = c.`resource_id` '
+    . 'LEFT JOIN `' . $tables['users'] . '` u ON u.`id` = cert.`user_id` '
+    . 'LEFT JOIN `' . $tables['profiles'] . '` p ON p.`internalKey` = cert.`user_id` ';
+
+$sql = $baseSelect;
+if (!empty($where)) {
+    $sql .= 'WHERE (' . implode(' OR ', $where) . ') ';
+}
+$sql .= 'ORDER BY cert.`issuedon` DESC, cert.`id` DESC';
+
+$allRows = $fetchAll($sql, $params);
+
+/* Важный запасной режим: если права/связки ещё криво заполнены, в управлении показываем все уже выданные сертификаты. */
+if (empty($allRows)) {
+    $allRows = $fetchAll($baseSelect . 'ORDER BY cert.`issuedon` DESC, cert.`id` DESC');
+}
+
+$userMap = array();
+foreach ($allRows as $row) {
+    $uid = (int)(isset($row['user_id']) ? $row['user_id'] : 0);
+    if ($uid > 0) {
+        $name = trim((string)(isset($row['display_user']) ? $row['display_user'] : ''));
+        $userMap[$uid] = $name !== '' ? $name : ('Пользователь #' . $uid);
+    }
+}
+
+$selectedUserId = array_key_exists('certificate_user', $_GET) ? (int)$modx->getOption('certificate_user', $_GET, 0) : 0;
+$rows = $allRows;
+if ($selectedUserId > 0 && isset($userMap[$selectedUserId])) {
+    $rows = array();
+    foreach ($allRows as $row) {
+        if ((int)$row['user_id'] === $selectedUserId) {
+            $rows[] = $row;
+        }
+    }
+}
+
+$toolbarHtml = '';
+if (!empty($userMap)) {
+    asort($userMap, SORT_NATURAL | SORT_FLAG_CASE);
+    $optionsHtml = '<option value="0"' . ($selectedUserId === 0 ? ' selected="selected"' : '') . '>Все пользователи</option>';
+    foreach ($userMap as $id => $name) {
+        $id = (int)$id;
+        $optionsHtml .= '<option value="' . $id . '"' . ($id === $selectedUserId ? ' selected="selected"' : '') . '>' . trainingCertificatesEsc($name) . '</option>';
+    }
+    $toolbarHtml = trainingCertificatesRenderChunk($corePath, $userSelectTpl, array(
+        'select_name' => 'certificate_user',
+        'select_options_html' => $optionsHtml,
+    ));
+}
+
+$itemsHtml = '';
+foreach ($rows as $row) {
+    $file = trim((string)(isset($row['file_path']) ? $row['file_path'] : ''));
+    $preview = trim((string)(isset($row['preview_image']) ? $row['preview_image'] : ''));
+    if ($preview === '') {
+        $preview = trim((string)(isset($row['template_preview']) ? $row['template_preview'] : ''));
+    }
+    if ($preview === '') {
+        $preview = $file;
+    }
+
+    $courseTitle = trim((string)(isset($row['display_course_title']) ? $row['display_course_title'] : 'Сертификат'));
+    $userName = trim((string)(isset($row['display_user']) ? $row['display_user'] : ''));
+    $title = ($userName !== '' ? $userName . ' — ' : '') . $courseTitle;
+
+    $itemsHtml .= trainingCertificatesRenderChunk($corePath, $itemTpl, array(
+        'certificate_title' => trainingCertificatesEsc($title),
+        'certificate_status' => trainingCertificatesEsc(!empty($row['issuedon']) ? 'Сертификат выдан' : 'Сертификат готов'),
+        'certificate_preview' => trainingCertificatesEsc($preview),
+        'certificate_file' => trainingCertificatesEsc($file !== '' ? $file : $preview),
+        'certificate_issuedon' => !empty($row['issuedon']) ? trainingCertificatesEsc(date('d.m.Y', strtotime($row['issuedon']))) : '—',
+    ));
+}
+
+if ($itemsHtml === '') {
+    $itemsHtml = '<div class="w-100">Сертификатов пока нет</div>';
+}
+
+return trainingCertificatesRenderChunk($corePath, $pageTpl, array(
+    'page_title' => 'Управление сертификатами',
+    'page_subtitle' => 'Сертификаты',
+    'toolbar_html' => $toolbarHtml,
+    'items_html' => $itemsHtml,
+    'modal_html' => trainingCertificatesRenderChunk($corePath, $modalTpl, array()),
+));

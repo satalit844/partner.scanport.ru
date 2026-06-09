@@ -1,0 +1,63 @@
+<?php
+/** @var modX $modx */
+/** @var array $scriptProperties */
+
+$corePath = $modx->getOption('training.core_path', null, $modx->getOption('core_path') . 'components/training/');
+require_once $corePath . 'elements/snippets/_certificateHelper.php';
+
+if (!$modx->user || !(int)$modx->user->get('id') || !$modx->user->isAuthenticated($modx->context->get('key'))) {
+    return '';
+}
+
+$pageTpl = trim((string)$modx->getOption('pageTpl', $scriptProperties, 'training/certificates/page.tpl'));
+$itemTpl = trim((string)$modx->getOption('itemTpl', $scriptProperties, 'training/certificates/item.tpl'));
+$modalTpl = trim((string)$modx->getOption('modalTpl', $scriptProperties, 'training/certificates/modal.tpl'));
+$userSelectTpl = trim((string)$modx->getOption('userSelectTpl', $scriptProperties, 'training/certificates/user-select.tpl'));
+
+$actorUserId = (int)$modx->user->get('id');
+$service = new TrainingCertificateService($modx, new Training($modx));
+$users = $service->getManageableUsers($actorUserId, true);
+$selectedUserId = (int)$modx->getOption('certificate_user', $_GET, $actorUserId);
+if (!$service->canManageUser($actorUserId, $selectedUserId)) {
+    $selectedUserId = $actorUserId;
+}
+
+$optionsHtml = '';
+foreach ($users as $user) {
+    $id = (int)$user['id'];
+    $optionsHtml .= '<option value="' . $id . '"' . ($id === $selectedUserId ? ' selected="selected"' : '') . '>'
+        . trainingCertificatesEsc($user['display_name']) . '</option>';
+}
+
+$toolbarHtml = '';
+if (count($users) > 1) {
+    $sortValue = trim((string)$modx->getOption('history_sort', $_GET, 'desc'));
+    $toolbarHtml = trainingCertificatesRenderChunk($corePath, $userSelectTpl, array(
+        'select_name' => 'certificate_user',
+        'select_options_html' => $optionsHtml,
+    ));
+}
+
+$service->ensureCertificatesForUser($selectedUserId, false);
+$rows = $service->listUserCertificates($selectedUserId);
+$itemsHtml = '';
+foreach ($rows as $row) {
+    $itemsHtml .= trainingCertificatesRenderChunk($corePath, $itemTpl, array(
+        'certificate_title' => trainingCertificatesEsc($row['course_title'] ?: $row['course_pagetitle']),
+        'certificate_status' => trainingCertificatesEsc(!empty($row['issuedon']) ? 'Сертификат выдан' : 'Сертификат готов'),
+        'certificate_preview' => trainingCertificatesEsc($row['preview_image'] ?: $row['template_preview']),
+        'certificate_file' => trainingCertificatesEsc($row['file_path'] ?: $row['preview_image']),
+        'certificate_issuedon' => !empty($row['issuedon']) ? trainingCertificatesEsc(date('d.m.Y', strtotime($row['issuedon']))) : '—',
+    ));
+}
+if ($itemsHtml === '') {
+    $itemsHtml = '<div class="w-100">Сертификатов пока нет</div>';
+}
+
+return trainingCertificatesRenderChunk($corePath, $pageTpl, array(
+    'page_title' => 'Управление сертификатами',
+    'page_subtitle' => 'Сертификаты',
+    'toolbar_html' => $toolbarHtml,
+    'items_html' => $itemsHtml,
+    'modal_html' => trainingCertificatesRenderChunk($corePath, $modalTpl, array()),
+));

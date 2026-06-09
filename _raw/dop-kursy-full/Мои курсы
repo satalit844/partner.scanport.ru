@@ -1,0 +1,21 @@
+<div class="section-block">
+    <div class="d-flex align-items-center justify-content-between mb-4 gap-3">
+        <div class="title-training">{$_modx->resource.pagetitle}</div>
+        <div class="trigger-search d-block d-sm-none">
+            <span class="search-input__ico" aria-hidden="true">
+                <img src="theme/images/training/all-course/search-ico.svg" class="img-svg">
+            </span>
+        </div>
+        <div class="search-block">
+            <form class="search-training" id="all-corses">
+                <label class="search-input">
+                    <span class="search-input__ico" aria-hidden="true">
+                        <img src="theme/images/training/all-course/search-ico.svg" class="img-svg">
+                    </span>
+                    <input type="text" class="search-input__field" placeholder="Поиск">
+                </label>
+            </form>
+        </div>
+    </div>
+    {'!trainingMyCourses' | snippet}
+</div>

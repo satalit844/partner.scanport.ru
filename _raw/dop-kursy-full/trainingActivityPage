@@ -1,0 +1,353 @@
+<?php
+/** @var modX $modx */
+/** @var array $scriptProperties */
+/* TRAINING_STAGE31_FIX_ACTIVITY_MAKEURL_CONTEXT */
+
+$corePath = $modx->getOption(
+    'training.core_path',
+    null,
+    $modx->getOption('core_path') . 'components/training/'
+);
+require_once $corePath . 'model/training/training.class.php';
+
+if (!function_exists('trainingActivityReq2')) {
+    function trainingActivityReq2($name, $default = null)
+    {
+        $name = (string)$name;
+        if ($name === '') {
+            return $default;
+        }
+
+        if (array_key_exists($name, $_GET)) {
+            return $_GET[$name];
+        }
+        if (array_key_exists($name, $_REQUEST)) {
+            return $_REQUEST[$name];
+        }
+
+        $ampName = 'amp;' . $name;
+        if (array_key_exists($ampName, $_GET)) {
+            return $_GET[$ampName];
+        }
+        if (array_key_exists($ampName, $_REQUEST)) {
+            return $_REQUEST[$ampName];
+        }
+
+        $qs = isset($_SERVER['QUERY_STRING']) ? (string)$_SERVER['QUERY_STRING'] : '';
+        if ($qs !== '') {
+            $qs = html_entity_decode($qs, ENT_QUOTES, 'UTF-8');
+            $qs = str_replace('&amp;', '&', $qs);
+            $parsed = array();
+            parse_str($qs, $parsed);
+            if (array_key_exists($name, $parsed)) {
+                return $parsed[$name];
+            }
+            if (array_key_exists($ampName, $parsed)) {
+                return $parsed[$ampName];
+            }
+        }
+
+        return $default;
+    }
+}
+
+if (!function_exists('trainingActivityEsc2')) {
+    function trainingActivityEsc2($value)
+    {
+        return htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8');
+    }
+}
+
+if (!function_exists('trainingActivityUrl2')) {
+    function trainingActivityUrl2(modX $modx, $resourceId, array $params = array())
+    {
+        $resourceId = (int)$resourceId;
+        if ($resourceId <= 0) {
+            return '';
+        }
+
+        /** @var modResource|null $resource */
+        $resource = $modx->getObject('modResource', array('id' => $resourceId));
+        if (!$resource) {
+            return '';
+        }
+
+        $contextKey = (string)$resource->get('context_key');
+        if ($contextKey === '') {
+            $contextKey = 'web';
+        }
+
+        $url = (string)$modx->makeUrl($resourceId, $contextKey, $params);
+        $url = html_entity_decode($url, ENT_QUOTES, 'UTF-8');
+        return str_replace('&amp;', '&', $url);
+    }
+}
+
+if (!function_exists('trainingActivityRenderFile2')) {
+    function trainingActivityRenderFile2($corePath, $relativePath, array $placeholders = array())
+    {
+        $path = rtrim(str_replace('\\', '/', (string)$corePath), '/') . '/elements/chunks/' . ltrim($relativePath, '/');
+        if (!is_file($path)) {
+            return '';
+        }
+
+        $content = (string)file_get_contents($path);
+        if ($content === '') {
+            return '';
+        }
+
+        $replace = array();
+        foreach ($placeholders as $key => $value) {
+            if (is_array($value) || is_object($value)) {
+                $value = '';
+            }
+            $replace['{$' . $key . '}'] = (string)$value;
+        }
+
+        return strtr($content, $replace);
+    }
+}
+
+if (!function_exists('trainingActivityError2')) {
+    function trainingActivityError2($corePath, $title, $message, $backUrl = '')
+    {
+        return trainingActivityRenderFile2($corePath, 'training/activity/error.tpl', array(
+            'title' => trainingActivityEsc2($title),
+            'message' => trainingActivityEsc2($message),
+            'back_url' => trainingActivityEsc2($backUrl),
+            'back_button_html' => $backUrl !== ''
+                ? '<a href="' . trainingActivityEsc2($backUrl) . '" class="btn btn-test col-auto text-decoration-none"><span>Назад к курсу</span><img src="theme/images/training/tests/arrow-rotate-ico.svg" class="img-svg d-none d-sm-block"></a>'
+                : '',
+        ));
+    }
+}
+
+$resourceId = (int)$modx->getOption('resource_id', $scriptProperties, $modx->resource ? $modx->resource->get('id') : 0);
+if ($resourceId <= 0) {
+    return '';
+}
+
+if (!$modx->user || !(int)$modx->user->get('id') || !$modx->user->isAuthenticated($modx->context->get('key'))) {
+    return '';
+}
+
+$activityId = (int)trainingActivityReq2('activity', 0);
+$backResourceId = (int)trainingActivityReq2('back', 0);
+$screen = trim((string)trainingActivityReq2('screen', ''));
+$step = trim((string)trainingActivityReq2('step', ''));
+$resultId = (int)trainingActivityReq2('result_id', 0);
+$reset = trainingActivityReq2('reset', null);
+$backUrl = $backResourceId > 0 ? trainingActivityUrl2($modx, $backResourceId) : '';
+
+if ($activityId <= 0) {
+    return trainingActivityError2($corePath, 'Активность не найдена', 'Не передан параметр activity.', $backUrl);
+}
+
+$training = new Training($modx);
+$activity = $modx->getObject('TrainingTestLink', array('id' => $activityId));
+if (!$activity) {
+    return trainingActivityError2($corePath, 'Активность не найдена', 'Не удалось найти запись активности.', $backUrl);
+}
+
+$courseId = (int)$activity->get('course_id');
+$moduleId = (int)$activity->get('module_id');
+$testId = (int)$activity->get('usertest_test_id');
+$linkType = trim((string)$activity->get('link_type'));
+if ($linkType === '') {
+    $linkType = 'test';
+}
+
+$userId = (int)$modx->user->get('id');
+if (method_exists($training, 'hasUserCourseAccess') && !$training->hasUserCourseAccess($courseId, $userId)) {
+    return trainingActivityError2($corePath, 'Нет доступа', 'У вас нет доступа к этой активности.', $backUrl);
+}
+
+$moduleTitle = 'Модуль';
+if ($moduleId > 0 && ($module = $modx->getObject('TrainingModule', $moduleId))) {
+    $moduleResourceId = (int)$module->get('resource_id');
+    if ($moduleResourceId > 0 && ($moduleResource = $modx->getObject('modResource', $moduleResourceId))) {
+        $moduleTitle = trim((string)$moduleResource->get('pagetitle')) ?: $moduleTitle;
+    }
+}
+
+$usertestCorePath = $modx->getOption('usertest_core_path', null, $modx->getOption('core_path') . 'components/usertest/');
+$usertestModelPath = rtrim($usertestCorePath, '/\\') . '/model/';
+if (!is_dir($usertestModelPath)) {
+    return trainingActivityError2($corePath, 'UserTest не найден', 'Не удалось найти model usertest.', $backUrl);
+}
+$modx->addPackage('usertest', $usertestModelPath);
+$usertest = $modx->getService('usertest', 'UserTest', $usertestModelPath . 'usertest/', array());
+if (!$usertest) {
+    return trainingActivityError2($corePath, 'UserTest не найден', 'Не удалось загрузить сервис тестирования.', $backUrl);
+}
+
+$testTitle = '';
+$testDescription = '';
+$testInstruction = '';
+$testActive = 0;
+$testObj = $modx->getObject('UserTestTests', array('id' => $testId));
+if ($testObj) {
+    $testTitle = trim((string)$testObj->get('name'));
+    $testDescription = trim((string)$testObj->get('description'));
+    $testInstruction = trim((string)$testObj->get('instruction'));
+    $testActive = (int)$testObj->get('active');
+}
+if ($testId <= 0 || !$testObj || $testActive !== 1) {
+    return trainingActivityError2($corePath, 'Тест не найден', 'Не удалось найти активный тест для этой активности.', $backUrl);
+}
+
+$minPassPercent = max(0, min(100, (float)$activity->get('min_pass_percent')));
+$maxAttempts = (int)$activity->get('max_attempts');
+
+$progressService = null;
+$progressClassPath = rtrim($corePath, '/\\') . '/model/training/services/trainingprogress.class.php';
+if (is_file($progressClassPath)) {
+    require_once $progressClassPath;
+    if (class_exists('TrainingProgressService')) {
+        $progressService = new TrainingProgressService($modx, $training);
+    }
+}
+
+$completedAttempts = 0;
+$bestStatus = null;
+
+if ($progressService && method_exists($progressService, 'syncUserTestStatus')) {
+    $bestStatus = $progressService->syncUserTestStatus($courseId, $moduleId, $testId, $userId);
+    if ($bestStatus) {
+        $completedAttempts = (int)$bestStatus->get('attempts');
+    }
+}
+
+if ($completedAttempts <= 0) {
+    $completedAttempts = (int)$modx->getCount('UserTestResults', array(
+        'test_id' => $testId,
+        'user_id' => $userId,
+        'status_id:IN' => array(2, 3),
+    ));
+}
+
+$hasActiveAttempt = (bool)$modx->getCount('UserTestResults', array(
+    'test_id' => $testId,
+    'user_id' => $userId,
+    'status_id' => 1,
+));
+
+$attemptsText = $maxAttempts > 0 ? ($completedAttempts . '/' . $maxAttempts) : ($completedAttempts . '/∞');
+$hasAttemptsLeft = $maxAttempts <= 0 || $completedAttempts < $maxAttempts || $hasActiveAttempt;
+$minPassPercentText = $minPassPercent > 0 ? rtrim(rtrim(number_format($minPassPercent, 2, '.', ''), '0'), '.') : '0';
+
+$instructionUrl = trainingActivityUrl2($modx, $resourceId, array('activity' => $activityId, 'back' => $backResourceId, 'screen' => 'instruction'));
+$testUrl = trainingActivityUrl2($modx, $resourceId, array('activity' => $activityId, 'back' => $backResourceId, 'screen' => 'test', 'step' => 'start'));
+$restartUrl = trainingActivityUrl2($modx, $resourceId, array('activity' => $activityId, 'back' => $backResourceId, 'screen' => 'test', 'step' => 'start', 'reset' => 1));
+$answerUrlTpl = trainingActivityUrl2($modx, $resourceId, array('activity' => $activityId, 'back' => $backResourceId, 'screen' => 'answers', 'result_id' => '__RESULT_ID__'));
+$pageUrl = trainingActivityUrl2($modx, $resourceId, array('activity' => $activityId, 'back' => $backResourceId, 'screen' => 'test'));
+
+$modx->setPlaceholder('training_activity_page_url', $pageUrl);
+$modx->setPlaceholder('training_activity_course_id', $courseId);
+$modx->setPlaceholder('training_activity_module_id', $moduleId);
+$modx->setPlaceholder('training_activity_test_link_id', $activityId);
+$modx->setPlaceholder('training_activity_min_pass_percent', $minPassPercentText);
+$modx->setPlaceholder('training_activity_max_attempts', $maxAttempts);
+$modx->setPlaceholder('training_activity_attempts_text', $attemptsText);
+$modx->setPlaceholder('training_activity_back_url', $backUrl);
+$modx->setPlaceholder('training_activity_restart_url', $restartUrl);
+$modx->setPlaceholder('training_activity_answer_url', $answerUrlTpl);
+
+
+if ($linkType === 'test') {
+    $shouldRunUserTest = false;
+    if ($screen === 'test') {
+        $shouldRunUserTest = true;
+    }
+    if ($step !== '' || $resultId > 0 || $reset !== null || $_SERVER['REQUEST_METHOD'] === 'POST') {
+        $shouldRunUserTest = true;
+    }
+
+
+    if ($screen === 'answers') {
+        if ($resultId <= 0) {
+            return trainingActivityError2($corePath, 'Результат не найден', 'Не передан result_id для просмотра теста.', $backUrl);
+        }
+
+        $_GET['result_id'] = $resultId;
+        $_REQUEST['result_id'] = $resultId;
+
+        $answerTplFile = '@FILE ' . rtrim($usertestCorePath, '/\\') . '/elements/chunks/chunk.tpl.UserTest.ResultAnswer.tpl';
+        $answerHtml = $modx->runSnippet('UserTestAnswerResult', array(
+            'result_id' => $resultId,
+            'tpl' => $answerTplFile,
+        ));
+        if (trim((string)$answerHtml) !== '') {
+            return $answerHtml;
+        }
+
+        $answerSnippetPath = rtrim($usertestCorePath, '/\\') . '/elements/snippets/snippet.UserTestAnswerResult.php';
+        if (is_file($answerSnippetPath)) {
+            $scriptProperties = array(
+                'result_id' => $resultId,
+                'tpl' => $answerTplFile,
+            );
+            return include $answerSnippetPath;
+        }
+
+        return trainingActivityError2($corePath, 'Просмотр теста недоступен', 'Не найден сниппет UserTestAnswerResult.', $backUrl);
+    }
+
+    if ($shouldRunUserTest) {
+        if (!$hasAttemptsLeft && $reset !== null) {
+            return trainingActivityError2($corePath, 'Попытки закончились', 'Доступные попытки прохождения теста закончились.', $backUrl);
+        }
+
+        $_GET['test_id'] = $testId;
+        $_REQUEST['test_id'] = $testId;
+        $_GET['id'] = $testId;
+        $_REQUEST['id'] = $testId;
+        if ($step !== '') {
+            $_GET['step'] = $step;
+            $_REQUEST['step'] = $step;
+        }
+        if ($resultId > 0) {
+            $_GET['result_id'] = $resultId;
+            $_REQUEST['result_id'] = $resultId;
+        }
+        if ($reset !== null) {
+            $_GET['reset'] = 1;
+            $_REQUEST['reset'] = 1;
+        }
+
+        return $modx->runSnippet('UserTest', array(
+            'id' => $testId,
+            'AjaxMode' => 1,
+            'training_activity_id' => $activityId,
+            'training_activity_page_url' => $pageUrl,
+            'training_activity_course_id' => $courseId,
+            'training_activity_module_id' => $moduleId,
+            'training_activity_test_link_id' => $activityId,
+            'training_activity_min_pass_percent' => $minPassPercentText,
+            'training_activity_back_url' => $backUrl,
+            'training_activity_restart_url' => $restartUrl,
+            'training_activity_answer_url' => $answerUrlTpl,
+        ));
+    }
+
+
+    if ($screen === 'instruction') {
+        return trainingActivityRenderFile2($corePath, 'training/activity/instruction.tpl', array(
+            'instruction_html' => $testInstruction !== '' ? $testInstruction : '<p>Перед ответом внимательно прочитайте текст вопроса. Затем выберите правильный вариант ответа. В некоторых вопросах может быть несколько правильных ответов. Нажмите кнопку «Начать тест», чтобы перейти к вопросам.</p>',
+            'min_pass_percent' => $minPassPercentText,
+            'attempts_text' => $attemptsText,
+            'start_url' => trainingActivityEsc2($testUrl),
+            'back_button_html' => $backUrl !== '' ? '<a href="' . trainingActivityEsc2($backUrl) . '" class="btn btn-test col-auto text-decoration-none"><span>Назад к курсу</span><img src="theme/images/training/tests/arrow-rotate-ico.svg" class="img-svg d-none d-sm-block"></a>' : '',
+        ));
+    }
+
+    return trainingActivityRenderFile2($corePath, 'training/activity/start.tpl', array(
+        'title' => trainingActivityEsc2($testTitle !== '' ? $testTitle : 'Тест'),
+        'description_html' => $testDescription !== '' ? $testDescription : '<p>Нажмите «Начать тест», чтобы перейти к инструкции.</p>',
+        'attempts_text' => $attemptsText,
+        'instruction_url' => trainingActivityEsc2($instructionUrl),
+        'back_button_html' => $backUrl !== '' ? '<a href="' . trainingActivityEsc2($backUrl) . '" class="btn btn-test col-auto text-decoration-none"><span>Назад к курсу</span><img src="theme/images/training/tests/arrow-rotate-ico.svg" class="img-svg d-none d-sm-block"></a>' : '',
+    ));
+}
+
+return trainingActivityError2($corePath, 'Практическое задание', 'Интерфейс практического задания будет подключён следующим шагом.', $backUrl);
