@@ -1,0 +1,27 @@
+/* UserTest factcheck v5 — icon size fix
+ * Подключать после usertest-factcheck-v4.css.
+ */
+
+.tests-block .btn-test img,
+.tests-block .btn-test svg,
+#testuser-main .btn-test img,
+#testuser-main .btn-test svg,
+#testuser-main .test-footer .btn-list-test img,
+#testuser-main .test-footer .btn-list-test svg {
+    width: 16px;
+    height: 16px;
+    flex: 0 0 16px;
+}
+
+@media (max-width: 767.98px) {
+    .tests-block .btn-test img,
+    .tests-block .btn-test svg,
+    #testuser-main .btn-test img,
+    #testuser-main .btn-test svg,
+    #testuser-main .test-footer .btn-list-test img,
+    #testuser-main .test-footer .btn-list-test svg {
+        width: 16px;
+        height: 16px;
+        flex: 0 0 16px;
+    }
+}
