@@ -1,0 +1,101 @@
+{extends 'template:01.base'}
+
+{block 'content'}
+    {if !$_modx->isAuthenticated('web')}
+        {$_modx->sendRedirect(12 | url)}
+    {/if}
+    {set $partnetr_lic = '!user_add_fields' | snippet : [
+        'fields' => 'partner_lic'
+    ]}
+    {if !$partnetr_lic}
+        {$_modx->sendRedirect(9 | url)}
+    {/if}
+    <div class="title-block d-flex flex-column gap-4 p-4">
+        <div class="title">{'longtitle' | resource}</div>
+        <form method="post" class="ms2_form form-software d-flex gap-sm-5 flex-wrap">
+            <input type="hidden" name="id" value="">
+            <input type="hidden" name="options[mid]" value="">
+            <input type="hidden" name="options[pagetitle]" value="">
+            
+            {set $rows = json_decode(16 | resource : "select_software", true)}
+            {foreach $rows as $select}
+                <div class="col form-group label-anim mb-5 mb-sm-0">
+                    {if $select@first}
+                        {set $fields = json_decode($select.fields, true)}
+                        <select id="{$select.id_select}" name="{$select.id_select}" class="form-control" required>
+                            <option value=""></option>
+                            {foreach $fields as $option}
+                                <option value="{$option.id_field}" {if $option.parent_field}class="{$option.parent_field}"{/if}>{$option.name_field}</option>
+                            {/foreach}
+                        </select>
+                        <label class="form-label">{$select.name_select}</label>
+                    {else}
+                        <select id="{$select.id_select}" name="{$select.id_select}" class="form-control" required disabled>
+                            <option value=""></option>
+                        </select>
+                        <label class="form-label">{$select.name_select}</label>
+                    {/if}
+                </div>
+            {/foreach}
+            <div class="col col-xl-auto form-group count mb-3 mb-sm-0">
+                <label class="form-label col-input">Кол-во</label>
+                <div class="card-cart-product__count mt-2 pt-1">
+                    <div class="card-product__count d-flex gap-2">
+                        <button type="button" class="countButton input-number__sub" data-add="minus"><img src="theme/images/minus.svg" class="img-svg"></button>
+                        <input name="count" class="input-number__input number-form add_number" type="text" max="50" min="1" value="1">
+                        <button type="button" class="countButton input-number__add" data-add="plus"><img src="theme/images/plus.svg" class="img-svg"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-xl-2 form-group btn-block">
+                <button class="btn btn-red w-100 disabledd" id="add_software" type="submit" name="ms2_action" value="cart/add">
+                Добавить
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="ms2_total_products mt-4 mb-3 mb-xl-5">
+        {'!msCart.custom' | snippet : [
+            'tpl' => 'tpl.msCart.custom',
+        ]}
+    </div>
+    
+    {*set $order = '!pdoResources' | snippet: [
+        'parents' => 0,
+        'class' => 'msOrder',
+        'limit' => 0,
+        'depth' => 2,
+        'sortdir' => 'DESC', 
+        'sortby' => 'id',
+        'tpl' => 'tpl.Order_row',
+        'where' => [
+            'user_id' => $_modx->user.id
+        ]
+    ]}
+    {if $order}
+        <div class="order-history mb-5">
+            <div class="order-history-title mb-4">История заказов</div>
+            <div class="d-flex flex-column list_history_order">
+                {$order}
+            </div>
+            <div class="show-all mt-5">
+                <a href="#">
+                    <span>Показать всю историю заказов</span>
+                </a>
+            </div>
+        </div>
+    {else}
+        <div class="order-history mb-5">
+            <div class="order-history-title mb-4">История заказов</div>
+            <div class="d-flex flex-column">
+                У вас еще небыло заказов
+            </div>
+        </div>
+    {/if*}
+    {'!msOrder.custom' | snippet : [
+        'tpl' => 'tpl.msOrder.custom',
+    ]}
+    {'!msGetOrder' | snippet : [
+        'tpl' => 'tpl.msGetOrder.custom'
+    ]}
+{/block}

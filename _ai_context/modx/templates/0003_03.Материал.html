@@ -1,0 +1,22 @@
+{extends 'template:01.base'}
+
+{block 'content'} 
+    {if !$_modx->isAuthenticated('web')}
+        {$_modx->sendRedirect(12 | url)}
+    {/if}
+    <div class="title mb-3">{$_modx->resource.longtitle ?: $_modx->resource.pagetitle}</div>
+    <div id="pdopage">
+        [[!+page.nav]]
+        <div class="d-flex rows gap-4 flex-wrap">
+            {'!pdoPage' | snippet : [
+                'parents' => $_modx->resource.id,
+                'ajaxMode' => 'scroll',
+                'includeTVs' => 'image,download_check,download,link',
+                'tvPrefix' => '',
+                'limit' => 8,
+                'tpl' => 'tpl.material',
+                'tplPageWrapper' => '@INLINE <div class="pagination" style="display: none;"><ul class="pagination">{$prev}{$pages}{$next}</ul></div>',
+            ]}
+        </div>
+    </div>
+{/block}

@@ -1,0 +1,38 @@
+<form class="ajax_form d-flex flex-wrap" action="{$_modx->resource.id | url}" method="post" id="reg-form">
+    <input type="hidden" name="successMessage" value="{$successMessage}">
+    <input type="hidden" name="validationErrorMessage" value="{$validationErrorMessage}">
+    <div class="form-group col-12 col-md-6 mb-3 pe-md-2">
+        <label class="form-label" for="af_fullname">Ваше имя&nbsp;<span class="red">*</span></label>
+        <input class="form-control" type="text" placeholder="Имя, фамилия" id="af_fullname" name="fullname" value="{$_modx->user.fullname}" readonly>
+        <img src="theme/images/auth/pensil-ico.svg" class="img-svg">
+    </div>
+    <div class="form-group col-12 col-md-6 mb-3 pe-md-2">
+        <label class="form-label" for="af_field_list_company">Компания&nbsp;<span class="red">*</span></label>
+        <input class="form-control" type="text" placeholder="Компания" id="af_field_list_company" name="field_list_company"  value="">
+        <img src="theme/images/auth/pensil-ico.svg" class="img-svg">
+    </div>
+    <div class="form-group col-12 col-md-6 mb-3 pe-md-2 d-flex flex-column">
+        <label class="form-label" for="af_mobilephone">Телефон&nbsp;<span class="red">*</span></label>
+        <input class="form-control form-phone" type="tel" id="af_mobilephone" name="mobilephone"  value="">
+        <img src="theme/images/auth/pensil-ico.svg" class="img-svg">
+    </div>
+    <div class="form-group col-12 col-md-6 mb-3 pe-md-2 d-flex flex-column">
+        <label class="form-label" for="af_email">E-mail&nbsp;<span class="red">*</span></label>
+        <input class="form-control" type="email" placeholder="E-mail" id="af_email" name="email" value="">
+        <img src="theme/images/auth/pensil-ico.svg" class="img-svg">
+    </div>
+    <div class="form-group col-12 col-md-6 mb-3 pe-md-2">
+        <label class="form-label" for="af_password">Пароль&nbsp;<span class="red">*</span></label>
+        <input class="form-control" type="password" placeholder="********" id="af_password" name="password" value="">
+        <img src="theme/images/auth/pensil-ico.svg" class="img-svg">
+    </div>
+    <div class="form-group col-12 col-md-6 mb-3 pe-md-2">
+        <label class="form-label" for="af_re-password">Подтверждение пароля&nbsp;<span class="red">*</span></label>
+        <input class="form-control" type="password" placeholder="********" id="af_re-password" name="re-password" value="">
+        <img src="theme/images/auth/pensil-ico.svg" class="img-svg">
+    </div>
+    
+    <div class="d-flex justify-content-center w-100">
+        <button type="submit" class="btn btn-red">Отправить</button>
+    </div>
+</form>

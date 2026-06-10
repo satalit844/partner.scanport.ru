@@ -1,0 +1,314 @@
+<form action="" method="post" id="office-profile-form" enctype="multipart/form-data">
+    <input type="hidden" name="photo" value="{$photo}"/>
+    <input type="file" name="newphoto" id="profile-photo" class="hidden"/>
+    <div class="profile-block d-flex flex-column flex-md-row p-4">
+        <div class="col-xl-1 position-relative profile-image-block">
+            <div class="profile-image m-md-auto avatar">
+                <img src="{$photo ?: 'theme/images/profile/no-photo.svg'}" alt="{$fullname}" title="{$fullname}"  data-gravatar="/theme/images/profile/no-photo.svg" id="profile-user-photo">
+            </div>
+            <div class="action-image">
+                <div>
+                    <a href="#" class="add_photo">
+                        <label for="profile-photo"></label>
+                    </a>
+                </div>
+                <div>
+                    <a href="#" id="office-user-photo-remove" class="remove_photo"></a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="profile-info">
+                <ul class="nav nav-tabs-profile d-flex flex-column flex-sm-row gap-3 gap-sm-4" id="tabprofile" role="tablist">
+                    <li class="nav-item-link" role="presentation">
+                        <button class="nav-link-profile active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="true">Личные данные</button>
+                    </li>
+                    <li class="nav-item-link" role="presentation">
+                        <button class="nav-link-profile" id="address-tab" data-bs-toggle="tab" data-bs-target="#address-tab-pane" type="button" role="tab" aria-controls="address-tab-pane" aria-selected="false">Данные компании</button>
+                    </li>
+                    <li class="nav-item-link" role="presentation">
+                        <button class="nav-link-profile" id="mailing-tab" data-bs-toggle="tab" data-bs-target="#mailing-tab-pane" type="button" role="tab" aria-controls="mailing-tab-pane" aria-selected="false">Настроить рассылки</button>
+                    </li>
+                    {set $user_field = '!user_add_fields' | snippet : ['fields' => 'api']}
+                    {if $user_field}
+                        <li class="nav-item-link" role="api">
+                            <button class="nav-link-profile" id="api-tab" data-bs-toggle="tab" data-bs-target="#api-tab-pane" type="button" role="tab" aria-controls="api-tab-pane" aria-selected="false">Доступ к API</button>
+                        </li>
+                    {/if}
+                </ul>
+                <div class="tab-content mt-4" id="tabContent">
+                    <div class="tab-pane fade show active" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+                        <div class="profile-form">
+                            <div class="block-profile d-flex flex-column flex-wrap gap-4">
+                                <div class="form-group">
+                                    <label class="form-label" >Ваше имя<sup class="red">*</sup></label>
+                                    <input class="form-control" type="text" name="fullname" value="{$fullname}" placeholder="Ваше имя">
+                                    <img src="theme/images/auth/pensil-ico.svg" class="img-svg">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" >Ваша фамилия</label>
+                                    <input class="form-control" type="text" name="surname" value="{$surname}" placeholder="Ваша фамилия">
+                                    <img src="theme/images/auth/pensil-ico.svg" class="img-svg">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" >Ваше отчество</label>
+                                    <input class="form-control" type="text" name="patronymic" value="{$patronymic}" placeholder="Ваше отчество">
+                                    <img src="theme/images/auth/pensil-ico.svg" class="img-svg">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" >Ваша должность</label>
+                                    <input class="form-control" type="text" name="user_post" value="{$user_post}" placeholder="Ваша должность">
+                                    <img src="theme/images/auth/pensil-ico.svg" class="img-svg">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Пароль</label>
+                                    <input class="form-control" type="password" name="specifiedpassword" value="" placeholder="********" autocomplete="new-password">
+                                    <img src="theme/images/auth/pensil-ico.svg" class="img-svg">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Введите пароль повторно</label>
+                                    <input class="form-control" type="password" name="confirmpassword" value="" placeholder="********">
+                                    <img src="theme/images/auth/pensil-ico.svg" class="img-svg">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Ваша почта{*<sup class="red">*</sup>*}</label>
+                                    <input class="form-control" type="email" name="email" value="{$email}" placeholder="email@email.ru" readonly>
+                                    {*<img src="theme/images/auth/pensil-ico.svg" class="img-svg">*}
+                                </div>
+                                <div class="form-group d-flex flex-column">
+                                    <label class="form-label">Телефон</label>
+                                    <input class="form-control form-phone" type="text" name="mobilephone" value="" data-value="{$mobilephone}">
+                                    <img src="theme/images/auth/pensil-ico.svg" class="img-svg">
+                                </div>
+                            </div>
+                            <div class="button-group d-flex flex-wrap flex-wrap flex-sm-nowrap gap-3 mt-4">
+                                <button type="submit" class="btn btn-red">Сохранить</button>
+                                <a href="{$_modx->resource.id | url : [] : ['action' => 'auth/logout']}" class="btn btn-white">Выход</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="address-tab-pane" role="tabpanel" aria-labelledby="address-tab" tabindex="0">
+                        <div class="profile-form">
+                            <div class="block-profile d-flex flex-column flex-wrap gap-4">
+                                <div class="form-group">
+                                    <label class="form-label">Область</label>
+                                    <input class="form-control" type="text" name="state" placeholder="Область" value="{$state}">
+                                    <img src="theme/images/auth/pensil-ico.svg" class="img-svg">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Город</label>
+                                    <input class="form-control" type="text" name="city" placeholder="Город" value="{$city}">
+                                    <img src="theme/images/auth/pensil-ico.svg" class="img-svg">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Улица, дом, подъезд</label>
+                                    <input class="form-control" type="text" placeholder="Улица, дом, подъезд" name="address" value="{$address}">
+                                    <img src="theme/images/auth/pensil-ico.svg" class="img-svg">
+                                </div>
+                                {set $inn = $field_list_inn | split : ";"}
+                                {set $company = $field_list_company | split : ";"}
+                                <div class="form-group">
+                                    {set $inn_tmp = $inn[0] | split : ':'}
+                                    <label class="form-label">ИНН</label>
+                                    <input type="hidden" name="field_inn" value="{$field_inn ?: $inn_tmp[0]}" id="field_inn">
+                                    <div class="form-control field_inn">{$field_inn ?: $inn_tmp[0]}</div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Компания</label>
+                                    <select id="field_company" name="field_company" class="form-control">
+                                        {foreach $company as $key => $item}
+                                            {set $inn_tmp = $inn[$key] | split : ':'}
+                                            <option value="{$item}" data-inn="{$inn_tmp[0]}" {if $item == $field_company}selected{/if}>{$item}</option>
+                                        {/foreach}
+                                    </select>
+                                </div>
+                                {if 'attorney' | config}
+                                    <div class="form-group">
+                                        <label class="form-label">Доверенность на оформление онлайн-заказов</label>
+                                        <div class="button-group d-flex mt-1">
+                                            <a href="{'attorney' | config}" class="btn btn-red" download>Скачать</a>
+                                        </div>
+                                    </div>
+                                {/if}
+                            </div>
+                            <div class="button-group d-flex flex-wrap flex-wrap flex-sm-nowrap gap-3 mt-4">
+                                <button type="submit" class="btn btn-red">Сохранить</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="mailing-tab-pane" role="tabpanel" aria-labelledby="mailing-tab" tabindex="0">
+                        <div class="title mb-4">Настроить персональные рассылки</div>
+                        <button type="button" class="btn btn-add-mailing mb-4">
+                            <img src="theme/images/plus.svg" class="img-svg">
+                            Добавить почту
+                        </button>
+                        {set $user_info = '!user_info' | snippet}
+                        <div class="block-mailing-item d-flex flex-wrap gap-3 mb-4">
+                            {foreach $user_info['data'] as $item}
+                                <div class="mailing-item">
+                                    <div class="mailing d-flex flex-column p-4">
+                                        <input type="hidden" name="action" value="subscription">
+                                        <div class="form-group position-relative">
+                                            <label class="form-title d-block form-label mute">Укажите Вашу почту для рассылок</label>
+                                            <input class="form-control" type="email" name="emails[]" placeholder="email@email.ru" value="{$item['email'] ?: $email}" {if $item['email']}readonly{/if}>
+                                            {if !$item@first}
+                                                <button type="button" class="delete-mailing"><img src="theme/images/minus.svg" class="img-svg"></button>
+                                            {/if}
+                                        </div>
+                                        <hr class="opacity-100">
+                                        <div class="form-title d-block mute mb-3">Выберите категории рассылок</div>
+                                        <div class="d-flex flex-column">
+                                            {set $item['email'] = ''}
+                                            {foreach $item as $key => $check}
+                                                {if $check}
+                                                    <label class="custom-checkbox-switch">
+                                                        <input type="hidden" name="{$key}[]" value="{$item[$key]['check'] ? '1' : ''}">
+                                                        <input type="checkbox" value="1" {$item[$key]['check'] ? 'checked' : ''}>
+                                                        <span>{$key | lexicon}</span>
+                                                    </label>
+                                                    {if !$check@last}
+                                                        <hr class="opacity-100">
+                                                    {/if}
+                                                {/if}
+                                            {/foreach}
+                                        </div>
+                                    </div>
+                                </div>
+                            {/foreach}
+                        </div>
+                        <div class="button-mailing d-flex flex-column p-4 mb-5">
+                            <label class="custom-checkbox mb-4">
+                                <input type="hidden" name="personal_data" value="{$user_info['personal_data'] ? 'true' : ''}" >
+                                <input type="checkbox" id="personal_data" value="true" {$user_info['personal_data'] ? 'checked' : ''}>
+                                <span>Я даю <a href="Politics.pdf" target="_blank">согласие на обработку</a> своих персональных данных</span>
+                            </label>
+                            <div class="button-group d-flex flex-wrap flex-wrap flex-sm-nowrap gap-3">
+                                <button type="submit" class="btn btn-red">Сохранить</button>
+                            </div>
+                        </div>
+                        {*
+                        {set $inn = $_modx->user.field_list_inn | split : ';'}
+                        {set $company = $_modx->user.field_list_company | split : ';'}
+                        {set $option_company = []}
+                        {foreach $inn as $key => $item}
+                            {set $inn_tmp = $item | split : ':'}
+                            {set $option_company[$key]['name'] = $company[$key] ~ '(ИНН ' ~ $inn_tmp[0] ~ ')'}
+                            {set $option_company[$key]['inn'] = $inn_tmp[0]}
+                        {/foreach}
+                        {set $partner_sales = json_decode(16 | resource : "partner", true)}
+                        {foreach $partner_sales as $partner}
+                            {if $partner['level'] == $inn_tmp[1]}
+                                {set $sale = $partner['sale']}
+                                {set $status = $partner['status']}
+                                {set $porog = $partner['porog']}
+                                {set $color_bg = $partner['color_bg']}
+                                {set $color_text = $partner['color_text']}
+                            {/if}
+                        {/foreach}
+                        <div class="title text-black mb-3">Ваш партнерский статус</div>
+                        <div class="partner-status d-flex flex-wrap gap-3 mb-4 ">
+                            <div class="badge-partner orange-badge" style="color: {$color_text};background: {$color_bg};">{$status}</div>
+                            
+                        </div>
+                        <div class="title text-black d-flex mb-3 gap-2 align-items-center"><span>Ваша партнёрская скидка</span><span class="person-sale">{$sale}%</span></div>
+                        {if $_modx->user.field_summ}
+                            <div class="achievement d-flex flex-wrap mb-4">
+                                {if $_modx->user.field_ceil}
+                                    {set $porog = $.php.round($_modx->user.field_ceil)}
+                                {/if}
+                                {set $range = $porog - $.php.round($_modx->user.field_summ)}
+                                {set $range_percent = $.php.round($_modx->user.field_summ)}
+                                {set $range_percent = ($_modx->user.field_summ / $porog) * 100}
+                                <div class="col-xl-auto">
+                                    <div class="title-small mb-1">Для подтверждения партнёрского статуса осталось приобрести лицензий на <span class="text-black">{$range | number : 0 : '.' : ' '} ₽</span> до {$_modx->user.rebeit}</div>
+                                    <div class="col-12">
+                                        <div class="block-range">
+                                            <div class="range-full" style="width: 100%"></div>
+                                            <div class="range" style="width: {$range_percent}%"></div>
+                                            <div class="d-flex align-items-center justify-content-between pt-4">
+                                                <span class="text-black">{$_modx->user.field_summ | number : 0 : '.' : ' '} ₽</span>
+                                                <span class="text-black">{$porog | number : 0 : '.' : ' '} ₽</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {/if}
+                        <div class="title text-black mb-3">Ваши партнёрские рибейты (действует до 31.12.2024)</div>
+                        {if $_modx->user.field_marketing}
+                            <div class="title-small mb-2">В 2024 году вы можете потратить на маркетинг или обучение - <span class="text-black">{$_modx->user.field_marketing | number : 0 : '.' : ' '} ₽</span></div>
+                            <div class="title-small mb-2">На данный момент вы уже потратили - <span class="text-black">{$_modx->user.field_sold | number : 0 : '.' : ' '} ₽</span></div>
+                            {set $range_marketing = $_modx->user.field_marketing - $.php.round($_modx->user.field_sold)}
+                            {set $range_marketing_percent = $.php.round($_modx->user.field_sold)}
+                            {set $range_marketing_percent = ($range_marketing_percent / $_modx->user.field_marketing) * 100}
+                            <div class="title-small mb-4">Осталось потратить - <span class="text-red">{$range_marketing | number : 0 : '.' : ' '} ₽</span></div>
+                            <div class="pie-chart mb-4">
+                                <svg class="pie" width="202" viewBox="0 0 37 37">
+                                    <circle r="15.9155" cx="50%" cy="50%"></circle>
+                                    <circle r="15.9155" cx="50%" cy="50%" style="stroke-dasharray: {$range_marketing_percent} 100;"></circle>
+                                    <text x="50%" y="50%">{$range_marketing | number : 0 : '.' : ' '} ₽</text>
+                                </svg>
+                            </div>
+                        {/if}
+                        
+                        *}
+                    </div>
+                    {if $user_field}
+                        <div class="tab-pane fade" id="api-tab-pane" role="tabpanel" aria-labelledby="api-tab" tabindex="0">
+                            <div class="profile-form">
+                                <div class="block-profile d-flex flex-column flex-wrap gap-4">
+                                    <div class="form-group col-12 col-xl-6">
+                                        <label class="form-label">Логин пользователя</label>
+                                        <div class="d-flex gap-3 align-items-center">
+                                            <input class="form-control" type="text" value="{$username}" readonly>
+                                            <button type="button" class="btn copy-field btn-image" title="Скопировать" ><img src="theme/images/profile/copy.svg" class="img-svg"></button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-12 col-xl-6">
+                                        <label class="form-label">Токен</label>
+                                        {set $token = $.php.md5($_modx->user.username ~ $_modx->user.password)}
+                                        <div class="d-flex gap-3 align-items-center">
+                                            <input class="form-control" type="text" value="{$token}" readonly>
+                                            <button type="button" class="btn copy-field btn-image" title="Скопировать" ><img src="theme/images/profile/copy.svg" class="img-svg"></button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-12 col-xl-6">
+                                        <label class="form-label">Ссылка для запросов</label>
+                                        <div class="d-flex gap-3 align-items-center">
+                                            <input class="form-control" type="text" value="{'site_url' | config}sync/get_product.php" readonly>
+                                            <button type="button" class="btn copy-field btn-image" title="Скопировать" ><img src="theme/images/profile/copy.svg" class="img-svg"></button>
+                                        </div>
+                                    </div>
+                                    {if $_modx->resource.instruction_api_1c}
+                                        <div class="form-group col-12 col-xl-6">
+                                            <div class="button-group d-flex flex-wrap align-items-center justify-content-between gap-3">
+                                                <div class="">{$_modx->resource.text_instruction_api_1c}</div>
+                                                <a href="{$_modx->resource.instruction_api_1c}" class="btn btn-violet" download="">Скачать</a>
+                                            </div>
+                                        </div>
+                                    {/if}
+                                </div>
+                                {*
+                                <div class="form-group col-lg-12 bg-black p-3 mt-4">
+                                    <label class="form-label text-white">cURL Request Example</label>
+                                    <pre class="text-white">
+                                        {$_modx->resource.request_example}
+                                    </pre>
+                                </div>
+                            
+                                <div class="form-group col-lg-12 bg-black p-3 mt-4">
+                                    <label class="form-label text-white">JSON Response Example</label>
+                                    <pre class="text-white">
+                                        {$_modx->resource.response_example}
+                                    </pre>
+                                </div>
+                                *}
+                            </div>
+                        </div>
+                    {/if}
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

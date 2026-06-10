@@ -1,0 +1,4498 @@
+[
+    {
+        "key": "",
+        "value": "176",
+        "xtype": "numberfield",
+        "namespace": "training",
+        "area": "training",
+        "editedon": null
+    },
+    {
+        "key": "access_category_enabled",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "authentication",
+        "editedon": null
+    },
+    {
+        "key": "access_context_enabled",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "authentication",
+        "editedon": null
+    },
+    {
+        "key": "access_resource_group_enabled",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "authentication",
+        "editedon": null
+    },
+    {
+        "key": "ace.fold_widgets",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "ace",
+        "area": "general",
+        "editedon": null
+    },
+    {
+        "key": "ace.font_size",
+        "value": "14px",
+        "xtype": "textfield",
+        "namespace": "ace",
+        "area": "general",
+        "editedon": "2024-02-19 12:52:21"
+    },
+    {
+        "key": "ace.grow",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "ace",
+        "area": "general",
+        "editedon": null
+    },
+    {
+        "key": "ace.height",
+        "value": "550px",
+        "xtype": "textfield",
+        "namespace": "ace",
+        "area": "general",
+        "editedon": "2024-02-19 12:52:25"
+    },
+    {
+        "key": "ace.html_elements_mime",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "ace",
+        "area": "general",
+        "editedon": null
+    },
+    {
+        "key": "ace.show_invisibles",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "ace",
+        "area": "general",
+        "editedon": "2024-02-19 12:52:27"
+    },
+    {
+        "key": "ace.snippets",
+        "value": "",
+        "xtype": "textarea",
+        "namespace": "ace",
+        "area": "general",
+        "editedon": null
+    },
+    {
+        "key": "ace.soft_tabs",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "ace",
+        "area": "general",
+        "editedon": null
+    },
+    {
+        "key": "ace.tab_size",
+        "value": "4",
+        "xtype": "textfield",
+        "namespace": "ace",
+        "area": "general",
+        "editedon": null
+    },
+    {
+        "key": "ace.theme",
+        "value": "monokai",
+        "xtype": "textfield",
+        "namespace": "ace",
+        "area": "general",
+        "editedon": "2024-02-19 12:52:32"
+    },
+    {
+        "key": "ace.word_wrap",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "ace",
+        "area": "general",
+        "editedon": "2024-02-19 12:52:35"
+    },
+    {
+        "key": "allow_forward_across_contexts",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "system",
+        "editedon": null
+    },
+    {
+        "key": "allow_manager_login_forgot_password",
+        "value": "[REDACTED]",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "authentication",
+        "editedon": null
+    },
+    {
+        "key": "allow_multiple_emails",
+        "value": "0",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "authentication",
+        "editedon": "2024-03-11 13:44:36"
+    },
+    {
+        "key": "allow_tags_in_post",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "system",
+        "editedon": null
+    },
+    {
+        "key": "allow_tv_eval",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "system",
+        "editedon": null
+    },
+    {
+        "key": "anonymous_sessions",
+        "value": "[REDACTED]",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "session",
+        "editedon": null
+    },
+    {
+        "key": "archive_with",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "system",
+        "editedon": null
+    },
+    {
+        "key": "automatic_alias",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "furls",
+        "editedon": null
+    },
+    {
+        "key": "automatic_template_assignment",
+        "value": "parent",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "site",
+        "editedon": null
+    },
+    {
+        "key": "auto_check_pkg_updates",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "system",
+        "editedon": null
+    },
+    {
+        "key": "auto_check_pkg_updates_cache_expire",
+        "value": "15",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "system",
+        "editedon": null
+    },
+    {
+        "key": "auto_isfolder",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "site",
+        "editedon": null
+    },
+    {
+        "key": "auto_menuindex",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "site",
+        "editedon": null
+    },
+    {
+        "key": "base_help_url",
+        "value": "//docs.modx.com/help/",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "blocked_minutes",
+        "value": "3",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "authentication",
+        "editedon": "2024-10-29 16:18:32"
+    },
+    {
+        "key": "cache_action_map",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "caching",
+        "editedon": null
+    },
+    {
+        "key": "cache_alias_map",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "caching",
+        "editedon": null
+    },
+    {
+        "key": "cache_context_settings",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "caching",
+        "editedon": null
+    },
+    {
+        "key": "cache_db",
+        "value": "0",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "caching",
+        "editedon": null
+    },
+    {
+        "key": "cache_db_expires",
+        "value": "0",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "caching",
+        "editedon": null
+    },
+    {
+        "key": "cache_db_session",
+        "value": "[REDACTED]",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "caching",
+        "editedon": null
+    },
+    {
+        "key": "cache_db_session_lifetime",
+        "value": "[REDACTED]",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "caching",
+        "editedon": null
+    },
+    {
+        "key": "cache_default",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "caching",
+        "editedon": null
+    },
+    {
+        "key": "cache_expires",
+        "value": "0",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "caching",
+        "editedon": null
+    },
+    {
+        "key": "cache_format",
+        "value": "0",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "caching",
+        "editedon": null
+    },
+    {
+        "key": "cache_handler",
+        "value": "xPDOFileCache",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "caching",
+        "editedon": null
+    },
+    {
+        "key": "cache_lang_js",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "caching",
+        "editedon": null
+    },
+    {
+        "key": "cache_lexicon_topics",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "caching",
+        "editedon": null
+    },
+    {
+        "key": "cache_noncore_lexicon_topics",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "caching",
+        "editedon": null
+    },
+    {
+        "key": "cache_resource",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "caching",
+        "editedon": null
+    },
+    {
+        "key": "cache_resource_clear_partial",
+        "value": "0",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "caching",
+        "editedon": null
+    },
+    {
+        "key": "cache_resource_expires",
+        "value": "0",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "caching",
+        "editedon": null
+    },
+    {
+        "key": "cache_scripts",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "caching",
+        "editedon": null
+    },
+    {
+        "key": "ckeditor.autocorrect_dash",
+        "value": "—",
+        "xtype": "textfield",
+        "namespace": "ckeditor",
+        "area": "general",
+        "editedon": null
+    },
+    {
+        "key": "ckeditor.autocorrect_double_quotes",
+        "value": "«»",
+        "xtype": "textfield",
+        "namespace": "ckeditor",
+        "area": "general",
+        "editedon": null
+    },
+    {
+        "key": "ckeditor.autocorrect_single_quotes",
+        "value": "„“",
+        "xtype": "textfield",
+        "namespace": "ckeditor",
+        "area": "general",
+        "editedon": null
+    },
+    {
+        "key": "ckeditor.extra_plugins",
+        "value": "html5video,nbsp",
+        "xtype": "textfield",
+        "namespace": "ckeditor",
+        "area": "general",
+        "editedon": null
+    },
+    {
+        "key": "ckeditor.format_tags",
+        "value": "p;h1;h2;h3;h4;h5;h6;pre;address;div",
+        "xtype": "textfield",
+        "namespace": "ckeditor",
+        "area": "general",
+        "editedon": null
+    },
+    {
+        "key": "ckeditor.native_spellchecker",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "ckeditor",
+        "area": "general",
+        "editedon": null
+    },
+    {
+        "key": "ckeditor.object_resizing",
+        "value": "0",
+        "xtype": "combo-boolean",
+        "namespace": "ckeditor",
+        "area": "general",
+        "editedon": null
+    },
+    {
+        "key": "ckeditor.remove_plugins",
+        "value": "forms,smiley,liststyle,justify,pagebreak,colorbutton,indentblock,font,newpage,print,save,language,bidi,selectall,preview,flash",
+        "xtype": "textfield",
+        "namespace": "ckeditor",
+        "area": "general",
+        "editedon": null
+    },
+    {
+        "key": "ckeditor.resource_editor_height",
+        "value": "600",
+        "xtype": "textfield",
+        "namespace": "ckeditor",
+        "area": "general",
+        "editedon": null
+    },
+    {
+        "key": "ckeditor.skin",
+        "value": "moono-lisa",
+        "xtype": "textfield",
+        "namespace": "ckeditor",
+        "area": "general",
+        "editedon": null
+    },
+    {
+        "key": "ckeditor.styles_set",
+        "value": "default",
+        "xtype": "textarea",
+        "namespace": "ckeditor",
+        "area": "general",
+        "editedon": null
+    },
+    {
+        "key": "ckeditor.toolbar",
+        "value": "",
+        "xtype": "textarea",
+        "namespace": "ckeditor",
+        "area": "general",
+        "editedon": null
+    },
+    {
+        "key": "ckeditor.toolbar_groups",
+        "value": "[{\"name\":\"document\",\"groups\":[\"mode\",\"document\",\"doctools\"]},{\"name\":\"clipboard\",\"groups\":[\"clipboard\",\"undo\"]},{\"name\":\"editing\",\"groups\":[\"find\",\"selection\",\"spellchecker\"]},{\"name\":\"links\"},{\"name\":\"insert\"},{\"name\":\"forms\"},\"/\",{\"name\":\"basicstyles\",\"groups\":[\"basicstyles\",\"cleanup\"]},{\"name\":\"paragraph\",\"groups\":[\"list\",\"indent\",\"blocks\",\"align\",\"bidi\"]},{\"name\":\"styles\"},{\"name\":\"colors\"},{\"name\":\"tools\"},{\"name\":\"others\"},{\"name\":\"about\"}]",
+        "xtype": "textarea",
+        "namespace": "ckeditor",
+        "area": "general",
+        "editedon": null
+    },
+    {
+        "key": "ckeditor.ui_color",
+        "value": "#DDDDDD",
+        "xtype": "textfield",
+        "namespace": "ckeditor",
+        "area": "general",
+        "editedon": null
+    },
+    {
+        "key": "ckeditor.version",
+        "value": "1.4.7-ce",
+        "xtype": "textfield",
+        "namespace": "ckeditor",
+        "area": "Other",
+        "editedon": null
+    },
+    {
+        "key": "clear_cache_refresh_trees",
+        "value": "0",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "caching",
+        "editedon": null
+    },
+    {
+        "key": "clientconfig.admin_groups",
+        "value": "Administrator",
+        "xtype": "textfield",
+        "namespace": "clientconfig",
+        "area": "Default",
+        "editedon": null
+    },
+    {
+        "key": "clientconfig.clear_cache",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "clientconfig",
+        "area": "Default",
+        "editedon": null
+    },
+    {
+        "key": "clientconfig.context_aware",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "clientconfig",
+        "area": "Default",
+        "editedon": null
+    },
+    {
+        "key": "clientconfig.google_fonts_api_key",
+        "value": "[REDACTED]",
+        "xtype": "textfield",
+        "namespace": "clientconfig",
+        "area": "Default",
+        "editedon": null
+    },
+    {
+        "key": "clientconfig.vertical_tabs",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "clientconfig",
+        "area": "Default",
+        "editedon": null
+    },
+    {
+        "key": "collections.mgr_datetime_format",
+        "value": "M d, g:i a",
+        "xtype": "textfield",
+        "namespace": "collections",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "collections.mgr_date_format",
+        "value": "M d",
+        "xtype": "textfield",
+        "namespace": "collections",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "collections.mgr_time_format",
+        "value": "g:i a",
+        "xtype": "textfield",
+        "namespace": "collections",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "collections.renderer_image_path",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "collections",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "collections.tree_tbar_collection",
+        "value": "0",
+        "xtype": "combo-boolean",
+        "namespace": "collections",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "collections.tree_tbar_selection",
+        "value": "0",
+        "xtype": "combo-boolean",
+        "namespace": "collections",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "collections.user_css",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "collections",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "collections.user_js",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "collections",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "colorpicker.debug",
+        "value": "0",
+        "xtype": "combo-boolean",
+        "namespace": "colorpicker",
+        "area": "system",
+        "editedon": null
+    },
+    {
+        "key": "compress_css",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "compress_js",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "compress_js_max_files",
+        "value": "10",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "confirm_navigation",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "container_suffix",
+        "value": "/",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "furls",
+        "editedon": null
+    },
+    {
+        "key": "context_tree_sort",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "context_tree_sortby",
+        "value": "rank",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "context_tree_sortdir",
+        "value": "ASC",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "controlerrorlog.admin_email",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "controlerrorlog",
+        "area": "controlerrorlog.main",
+        "editedon": null
+    },
+    {
+        "key": "controlerrorlog.allow_copy_deletion",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "controlerrorlog",
+        "area": "controlerrorlog.main",
+        "editedon": null
+    },
+    {
+        "key": "controlerrorlog.auto_refresh",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "controlerrorlog",
+        "area": "controlerrorlog.main",
+        "editedon": null
+    },
+    {
+        "key": "controlerrorlog.control_frontend",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "controlerrorlog",
+        "area": "controlerrorlog.main",
+        "editedon": null
+    },
+    {
+        "key": "controlerrorlog.css_file",
+        "value": "/assets/components/controlerrorlog/css/web/default.css",
+        "xtype": "textfield",
+        "namespace": "controlerrorlog",
+        "area": "controlerrorlog.main",
+        "editedon": null
+    },
+    {
+        "key": "controlerrorlog.date_format",
+        "value": "%Y-%m-%d",
+        "xtype": "textfield",
+        "namespace": "controlerrorlog",
+        "area": "controlerrorlog.main",
+        "editedon": null
+    },
+    {
+        "key": "controlerrorlog.enable",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "controlerrorlog",
+        "area": "controlerrorlog.main",
+        "editedon": null
+    },
+    {
+        "key": "controlerrorlog.format_output",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "controlerrorlog",
+        "area": "controlerrorlog.main",
+        "editedon": null
+    },
+    {
+        "key": "controlerrorlog.js_file",
+        "value": "/assets/components/controlerrorlog/js/web/default.js",
+        "xtype": "textfield",
+        "namespace": "controlerrorlog",
+        "area": "controlerrorlog.main",
+        "editedon": null
+    },
+    {
+        "key": "controlerrorlog.last_lines",
+        "value": "15",
+        "xtype": "numberfield",
+        "namespace": "controlerrorlog",
+        "area": "controlerrorlog.main",
+        "editedon": null
+    },
+    {
+        "key": "controlerrorlog.refresh_freq",
+        "value": "60",
+        "xtype": "numberfield",
+        "namespace": "controlerrorlog",
+        "area": "controlerrorlog.main",
+        "editedon": null
+    },
+    {
+        "key": "controlerrorlog.tpl",
+        "value": "error_table.tpl",
+        "xtype": "textfield",
+        "namespace": "controlerrorlog",
+        "area": "controlerrorlog.main",
+        "editedon": null
+    },
+    {
+        "key": "cultureKey",
+        "value": "ru",
+        "xtype": "modx-combo-language",
+        "namespace": "core",
+        "area": "language",
+        "editedon": "2024-02-19 12:08:48"
+    },
+    {
+        "key": "date_timezone",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "system",
+        "editedon": null
+    },
+    {
+        "key": "debug",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "system",
+        "editedon": null
+    },
+    {
+        "key": "default_content_type",
+        "value": "1",
+        "xtype": "modx-combo-content-type",
+        "namespace": "core",
+        "area": "site",
+        "editedon": null
+    },
+    {
+        "key": "default_context",
+        "value": "web",
+        "xtype": "modx-combo-context",
+        "namespace": "core",
+        "area": "site",
+        "editedon": null
+    },
+    {
+        "key": "default_duplicate_publish_option",
+        "value": "preserve",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "default_media_source",
+        "value": "1",
+        "xtype": "modx-combo-source",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "default_media_source_type",
+        "value": "sources.modFileMediaSource",
+        "xtype": "modx-combo-source-type",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "default_per_page",
+        "value": "20",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "default_template",
+        "value": "1",
+        "xtype": "modx-combo-template",
+        "namespace": "core",
+        "area": "site",
+        "editedon": null
+    },
+    {
+        "key": "default_username",
+        "value": "(anonymous)",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "session",
+        "editedon": null
+    },
+    {
+        "key": "editor_css_path",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "editor",
+        "editedon": null
+    },
+    {
+        "key": "editor_css_selectors",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "editor",
+        "editedon": null
+    },
+    {
+        "key": "emailsender",
+        "value": "partner@scanport.ru",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "authentication",
+        "editedon": "2024-07-05 10:03:07"
+    },
+    {
+        "key": "emailsubject",
+        "value": "Your login details",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "authentication",
+        "editedon": null
+    },
+    {
+        "key": "enable_dragdrop",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "enable_gravatar",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "error_log_filename",
+        "value": "error.log",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "system",
+        "editedon": null
+    },
+    {
+        "key": "error_log_filepath",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "system",
+        "editedon": null
+    },
+    {
+        "key": "error_page",
+        "value": "146",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "site",
+        "editedon": "2025-04-25 14:43:04"
+    },
+    {
+        "key": "extension_packages",
+        "value": "[{\"minishop2\":{\"path\":\"[[++core_path]]components/minishop2/model/\"}},{\"iems2\":{\"path\":\"[[++core_path]]components/iems2/model/\"}},{\"iemsoptionsprice2\":{\"path\":\"[[++core_path]]components/iemsoptionsprice2/model/\"}},{\"msimportexport\":{\"path\":\"[[++core_path]]components/msimportexport/model/\"}},{\"iegallery\":{\"path\":\"[[++core_path]]components/iegallery/model/\"}},{\"msoptionsprice\":{\"path\":\"[[++core_path]]components/msoptionsprice/model/\"}},{\"iemsoptionscolor\":{\"path\":\"[[++core_path]]components/iemsoptionscolor/model/\"}},{\"iemsproductremains\":{\"path\":\"[[++core_path]]components/iemsproductremains/model/\"}},{\"iemssaleprice\":{\"path\":\"[[++core_path]]components/iemssaleprice/model/\"}},{\"collections\":{\"path\":\"[[++core_path]]components/collections/model/\"}}]",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "system",
+        "editedon": "2024-04-08 12:12:30"
+    },
+    {
+        "key": "failed_login_attempts",
+        "value": "10",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "authentication",
+        "editedon": "2024-10-29 16:18:13"
+    },
+    {
+        "key": "feed_modx_news",
+        "value": "https://feeds.feedburner.com/modx-announce",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "system",
+        "editedon": null
+    },
+    {
+        "key": "feed_modx_news_enabled",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "system",
+        "editedon": null
+    },
+    {
+        "key": "feed_modx_security",
+        "value": "https://forums.modx.com/board.xml?board=294",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "system",
+        "editedon": null
+    },
+    {
+        "key": "feed_modx_security_enabled",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "system",
+        "editedon": null
+    },
+    {
+        "key": "fe_editor_lang",
+        "value": "en",
+        "xtype": "modx-combo-language",
+        "namespace": "core",
+        "area": "language",
+        "editedon": null
+    },
+    {
+        "key": "filemanager_path",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "file",
+        "editedon": null
+    },
+    {
+        "key": "filemanager_path_relative",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "file",
+        "editedon": null
+    },
+    {
+        "key": "filemanager_url",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "file",
+        "editedon": null
+    },
+    {
+        "key": "filemanager_url_relative",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "file",
+        "editedon": null
+    },
+    {
+        "key": "forgot_login_email",
+        "value": "<p>Hello [[+username]],</p>\n<p>A request for a password reset has been issued for your MODX user. If you sent this, you may follow this link and use this password to login. If you did not send this request, please ignore this email.</p>\n\n<p>\n    <strong>Activation Link:</strong> [[+url_scheme]][[+http_host]][[+manager_url]]?modahsh=[[+hash]]<br />\n    <strong>Username:</strong> [[+username]]<br />\n    <strong>Password:</strong> [[+password]]<br />\n</p>\n\n<p>After you log into the MODX Manager, you can change your password again, if you wish.</p>\n\n<p>Regards,<br />Site Administrator</p>",
+        "xtype": "textarea",
+        "namespace": "core",
+        "area": "authentication",
+        "editedon": null
+    },
+    {
+        "key": "formit.attachment.mediasource",
+        "value": "1",
+        "xtype": "modx-combo-source",
+        "namespace": "formit",
+        "area": "formit",
+        "editedon": null
+    },
+    {
+        "key": "formit.attachment.path",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "formit",
+        "area": "formit",
+        "editedon": null
+    },
+    {
+        "key": "formit.cleanform.days",
+        "value": "30",
+        "xtype": "textfield",
+        "namespace": "formit",
+        "area": "formit",
+        "editedon": null
+    },
+    {
+        "key": "formit.exclude_contexts",
+        "value": "mgr",
+        "xtype": "textfield",
+        "namespace": "formit",
+        "area": "formit",
+        "editedon": null
+    },
+    {
+        "key": "formit.form_encryptkey",
+        "value": "modx65d31a9eaba597.72445452",
+        "xtype": "textfield",
+        "namespace": "formit",
+        "area": "formit",
+        "editedon": "2024-04-10 12:19:15"
+    },
+    {
+        "key": "formit.max_chars_textfield",
+        "value": "125",
+        "xtype": "textfield",
+        "namespace": "formit",
+        "area": "formit",
+        "editedon": null
+    },
+    {
+        "key": "formit.recaptcha_private_key",
+        "value": "[REDACTED]",
+        "xtype": "textfield",
+        "namespace": "formit",
+        "area": "formit_recaptcha",
+        "editedon": null
+    },
+    {
+        "key": "formit.recaptcha_public_key",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "formit",
+        "area": "formit_recaptcha",
+        "editedon": null
+    },
+    {
+        "key": "formit.recaptcha_use_ssl",
+        "value": "0",
+        "xtype": "combo-boolean",
+        "namespace": "formit",
+        "area": "formit_recaptcha",
+        "editedon": null
+    },
+    {
+        "key": "form_customization_use_all_groups",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "forward_merge_excludes",
+        "value": "type,published,class_key",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "system",
+        "editedon": null
+    },
+    {
+        "key": "friendly_alias_lowercase_only",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "furls",
+        "editedon": null
+    },
+    {
+        "key": "friendly_alias_max_length",
+        "value": "0",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "furls",
+        "editedon": null
+    },
+    {
+        "key": "friendly_alias_realtime",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "furls",
+        "editedon": "2024-02-19 14:19:02"
+    },
+    {
+        "key": "friendly_alias_restrict_chars",
+        "value": "pattern",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "furls",
+        "editedon": null
+    },
+    {
+        "key": "friendly_alias_restrict_chars_pattern",
+        "value": "/[\\0\\x0B\\t\\n\\r\\f\\a&=+%#<>\"~:`@\\?\\[\\]\\{\\}\\|\\^'\\\\]/",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "furls",
+        "editedon": null
+    },
+    {
+        "key": "friendly_alias_strip_element_tags",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "furls",
+        "editedon": null
+    },
+    {
+        "key": "friendly_alias_translit",
+        "value": "russian",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "furls",
+        "editedon": "2024-02-19 12:51:30"
+    },
+    {
+        "key": "friendly_alias_translit_class",
+        "value": "translitor",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "furls",
+        "editedon": "2024-02-19 12:51:30"
+    },
+    {
+        "key": "friendly_alias_translit_class_path",
+        "value": "{core_path}components/translitor/model/",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "furls",
+        "editedon": "2024-02-19 12:51:30"
+    },
+    {
+        "key": "friendly_alias_trim_chars",
+        "value": "/.-_",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "furls",
+        "editedon": null
+    },
+    {
+        "key": "friendly_alias_word_delimiter",
+        "value": "-",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "furls",
+        "editedon": null
+    },
+    {
+        "key": "friendly_alias_word_delimiters",
+        "value": "-_",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "furls",
+        "editedon": null
+    },
+    {
+        "key": "friendly_urls",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "furls",
+        "editedon": "2024-02-19 14:19:04"
+    },
+    {
+        "key": "friendly_urls_strict",
+        "value": "0",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "furls",
+        "editedon": null
+    },
+    {
+        "key": "global_duplicate_uri_check",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "furls",
+        "editedon": "2024-02-19 14:19:07"
+    },
+    {
+        "key": "hidemenu_default",
+        "value": "0",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "site",
+        "editedon": null
+    },
+    {
+        "key": "iegallery_iegalleryms2galleryexportservice_worker",
+        "value": "ieGalleryMs2GalleryExportWorker",
+        "xtype": "textfield",
+        "namespace": "iegallery",
+        "area": "iegallery_workers",
+        "editedon": null
+    },
+    {
+        "key": "iegallery_iegalleryms2galleryimportservice_worker",
+        "value": "ieGalleryMs2GalleryImportWorker",
+        "xtype": "textfield",
+        "namespace": "iegallery",
+        "area": "iegallery_workers",
+        "editedon": null
+    },
+    {
+        "key": "iegallery_iegalleryms2imagesexportservice_worker",
+        "value": "ieGalleryMs2ImagesExportWorker",
+        "xtype": "textfield",
+        "namespace": "iegallery",
+        "area": "iegallery_workers",
+        "editedon": null
+    },
+    {
+        "key": "iegallery_iegalleryms2imagesimportservice_worker",
+        "value": "ieGalleryMs2ImagesImportWorker",
+        "xtype": "textfield",
+        "namespace": "iegallery",
+        "area": "iegallery_workers",
+        "editedon": null
+    },
+    {
+        "key": "iegallery_tools_handler_class",
+        "value": "IeGalleryTools",
+        "xtype": "textfield",
+        "namespace": "iegallery",
+        "area": "iegallery_main",
+        "editedon": null
+    },
+    {
+        "key": "iems2_iems2categoryexportservice_worker_class",
+        "value": "IeMs2CategoryExportWorker",
+        "xtype": "textfield",
+        "namespace": "iems2",
+        "area": "iems2_workers",
+        "editedon": null
+    },
+    {
+        "key": "iems2_iems2categoryimportworker_worker_class",
+        "value": "IeMs2CategoryImportWorker",
+        "xtype": "textfield",
+        "namespace": "iems2",
+        "area": "iems2_workers",
+        "editedon": null
+    },
+    {
+        "key": "iems2_iems2categoryupdateworker_worker_class",
+        "value": "IeMs2CategoryUpdateWorker",
+        "xtype": "textfield",
+        "namespace": "iems2",
+        "area": "iems2_workers",
+        "editedon": null
+    },
+    {
+        "key": "iems2_iems2linksexportservice_worker_class",
+        "value": "IeMs2LinksExportWorker",
+        "xtype": "textfield",
+        "namespace": "iems2",
+        "area": "iems2_workers",
+        "editedon": null
+    },
+    {
+        "key": "iems2_iems2linksimportservice_worker_class",
+        "value": "IeMs2LinksImportWorker",
+        "xtype": "textfield",
+        "namespace": "iems2",
+        "area": "iems2_workers",
+        "editedon": null
+    },
+    {
+        "key": "iems2_iems2productexportservice_worker_class",
+        "value": "IeMs2ProductExportWorker",
+        "xtype": "textfield",
+        "namespace": "iems2",
+        "area": "iems2_workers",
+        "editedon": null
+    },
+    {
+        "key": "iems2_iems2productimportworker_worker_class",
+        "value": "IeMs2ProductImportWorker",
+        "xtype": "textfield",
+        "namespace": "iems2",
+        "area": "iems2_workers",
+        "editedon": null
+    },
+    {
+        "key": "iems2_iems2productupdateworker_worker_class",
+        "value": "IeMs2ProductUpdateWorker",
+        "xtype": "textfield",
+        "namespace": "iems2",
+        "area": "iems2_workers",
+        "editedon": null
+    },
+    {
+        "key": "iems2_tools_handler_class",
+        "value": "IeMs2Tools",
+        "xtype": "textfield",
+        "namespace": "iems2",
+        "area": "iems2_main",
+        "editedon": null
+    },
+    {
+        "key": "iemsoptionscolor_exportservice_worker",
+        "value": "ieMsOptionsColorExportWorker",
+        "xtype": "textfield",
+        "namespace": "iemsoptionscolor",
+        "area": "iemsoptionscolor_main",
+        "editedon": null
+    },
+    {
+        "key": "iemsoptionscolor_importservice_worker",
+        "value": "ieMsOptionsColorImportWorker",
+        "xtype": "textfield",
+        "namespace": "iemsoptionscolor",
+        "area": "iemsoptionscolor_main",
+        "editedon": null
+    },
+    {
+        "key": "iemsoptionscolor_tools_handler_class",
+        "value": "IeMsOptionsColorTools",
+        "xtype": "textfield",
+        "namespace": "iemsoptionscolor",
+        "area": "iemsoptionscolor_main",
+        "editedon": null
+    },
+    {
+        "key": "iemsoptionsprice2_exportservice_worker",
+        "value": "ieMsOptionsPrice2ExportWorker",
+        "xtype": "textfield",
+        "namespace": "iemsoptionsprice2",
+        "area": "iemsoptionsprice2_main",
+        "editedon": null
+    },
+    {
+        "key": "iemsoptionsprice2_importservice_worker",
+        "value": "ieMsOptionsPrice2ImportWorker",
+        "xtype": "textfield",
+        "namespace": "iemsoptionsprice2",
+        "area": "iemsoptionsprice2_main",
+        "editedon": null
+    },
+    {
+        "key": "iemsoptionsprice2_tools_handler_class",
+        "value": "IeMsOptionsPrice2Tools",
+        "xtype": "textfield",
+        "namespace": "iemsoptionsprice2",
+        "area": "iemsoptionsprice2_main",
+        "editedon": null
+    },
+    {
+        "key": "iemsproductremains_exportservice_worker",
+        "value": "ieMsProductRemainsExportWorker",
+        "xtype": "textfield",
+        "namespace": "iemsproductremains",
+        "area": "iemsproductremains_main",
+        "editedon": null
+    },
+    {
+        "key": "iemsproductremains_importservice_worker",
+        "value": "ieMsProductRemainsImportWorker",
+        "xtype": "textfield",
+        "namespace": "iemsproductremains",
+        "area": "iemsproductremains_main",
+        "editedon": null
+    },
+    {
+        "key": "iemsproductremains_tools_handler_class",
+        "value": "IeMsProductRemainsTools",
+        "xtype": "textfield",
+        "namespace": "iemsproductremains",
+        "area": "iemsproductremains_main",
+        "editedon": null
+    },
+    {
+        "key": "iemssaleprice_iemssalepriceexportservice_worker",
+        "value": "ieMsSalePriceExportWorker",
+        "xtype": "textfield",
+        "namespace": "iemssaleprice",
+        "area": "iemssaleprice_workers",
+        "editedon": null
+    },
+    {
+        "key": "iemssaleprice_iemssalepriceimportservice_worker",
+        "value": "ieMsSalePriceImportWorker",
+        "xtype": "textfield",
+        "namespace": "iemssaleprice",
+        "area": "iemssaleprice_workers",
+        "editedon": null
+    },
+    {
+        "key": "iemssaleprice_tools_handler_class",
+        "value": "IeMsSalePriceTools",
+        "xtype": "textfield",
+        "namespace": "iemssaleprice",
+        "area": "iemssaleprice_main",
+        "editedon": null
+    },
+    {
+        "key": "ieyandexmarket_ieyandexmarketexportservice_worker",
+        "value": "IeYandexMarketExportWorker",
+        "xtype": "textfield",
+        "namespace": "ieyandexmarket",
+        "area": "ieyandexmarket_workers",
+        "editedon": null
+    },
+    {
+        "key": "ieyandexmarket_tools_handler_class",
+        "value": "IeYandexMarketTools",
+        "xtype": "textfield",
+        "namespace": "ieyandexmarket",
+        "area": "ieyandexmarket_main",
+        "editedon": null
+    },
+    {
+        "key": "ieyandexmarket_xml_writer_class",
+        "value": "IeYandexMarketXMLWriter",
+        "xtype": "textfield",
+        "namespace": "ieyandexmarket",
+        "area": "ieyandexmarket_main",
+        "editedon": null
+    },
+    {
+        "key": "inline_help",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "link_tag_scheme",
+        "value": "-1",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "site",
+        "editedon": null
+    },
+    {
+        "key": "locale",
+        "value": "en_US.UTF-8",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "language",
+        "editedon": "2024-06-14 13:12:29"
+    },
+    {
+        "key": "lock_ttl",
+        "value": "360",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "system",
+        "editedon": null
+    },
+    {
+        "key": "login.forgot_password_email_subject",
+        "value": "[REDACTED]",
+        "xtype": "textfield",
+        "namespace": "login",
+        "area": "authentication",
+        "editedon": null
+    },
+    {
+        "key": "log_deprecated",
+        "value": "0",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "system",
+        "editedon": "2024-03-11 14:46:14"
+    },
+    {
+        "key": "log_level",
+        "value": "1",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "system",
+        "editedon": null
+    },
+    {
+        "key": "log_snippet_not_found",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "site",
+        "editedon": null
+    },
+    {
+        "key": "log_target",
+        "value": "FILE",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "system",
+        "editedon": null
+    },
+    {
+        "key": "mail_charset",
+        "value": "UTF-8",
+        "xtype": "modx-combo-charset",
+        "namespace": "core",
+        "area": "mail",
+        "editedon": null
+    },
+    {
+        "key": "mail_encoding",
+        "value": "8bit",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "mail",
+        "editedon": null
+    },
+    {
+        "key": "mail_smtp_auth",
+        "value": "[REDACTED]",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "mail",
+        "editedon": "2024-09-03 15:48:38"
+    },
+    {
+        "key": "mail_smtp_autotls",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "mail",
+        "editedon": null
+    },
+    {
+        "key": "mail_smtp_helo",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "mail",
+        "editedon": null
+    },
+    {
+        "key": "mail_smtp_hosts",
+        "value": "smtp.timeweb.ru",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "mail",
+        "editedon": "2024-07-05 10:04:39"
+    },
+    {
+        "key": "mail_smtp_keepalive",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "mail",
+        "editedon": null
+    },
+    {
+        "key": "mail_smtp_pass",
+        "value": "[REDACTED]",
+        "xtype": "text-password",
+        "namespace": "core",
+        "area": "mail",
+        "editedon": "2024-07-05 10:03:51"
+    },
+    {
+        "key": "mail_smtp_port",
+        "value": "465",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "mail",
+        "editedon": "2024-07-05 10:04:00"
+    },
+    {
+        "key": "mail_smtp_prefix",
+        "value": "ssl",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "mail",
+        "editedon": "2024-07-05 10:04:23"
+    },
+    {
+        "key": "mail_smtp_single_to",
+        "value": "0",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "mail",
+        "editedon": "2024-07-05 10:06:33"
+    },
+    {
+        "key": "mail_smtp_timeout",
+        "value": "10",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "mail",
+        "editedon": null
+    },
+    {
+        "key": "mail_smtp_user",
+        "value": "partner@scanport.ru",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "mail",
+        "editedon": "2024-09-03 15:48:34"
+    },
+    {
+        "key": "mail_use_smtp",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "mail",
+        "editedon": "2024-09-03 15:48:37"
+    },
+    {
+        "key": "main_nav_parent",
+        "value": "topnav",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "manager_date_format",
+        "value": "Y-m-d",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "manager_direction",
+        "value": "ltr",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "language",
+        "editedon": null
+    },
+    {
+        "key": "manager_favicon_url",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "manager_js_cache_file_locking",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "manager_js_cache_max_age",
+        "value": "3600",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "manager_js_document_root",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "manager_js_zlib_output_compression",
+        "value": "0",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "manager_language",
+        "value": "ru",
+        "xtype": "modx-combo-language",
+        "namespace": "core",
+        "area": "language",
+        "editedon": "2024-02-19 12:08:48"
+    },
+    {
+        "key": "manager_lang_attribute",
+        "value": "ru",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "language",
+        "editedon": "2024-02-19 12:08:48"
+    },
+    {
+        "key": "manager_login_url_alternate",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "authentication",
+        "editedon": null
+    },
+    {
+        "key": "manager_theme",
+        "value": "default",
+        "xtype": "modx-combo-manager-theme",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "manager_time_format",
+        "value": "g:i a",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "manager_use_fullname",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "manager_week_start",
+        "value": "0",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "mgr_source_icon",
+        "value": "icon-folder-open-o",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "mgr_tree_icon_collectioncontainer",
+        "value": "collectioncontainer",
+        "xtype": "textfield",
+        "namespace": "collections",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "mgr_tree_icon_context",
+        "value": "tree-context",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "mgr_tree_icon_mscategory",
+        "value": "icon icon-barcode",
+        "xtype": "textarea",
+        "namespace": "minishop2",
+        "area": "ms2_category",
+        "editedon": null
+    },
+    {
+        "key": "mgr_tree_icon_msproduct",
+        "value": "icon icon-tag",
+        "xtype": "textarea",
+        "namespace": "minishop2",
+        "area": "ms2_product",
+        "editedon": null
+    },
+    {
+        "key": "mgr_tree_icon_selectioncontainer",
+        "value": "selectioncontainer",
+        "xtype": "textfield",
+        "namespace": "collections",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "modx_browser_default_sort",
+        "value": "name",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "modx_browser_default_viewmode",
+        "value": "grid",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "modx_browser_tree_hide_files",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "modx_browser_tree_hide_tooltips",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "modx_charset",
+        "value": "UTF-8",
+        "xtype": "modx-combo-charset",
+        "namespace": "core",
+        "area": "language",
+        "editedon": null
+    },
+    {
+        "key": "ms2_cart_context",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "minishop2",
+        "area": "ms2_cart",
+        "editedon": null
+    },
+    {
+        "key": "ms2_cart_handler_class",
+        "value": "msCartProductHandler",
+        "xtype": "textfield",
+        "namespace": "minishop2",
+        "area": "ms2_cart",
+        "editedon": "2024-04-15 14:50:06"
+    },
+    {
+        "key": "ms2_cart_js_class_name",
+        "value": "MsCart",
+        "xtype": "textfield",
+        "namespace": "minishop2",
+        "area": "ms2_frontend",
+        "editedon": null
+    },
+    {
+        "key": "ms2_cart_js_class_path",
+        "value": "[[+jsUrl]]web/vanilajs/modules/mscart.class.js",
+        "xtype": "textfield",
+        "namespace": "minishop2",
+        "area": "ms2_frontend",
+        "editedon": null
+    },
+    {
+        "key": "ms2_cart_max_count",
+        "value": "1000",
+        "xtype": "numberfield",
+        "namespace": "minishop2",
+        "area": "ms2_cart",
+        "editedon": null
+    },
+    {
+        "key": "ms2_cart_product_key_fields",
+        "value": "id,options",
+        "xtype": "textfield",
+        "namespace": "minishop2",
+        "area": "ms2_cart",
+        "editedon": null
+    },
+    {
+        "key": "ms2_category_content_default",
+        "value": "",
+        "xtype": "textarea",
+        "namespace": "minishop2",
+        "area": "ms2_category",
+        "editedon": null
+    },
+    {
+        "key": "ms2_category_grid_fields",
+        "value": "id,menuindex,pagetitle,article,price,thumb,new,favorite,popular",
+        "xtype": "textarea",
+        "namespace": "minishop2",
+        "area": "ms2_category",
+        "editedon": null
+    },
+    {
+        "key": "ms2_category_id_as_alias",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "minishop2",
+        "area": "ms2_category",
+        "editedon": null
+    },
+    {
+        "key": "ms2_category_remember_tabs",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "minishop2",
+        "area": "ms2_category",
+        "editedon": null
+    },
+    {
+        "key": "ms2_category_show_comments",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "minishop2",
+        "area": "ms2_category",
+        "editedon": null
+    },
+    {
+        "key": "ms2_category_show_nested_products",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "minishop2",
+        "area": "ms2_category",
+        "editedon": null
+    },
+    {
+        "key": "ms2_category_show_options",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "minishop2",
+        "area": "ms2_category",
+        "editedon": null
+    },
+    {
+        "key": "ms2_chunks_categories",
+        "value": "4",
+        "xtype": "textfield",
+        "namespace": "minishop2",
+        "area": "ms2_main",
+        "editedon": "2024-02-22 14:42:42"
+    },
+    {
+        "key": "ms2_date_format",
+        "value": "%d.%m.%y <span class=\"gray\">%H:%M</span>",
+        "xtype": "textfield",
+        "namespace": "minishop2",
+        "area": "ms2_order",
+        "editedon": null
+    },
+    {
+        "key": "ms2_email_manager",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "minishop2",
+        "area": "ms2_order",
+        "editedon": null
+    },
+    {
+        "key": "ms2_frontend_css",
+        "value": "[[+cssUrl]]web/default.css",
+        "xtype": "textfield",
+        "namespace": "minishop2",
+        "area": "ms2_frontend",
+        "editedon": null
+    },
+    {
+        "key": "ms2_frontend_js",
+        "value": "[[+jsUrl]]web/default-custom.js",
+        "xtype": "textfield",
+        "namespace": "minishop2",
+        "area": "ms2_frontend",
+        "editedon": "2024-04-15 14:55:39"
+    },
+    {
+        "key": "ms2_frontend_message_css",
+        "value": "[[+cssUrl]]web/lib/jquery.jgrowl.min.css",
+        "xtype": "textfield",
+        "namespace": "minishop2",
+        "area": "ms2_frontend",
+        "editedon": null
+    },
+    {
+        "key": "ms2_frontend_message_js",
+        "value": "[[+jsUrl]]web/lib/jquery.jgrowl.min.js",
+        "xtype": "textfield",
+        "namespace": "minishop2",
+        "area": "ms2_frontend",
+        "editedon": null
+    },
+    {
+        "key": "ms2_frontend_message_js_settings",
+        "value": "[[+jsUrl]]web/message_settings.js",
+        "xtype": "textfield",
+        "namespace": "minishop2",
+        "area": "ms2_frontend",
+        "editedon": null
+    },
+    {
+        "key": "ms2_frontend_notify_js_settings",
+        "value": "[[+jsUrl]]web/vanilajs/message_settings.json",
+        "xtype": "textfield",
+        "namespace": "minishop2",
+        "area": "ms2_frontend",
+        "editedon": null
+    },
+    {
+        "key": "ms2_notify_js_class_name",
+        "value": "MsIziToast",
+        "xtype": "textfield",
+        "namespace": "minishop2",
+        "area": "ms2_frontend",
+        "editedon": null
+    },
+    {
+        "key": "ms2_notify_js_class_path",
+        "value": "[[+jsUrl]]web/vanilajs/modules/msizitoast.class.js",
+        "xtype": "textfield",
+        "namespace": "minishop2",
+        "area": "ms2_frontend",
+        "editedon": null
+    },
+    {
+        "key": "ms2_order_address_fields",
+        "value": "receiver,phone,email,index,country,region,city,metro,street,building,entrance,floor,room,comment,text_address",
+        "xtype": "textarea",
+        "namespace": "minishop2",
+        "area": "ms2_order",
+        "editedon": null
+    },
+    {
+        "key": "ms2_order_format_num",
+        "value": "%y%m",
+        "xtype": "textfield",
+        "namespace": "minishop2",
+        "area": "ms2_order",
+        "editedon": null
+    },
+    {
+        "key": "ms2_order_format_num_separator",
+        "value": "/",
+        "xtype": "textfield",
+        "namespace": "minishop2",
+        "area": "ms2_order",
+        "editedon": null
+    },
+    {
+        "key": "ms2_order_format_phone",
+        "value": "/[^-+()0-9]/u",
+        "xtype": "textfield",
+        "namespace": "minishop2",
+        "area": "ms2_order",
+        "editedon": null
+    },
+    {
+        "key": "ms2_order_grid_fields",
+        "value": "id,num,customer,status,cost,weight,delivery,payment,createdon,updatedon,comment",
+        "xtype": "textarea",
+        "namespace": "minishop2",
+        "area": "ms2_order",
+        "editedon": null
+    },
+    {
+        "key": "ms2_order_handler_class",
+        "value": "msOrderHandler",
+        "xtype": "textfield",
+        "namespace": "minishop2",
+        "area": "ms2_order",
+        "editedon": null
+    },
+    {
+        "key": "ms2_order_js_class_name",
+        "value": "MsOrder",
+        "xtype": "textfield",
+        "namespace": "minishop2",
+        "area": "ms2_frontend",
+        "editedon": null
+    },
+    {
+        "key": "ms2_order_js_class_path",
+        "value": "[[+jsUrl]]web/vanilajs/modules/msorder.class.js",
+        "xtype": "textfield",
+        "namespace": "minishop2",
+        "area": "ms2_frontend",
+        "editedon": null
+    },
+    {
+        "key": "ms2_order_product_fields",
+        "value": "name,vendor_name,product_article,weight,price,count,cost",
+        "xtype": "textarea",
+        "namespace": "minishop2",
+        "area": "ms2_order",
+        "editedon": "2024-02-22 14:42:42"
+    },
+    {
+        "key": "ms2_order_product_options",
+        "value": "size,color",
+        "xtype": "textarea",
+        "namespace": "minishop2",
+        "area": "ms2_order",
+        "editedon": null
+    },
+    {
+        "key": "ms2_order_tv_list",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "minishop2",
+        "area": "ms2_order",
+        "editedon": null
+    },
+    {
+        "key": "ms2_order_user_groups",
+        "value": "Users",
+        "xtype": "textfield",
+        "namespace": "minishop2",
+        "area": "ms2_order",
+        "editedon": "2024-05-22 17:01:07"
+    },
+    {
+        "key": "ms2_plugins",
+        "value": "[]",
+        "xtype": "textarea",
+        "namespace": "minishop2",
+        "area": "ms2_main",
+        "editedon": null
+    },
+    {
+        "key": "ms2_price_format",
+        "value": "[2, \".\", \" \"]",
+        "xtype": "textfield",
+        "namespace": "minishop2",
+        "area": "ms2_product",
+        "editedon": null
+    },
+    {
+        "key": "ms2_price_format_no_zeros",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "minishop2",
+        "area": "ms2_product",
+        "editedon": null
+    },
+    {
+        "key": "ms2_product_extra_fields",
+        "value": "price,old_price,article,weight,color,size,vendor,made_in,tags,new,popular,favorite",
+        "xtype": "textarea",
+        "namespace": "minishop2",
+        "area": "ms2_product",
+        "editedon": null
+    },
+    {
+        "key": "ms2_product_id_as_alias",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "minishop2",
+        "area": "ms2_product",
+        "editedon": null
+    },
+    {
+        "key": "ms2_product_remember_tabs",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "minishop2",
+        "area": "ms2_product",
+        "editedon": null
+    },
+    {
+        "key": "ms2_product_show_comments",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "minishop2",
+        "area": "ms2_product",
+        "editedon": null
+    },
+    {
+        "key": "ms2_product_show_in_tree_default",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "minishop2",
+        "area": "ms2_product",
+        "editedon": null
+    },
+    {
+        "key": "ms2_product_source_default",
+        "value": "2",
+        "xtype": "modx-combo-source",
+        "namespace": "minishop2",
+        "area": "ms2_product",
+        "editedon": "2024-02-22 14:42:42"
+    },
+    {
+        "key": "ms2_product_tab_categories",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "minishop2",
+        "area": "ms2_product",
+        "editedon": null
+    },
+    {
+        "key": "ms2_product_tab_extra",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "minishop2",
+        "area": "ms2_product",
+        "editedon": null
+    },
+    {
+        "key": "ms2_product_tab_gallery",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "minishop2",
+        "area": "ms2_product",
+        "editedon": null
+    },
+    {
+        "key": "ms2_product_tab_links",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "minishop2",
+        "area": "ms2_product",
+        "editedon": null
+    },
+    {
+        "key": "ms2_product_tab_options",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "minishop2",
+        "area": "ms2_product",
+        "editedon": null
+    },
+    {
+        "key": "ms2_product_thumbnail_default",
+        "value": "{assets_url}components/minishop2/img/mgr/ms2_thumb.png",
+        "xtype": "textfield",
+        "namespace": "minishop2",
+        "area": "ms2_product",
+        "editedon": null
+    },
+    {
+        "key": "ms2_product_thumbnail_size",
+        "value": "small",
+        "xtype": "textfield",
+        "namespace": "minishop2",
+        "area": "ms2_product",
+        "editedon": null
+    },
+    {
+        "key": "ms2_register_frontend",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "minishop2",
+        "area": "ms2_frontend",
+        "editedon": null
+    },
+    {
+        "key": "ms2_services",
+        "value": "{\"cart\":[],\"order\":[],\"payment\":[],\"delivery\":[]}",
+        "xtype": "textarea",
+        "namespace": "minishop2",
+        "area": "ms2_main",
+        "editedon": null
+    },
+    {
+        "key": "ms2_status_canceled",
+        "value": "0",
+        "xtype": "numberfield",
+        "namespace": "minishop2",
+        "area": "ms2_statuses",
+        "editedon": null
+    },
+    {
+        "key": "ms2_status_draft",
+        "value": "5",
+        "xtype": "numberfield",
+        "namespace": "minishop2",
+        "area": "ms2_statuses",
+        "editedon": "2024-02-22 14:42:42"
+    },
+    {
+        "key": "ms2_status_for_stat",
+        "value": "2,3",
+        "xtype": "textfield",
+        "namespace": "minishop2",
+        "area": "ms2_statuses",
+        "editedon": null
+    },
+    {
+        "key": "ms2_status_new",
+        "value": "1",
+        "xtype": "numberfield",
+        "namespace": "minishop2",
+        "area": "ms2_statuses",
+        "editedon": "2024-02-22 14:42:42"
+    },
+    {
+        "key": "ms2_status_paid",
+        "value": "2",
+        "xtype": "numberfield",
+        "namespace": "minishop2",
+        "area": "ms2_statuses",
+        "editedon": "2024-02-22 14:42:42"
+    },
+    {
+        "key": "ms2_template_category_default",
+        "value": "10",
+        "xtype": "modx-combo-template",
+        "namespace": "minishop2",
+        "area": "ms2_category",
+        "editedon": "2024-03-18 20:05:51"
+    },
+    {
+        "key": "ms2_template_product_default",
+        "value": "9",
+        "xtype": "modx-combo-template",
+        "namespace": "minishop2",
+        "area": "ms2_product",
+        "editedon": "2024-03-18 20:06:00"
+    },
+    {
+        "key": "ms2_tmp_storage",
+        "value": "session",
+        "xtype": "textfield",
+        "namespace": "minishop2",
+        "area": "ms2_main",
+        "editedon": null
+    },
+    {
+        "key": "ms2_toggle_js_type",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "minishop2",
+        "area": "ms2_frontend",
+        "editedon": null
+    },
+    {
+        "key": "ms2_use_scheduler",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "minishop2",
+        "area": "ms2_main",
+        "editedon": null
+    },
+    {
+        "key": "ms2_utility_import_fields",
+        "value": "pagetitle,parent,price,article",
+        "xtype": "textfield",
+        "namespace": "minishop2",
+        "area": "ms2_import",
+        "editedon": null
+    },
+    {
+        "key": "ms2_utility_import_fields_delimiter",
+        "value": ";",
+        "xtype": "textfield",
+        "namespace": "minishop2",
+        "area": "ms2_import",
+        "editedon": null
+    },
+    {
+        "key": "ms2_vanila_js",
+        "value": "[[+jsUrl]]web/vanilajs/default.js",
+        "xtype": "textfield",
+        "namespace": "minishop2",
+        "area": "ms2_frontend",
+        "editedon": null
+    },
+    {
+        "key": "ms2_weight_format",
+        "value": "[3, \".\", \" \"]",
+        "xtype": "textfield",
+        "namespace": "minishop2",
+        "area": "ms2_product",
+        "editedon": null
+    },
+    {
+        "key": "ms2_weight_format_no_zeros",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "minishop2",
+        "area": "ms2_product",
+        "editedon": null
+    },
+    {
+        "key": "msexportusersexcel_date_format",
+        "value": "d.m.Y H:i:s",
+        "xtype": "textfield",
+        "namespace": "msexportusersexcel",
+        "area": "msexportusersexcel_excel",
+        "editedon": null
+    },
+    {
+        "key": "msexportusersexcel_date_process",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "msexportusersexcel",
+        "area": "msexportusersexcel_excel",
+        "editedon": null
+    },
+    {
+        "key": "msexportusersexcel_download",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "msexportusersexcel",
+        "area": "msexportusersexcel_file",
+        "editedon": null
+    },
+    {
+        "key": "msexportusersexcel_source_default",
+        "value": "4",
+        "xtype": "modx-combo-source",
+        "namespace": "msexportusersexcel",
+        "area": "msexportusersexcel_file",
+        "editedon": "2025-08-26 10:31:53"
+    },
+    {
+        "key": "msimportexport_export_default_settings",
+        "value": "{\"debug\":0,\"export_format\":\"\",\"filename\":\"\",\"export_path\":\"\",\"file_ttl\":0,\"download_lock_ttl\":\"\",\"archive\":0,\"skip_top_lines\":\"\",\"add_keys\":0,\"add_fields\":0,\"skip_field_parse\":\"\",\"first_delimiter\":\"|\",\"second_delimiter\":\"%\",\"auto_restart_limit\":1,\"limit\":500,\"where\":\"\",\"leftjoin\":\"\",\"innerjoin\":\"\",\"select\":\"\",\"notice\":\"\",\"notice_method\":\"email\",\"notice_email\":\"\",\"notice_status\":[],\"notice_template_subject\":\"Task ID:{$id} status: {$status_text}\",\"notice_template_message\":\"{switch $status}\\r\\n    {case 'initiated'}\\r\\n        Mode:{$mode}; preset ID:{$preset_id} ({$preset_name}) \\r\\n    {case 'completed'}\\r\\n        Mode:{$mode}; preset ID:{$preset_id} ({$preset_name})\\r\\n        <ul>\\r\\n        Stats:\\r\\n        {foreach $stats as $key =>$val}\\r\\n            <li>{$key}: {$val}<\\/li>\\r\\n        {\\/foreach}\\r\\n        <\\/ul>\\r\\n        Total time: {$total_time}\\r\\n    {case 'failed'}\\r\\n        Mode:{$mode}; preset ID:{$preset_id} ({$preset_name})\\r\\n        Stats: {$stats|print}\\r\\n    {case default}\\r\\n        Mode:{$mode}; preset ID:{$preset_id} ({$preset_name})\\r\\n{\\/switch}\",\"csv_delimiter\":\";\",\"csv_enclosure\":\"\\\"\",\"csv_escape\":\"\\\\\\\\\",\"iteration_report\":3,\"task_refresh_freq\":2,\"script_memory_limit\":\"\",\"ctx\":\"\",\"resources\":\"\",\"published_only\":1,\"exclude_deleted\":1}",
+        "xtype": "textfield",
+        "namespace": "msimportexport",
+        "area": "",
+        "editedon": null
+    },
+    {
+        "key": "msimportexport_export_exclude_fields",
+        "value": "type,contentType,donthit,privateweb,privatemgr,content_dispo,class_key,context_key,content_type",
+        "xtype": "textfield",
+        "namespace": "msimportexport",
+        "area": "msimportexport_export",
+        "editedon": null
+    },
+    {
+        "key": "msimportexport_import_default_settings",
+        "value": "{\"debug\":0,\"start_from_line\":\"\",\"file\":\"\",\"remove_source_file\":0,\"first_delimiter\":\"|\",\"second_delimiter\":\"%\",\"iteration_report\":2,\"task_refresh_freq\":15,\"auto_restart_limit\":1,\"csv_delimiter\":\";\",\"csv_enclosure\":\"\\\"\",\"csv_escape\":\"\\\\\\\\\",\"convert_encoding\":\"\",\"source_encode\":\"cp1251\",\"notice\":0,\"notice_method\":\"email\",\"notice_email\":\"\",\"notice_status\":[],\"notice_template_subject\":\"Task ID:{$id} status: {$status_text}\",\"notice_template_message\":\"{switch $status}\\r\\n    {case 'initiated'}\\r\\n        Mode:{$mode}; preset ID:{$preset_id} ({$preset_name}) \\r\\n    {case 'completed'}\\r\\n        Mode:{$mode}; preset ID:{$preset_id} ({$preset_name})\\r\\n        <ul>\\r\\n        Stats:\\r\\n        {foreach $stats as $key =>$val}\\r\\n            <li>{$key}: {$val}<\\/li>\\r\\n        {\\/foreach}\\r\\n        <\\/ul>\\r\\n        Total time: {$total_time}\\r\\n    {case 'failed'}\\r\\n        Mode:{$mode}; preset ID:{$preset_id} ({$preset_name})\\r\\n        Stats: {$stats|print}\\r\\n    {case default}\\r\\n        Mode:{$mode}; preset ID:{$preset_id} ({$preset_name})\\r\\n{\\/switch}\",\"script_memory_limit\":\"\",\"checking_field\":\"pagetitle\",\"check_existence\":1,\"disable_map_generation\":1,\"parent_default\":0,\"parent_delimiter\":\"\",\"skip_empty_parent\":0,\"skip_action\":\"\",\"skip_empty_checking_field\":1,\"check_unique_alias\":0,\"create_unique_alias\":0,\"template_unique_alias\":\"\",\"use_alias_in_search\":0,\"ctx\":\"\",\"completion_action\":\"\",\"text_format_method\":\"nl2br\",\"text_format_fields\":\"\",\"template_resource_default\":1,\"published_resource_default\":1,\"hidemenu_resource_default\":0,\"searchable_resource_default\":1}",
+        "xtype": "textfield",
+        "namespace": "msimportexport",
+        "area": "",
+        "editedon": null
+    },
+    {
+        "key": "msimportexport_import_exclude_fields",
+        "value": "type,contentType,donthit,privateweb,privatemgr,content_dispo,class_key,context_key,content_type,source,image,thumb",
+        "xtype": "textfield",
+        "namespace": "msimportexport",
+        "area": "msimportexport_import",
+        "editedon": null
+    },
+    {
+        "key": "msimportexport_min_php_version",
+        "value": "7.4.*",
+        "xtype": "textfield",
+        "namespace": "msimportexport",
+        "area": "msimportexport_system",
+        "editedon": null
+    },
+    {
+        "key": "msimportexport_readers",
+        "value": "{\"csv\":\"MsIeCSVReader\",\"xlsx\":\"MsIeXLSXReader\",\"ods\":\"MsIeODSReader\",\"json\":\"MsIeJSONReader\",\"xml\":\"MsIeXMLReader\"}",
+        "xtype": "textfield",
+        "namespace": "msimportexport",
+        "area": "msimportexport_system",
+        "editedon": null
+    },
+    {
+        "key": "msimportexport_show_hidden_settings",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "msimportexport",
+        "area": "msimportexport_system",
+        "editedon": null
+    },
+    {
+        "key": "msimportexport_system_settings",
+        "value": "{\"php_interpreter\":\"/usr/bin/php\",\"watcher_script_path\":\"/www/wwwroot/dev.modxstore.net/core/components/msimportexport/scripts/watcher.php\",\"watcher_max_count\":3,\"watcher_wait\":3,\"watcher_lifetime\":1800,\"mysql_wait_timeout\":28800,\"watcher_debug\":0,\"task_list_refresh_freq\":30,\"pid_refresh_freq\":3,\"gc_file_maxlifetime\":259200,\"gc_task_maxlifetime\":259200,\"gc_schedule\":\"5 5 * * *\",\"tmp_path\":\"{+assets_path}tmp/\",\"upload_path\":\"{+assets_path}upload/\",\"export_path\":\"{+assets_path}export/\",\"search_depth\":10,\"daemon_mode\":0}",
+        "xtype": "textarea",
+        "namespace": "msimportexport",
+        "area": "msimportexport_system",
+        "editedon": null
+    },
+    {
+        "key": "msimportexport_task_manager_handler_class",
+        "value": "MsIeTaskManager",
+        "xtype": "textfield",
+        "namespace": "msimportexport",
+        "area": "msimportexport_system",
+        "editedon": null
+    },
+    {
+        "key": "msimportexport_tools_handler_class",
+        "value": "MsIeTools",
+        "xtype": "textfield",
+        "namespace": "msimportexport",
+        "area": "msimportexport_system",
+        "editedon": null
+    },
+    {
+        "key": "msimportexport_watcher_handler_class",
+        "value": "MsIeWatcher",
+        "xtype": "textfield",
+        "namespace": "msimportexport",
+        "area": "msimportexport_system",
+        "editedon": null
+    },
+    {
+        "key": "msimportexport_writers",
+        "value": "{\"csv\":\"MsIeCSVWriter\",\"xlsx\":\"MsIeXLSXWriter\",\"xlsx2\":\"MsIeXLSX2Writer\",\"ods\":\"MsIeODSWriter\",\"json\":\"MsIeJSONWriter\",\"xml\":\"MsIeXMLWriter\"}",
+        "xtype": "textfield",
+        "namespace": "msimportexport",
+        "area": "msimportexport_system",
+        "editedon": null
+    },
+    {
+        "key": "mslistorders_frontend_css",
+        "value": "[[+cssUrl]]web/default.css",
+        "xtype": "textfield",
+        "namespace": "mslistorders",
+        "area": "mslistorders_main",
+        "editedon": null
+    },
+    {
+        "key": "mslistorders_frontend_js",
+        "value": "[[+jsUrl]]web/default.js",
+        "xtype": "textfield",
+        "namespace": "mslistorders",
+        "area": "mslistorders_main",
+        "editedon": null
+    },
+    {
+        "key": "mslistorders_status_cancel",
+        "value": "4",
+        "xtype": "textfield",
+        "namespace": "mslistorders",
+        "area": "mslistorders_main",
+        "editedon": null
+    },
+    {
+        "key": "mslistorders_status_repeat",
+        "value": "1",
+        "xtype": "textfield",
+        "namespace": "mslistorders",
+        "area": "mslistorders_main",
+        "editedon": null
+    },
+    {
+        "key": "msoptionsprice_allow_remains",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "msoptionsprice",
+        "area": "msoptionsprice_main",
+        "editedon": null
+    },
+    {
+        "key": "msoptionsprice_allow_zero_article",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "msoptionsprice",
+        "area": "msoptionsprice_main",
+        "editedon": null
+    },
+    {
+        "key": "msoptionsprice_allow_zero_cost",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "msoptionsprice",
+        "area": "msoptionsprice_main",
+        "editedon": null
+    },
+    {
+        "key": "msoptionsprice_allow_zero_count",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "msoptionsprice",
+        "area": "msoptionsprice_main",
+        "editedon": "2024-03-18 20:18:35"
+    },
+    {
+        "key": "msoptionsprice_allow_zero_mass",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "msoptionsprice",
+        "area": "msoptionsprice_main",
+        "editedon": null
+    },
+    {
+        "key": "msoptionsprice_allow_zero_modification",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "msoptionsprice",
+        "area": "msoptionsprice_main",
+        "editedon": null
+    },
+    {
+        "key": "msoptionsprice_allow_zero_old_cost",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "msoptionsprice",
+        "area": "msoptionsprice_main",
+        "editedon": null
+    },
+    {
+        "key": "msoptionsprice_create_modification_with_duplicate",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "msoptionsprice",
+        "area": "msoptionsprice_main",
+        "editedon": null
+    },
+    {
+        "key": "msoptionsprice_exclude_modification_options",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "msoptionsprice",
+        "area": "msoptionsprice_main",
+        "editedon": null
+    },
+    {
+        "key": "msoptionsprice_frontendCss",
+        "value": "[[+assetsUrl]]css/web/default.css",
+        "xtype": "textfield",
+        "namespace": "msoptionsprice",
+        "area": "msoptionsprice_main",
+        "editedon": null
+    },
+    {
+        "key": "msoptionsprice_frontendJs",
+        "value": "[[+assetsUrl]]js/web/default.js",
+        "xtype": "textfield",
+        "namespace": "msoptionsprice",
+        "area": "msoptionsprice_main",
+        "editedon": null
+    },
+    {
+        "key": "msoptionsprice_grid_modification_fields",
+        "value": "id,name,type,price,old_price,article,weight,count,image",
+        "xtype": "textarea",
+        "namespace": "msoptionsprice",
+        "area": "msoptionsprice_main",
+        "editedon": "2026-03-13 12:00:23"
+    },
+    {
+        "key": "msoptionsprice_include_modification_options",
+        "value": "kit",
+        "xtype": "textfield",
+        "namespace": "msoptionsprice",
+        "area": "msoptionsprice_main",
+        "editedon": "2024-03-18 20:19:06"
+    },
+    {
+        "key": "msoptionsprice_modification_gallery_class",
+        "value": "msProductFile",
+        "xtype": "textfield",
+        "namespace": "msoptionsprice",
+        "area": "msoptionsprice_main",
+        "editedon": null
+    },
+    {
+        "key": "msoptionsprice_modification_thumbs",
+        "value": "small",
+        "xtype": "textarea",
+        "namespace": "msoptionsprice",
+        "area": "msoptionsprice_main",
+        "editedon": null
+    },
+    {
+        "key": "msoptionsprice_number_format",
+        "value": "[2,1]",
+        "xtype": "textfield",
+        "namespace": "msoptionsprice",
+        "area": "msoptionsprice_main",
+        "editedon": null
+    },
+    {
+        "key": "msoptionsprice_search_modification_by_image_strict",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "msoptionsprice",
+        "area": "msoptionsprice_main",
+        "editedon": null
+    },
+    {
+        "key": "msoptionsprice_search_modification_strict",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "msoptionsprice",
+        "area": "msoptionsprice_main",
+        "editedon": null
+    },
+    {
+        "key": "msoptionsprice_sort_modification_option_values",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "msoptionsprice",
+        "area": "msoptionsprice_main",
+        "editedon": null
+    },
+    {
+        "key": "msoptionsprice_status_pickup_remains",
+        "value": "1",
+        "xtype": "textfield",
+        "namespace": "msoptionsprice",
+        "area": "msoptionsprice_main",
+        "editedon": null
+    },
+    {
+        "key": "msoptionsprice_status_return_remains",
+        "value": "4",
+        "xtype": "textfield",
+        "namespace": "msoptionsprice",
+        "area": "msoptionsprice_main",
+        "editedon": null
+    },
+    {
+        "key": "msoptionsprice_window_modification_fields",
+        "value": "name,price,old_price,image,article,weight,count",
+        "xtype": "textarea",
+        "namespace": "msoptionsprice",
+        "area": "msoptionsprice_main",
+        "editedon": null
+    },
+    {
+        "key": "msoptionsprice_window_modification_tabs",
+        "value": "modification",
+        "xtype": "textarea",
+        "namespace": "msoptionsprice",
+        "area": "msoptionsprice_main",
+        "editedon": null
+    },
+    {
+        "key": "msoptionsprice_working_templates",
+        "value": "9",
+        "xtype": "textfield",
+        "namespace": "msoptionsprice",
+        "area": "msoptionsprice_main",
+        "editedon": "2024-03-18 20:19:26"
+    },
+    {
+        "key": "office_auth_activation",
+        "value": "[REDACTED]",
+        "xtype": "combo-boolean",
+        "namespace": "office",
+        "area": "office_auth",
+        "editedon": null
+    },
+    {
+        "key": "office_auth_frontend_css",
+        "value": "[REDACTED]",
+        "xtype": "textfield",
+        "namespace": "office",
+        "area": "office_auth",
+        "editedon": null
+    },
+    {
+        "key": "office_auth_frontend_js",
+        "value": "[REDACTED]",
+        "xtype": "textfield",
+        "namespace": "office",
+        "area": "office_auth",
+        "editedon": null
+    },
+    {
+        "key": "office_auth_mode",
+        "value": "[REDACTED]",
+        "xtype": "textfield",
+        "namespace": "office",
+        "area": "office_auth",
+        "editedon": null
+    },
+    {
+        "key": "office_auth_page_id",
+        "value": "[REDACTED]",
+        "xtype": "numberfield",
+        "namespace": "office",
+        "area": "office_auth",
+        "editedon": "2024-09-11 15:29:59"
+    },
+    {
+        "key": "office_auth_reset_page_id",
+        "value": "[REDACTED]",
+        "xtype": "textfield",
+        "namespace": "office",
+        "area": "",
+        "editedon": null
+    },
+    {
+        "key": "office_check_csrf",
+        "value": "0",
+        "xtype": "combo-boolean",
+        "namespace": "office",
+        "area": "office_main",
+        "editedon": "2024-12-10 13:25:05"
+    },
+    {
+        "key": "office_controllers_paths",
+        "value": "{}",
+        "xtype": "textfield",
+        "namespace": "office",
+        "area": "office_main",
+        "editedon": null
+    },
+    {
+        "key": "office_extjs_css",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "office",
+        "area": "office_main",
+        "editedon": null
+    },
+    {
+        "key": "office_frontend_css",
+        "value": "[[++assets_url]]components/office/css/main/default.css",
+        "xtype": "textfield",
+        "namespace": "office",
+        "area": "office_main",
+        "editedon": null
+    },
+    {
+        "key": "office_frontend_js",
+        "value": "[[++assets_url]]components/office/js/main/default.js",
+        "xtype": "textfield",
+        "namespace": "office",
+        "area": "office_main",
+        "editedon": null
+    },
+    {
+        "key": "office_ms2_date_format",
+        "value": "%d.%m.%y <small>%H:%M</small>",
+        "xtype": "textfield",
+        "namespace": "office",
+        "area": "office_ms2",
+        "editedon": null
+    },
+    {
+        "key": "office_ms2_frontend_css",
+        "value": "[[++assets_url]]components/office/css/minishop2/default.css",
+        "xtype": "textfield",
+        "namespace": "office",
+        "area": "office_ms2",
+        "editedon": null
+    },
+    {
+        "key": "office_ms2_frontend_js",
+        "value": "[[++assets_url]]components/office/js/minishop2/default.js",
+        "xtype": "textfield",
+        "namespace": "office",
+        "area": "office_ms2",
+        "editedon": null
+    },
+    {
+        "key": "office_ms2_order_address_fields",
+        "value": "receiver,phone,index,country,region,city,metro,street,building,room,comment",
+        "xtype": "textarea",
+        "namespace": "office",
+        "area": "office_ms2",
+        "editedon": null
+    },
+    {
+        "key": "office_ms2_order_form_fields",
+        "value": "num,cart_cost,delivery_cost,weight,payment,delivery",
+        "xtype": "textarea",
+        "namespace": "office",
+        "area": "office_ms2",
+        "editedon": null
+    },
+    {
+        "key": "office_ms2_order_grid_fields",
+        "value": "num,status,cost,weigh,delivery,payment,createdon,updatedon",
+        "xtype": "textarea",
+        "namespace": "office",
+        "area": "office_ms2",
+        "editedon": null
+    },
+    {
+        "key": "office_ms2_order_product_fields",
+        "value": "name,product_article,weight,price,count,cost",
+        "xtype": "textarea",
+        "namespace": "office",
+        "area": "office_ms2",
+        "editedon": "2024-03-11 13:44:36"
+    },
+    {
+        "key": "office_profile_frontend_css",
+        "value": "[[++assets_url]]components/office/css/profile/default.css",
+        "xtype": "textfield",
+        "namespace": "office",
+        "area": "office_profile",
+        "editedon": null
+    },
+    {
+        "key": "office_profile_frontend_js",
+        "value": "[[+jsUrl]]profile/default.js",
+        "xtype": "textfield",
+        "namespace": "office",
+        "area": "office_profile",
+        "editedon": null
+    },
+    {
+        "key": "office_profile_page_id",
+        "value": "9",
+        "xtype": "numberfield",
+        "namespace": "office",
+        "area": "office_profile",
+        "editedon": "2024-04-08 13:08:34"
+    },
+    {
+        "key": "office_profile_required_fields",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "office",
+        "area": "office_profile",
+        "editedon": "2024-04-08 13:08:20"
+    },
+    {
+        "key": "office_sanitize_pcre",
+        "value": "/[^-_0-9\\p{L}\\s@.,:\\/\\+()]+/iu",
+        "xtype": "textfield",
+        "namespace": "office",
+        "area": "office_main",
+        "editedon": null
+    },
+    {
+        "key": "office_sms_from",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "office",
+        "area": "office_main",
+        "editedon": null
+    },
+    {
+        "key": "office_sms_id",
+        "value": "",
+        "xtype": "text-password",
+        "namespace": "office",
+        "area": "office_main",
+        "editedon": null
+    },
+    {
+        "key": "office_sms_key",
+        "value": "",
+        "xtype": "text-password",
+        "namespace": "office",
+        "area": "office_main",
+        "editedon": null
+    },
+    {
+        "key": "office_sms_provider",
+        "value": "SmsRu",
+        "xtype": "textfield",
+        "namespace": "office",
+        "area": "office_main",
+        "editedon": null
+    },
+    {
+        "key": "pageblocks_ai_fake",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "pageblocks",
+        "area": "AI",
+        "editedon": null
+    },
+    {
+        "key": "pageblocks_apikey",
+        "value": "[REDACTED]",
+        "xtype": "textfield",
+        "namespace": "pageblocks",
+        "area": "main",
+        "editedon": null
+    },
+    {
+        "key": "pageblocks_chatgpt_apikey",
+        "value": "[REDACTED]",
+        "xtype": "textfield",
+        "namespace": "pageblocks",
+        "area": "ChatGPT",
+        "editedon": null
+    },
+    {
+        "key": "pageblocks_chatgpt_model",
+        "value": "gpt-4o-2024-05-13",
+        "xtype": "textfield",
+        "namespace": "pageblocks",
+        "area": "ChatGPT",
+        "editedon": null
+    },
+    {
+        "key": "pageblocks_chatgpt_prompt",
+        "value": "translate from [[+from]] to [[+to]]: ",
+        "xtype": "textfield",
+        "namespace": "pageblocks",
+        "area": "ChatGPT",
+        "editedon": null
+    },
+    {
+        "key": "pageblocks_context_aware",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "pageblocks",
+        "area": "translate",
+        "editedon": null
+    },
+    {
+        "key": "pageblocks_create_chunks",
+        "value": "base",
+        "xtype": "textfield",
+        "namespace": "pageblocks",
+        "area": "chunks",
+        "editedon": null
+    },
+    {
+        "key": "pageblocks_deepl_account",
+        "value": "[REDACTED]",
+        "xtype": "modx-combo-deepl",
+        "namespace": "pageblocks",
+        "area": "DeepL",
+        "editedon": null
+    },
+    {
+        "key": "pageblocks_deepl_apikey",
+        "value": "[REDACTED]",
+        "xtype": "textfield",
+        "namespace": "pageblocks",
+        "area": "DeepL",
+        "editedon": null
+    },
+    {
+        "key": "pageblocks_deepl_free_url",
+        "value": "https://api-free.deepl.com/v2/",
+        "xtype": "textfield",
+        "namespace": "pageblocks",
+        "area": "DeepL",
+        "editedon": null
+    },
+    {
+        "key": "pageblocks_deepl_pro_url",
+        "value": "https://api.deepl.com/v2/",
+        "xtype": "textfield",
+        "namespace": "pageblocks",
+        "area": "DeepL",
+        "editedon": null
+    },
+    {
+        "key": "pageblocks_deepl_word_count",
+        "value": "3",
+        "xtype": "numberfield",
+        "namespace": "pageblocks",
+        "area": "DeepLGPT",
+        "editedon": null
+    },
+    {
+        "key": "pageblocks_grid_stateful",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "pageblocks",
+        "area": "grid",
+        "editedon": null
+    },
+    {
+        "key": "pageblocks_hide_parents",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "pageblocks",
+        "area": "main",
+        "editedon": null
+    },
+    {
+        "key": "pageblocks_hide_resources",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "pageblocks",
+        "area": "main",
+        "editedon": null
+    },
+    {
+        "key": "pageblocks_hide_templates",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "pageblocks",
+        "area": "main",
+        "editedon": null
+    },
+    {
+        "key": "pageblocks_remove_file",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "pageblocks",
+        "area": "gallery",
+        "editedon": null
+    },
+    {
+        "key": "pageblocks_source_path",
+        "value": "assets/images/",
+        "xtype": "textfield",
+        "namespace": "pageblocks",
+        "area": "gallery",
+        "editedon": null
+    },
+    {
+        "key": "pageblocks_tab_index",
+        "value": "0",
+        "xtype": "numberfield",
+        "namespace": "pageblocks",
+        "area": "main",
+        "editedon": null
+    },
+    {
+        "key": "pageblocks_translator",
+        "value": "",
+        "xtype": "modx-combo-translate",
+        "namespace": "pageblocks",
+        "area": "translate",
+        "editedon": null
+    },
+    {
+        "key": "parser_class",
+        "value": "pdoParser",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "site",
+        "editedon": null
+    },
+    {
+        "key": "parser_class_path",
+        "value": "{core_path}components/pdotools/model/pdotools/",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "site",
+        "editedon": null
+    },
+    {
+        "key": "parser_recurse_uncacheable",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "system",
+        "editedon": null
+    },
+    {
+        "key": "password_generated_length",
+        "value": "[REDACTED]",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "authentication",
+        "editedon": null
+    },
+    {
+        "key": "password_min_length",
+        "value": "[REDACTED]",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "authentication",
+        "editedon": null
+    },
+    {
+        "key": "pdoFetch.class",
+        "value": "pdotools.pdofetch",
+        "xtype": "textfield",
+        "namespace": "pdotools",
+        "area": "pdotools_main",
+        "editedon": null
+    },
+    {
+        "key": "pdofetch_class_path",
+        "value": "{core_path}components/pdotools/model/",
+        "xtype": "textfield",
+        "namespace": "pdotools",
+        "area": "pdotools_main",
+        "editedon": null
+    },
+    {
+        "key": "pdoTools.class",
+        "value": "pdotools.pdotools",
+        "xtype": "textfield",
+        "namespace": "pdotools",
+        "area": "pdotools_main",
+        "editedon": null
+    },
+    {
+        "key": "pdotools_class_path",
+        "value": "{core_path}components/pdotools/model/",
+        "xtype": "textfield",
+        "namespace": "pdotools",
+        "area": "pdotools_main",
+        "editedon": null
+    },
+    {
+        "key": "pdotools_elements_path",
+        "value": "{core_path}elements/",
+        "xtype": "textfield",
+        "namespace": "pdotools",
+        "area": "pdotools_main",
+        "editedon": null
+    },
+    {
+        "key": "pdotools_fenom_cache",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "pdotools",
+        "area": "pdotools_main",
+        "editedon": null
+    },
+    {
+        "key": "pdotools_fenom_default",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "pdotools",
+        "area": "pdotools_main",
+        "editedon": null
+    },
+    {
+        "key": "pdotools_fenom_modx",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "pdotools",
+        "area": "pdotools_main",
+        "editedon": "2024-02-19 12:53:12"
+    },
+    {
+        "key": "pdotools_fenom_options",
+        "value": "",
+        "xtype": "textarea",
+        "namespace": "pdotools",
+        "area": "pdotools_main",
+        "editedon": null
+    },
+    {
+        "key": "pdotools_fenom_parser",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "pdotools",
+        "area": "pdotools_main",
+        "editedon": "2024-02-19 12:53:13"
+    },
+    {
+        "key": "pdotools_fenom_php",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "pdotools",
+        "area": "pdotools_main",
+        "editedon": "2024-02-19 12:53:15"
+    },
+    {
+        "key": "pdotools_fenom_save_on_errors",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "pdotools",
+        "area": "pdotools_main",
+        "editedon": null
+    },
+    {
+        "key": "phpthumb_allow_src_above_docroot",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "phpthumb",
+        "editedon": null
+    },
+    {
+        "key": "phpthumb_cache_maxage",
+        "value": "30",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "phpthumb",
+        "editedon": null
+    },
+    {
+        "key": "phpthumb_cache_maxfiles",
+        "value": "10000",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "phpthumb",
+        "editedon": null
+    },
+    {
+        "key": "phpthumb_cache_maxsize",
+        "value": "100",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "phpthumb",
+        "editedon": null
+    },
+    {
+        "key": "phpthumb_cache_source_enabled",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "phpthumb",
+        "editedon": null
+    },
+    {
+        "key": "phpthumb_document_root",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "phpthumb",
+        "editedon": null
+    },
+    {
+        "key": "phpthumb_error_bgcolor",
+        "value": "CCCCFF",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "phpthumb",
+        "editedon": null
+    },
+    {
+        "key": "phpthumb_error_fontsize",
+        "value": "1",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "phpthumb",
+        "editedon": null
+    },
+    {
+        "key": "phpthumb_error_textcolor",
+        "value": "FF0000",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "phpthumb",
+        "editedon": null
+    },
+    {
+        "key": "phpthumb_far",
+        "value": "C",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "phpthumb",
+        "editedon": null
+    },
+    {
+        "key": "phpthumb_imagemagick_path",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "phpthumb",
+        "editedon": null
+    },
+    {
+        "key": "phpthumb_nohotlink_enabled",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "phpthumb",
+        "editedon": null
+    },
+    {
+        "key": "phpthumb_nohotlink_erase_image",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "phpthumb",
+        "editedon": null
+    },
+    {
+        "key": "phpthumb_nohotlink_text_message",
+        "value": "Off-server thumbnailing is not allowed",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "phpthumb",
+        "editedon": null
+    },
+    {
+        "key": "phpthumb_nohotlink_valid_domains",
+        "value": "{http_host}",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "phpthumb",
+        "editedon": null
+    },
+    {
+        "key": "phpthumb_nooffsitelink_enabled",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "phpthumb",
+        "editedon": null
+    },
+    {
+        "key": "phpthumb_nooffsitelink_erase_image",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "phpthumb",
+        "editedon": null
+    },
+    {
+        "key": "phpthumb_nooffsitelink_require_refer",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "phpthumb",
+        "editedon": null
+    },
+    {
+        "key": "phpthumb_nooffsitelink_text_message",
+        "value": "Off-server linking is not allowed",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "phpthumb",
+        "editedon": null
+    },
+    {
+        "key": "phpthumb_nooffsitelink_valid_domains",
+        "value": "{http_host}",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "phpthumb",
+        "editedon": null
+    },
+    {
+        "key": "phpthumb_nooffsitelink_watermark_src",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "phpthumb",
+        "editedon": null
+    },
+    {
+        "key": "phpthumb_zoomcrop",
+        "value": "0",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "phpthumb",
+        "editedon": null
+    },
+    {
+        "key": "preserve_menuindex",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "principal_targets",
+        "value": "modAccessContext,modAccessResourceGroup,modAccessCategory,sources.modAccessMediaSource,modAccessNamespace",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "authentication",
+        "editedon": null
+    },
+    {
+        "key": "proxy_auth_type",
+        "value": "[REDACTED]",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "proxy",
+        "editedon": null
+    },
+    {
+        "key": "proxy_host",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "proxy",
+        "editedon": null
+    },
+    {
+        "key": "proxy_password",
+        "value": "[REDACTED]",
+        "xtype": "text-password",
+        "namespace": "core",
+        "area": "proxy",
+        "editedon": null
+    },
+    {
+        "key": "proxy_port",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "proxy",
+        "editedon": null
+    },
+    {
+        "key": "proxy_username",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "proxy",
+        "editedon": null
+    },
+    {
+        "key": "publish_default",
+        "value": "0",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "site",
+        "editedon": "2024-04-08 13:06:49"
+    },
+    {
+        "key": "rb_base_dir",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "file",
+        "editedon": null
+    },
+    {
+        "key": "rb_base_url",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "file",
+        "editedon": null
+    },
+    {
+        "key": "recaptcha.private_key",
+        "value": "[REDACTED]",
+        "xtype": "textfield",
+        "namespace": "login",
+        "area": "recaptcha",
+        "editedon": null
+    },
+    {
+        "key": "recaptcha.public_key",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "login",
+        "area": "recaptcha",
+        "editedon": null
+    },
+    {
+        "key": "recaptcha.use_ssl",
+        "value": "false",
+        "xtype": "combo-boolean",
+        "namespace": "login",
+        "area": "recaptcha",
+        "editedon": null
+    },
+    {
+        "key": "request_controller",
+        "value": "index.php",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "gateway",
+        "editedon": null
+    },
+    {
+        "key": "request_method_strict",
+        "value": "0",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "gateway",
+        "editedon": null
+    },
+    {
+        "key": "request_param_alias",
+        "value": "q",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "gateway",
+        "editedon": null
+    },
+    {
+        "key": "request_param_id",
+        "value": "id",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "gateway",
+        "editedon": null
+    },
+    {
+        "key": "resolve_hostnames",
+        "value": "0",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "system",
+        "editedon": null
+    },
+    {
+        "key": "resource_static_allow_absolute",
+        "value": "0",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "static_resources",
+        "editedon": null
+    },
+    {
+        "key": "resource_static_path",
+        "value": "{assets_path}",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "static_resources",
+        "editedon": null
+    },
+    {
+        "key": "resource_tree_node_name",
+        "value": "pagetitle",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "resource_tree_node_name_fallback",
+        "value": "pagetitle",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "resource_tree_node_tooltip",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "richtext_default",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "search_default",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "site",
+        "editedon": "2024-04-08 13:06:47"
+    },
+    {
+        "key": "send_poweredby_header",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "system",
+        "editedon": "2024-02-19 12:08:48"
+    },
+    {
+        "key": "server_offset_time",
+        "value": "0",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "system",
+        "editedon": null
+    },
+    {
+        "key": "server_protocol",
+        "value": "http",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "system",
+        "editedon": null
+    },
+    {
+        "key": "session_cookie_domain",
+        "value": "[REDACTED]",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "session",
+        "editedon": null
+    },
+    {
+        "key": "session_cookie_httponly",
+        "value": "[REDACTED]",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "session",
+        "editedon": null
+    },
+    {
+        "key": "session_cookie_lifetime",
+        "value": "[REDACTED]",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "session",
+        "editedon": null
+    },
+    {
+        "key": "session_cookie_path",
+        "value": "[REDACTED]",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "session",
+        "editedon": null
+    },
+    {
+        "key": "session_cookie_samesite",
+        "value": "[REDACTED]",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "session",
+        "editedon": null
+    },
+    {
+        "key": "session_cookie_secure",
+        "value": "[REDACTED]",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "session",
+        "editedon": null
+    },
+    {
+        "key": "session_gc_maxlifetime",
+        "value": "[REDACTED]",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "session",
+        "editedon": null
+    },
+    {
+        "key": "session_handler_class",
+        "value": "[REDACTED]",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "session",
+        "editedon": null
+    },
+    {
+        "key": "session_name",
+        "value": "[REDACTED]",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "session",
+        "editedon": null
+    },
+    {
+        "key": "settings_distro",
+        "value": "traditional",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "system",
+        "editedon": null
+    },
+    {
+        "key": "settings_version",
+        "value": "2.8.5-pl",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "system",
+        "editedon": null
+    },
+    {
+        "key": "set_header",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "system",
+        "editedon": null
+    },
+    {
+        "key": "show_tv_categories_header",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "signupemail_message",
+        "value": "<p>Hello [[+uid]],</p>\n    <p>Here are your login details for the [[+sname]] MODX Manager:</p>\n\n    <p>\n        <strong>Username:</strong> [[+uid]]<br />\n        <strong>Password:</strong> [[+pwd]]<br />\n    </p>\n\n    <p>Once you log into the MODX Manager at [[+surl]], you can change your password.</p>\n\n    <p>Regards,<br />Site Administrator</p>",
+        "xtype": "textarea",
+        "namespace": "core",
+        "area": "authentication",
+        "editedon": null
+    },
+    {
+        "key": "site_name",
+        "value": "Компания Сканпорт",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "site",
+        "editedon": "2024-07-17 15:48:17"
+    },
+    {
+        "key": "site_start",
+        "value": "12",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "site",
+        "editedon": "2024-03-11 10:39:02"
+    },
+    {
+        "key": "site_status",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "site",
+        "editedon": "2024-04-08 13:06:52"
+    },
+    {
+        "key": "site_unavailable_message",
+        "value": "The site is currently unavailable",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "site",
+        "editedon": null
+    },
+    {
+        "key": "site_unavailable_page",
+        "value": "0",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "site",
+        "editedon": null
+    },
+    {
+        "key": "static_elements_automate_chunks",
+        "value": "0",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "static_elements",
+        "editedon": null
+    },
+    {
+        "key": "static_elements_automate_plugins",
+        "value": "0",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "static_elements",
+        "editedon": null
+    },
+    {
+        "key": "static_elements_automate_snippets",
+        "value": "0",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "static_elements",
+        "editedon": null
+    },
+    {
+        "key": "static_elements_automate_templates",
+        "value": "0",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "static_elements",
+        "editedon": null
+    },
+    {
+        "key": "static_elements_automate_tvs",
+        "value": "0",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "static_elements",
+        "editedon": null
+    },
+    {
+        "key": "static_elements_basepath",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "static_elements",
+        "editedon": null
+    },
+    {
+        "key": "static_elements_default_category",
+        "value": "0",
+        "xtype": "modx-combo-category",
+        "namespace": "core",
+        "area": "static_elements",
+        "editedon": null
+    },
+    {
+        "key": "static_elements_default_mediasource",
+        "value": "0",
+        "xtype": "modx-combo-source",
+        "namespace": "core",
+        "area": "static_elements",
+        "editedon": null
+    },
+    {
+        "key": "static_elements_html_extension",
+        "value": ".tpl",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "static_elements",
+        "editedon": null
+    },
+    {
+        "key": "strip_image_paths",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "file",
+        "editedon": null
+    },
+    {
+        "key": "swal2_ajaxform",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "sweetalert2",
+        "area": "swal2_packages",
+        "editedon": null
+    },
+    {
+        "key": "swal2_frontend_css",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "sweetalert2",
+        "area": "swal2_frontend",
+        "editedon": null
+    },
+    {
+        "key": "swal2_frontend_js",
+        "value": "[[+jsUrl]]sweetalert2.all.min.js,[[+jsUrl]]default.min.js",
+        "xtype": "textfield",
+        "namespace": "sweetalert2",
+        "area": "swal2_frontend",
+        "editedon": null
+    },
+    {
+        "key": "swal2_minishop2",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "sweetalert2",
+        "area": "swal2_packages",
+        "editedon": null
+    },
+    {
+        "key": "swal2_msoneclick",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "sweetalert2",
+        "area": "swal2_packages",
+        "editedon": null
+    },
+    {
+        "key": "swal2_office",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "sweetalert2",
+        "area": "swal2_packages",
+        "editedon": null
+    },
+    {
+        "key": "swal2_position",
+        "value": "top-end",
+        "xtype": "textfield",
+        "namespace": "sweetalert2",
+        "area": "swal2_main",
+        "editedon": null
+    },
+    {
+        "key": "swal2_showconfirmbutton",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "sweetalert2",
+        "area": "swal2_main",
+        "editedon": null
+    },
+    {
+        "key": "swal2_timer",
+        "value": "3000",
+        "xtype": "numberfield",
+        "namespace": "sweetalert2",
+        "area": "swal2_main",
+        "editedon": null
+    },
+    {
+        "key": "swal2_toast",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "sweetalert2",
+        "area": "swal2_main",
+        "editedon": null
+    },
+    {
+        "key": "swal2_width",
+        "value": "19rem",
+        "xtype": "textfield",
+        "namespace": "sweetalert2",
+        "area": "swal2_main",
+        "editedon": null
+    },
+    {
+        "key": "symlink_merge_fields",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "site",
+        "editedon": null
+    },
+    {
+        "key": "syncsite_default",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "caching",
+        "editedon": null
+    },
+    {
+        "key": "topmenu_show_descriptions",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "training.assets_path",
+        "value": "/var/www/partners_sca_usr/data/www/partners.scanport.ru/assets/components/training/",
+        "xtype": "textfield",
+        "namespace": "training",
+        "area": "Paths",
+        "editedon": null
+    },
+    {
+        "key": "training.assets_url",
+        "value": "/assets/components/training/",
+        "xtype": "textfield",
+        "namespace": "training",
+        "area": "Paths",
+        "editedon": null
+    },
+    {
+        "key": "training.connector_url",
+        "value": "/assets/components/training/connector.php",
+        "xtype": "textfield",
+        "namespace": "training",
+        "area": "Paths",
+        "editedon": null
+    },
+    {
+        "key": "training.core_path",
+        "value": "/var/www/partners_sca_usr/data/www/partners.scanport.ru/core/components/training/",
+        "xtype": "textfield",
+        "namespace": "training",
+        "area": "Paths",
+        "editedon": null
+    },
+    {
+        "key": "training.courses_parent_id",
+        "value": "150",
+        "xtype": "textfield",
+        "namespace": "training",
+        "area": "Resources",
+        "editedon": null
+    },
+    {
+        "key": "training.course_request_email",
+        "value": "syrbachev@scanport.ru",
+        "xtype": "textfield",
+        "namespace": "training",
+        "area": "course_request",
+        "editedon": "2026-05-19 14:46:38"
+    },
+    {
+        "key": "training.files_path",
+        "value": "/var/www/partners_sca_usr/data/www/partners.scanport.ru/assets/training/",
+        "xtype": "textfield",
+        "namespace": "training",
+        "area": "Files",
+        "editedon": null
+    },
+    {
+        "key": "training.files_url",
+        "value": "/assets/training/",
+        "xtype": "textfield",
+        "namespace": "training",
+        "area": "Files",
+        "editedon": null
+    },
+    {
+        "key": "training.practice_notification_email",
+        "value": "syrbachev@scanport.ru",
+        "xtype": "textfield",
+        "namespace": "training",
+        "area": "practice",
+        "editedon": "2026-05-19 15:18:10"
+    },
+    {
+        "key": "training.processors_path",
+        "value": "/var/www/partners_sca_usr/data/www/partners.scanport.ru/core/components/training/processors/",
+        "xtype": "textfield",
+        "namespace": "training",
+        "area": "Paths",
+        "editedon": null
+    },
+    {
+        "key": "training.training_media_source",
+        "value": "1",
+        "xtype": "modx-combo-source",
+        "namespace": "training",
+        "area": "Files",
+        "editedon": "2026-03-24 17:07:20"
+    },
+    {
+        "key": "training.training_practice_resource_id",
+        "value": "176",
+        "xtype": "numberfield",
+        "namespace": "training",
+        "area": "training",
+        "editedon": "2026-05-06 21:25:30"
+    },
+    {
+        "key": "training_activity_ajax_mode",
+        "value": "0",
+        "xtype": "combo-boolean",
+        "namespace": "training",
+        "area": "training",
+        "editedon": null
+    },
+    {
+        "key": "translitor_language",
+        "value": "ru",
+        "xtype": "textfield",
+        "namespace": "translitor",
+        "area": "translitor_main",
+        "editedon": null
+    },
+    {
+        "key": "tree_default_sort",
+        "value": "menuindex",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "tree_root_id",
+        "value": "0",
+        "xtype": "numberfield",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "tvs_below_content",
+        "value": "0",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "udperms_allowroot",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "authentication",
+        "editedon": null
+    },
+    {
+        "key": "unauthorized_page",
+        "value": "[REDACTED]",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "site",
+        "editedon": null
+    },
+    {
+        "key": "upload_check_exists",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "file",
+        "editedon": null
+    },
+    {
+        "key": "upload_files",
+        "value": "txt,html,htm,xml,js,js.map,css,scss,less,css.map,zip,gz,rar,z,tgz,tar,mp3,mp4,aac,wav,au,wmv,avi,mpg,mpeg,pdf,doc,docx,xls,xlsx,ppt,pptx,jpg,jpeg,png,tiff,svg,svgz,gif,psd,ico,bmp,webp,avif,odt,ods,odp,odb,odg,odf,md,ttf,woff,woff2,eot,php,json,csv,mkv,tpl",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "file",
+        "editedon": "2026-03-23 13:41:02"
+    },
+    {
+        "key": "upload_flash",
+        "value": "swf,fla",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "file",
+        "editedon": null
+    },
+    {
+        "key": "upload_images",
+        "value": "jpg,jpeg,png,gif,psd,ico,bmp,tiff,svg,svgz,webp,avif",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "file",
+        "editedon": null
+    },
+    {
+        "key": "upload_maxsize",
+        "value": "5242880000",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "file",
+        "editedon": "2024-02-19 12:08:48"
+    },
+    {
+        "key": "upload_media",
+        "value": "mp3,wav,au,wmv,avi,mpg,mpeg,mkv",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "file",
+        "editedon": "2026-04-02 10:36:05"
+    },
+    {
+        "key": "usertest_access_export_groups",
+        "value": "Administrator",
+        "xtype": "textfield",
+        "namespace": "usertest",
+        "area": "default",
+        "editedon": null
+    },
+    {
+        "key": "usertest_create_modx_users",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "usertest",
+        "area": "default",
+        "editedon": null
+    },
+    {
+        "key": "usertest_default_questions_validate",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "usertest",
+        "area": "default",
+        "editedon": null
+    },
+    {
+        "key": "usertest_group_created_modx_users",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "usertest",
+        "area": "default",
+        "editedon": null
+    },
+    {
+        "key": "usertest_invite_email_from",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "usertest",
+        "area": "default",
+        "editedon": null
+    },
+    {
+        "key": "usertest_invite_email_from_name",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "usertest",
+        "area": "default",
+        "editedon": null
+    },
+    {
+        "key": "usertest_teachers_email",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "usertest",
+        "area": "default",
+        "editedon": null
+    },
+    {
+        "key": "usertest_user_groups",
+        "value": "",
+        "xtype": "textfield",
+        "namespace": "usertest",
+        "area": "default",
+        "editedon": null
+    },
+    {
+        "key": "usertest_use_emailqueue_for_invites",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "usertest",
+        "area": "default",
+        "editedon": null
+    },
+    {
+        "key": "usertest_use_richtexteditor",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "usertest",
+        "area": "default",
+        "editedon": null
+    },
+    {
+        "key": "usertest_use_richtexteditor_in_answers",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "usertest",
+        "area": "default",
+        "editedon": null
+    },
+    {
+        "key": "usertest_use_richtexteditor_in_child_questions",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "usertest",
+        "area": "default",
+        "editedon": null
+    },
+    {
+        "key": "usertest_use_richtexteditor_in_edit_test",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "usertest",
+        "area": "default",
+        "editedon": null
+    },
+    {
+        "key": "usertest_use_richtexteditor_in_questions",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "usertest",
+        "area": "default",
+        "editedon": null
+    },
+    {
+        "key": "usertest_use_richtexteditor_in_variants",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "usertest",
+        "area": "default",
+        "editedon": null
+    },
+    {
+        "key": "user_nav_parent",
+        "value": "usernav",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "use_alias_path",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "furls",
+        "editedon": "2024-02-19 14:19:11"
+    },
+    {
+        "key": "use_browser",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "file",
+        "editedon": null
+    },
+    {
+        "key": "use_context_resource_table",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "caching",
+        "editedon": null
+    },
+    {
+        "key": "use_editor",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "editor",
+        "editedon": null
+    },
+    {
+        "key": "use_frozen_parent_uris",
+        "value": "0",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "furls",
+        "editedon": null
+    },
+    {
+        "key": "use_multibyte",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "language",
+        "editedon": "2024-02-19 12:08:48"
+    },
+    {
+        "key": "use_weblink_target",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "site",
+        "editedon": null
+    },
+    {
+        "key": "webpwdreminder_message",
+        "value": "<p>Hello [[+uid]],</p>\n\n    <p>To activate your new password click the following link:</p>\n\n    <p>[[+surl]]</p>\n\n    <p>If successful you can use the following password to login:</p>\n\n    <p><strong>Password:</strong> [[+pwd]]</p>\n\n    <p>If you did not request this email then please ignore it.</p>\n\n    <p>Regards,<br />\n    Site Administrator</p>",
+        "xtype": "textarea",
+        "namespace": "core",
+        "area": "authentication",
+        "editedon": null
+    },
+    {
+        "key": "websignupemail_message",
+        "value": "<p>Hello [[+uid]],</p>\n\n    <p>Here are your login details for [[+sname]]:</p>\n\n    <p><strong>Username:</strong> [[+uid]]<br />\n    <strong>Password:</strong> [[+pwd]]</p>\n\n    <p>Once you log into [[+sname]] at [[+surl]], you can change your password.</p>\n\n    <p>Regards,<br />\n    Site Administrator</p>",
+        "xtype": "textarea",
+        "namespace": "core",
+        "area": "authentication",
+        "editedon": null
+    },
+    {
+        "key": "welcome_action",
+        "value": "welcome",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "welcome_namespace",
+        "value": "core",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "welcome_screen",
+        "value": "",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": "2024-02-19 12:10:46"
+    },
+    {
+        "key": "welcome_screen_url",
+        "value": "//misc.modx.com/revolution/welcome.28.html",
+        "xtype": "textfield",
+        "namespace": "core",
+        "area": "manager",
+        "editedon": null
+    },
+    {
+        "key": "which_editor",
+        "value": "CKEditor",
+        "xtype": "modx-combo-rte",
+        "namespace": "core",
+        "area": "editor",
+        "editedon": "2026-02-10 10:11:18"
+    },
+    {
+        "key": "which_element_editor",
+        "value": "Ace",
+        "xtype": "modx-combo-rte",
+        "namespace": "core",
+        "area": "editor",
+        "editedon": "2024-02-19 12:51:22"
+    },
+    {
+        "key": "xhtml_urls",
+        "value": "1",
+        "xtype": "combo-boolean",
+        "namespace": "core",
+        "area": "site",
+        "editedon": null
+    }
+]

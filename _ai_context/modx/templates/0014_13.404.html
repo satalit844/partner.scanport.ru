@@ -1,0 +1,11 @@
+{extends 'template:01.base'}
+{block 'content'}
+    {if !$_modx->isAuthenticated('web')}
+        {$_modx->sendRedirect(12 | url)}
+    {/if}
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="error-page">
+            <img src="theme/images/error-page/404.svg" class="img-svg w-100 h-100">
+        <div>
+    </div>
+{/block}

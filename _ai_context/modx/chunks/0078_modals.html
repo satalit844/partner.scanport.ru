@@ -1,0 +1,242 @@
+{if $_modx->resource.template == 15}
+    <div class="modal fade" id="sertModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content sert-modal">
+          <div class="modal-body p-0">
+            <div class="sert-modal__wrap">
+              <img class="sert-modal__img"
+                   src="theme/images/training/sert/image_1.jpg"
+                   alt="Сертификат">
+    
+              <div class="sert-modal__actions">
+                <a class="sert-modal__download" href="theme/images/training/sert/image_1.jpg" download>
+                  <span>Скачать</span>
+                  <img src="theme/images/training/all-course/download-ico.svg" class="img-svg" alt="">
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade testListModal" id="testListModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered testListModal__dialog">
+            <div class="modal-content testListModal__content">
+                {*<button type="button" class="testListModal__close" data-bs-dismiss="modal" aria-label="Закрыть">
+                    <img src="theme/images/training/tests/close-ico.svg" class="img-svg" alt="Закрыть">
+                </button>*}
+    
+                <div class="testListModal__head">
+                    <div class="testListModal__grid testListModal__grid--head">
+                        <div>Вопрос</div>
+                        <div>Результат</div>
+                        <div>Баллы</div>
+                    </div>
+                </div>
+    
+                <div class="testListModal__body">
+                    <div class="testListModal__list">
+    
+                        <div class="testListModal__row">
+                            <div class="testListModal__number">
+                                1
+                            </div>
+                            <div class="testListModal__question">
+                                Какие основные группы штрихкодов вы знаете?
+                            </div>
+                            <div class="testListModal__result">-</div>
+                            <div class="testListModal__score">0 / 10</div>
+                        </div>
+    
+                        <div class="testListModal__row">
+                            <div class="testListModal__number">
+                                2
+                            </div>
+                            <div class="testListModal__question">
+                                Какая информация зашифрована в штрихкоде EAN
+                            </div>
+                            <div class="testListModal__result">-</div>
+                            <div class="testListModal__score">0 / 10</div>
+                        </div>
+    
+                        <div class="testListModal__row">
+                            <div class="testListModal__number">
+                                3
+                            </div>
+                            <div class="testListModal__question">
+                                Какие обязательные элементы используются в QR кодах
+                            </div>
+                            <div class="testListModal__result">-</div>
+                            <div class="testListModal__score">0 / 10</div>
+                        </div>
+    
+                        <div class="testListModal__row">
+                            <div class="testListModal__number">
+                                3
+                            </div>
+                            <div class="testListModal__question">
+                                Плотность печати штрихкодов связана
+                            </div>
+                            <div class="testListModal__result">-</div>
+                            <div class="testListModal__score">0 / 10</div>
+                        </div>
+    
+                        <div class="testListModal__row">
+                            <div class="testListModal__number">
+                                5
+                            </div>
+                            <div class="testListModal__question">
+                                Какие сканеры умеют читать линейные штрихкоды?
+                            </div>
+                            <div class="testListModal__result">-</div>
+                            <div class="testListModal__score">0 / 10</div>
+                        </div>
+    
+                        <div class="testListModal__row">
+                            <div class="testListModal__number">
+                                6
+                            </div>
+                            <div class="testListModal__question">
+                                Клиент приобрёл новый беспроводной сканер
+                            </div>
+                            <div class="testListModal__result">-</div>
+                            <div class="testListModal__score">0 / 10</div>
+                        </div>
+    
+                        <div class="testListModal__row">
+                            <div class="testListModal__number">
+                                7
+                            </div>
+                            <div class="testListModal__question">
+                                Как проверить качество печати штрихкода?
+                            </div>
+                            <div class="testListModal__result">-</div>
+                            <div class="testListModal__score">0 / 10</div>
+                        </div>
+    
+                        <div class="testListModal__row">
+                            <div class="testListModal__number">
+                                8
+                            </div>
+                            <div class="testListModal__question">
+                                Какие ошибки чаще всего возникают при маркировке?
+                            </div>
+                            <div class="testListModal__result">-</div>
+                            <div class="testListModal__score">0 / 10</div>
+                        </div>
+    
+                        <div class="testListModal__row">
+                            <div class="testListModal__number">
+                                9
+                            </div>
+                            <div class="testListModal__question">
+                                Какой формат используется для маркировки товаров?
+                            </div>
+                            <div class="testListModal__result">-</div>
+                            <div class="testListModal__score">0 / 10</div>
+                        </div>
+    
+                        <div class="testListModal__row">
+                            <div class="testListModal__number">
+                                10
+                            </div>
+                            <div class="testListModal__question">
+                                Чем двумерный код отличается от линейного?
+                            </div>
+                            <div class="testListModal__result">-</div>
+                            <div class="testListModal__score">0 / 10</div>
+                        </div>
+    
+                        <div class="testListModal__row">
+                            <div class="testListModal__number">
+                                11
+                            </div>
+                            <div class="testListModal__question">
+                                Как настроить терминал сбора данных для работы?
+                            </div>
+                            <div class="testListModal__result">-</div>
+                            <div class="testListModal__score">0 / 10</div>
+                        </div>
+    
+                        <div class="testListModal__row">
+                            <div class="testListModal__number">
+                                12
+                            </div>
+                            <div class="testListModal__question">
+                                Что важно учитывать при интеграции AutoID?
+                            </div>
+                            <div class="testListModal__result">-</div>
+                            <div class="testListModal__score">0 / 10</div>
+                        </div>
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{/if}
+
+{if $_modx->resource.parent != 11}
+    <div class="modal fade" id="callback" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="callbackLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content callback-form">
+                <div class="modal-header pt-0 pb-3">
+                    <div class="callback-title">Задать вопрос менеджеру</div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {set $email = 'email_callback' | config}
+                    {set $sender = 'emailsender' | config}
+                    {'!AjaxForm' | snippet : [
+                        'form' => 'tpl.callback.form',
+                        'emailTpl' => 'email.callback.admin',
+                        'preHooks' => 'checkSpamTime',
+                        'hooks' => 'checkSpamTime,FormItSaveForm,email',
+                        'formName' => 'Задать вопрос',
+                        'formFields' => 'fullname,email,field_list_company,message',
+                        'fieldNames' => 'fullname==ФИО,email==email,field_list_company==Компания,message==Сообщение',
+                        'emailFrom' => $sender,
+                        'emailTo' => $email,
+                        'emailSubject' => 'Форма обратной связи Компания Сканпорт',
+                        'validate' => 'fullname:required,email:email:required,field_list_company:required,message:required,addr:blank',
+                        'validationErrorMessage' => 'В форме содержатся ошибки!!!',
+                        'successMessage' => 'Ваша форма успешно отправлена!',
+                    ]}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="thenks" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="thenksLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content callback-form">
+                <div class="modal-header pt-0 pb-3">
+                    <div class="callback-title">Спасибо за обращение</div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>{'form_thenks' | config}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {set $ids_resources = 'ids_resources' | config | split}
+    {if $_modx->resource.id in list $ids_resources}
+        <div class="modal fade" id="message" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="thenksLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-xl">
+                <div class="modal-content message-modal">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-body p-0">
+                        <a href="{'link' | config}" target="_blank">
+                            <img 
+                                src="{'image_pc' | config}" 
+                                srcset="{'image_mobile' | config} 768w, {'image_pc' | config} 1200w" 
+                                sizes="(max-width: 767px) 100vw, 1200px"
+                                alt="message" 
+                                class="w-100">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {/if}
+{/if}

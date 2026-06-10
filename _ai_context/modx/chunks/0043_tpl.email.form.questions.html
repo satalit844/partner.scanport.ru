@@ -1,0 +1,96 @@
+{*<p>Новое письмо из квиза {$title_quiz} от компании {$company}</p>*}
+{*if $inn}<p>ИНН: {$inn}</p>{/if*}
+{if $fullname}<p>Имя: {$fullname}</p>{/if}
+{if $email}<p>Email: {$email}</p>{/if}
+{if $company}<p>Компания: {$company}</p>{/if}
+{*if $phone}<p>Телефон: {$phone}</p>{/if*}
+<p>Ответы на вопросы:</p>
+{set $rows = json_decode($_modx->resource.id | resource : "questions", true)}
+{set $i = 1}
+{foreach $rows as $row}
+    <p>{$row.text}</p>
+    {switch $i}
+        {case 1}
+            {if $responce_1}<p>Ответ: {$responce_1}</p>{/if}
+        {case 2}
+            {if $responce_2}<p>Ответ: {$responce_2}</p>{/if}
+        {case 3}
+            {if $responce_3}<p>Ответ: {$responce_3}</p>{/if}
+        {case 4}
+            {if $responce_4}<p>Ответ: {$responce_4}</p>{/if}
+        {case 5}
+            {if $responce_5}<p>Ответ: {$responce_5}</p>{/if}
+        {case 6}
+            {if $responce_6}<p>Ответ: {$responce_6}</p>{/if}
+        {case 7}
+            {if $responce_7}<p>Ответ: {$responce_7}</p>{/if}
+        {case 8}
+            {if $responce_8}<p>Ответ: {$responce_8}</p>{/if}
+        {case 9}
+            {if $responce_9}<p>Ответ: {$responce_9}</p>{/if}
+        {case 10}
+            {if $responce_10}<p>Ответ: {$responce_10}</p>{/if}
+        {case 11}
+            {if $responce_11}<p>Ответ: {$responce_11}</p>{/if}
+        {case 12}
+            {if $responce_12}<p>Ответ: {$responce_12}</p>{/if}
+        {case 13}
+            {if $responce_13}<p>Ответ: {$responce_13}</p>{/if}
+        {case 14}
+            {if $responce_14}<p>Ответ: {$responce_14}</p>{/if}
+        {case 15}
+            {if $responce_15}<p>Ответ: {$responce_15}</p>{/if}
+        {case 16}
+            {if $responce_16}<p>Ответ: {$responce_16}</p>{/if}
+        {case 17}
+            {if $responce_17}<p>Ответ: {$responce_17}</p>{/if}
+        {case 18}
+            {if $responce_18}<p>Ответ: {$responce_18}</p>{/if}
+        {case 19}
+            {if $responce_19}<p>Ответ: {$responce_19}</p>{/if}
+        {case 20}
+            {if $responce_20}<p>Ответ: {$responce_20}</p>{/if}
+        {case 21}
+            {if $responce_21}<p>Ответ: {$responce_21}</p>{/if}
+        {case 22}
+            {if $responce_22}<p>Ответ: {$responce_22}</p>{/if}
+        {case 23}
+            {if $responce_23}<p>Ответ: {$responce_23}</p>{/if}
+        {case 24}
+            {if $responce_24}<p>Ответ: {$responce_24}</p>{/if}
+        {case 25}
+            {if $responce_25}<p>Ответ: {$responce_25}</p>{/if}
+        {case 26}
+            {if $responce_26}<p>Ответ: {$responce_26}</p>{/if}
+        {case 27}
+            {if $responce_27}<p>Ответ: {$responce_27}</p>{/if}
+        {case 28}
+            {if $responce_28}<p>Ответ: {$responce_28}</p>{/if}
+        {case 29}
+            {if $responce_29}<p>Ответ: {$responce_29}</p>{/if}
+        {case 30}
+            {if $responce_30}<p>Ответ: {$responce_30}</p>{/if}
+        {case 31}
+            {if $responce_31}<p>Ответ: {$responce_31}</p>{/if}
+        {case 32}
+            {if $responce_32}<p>Ответ: {$responce_32}</p>{/if}
+        {case 33}
+            {if $responce_33}<p>Ответ: {$responce_33}</p>{/if}
+        {case 34}
+            {if $responce_34}<p>Ответ: {$responce_34}</p>{/if}
+        {case 35}
+            {if $responce_35}<p>Ответ: {$responce_35}</p>{/if}
+        {case 36}
+            {if $responce_36}<p>Ответ: {$responce_36}</p>{/if}
+        {case 37}
+            {if $responce_37}<p>Ответ: {$responce_37}</p>{/if}
+        {case 38}
+            {if $responce_38}<p>Ответ: {$responce_38}</p>{/if}
+        {case 39}
+            {if $responce_39}<p>Ответ: {$responce_39}</p>{/if}
+        {case 40}
+            {if $responce_40}<p>Ответ: {$responce_40}</p>{/if}
+        {case default}
+    {/switch}
+    {set $i = $i + 1}
+{/foreach}

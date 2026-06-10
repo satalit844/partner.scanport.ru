@@ -1,0 +1,57 @@
+<div id="office-auth-form">
+    <form class="d-flex flex-wrap" method="post" id="office-auth-register">
+        <div class="form-group col-12 col-md-6 mb-3 pe-md-2">
+            <label class="form-label" for="office-auth-register-fullname">Имя, фамилия&nbsp;<span class="red">*</span></label>
+            <input class="form-control" type="text" placeholder="Имя, фамилия" name="fullname" id="office-register-form-fullname" value="">
+            <img src="theme/images/auth/pensil-ico.svg" class="img-svg">
+        </div>
+        <div class="form-group col-12 col-md-6 mb-3 pe-md-2">
+            <label class="form-label" for="office-auth-register-field_list_company">Компания&nbsp;<span class="red">*</span></label>
+            <input class="form-control" type="text" placeholder="Компания" name="field_list_company" id="office-auth-register-field_list_company">
+            <img src="theme/images/auth/pensil-ico.svg" class="img-svg">
+        </div>
+        <div class="form-group col-12 col-md-6 mb-3 pe-md-2 d-flex flex-column">
+            <label class="form-label" for="office-auth-register-phone">Телефон&nbsp;<span class="red">*</span></label>
+            <input class="form-control form-phone" type="tel" name="mobilephone" id="office-auth-register-phone" value="">
+            <img src="theme/images/auth/pensil-ico.svg" class="img-svg">
+        </div>
+        <div class="form-group col-12 col-md-6 mb-3 pe-md-2 d-flex flex-column">
+            <label class="form-label" for="office-auth-register-email">E-mail&nbsp;<span class="red">*</span></label>
+            <input class="form-control" type="email" placeholder="E-mail" name="email" id="office-auth-register-email" value="">
+            <img src="theme/images/auth/pensil-ico.svg" class="img-svg">
+        </div>
+        
+        <div class="form-group col-12 col-md-6 mb-3 pe-md-2">
+            <label class="form-label" for="office-auth-register-inn_company">ИНН компании&nbsp;<span class="red">*</span></label>
+            <input class="form-control" type="text" placeholder="ИНН компании" name="inn_company" id="office-auth-register-inn_company">
+            <img src="theme/images/auth/pensil-ico.svg" class="img-svg">
+        </div>
+        <div class="form-group col-12 col-md-6 mb-3 pe-md-2">
+            <label class="form-label" for="office-auth-register-state">Регион компании&nbsp;<span class="red">*</span></label>
+            <input class="form-control" type="text" placeholder="Регион компании" name="state" id="office-auth-register-state">
+            <img src="theme/images/auth/pensil-ico.svg" class="img-svg">
+        </div>
+        
+        <div class="form-group col-12 col-md-6 mb-3 pe-md-2">
+            <label class="form-label" for="office-auth-register-password">Пароль&nbsp;<span class="red">*</span></label>
+            <input class="form-control" type="password" placeholder="********" name="password" id="office-register-form-password" value="">
+            <img src="theme/images/auth/pensil-ico.svg" class="img-svg">
+        </div>
+        <div class="form-group col-12 col-md-6 mb-3 pe-md-2">
+            <label class="form-label" for="office-auth-register-re_password">Подтверждение пароля&nbsp;<span class="red">*</span></label>
+            <input class="form-control" type="password" placeholder="********" name="re-password" id="office-register-form-re_password" value="">
+            <img src="theme/images/auth/pensil-ico.svg" class="img-svg">
+        </div>
+        
+        <div class="d-flex gap-3 align-items-center button-groups flex-wrap justify-content-between w-100">
+            <label class="custom-checkbox">
+                <input type="checkbox" name="politic" value="1" checked>
+                <span>Я даю <a href="https://scanport.ru/Politics.pdf" target="_blank">согласие на обработку</a> своих персональных данных</span>
+            </label>
+            <div class="col-auto">
+                <input type="hidden" name="action" value="auth/formRegister"/>
+                <button type="submit" class="btn btn-red w-100">Применить</button>
+            </div>
+        </div>
+    </form>
+</div>

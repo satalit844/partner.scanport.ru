@@ -1,0 +1,327 @@
+{extends 'template:01.base'}
+
+{block 'content'}
+    {if !$_modx->isAuthenticated('web')}
+        {$_modx->sendRedirect(12 | url)}
+    {/if}
+    <div class="profile-block d-flex flex-column flex-md-row p-4">
+        <div class="col-12">
+            <div class="profile-info">
+                {set $inn = $_modx->user.field_list_inn | split : ';'}
+                {set $company = $_modx->user.field_list_company | split : ';'}
+                {set $option_company = []}
+                {foreach $inn as $key => $item}
+                    {set $inn_tmp = $item | split : ':'}
+                    {set $option_company[$key]['name'] = $company[$key] ~ '(ИНН ' ~ $inn_tmp[0] ~ ')'}
+                    {set $option_company[$key]['inn'] = $inn_tmp[0]}
+                {/foreach}
+                {set $partner_sales = json_decode(16 | resource : "partner", true)}
+                {foreach $partner_sales as $partner}
+                    {if $partner['level'] == $inn_tmp[1]}
+                        {set $sale = $_modx->user.field_iudiscount ?: $partner['sale']}
+                        {set $status = $partner['status']}
+                        {set $porog = $partner['porog']}
+                        {set $color_bg = $partner['color_bg']}
+                        {set $color_text = $partner['color_text']}
+                    {/if}
+                {/foreach}
+                <div class="title text-black mb-3">Ваш партнерский статус</div>
+                <div class="partner-status d-flex flex-wrap gap-3 mb-4 ">
+                    <div class="badge-partner orange-badge" style="color: {$color_text};background: {$color_bg};">{$status}</div>
+                </div>
+                <div class="title text-black d-flex mb-3 gap-2 align-items-center"><span>Ваша партнёрская скидка</span><span class="person-sale">{$sale}%</span></div>
+                {if $inn_tmp[1] > 1}
+                    {if $_modx->user.field_iudiscount}
+                        <div class="title text-black d-flex mb-3 gap-2 align-items-center"><span>Объем закупок в текущем квартале</span><span class="purchase-volume">{$_modx->user.field_summ} ₽</span></div>
+                        {if $_modx->user.notresident != '1'}
+                            {set $rebeit = $_modx->user.rebeit ?: '!quarter' | snippet} {*дата квартал*}
+                            {set $field_summ = '!end_date' | snippet : [
+                                'date' => $rebeit,
+                                'field_summ' => $_modx->user.field_summ
+                            ]}
+                            {switch $_modx->user.field_iudiscount}
+                                {case 30}
+                                    <div class="achievement d-flex flex-wrap mb-4">
+                                        {set $porog = 400000}
+                                        {set $range = $porog - $.php.round($field_summ)}
+                                        {set $range_percent = $.php.round($field_summ)}
+                                        {set $range_percent = ($field_summ / $porog) * 100}
+                                        {set $porog_tmp = 650000}
+                                        {set $range_tmp = $porog_tmp - $.php.round($field_summ)}
+                                        {set $range_percent_tmp = ($field_summ / $porog_tmp) * 100}
+                                        {if $field_summ > $porog}
+                                            {set $field_summ = $.php.round($field_summ)}
+                                            {set $range_percent = 100}
+                                            {set $range = 0}
+                                        {/if}
+                                        {if $field_summ > $porog_tmp}
+                                            {set $field_summ = $.php.round($field_summ)}
+                                            {set $range_percent_tmp = 100}
+                                            {set $range_tmp = 0}
+                                        {/if}
+                                        <div class="d-flex flex-column align-items-start">
+                                            <div class="title-small mb-1">Для повышения партнерской скидки до 40% в следующем квартале - приобретите лицензии еще на <span class="text-black">{$range | number : 0 : '.' : ' '} ₽</span> до {$rebeit}</div>
+                                            <div class="col-12">
+                                                <div class="d-flex align-items-center gap-2 mb-5">
+                                                    <span class="col-auto value">0 ₽</span>
+                                                    <div class="col block-range">
+                                                        <div class="range-full" style="width: 100%"></div>
+                                                        <div class="range purple" style="width: {$range_percent}%"></div>
+                                                        <span class="active_summ" style="left: calc({$range_percent}% - 10px);">{$field_summ | number : 0 : '.' : '&nbsp;'}&nbsp;₽</span>
+                                                    </div>
+                                                    <span class="col-auto value">{$porog | number : 0 : '.' : ' '} ₽</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-auto">
+                                            <div class="title-small mb-1">Для повышения партнерской скидки до 50% в следующем квартале - приобретите лицензии еще на <span class="text-black">{$range_tmp | number : 0 : '.' : ' '} ₽</span> до {$rebeit}</div>
+                                            <div class="col-12">
+                                                <div class="d-flex align-items-center gap-2 mb-3">
+                                                    <span class="col-auto value">0 ₽</span>
+                                                    <div class="col block-range">
+                                                        <div class="range-full" style="width: 100%"></div>
+                                                        <div class="range" style="width: {$range_percent_tmp}%"></div>
+                                                        <span class="active_summ" style="left: calc({$range_percent_tmp}% - 10px);">{$field_summ | number : 0 : '.' : '&nbsp;'}&nbsp;₽</span>
+                                                    </div>
+                                                    <span class="col-auto value">{$porog_tmp | number : 0 : '.' : ' '} ₽</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {case 40}
+                                    <div class="achievement d-flex flex-wrap mb-4">
+                                        {set $porog = 650000}
+                                        {set $range = $porog - $.php.round($field_summ)}
+                                        {set $range_percent = $.php.round($field_summ)}
+                                        {set $range_percent = ($field_summ / $porog) * 100}
+                                        {set $range_tmp = 400000 - $.php.round($field_summ)}
+                                        {set $range_percent_tmp = ($field_summ / 400000) * 100}
+                                        {if $field_summ > 400000}
+                                            {set $field_summ = $.php.round($field_summ)}
+                                            {set $range_percent_tmp = 100}
+                                            {set $range_tmp = 0}
+                                            {if $field_summ > $porog}
+                                                {set $range = 0}
+                                                {set $range_percent = 100}
+                                            {/if}
+                                        {/if}
+                                        <div class="d-flex flex-column align-items-start">
+                                            <div class="col-xl-auto mb-3">
+                                                <div class="title-small mb-1">Для сохранения размера партнерской скидки в следующем квартале - приобретите лицензии еще на <span class="text-black">{$range_tmp | number : 0 : '.' : ' '} ₽</span> до {$rebeit}</div>
+                                                <div class="col-12">
+                                                    <div class="d-flex align-items-center gap-2 mb-5">
+                                                        <span class="col-auto value">0 ₽</span>
+                                                        <div class="col block-range">
+                                                            <div class="range-full" style="width: 100%"></div>
+                                                            <div class="range" style="width: {$range_percent_tmp}%"></div>
+                                                            <span class="active_summ" style="left: calc({$range_percent_tmp}% - 10px);">{$field_summ | number : 0 : '.' : '&nbsp;'}&nbsp;₽</span>
+                                                        </div>
+                                                        <span class="col-auto value">{400000 | number : 0 : '.' : ' '} ₽</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-auto">
+                                                <div class="title-small mb-1">Для повышения партнерской скидки до 50% в следующем квартале - приобретите лицензии еще на <span class="text-black">{$range | number : 0 : '.' : ' '} ₽</span> до {$rebeit}</div>
+                                                <div class="col-12">
+                                                    <div class="d-flex align-items-center gap-2 mb-3">
+                                                        <span class="col-auto value">0 ₽</span>
+                                                        <div class="col block-range">
+                                                            <div class="range-full" style="width: 100%"></div>
+                                                            <div class="range purple" style="width: {$range_percent}%"></div>
+                                                            <span class="active_summ" style="left: calc({$range_percent}% - 10px);">{$field_summ | number : 0 : '.' : '&nbsp;'}&nbsp;₽</span>
+                                                        </div>
+                                                        <span class="col-auto value">{$porog | number : 0 : '.' : ' '} ₽</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {case 50}
+                                    <div class="achievement d-flex flex-wrap mb-4">
+                                        {set $porog = 650000}
+                                        {set $range = $porog - $.php.round($field_summ)}
+                                        {set $range_percent = $.php.round($field_summ)}
+                                        {set $range_percent = ($field_summ / $porog) * 100}
+                                        {if $field_summ > $porog}
+                                            {set $field_summ = $.php.round($field_summ)}
+                                            {set $range_percent = 100}
+                                            {set $range = 0}
+                                        {/if}
+                                        <div class="col-xl-auto">
+                                            <div class="title-small mb-1">Для сохранения размера партнерской скидки в следующем квартале - приобретите лицензии еще на <span class="text-black">{$range | number : 0 : '.' : ' '} ₽</span> до {$rebeit}</div>
+                                            <div class="col-12">
+                                                <div class="d-flex align-items-center gap-2 mb-3">
+                                                    <span class="col-auto value">0 ₽</span>
+                                                    <div class="col block-range">
+                                                        <div class="range-full" style="width: 100%"></div>
+                                                        <div class="range" style="width: {$range_percent}%"></div>
+                                                        <span class="active_summ" style="left: calc({$range_percent}% - 10px);">{$field_summ | number : 0 : '.' : '&nbsp;'}&nbsp;₽</span>
+                                                    </div>
+                                                    <span class="col-auto value">{$porog | number : 0 : '.' : ' '} ₽</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                {default}
+                                
+                            {/switch}
+                        {/if}
+                    {else}
+                        {set $rebeit = $_modx->user.rebeit ?: '!quarter' | snippet}
+                        {set $field_summ = '!end_date' | snippet : [
+                            'date' => $rebeit,
+                            'field_summ' => $_modx->user.field_summ
+                        ]}
+                        <div class="achievement d-flex flex-wrap mb-4">
+                            {if $_modx->user.field_ceil}
+                                {set $porog = $.php.round($_modx->user.field_ceil)}
+                            {/if}
+                            {set $range = $porog - $.php.round($field_summ)}
+                            {set $range_percent = $.php.round($field_summ)}
+                            {set $range_percent = ($field_summ / $porog) * 100}
+                            {if $field_summ > $porog}
+                                {set $field_summ = 0}
+                                {set $range_percent = 0}
+                            {/if}
+                            <div class="col-xl-auto">
+                                <div class="title-small mb-1">Для подтверждения партнёрского статуса осталось приобрести лицензий на <span class="text-black">{$range | number : 0 : '.' : ' '} ₽</span> до {$rebeit}</div>
+                                <div class="col-12">
+                                    <div class="block-range">
+                                        <div class="range-full" style="width: 100%"></div>
+                                        <div class="range" style="width: {$range_percent}%"></div>
+                                        <div class="d-flex align-items-center justify-content-between pt-4">
+                                            <span class="text-black">{$field_summ | number : 0 : '.' : ' '} ₽</span>
+                                            <span class="text-black">{$porog | number : 0 : '.' : ' '} ₽</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {/if}
+                    {if $_modx->user.field_marketing}
+                        {set $date = '' | date : "Y"}
+                        <div class="title text-black mb-3">Ваши партнёрские рибейты (действует до 31.12.{$date})</div>
+                        <div class="title-small mb-2">В {$date} году вы можете потратить на маркетинг или обучение - <span class="text-black">{$_modx->user.field_marketing | number : 0 : '.' : ' '} ₽</span></div>
+                        <div class="title-small mb-2">На данный момент вы уже потратили - <span class="text-black">{$_modx->user.field_sold ? $_modx->user.field_sold : 0 | number : 0 : '.' : ' '} ₽</span></div>
+                        {set $range_marketing = $_modx->user.field_marketing - $.php.round($_modx->user.field_sold ? $_modx->user.field_sold : 0)}
+                        {set $range_marketing_percent = $.php.round($_modx->user.field_sold ? $_modx->user.field_sold : 0)}
+                        {set $range_marketing_percent = ($range_marketing_percent / $_modx->user.field_marketing) * 100}
+                        <div class="title-small mb-4">Осталось потратить - <span class="text-red">{$range_marketing | number : 0 : '.' : ' '} ₽</span></div>
+                        <div class="pie-chart mb-4">
+                            <svg class="pie" width="202" viewBox="0 0 37 37">
+                                <circle r="15.9155" cx="50%" cy="50%"></circle>
+                                <circle r="15.9155" cx="50%" cy="50%" style="stroke-dasharray: {$range_marketing_percent} 100;"></circle>
+                                <text x="50%" y="50%">{$range_marketing | number : 0 : '.' : ' '} ₽</text>
+                            </svg>
+                        </div>
+                    {/if}
+                    {if $_modx->user.field_nfr}
+                        {$_modx->lexicon->load('core:site')}
+                        {set $nfr = $_modx->user.field_nfr}
+                        {set $nfr = $nfr | split : ";"}
+                        <div class="title text-black mt-3 mb-3">Ваша NFR-лицензия</div>
+                        
+                        <div class="section-nfr d-flex flex-wrap gap-4 gap-lg-5">
+                            <div class="col-12 col-lg-auto d-flex flex-column">
+                                <ul class="nav nav-pills mb-3 gap-2 mb-4" id="pills-tab" role="tablist">
+                                    {foreach $nfr as $key => $item}
+                                        {if $key < 3}
+                                            {set $values = $item | split : ":"}
+                                            {if $item@first}
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-nfr active" id="pills-{$key}-tab" data-bs-toggle="pill" data-bs-target="#pills-{$key}" type="button" role="tab" aria-controls="pills-{$key}" aria-selected="true">{('site_profile_name_' ~ $values[0]) | lexicon}</button>
+                                                </li>
+                                            {else}
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-nfr" id="pills-{$key}-tab" data-bs-toggle="pill" data-bs-target="#pills-{$key}" type="button" role="tab" aria-controls="pills-{$key}" aria-selected="false">{('site_profile_name_' ~ $values[0]) | lexicon}</button>
+                                                </li>
+                                            {/if}
+                                        {/if}
+                                    {/foreach}
+                                </ul>
+                                <div class="tab-content" id="pills-tabContent">
+                                    {foreach $nfr as $key => $item}
+                                        {set $freePercentage = 0}
+                                        {set $values = $item | split : ":"}
+                                        {set $nums = $values[1] | split : ","}
+                                        {if $nums[2] == 0 && $nums[1] == 0 && $nums[0] == 0}
+                                            {set $freePercentage = 0}
+                                        {elseif $nums[0] == $nums[2]}
+                                            {set $freePercentage = 0}
+                                        {elseif $nums[0] < $nums[1]}
+                                            {set $freePercentage = 100}
+                                        {else}
+                                            {set $freePercentage = ($nums[2] / $nums[0]) * 100}
+                                            {set $freePercentage = $.php.round($freePercentage)}
+                                        {/if}
+                                        
+                                        {if $item@first}
+                                            <div class="tab-pane fade show active" id="pills-{$key}" role="tabpanel" aria-labelledby="pills-{$key}-tab" tabindex="0">
+                                                <div class="pie-chart">
+                                                    <svg class="pie" width="202" viewBox="0 0 37 37">
+                                                        <circle r="15.9155" cx="50%" cy="50%"></circle>
+                                                        {if $freePercentage != 0}
+                                                            <circle r="15.9155" cx="50%" cy="50%" style="stroke-dasharray: {$freePercentage} 100;"></circle>
+                                                        {/if}
+                                                        <text class="title-pie"x="50%" y="45%">NFR лицензии:</text>
+                                                        <text class="title-pie pt-2"x="50%" y="60%" style="fill:red">{$nums[0]} шт</text>
+                                                    </svg>
+                                                    <div class="item-conclusion d-flex flex-column flex-md-row position-relative gap-3 mt-3">
+                                                        <div class="d-flex align-items-center gap-2">
+                                                            <span class="title">Предоставлено:</span>
+                                                            <span class="value">{$nums[1]} шт.</span>
+                                                        </div>
+                                                        <div class="d-flex align-items-center gap-2">
+                                                            <span class="title">Свободно:</span>
+                                                            <span class="value value-two">{$nums[2]} шт.</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {else}
+                                            <div class="tab-pane fade" id="pills-{$key}" role="tabpanel" aria-labelledby="pills-{$key}-tab" tabindex="0">
+                                                <div class="pie-chart">
+                                                    <svg class="pie" width="202" viewBox="0 0 37 37">
+                                                        <circle r="15.9155" cx="50%" cy="50%"></circle>
+                                                        {if $freePercentage != 0}
+                                                            <circle r="15.9155" cx="50%" cy="50%" style="stroke-dasharray: {$freePercentage} 100;"></circle>
+                                                        {/if}
+                                                        <text class="title-pie"x="50%" y="45%">NFR лицензии:</text>
+                                                        <text class="title-pie pt-2"x="50%" y="60%" style="fill:red">{$nums[0]} шт</text>
+                                                    </svg>
+                                                    <div class="item-conclusion d-flex position-relative gap-3 mt-3">
+                                                        <div class="d-flex align-items-center gap-2">
+                                                            <span class="title">Предоставлено:</span>
+                                                            <span class="value">{$nums[1]} шт.</span>
+                                                        </div>
+                                                        <div class="d-flex align-items-center gap-2">
+                                                            <span class="title">Свободно:</span>
+                                                            <span class="value value-two">{$nums[2]} шт.</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {/if}
+                                    {/foreach}
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-auto item-company">
+                                <div class="block-nft-order">
+                                    <div class="title text-red mb-3">Список компаний</div>
+                                    {set $companies = $_modx->user.field_list_company}
+                                    {set $companies = $companies | split : ";"}
+                                    <ul class="list-group list-group-flush company-list gap-1">
+                                        {foreach $companies as $item}
+                                            <li>{$item}</li>
+                                        {/foreach}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    {/if}
+                {/if}
+            </div>
+        </div>
+    </div>
+{/block}

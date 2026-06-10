@@ -1,0 +1,34 @@
+<div id="office-auth-form">
+    <form class="d-flex flex-column" method="post" id="office-auth-login">
+        <div class="form-group mb-3">
+            <label class="form-label" for="office-auth-login-email">Ваша почта</label>
+            <input class="form-control" type="text" name="username" id="office-auth-login-username" value="" placeholder="Ваш e-mail" required>
+            <img src="theme/images/auth/pensil-ico.svg" class="img-svg">
+        </div>
+        <div class="form-group mb-3">
+            <label class="form-label" for="office-auth-login-password">Пароль</label>
+            <input class="form-control" type="password" name="password" placeholder="********" id="office-login-form-password" value="" required>
+            <img src="theme/images/auth/pensil-ico.svg" class="img-svg">
+        </div>
+        <div class="form-group remember-me mb-4">
+            <label class="form-label custom-radio d-flex gap-1 align-items-center">
+                <input type="checkbox" name="remember" class="d-none">
+                <span>Запомнить меня</span>
+            </label>
+        </div>
+        <div class="d-flex gap-2 align-items-center button-groups">
+            <div class="col">
+                <a href="{14 | url}">Забыли пароль?</a>
+            </div>
+            <div class="col">
+                <input type="hidden" name="action" value="auth/formLogin"/>
+                <input type="hidden" name="return" value=""/>
+                <input type="hidden" name="rememberme" value="0"/>
+                <button type="submit" class="btn btn-red w-100">Применить</button>
+            </div>
+        </div>
+    </form>
+    {if $error?}
+        <div class="alert alert-danger">{$error}</div>
+    {/if}
+</div>

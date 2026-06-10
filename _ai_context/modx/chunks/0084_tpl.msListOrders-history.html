@@ -1,0 +1,163 @@
+<div id="mslistorders" class="d-flex flex-column gap-3">
+	{if !count($orders)}
+		{'mslistorders_orders_empty' | lexicon}
+	{else}
+	    {set $status = ['pay' => 'status-pay', 'nopay' => 'status-nopay', 'shipped' => 'status-shipped', 'noshipped' => 'status-noshipped']}
+		{foreach $orders as $order}
+		    {*$order | print*}
+			<div class="history-item" data-company="{$order.properties['inn']}" data-status="{$order.properties['status'] | join}">
+			    <div class="header-history d-flex flex-wrap align-items-center gap-3 position-relative pe-5">
+			        {set $num = $order.num | split : '_'}
+			        <div class="title">Заказ № {$num[0]} от {$order.createdon | date :"d.m.Y"}</div>
+			        {foreach $order.properties['status'] as $key => $item}
+			            <div class="badge-status {$status[$item]}">{('mslistorders_status_' ~ $item) | lexicon}</div>
+			        {/foreach}
+			        <img src="/theme/images/arrow-down.svg" class="img-svg">
+			    </div>
+			    <div class="block-history-product">
+    			    <div class="title-history flex-wrap pb-2 mb-4 d-none d-md-flex">
+    			        <div class="col-6 col-xl-6">Наменование</div>
+    			        <div class="col-3 col-xl-2">Кол-во</div>
+    			        <div class="col-3 col-xl-2">Цена</div>
+    			        <div class="d-none d-xl-block col-xl-2">&nbsp;</div>
+    			    </div>
+    			    <div class="d-flex flex-column">
+    			        {foreach $order['products'] as $product}
+    			            <form method="post" class="ms2_form d-flex flex-wrap align-items-center item-product pb-3 mb-4 gap-2 gap-md-0">
+                                {*set $option = json_decode($options, true)*}
+                                {*$product | print*}
+                                <input type="hidden" name="id" value="{$product.product_id}">
+                                <input type="hidden" name="options[mid]" value="{$product.options['modification']}">
+                                <div class="col-12 col-md-6">
+                                    <div class="title-history d-block d-md-none">
+                                        <span>Наменование</span>
+                                    </div>
+                                    <div class="title-product">
+                                        {if $product.options['pagetitle']}
+                                            {$product.options['pagetitle']}
+                                        {else}
+                                            {if $product.options['modification']}
+                                                {set $product.modification = $_modx->runSnippet('!msOptionsPrice.modification',[
+                                                    'product' => $product.product_id,
+                                                    'where' => json_encode([
+                                                        'msopModification.id' => $product.options.modification
+                                                    ]
+                                                ),
+                                                    'return' => 'data'
+                                                ])}
+                                                {set $product.modification = $product.modification[0]}
+                                                {*$product.modification | print*}
+                                                <input type="hidden" name="options[pagetitle]" value="{$product.modification['options']['kit']}">
+                                                {$product.modification['options']['kit']}
+                                                <div class="prod_opt">
+                                                    <div class="prod_opt_title">
+                                                        Партномер:
+                                                    </div>
+                                                    <div class="prod_opt_value">
+                                                        {$product.modification['name']}
+                                                    </div>
+                                                </div>
+                                                <div class="prod_opt">
+                                                    <div class="prod_opt_title">
+                                                        Артикул:
+                                                    </div>
+                                                    <div class="prod_opt_value">
+                                                        {$product.modification['article']}
+                                                    </div>
+                                                </div>
+                                            {/if}
+                                        {/if}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3 col-xl-2 count">
+                                    <div class="title-history d-block d-md-none">
+                                        <span>Кол-во</span>
+                                    </div>
+                                    <div method="post" class="ms2_form cart-count">
+                                        <div class="card-cart-product__count">
+                                            <div class="card-product__count d-flex gap-2">
+                                                <button type="button" class="countButton input-number__sub" data-add="minus"><img src="theme/images/minus.svg" class="img-svg"></button>
+                                                <input name="count" class="input-number__input number-form add_number" type="text" max="50" min="1" value="{$product.count}">
+                                                <button type="button" class="countButton input-number__add" data-add="plus"><img src="theme/images/plus.svg" class="img-svg"></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3 col-xl-2 price text-start">
+                                    <div class="title-history d-block d-md-none">
+                                        <span>Цена</span>
+                                    </div>
+                                    {$product.price} ₽
+                                </div>
+                                <div class="col-12 col-xl-2 ms-xl-auto ms-xl-0 mt-3 mt-xl-0">
+                                    <button type="submit" name="ms2_action" value="cart/add" class="btn btn-white ms-md-auto w-100 w-md-auto">Повторить</button>
+                                </div>
+                            </form>
+    			        {/foreach}
+    			    </div>
+    			    <div class="history-total d-flex flex-column flex-md-row justify-content-md-between align-items-md-center gap-2 gap-md-0">
+    			        <div class="total-order">Общая сумма: <span>{$order.cost} ₽</span></div>
+    			        <ul class="d-flex flex-wrap align-items-center gap-3 list-unstyled mb-0">
+    						{foreach $actions as $action}
+    							<li class="w-100 w-md-auto">
+    								<form method="post" class="mslistorders-form">
+    									<input type="hidden" name="id" value="{$order.id}">
+    									<input type="hidden" name="propkey" value="{$order.propkey}">
+    									<button class="btn btn-red mslistorders-action w-100 w-md-auto" type="submit" value="{$action}">{('mslistorders_action_' ~ $action) | lexicon}</button>
+    								</form>
+    							</li>
+    						{/foreach}
+    					</ul>
+    			    </div>
+    			</div>
+					{*<tr id="{$order.id}">
+						<td class="num">{$order.num}</td>
+						<td class="createdon">{$order.createdon | date :"d.m.Y"} sdfsdfsdf</td>
+						<td class="updatedon">{$order.updatedon | date :"d.m.Y"}</td>
+						<td class="customer">{$order.profile_fullname}</td>
+						<td class="cost">
+							{$order.cost}
+							<sub>{$order.total_product} {'ms2_frontend_count_unit' | lexicon}</sub>
+						</td>
+						<td class="status" style="color: #{$order.status_color}">{$order.status_name}</td>
+						<td class="view">
+							<ul class="mslistorders-row-actions">
+								{foreach $actions as $action}
+									<li class="">
+										<form method="post" class="mslistorders-form">
+											<input type="hidden" name="id" value="{$order.id}">
+											<input type="hidden" name="propkey" value="{$order.propkey}">
+											<button class="btn btn-default mslistorders-action" type="submit"
+													value="{$action}"
+													title="{('mslistorders_action_' ~ $action) | lexicon}">
+											</button>
+										</form>
+									</li>
+								{/foreach}
+							</ul>
+							{$order['products'] | print}
+						</td>
+						
+					</tr>*}
+			</div>
+		{/foreach}
+	{/if}
+</div>
+
+{*if $total?}
+	<div class="mslistorder-total row">
+		<div class="col-md-3 col-md-offset-9">
+			<strong>{'mslistorders_cost' | lexicon}:</strong><br>
+		<span>
+			{'mslistorders_sum_orders' | lexicon}: {$total.sum} {'ms2_frontend_currency' | lexicon}
+		</span><br>
+		<span>
+			{'mslistorders_count_orders' | lexicon}: {$total.orders} {'ms2_frontend_count_unit' | lexicon}
+		</span><br>
+		<span>
+			{'mslistorders_count_products' | lexicon}: {$total.products} {'ms2_frontend_count_unit' | lexicon}
+		</span>
+		</div>
+	</div>
+	<br>
+{/if*}

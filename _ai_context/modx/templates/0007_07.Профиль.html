@@ -1,0 +1,21 @@
+{extends 'template:01.base'}
+
+{block 'content'}
+    {if !$_modx->isAuthenticated('web')}
+        {$_modx->sendRedirect(12 | url)}
+    {/if}
+    {'!activate_transfer' | snippet}
+    {*$_modx->isAuthenticated()*}
+    {*f $_modx->hasSessionContext('web')}
+        {$_modx->sendRedirect( $_modx->makeUrl(12) )}
+    {/if*}
+    {'!OfficeProfile' | snippet : [
+        'profileFields' => 'email,fullname,surname,personal_data,api,patronymic,user_post,mobilephone,field_inn,field_list_inn,field_company,field_list_company,city,state,address',
+        'requiredFields' => 'fullname,mobilephone',
+        'HybridAuth' => 0,
+        'avatarParams' => '{
+            "w":200,"h":200,"zc":1,"bg":"ffffff","f":"jpg"
+        }',
+        'tplProfile' => 'tpl.Office.profile.user-form',
+    ]}
+{/block}

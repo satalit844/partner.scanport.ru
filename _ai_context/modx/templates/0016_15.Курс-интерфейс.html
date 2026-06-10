@@ -1,0 +1,17 @@
+{extends 'template:01.base'}
+{block 'css'}
+    <link href="theme/css/swiper-bundle.min.css" rel="stylesheet">
+    <link href="{'!fileCashFix' | snippet : ['input' => 'theme/css/training.css']}" rel="stylesheet">
+    
+{/block}
+{block 'content'}
+    {if !$_modx->isAuthenticated('web')}
+        {$_modx->sendRedirect(12 | url)}
+    {/if}
+    {$_modx->resource.content}
+{/block}
+{block 'js'}
+    <script src="theme/js/swiper-bundle.min.js"></script>
+    <script src="{'!fileCashFix' | snippet : ['input' => 'theme/js/app-training.js']}"></script>
+    
+{/block}

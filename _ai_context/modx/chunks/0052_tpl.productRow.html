@@ -1,0 +1,28 @@
+<form method="post" class="ms2_form d-flex flex-wrap align-items-center item-product pb-3 mb-4 gap-4 gap-xl-0">
+    {set $option = json_decode($options, true)}
+    <input type="hidden" name="id" value="{$id}">
+    <input type="hidden" name="options[mid]" value="{$option['mid']}">
+    <input type="hidden" name="options[pagetitle]" value="{$option['pagetitle']}">
+    <div class="col-12 col-xl">
+        <div class="title-product">
+            {$option['pagetitle']}
+        </div>
+    </div>
+    <div class="col-auto count ms-xl-auto me-auto">
+        <div method="post" class="ms2_form cart-count">
+            <div class="card-cart-product__count">
+                <div class="card-product__count d-flex gap-2">
+                    <button type="button" class="countButton input-number__sub" data-add="minus"><img src="theme/images/minus.svg" class="img-svg"></button>
+                    <input name="count" class="input-number__input number-form add_number" type="text" max="50" min="1" value="{$count}">
+                    <button type="button" class="countButton input-number__add" data-add="plus"><img src="theme/images/plus.svg" class="img-svg"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-auto col-sm-2 price text-sm-center mx-sm-auto mx-xl-0">
+        {$cost | number : 0 : '.' : ' '} ₽
+    </div>
+    <div class="col-12 col-sm-auto ms-sm-auto ms-xl-0" >
+        <button type="submit" name="ms2_action" value="cart/add" class="btn btn-white w-sm-auto w-100">Повторить</button>
+    </div>
+</form>

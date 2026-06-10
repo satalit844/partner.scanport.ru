@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="{'modx_charset' | config}">
+<head>
+    <title>{$_modx->resource.pagetitle} - {'site_name' | config}</title>
+    <base href="{'site_url' | config}" />
+    <meta charset="{'modx_charset' | config}" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="theme/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="theme/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="theme/favicon/favicon-16x16.png">
+    <link rel="manifest" href="theme/favicon/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    
+    <link href="theme/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="theme/css/swiper-bundle.min.css"/>
+    <link href="theme/vendor/intl-tel-input/css/intlTelInput.min.css" rel="stylesheet">
+    <link href="{'!fileCashFix' | snippet : ['input' => 'theme/css/style.css']}" rel="stylesheet">
+    {block 'css'}{/block}
+</head>
+<body class="{if $.session['user_custom']['menu_collapsed'] == 1}menu-Collapsed{else}show-menu{/if} {if $_modx->resource.template == 8}auth-users{/if}">
+    {if $_modx->resource.template == 8}
+        <main class="auth p-1 p-md-0 py-md-5">
+            {block 'content'}{/block}
+        </main>
+    {else}
+        <main>
+            {set $partnetr_lic = '!user_add_fields' | snippet : [
+                'fields' => 'partner_lic'
+            ]}
+            {if !$partnetr_lic}
+                {set $resources = '-1,-122'}
+            {/if}
+            <div class="aside d-none d-lg-flex flex-column flex-shrink-0 py-3 ps-3 pe-1 text-bg-purple fixed-top h-100">
+                <div class="d-flex px-1 pb-3 justify-content-between">
+                    <div class="d-flex gap-2 logo">
+                        <a href="https://scanport.ru" target="_blank">
+                            <img src="theme/images/logo-scanport.svg" class="img-svg">
+                        </a>
+                        <a href="https://data-mobile.ru" target="_blank">
+                            <img src="theme/images/logo-datamobile.svg" class="img-svg">
+                        </a>
+                    </div>
+                    <a href="#" class="burger-toggle">
+                        <img src="theme/images/burger.svg" class="img-svg">
+                    </a>
+                </div>
+                {'!trainingMenuRender' | snippet : [
+                    'resources' => $resources,
+                    'outerClass' => 'nav flex-column flex-nowrap mb-auto pt-4 gap-lg-2 pe-1'
+                ]}
+                <div class="aside text-bg-purple-light p-3 position-absolute bottom-0 start-0 w-100">
+                    <a href="{9 | url}" class="px-3 d-flex gap-2 align-items-center text-decoration-none">
+                        <img src="theme/images/user-ico.svg" class="img-svg">
+                        <span class="text-user">{$_modx->user.fullname}</span>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="top-header d-flex d-lg-none flex-column flex-shrink-0 p-3 text-bg-purple fixed-top w-100">
+                <div class="d-flex px-1 justify-content-between align-items-center">
+                    <div class="d-flex gap-2 logo">
+                        <a href="https://scanport.ru">
+                            <img src="theme/images/logo-scanport.svg" class="img-svg">
+                        </a>
+                        <a href="https://data-mobile.ru">
+                            <img src="theme/images/logo-datamobile.svg" class="img-svg">
+                        </a>
+                    </div>
+                    <a href="#" class="burger-toggle">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </a>
+                </div>
+                <div class="mobile-menu">
+                    {'!trainingMenuRender' | snippet : [
+                        'resources' => $resources,
+                        'outerClass' => 'nav flex-column flex-nowrap mb-auto pt-4 gap-lg-2 pe-1'
+                    ]}
+                    <div class="aside text-bg-purple-light p-3 position-absolute bottom-0 start-0 w-100">
+                        <a href="{9 | url}" class="px-3 d-flex gap-2 align-items-center text-decoration-none justify-content-center">
+                            <img src="theme/images/user-ico.svg" class="img-svg">
+                            <span class="text-user">{$_modx->user.fullname}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <header class="fixed-top header-nav">
+                <div class="d-flex justify-content-between px-4 align-items-center h-100">
+                    <div class="title">
+                        {if $_modx->resource.template in list [15,16,17]}
+                            Обучение
+                        {else}
+                            {$_modx->resource.pagetitle}
+                        {/if}
+                    </div>
+                    <div class="d-flex gap-3 align-items-center">
+                        <a href="https://t.me/+U5_Q_ceWvJk2NTli" class="btn btn-support gap-2" target="_blank">
+                            <span>Перейти в чат</span>
+                            <img src="theme/images/telegram-ico.svg" class="img-svg">
+                        </a>
+                        <a href="#" class="btn btn-support gap-2" data-bs-toggle="modal" data-bs-target="#callback">
+                            <span>Вопрос менеджеру</span>
+                            <img src="theme/images/question-ico.svg" class="img-svg">
+                        </a>
+                        <a href="https://scanport.intraservice.ru/" class="btn btn-support gap-2" target="_blank">
+                            <span>Техподдержка</span>
+                            <img src="theme/images/support-ico.svg" class="img-svg">
+                        </a>
+                        {set $inn = $_modx->user.field_list_inn | split : ';'}
+                        {set $company = $_modx->user.field_list_company | split : ';'}
+                        {set $option_company = []}
+                        {foreach $inn as $key => $item}
+                            {set $inn_tmp = $item | split : ':'}
+                            {set $option_company[$key]['name'] = $company[$key] ~ '(ИНН ' ~ $inn_tmp[0] ~ ')'}
+                            {set $option_company[$key]['inn'] = $inn_tmp[0]}
+                        {/foreach}
+                        {set $partner_sales = json_decode(16 | resource : "partner", true)}
+                        {foreach $partner_sales as $partner}
+                            {if $partner['level'] == $inn_tmp[1]}
+                                {set $sale = $partner['sale']}
+                                {set $status = $partner['status']}
+                                {set $color_bg = $partner['color_bg']}
+                                {set $color_text = $partner['color_text']}
+                            {/if}
+                        {/foreach}
+                        <div class="partner-status d-none d-md-flex">
+                            <div class="badge-partner orange-badge" style="color: {$color_text};background: {$color_bg};">{$status}</div>
+                        </div>
+                        <a href="{9 | url}" class="username d-flex gap-3 text-decoration-none">
+                            <span class="d-none d-lg-flex flex-column align-items-end justify-content-center">
+                                <span class="text-black">{$_modx->user.fullname}</span>
+                                {set $company = $_modx->user.field_list_company | split : ';'}
+                                <span class="mute company_profile">{$_modx->user.field_company ?: $company[0]}</span>
+                            </span>
+                            <img src="theme/images/user-ico-black.svg" class="img-svg">
+                        </a>
+                    </div>
+                </div>
+            </header>
+            {switch $_modx->resource.template}
+                {case 5}
+                    {set $class = 'content-type'}
+                {case 15}
+                    {set $class = 'training-type'}
+                {case 16}
+                    {set $class = 'training-type'}
+                {case 17}
+                    {set $class = 'training-type'}
+            {/switch}
+            <div class="content {$class}">
+                {block 'content'}{/block}
+            </div>
+        </main>
+    {/if}
+    {include 'modals'}
+    <script>
+        var message = '{'message_form_questions' | config}';
+        var page_id = '{$_modx->resource.id}';
+    </script>
+    <script src="theme/js/jquery-3.7.1.min.js"></script>
+    <script src="theme/js/jquery-migrate-3.4.1.min.js"></script>
+    <script src="theme/js/jquery-ui.min.js"></script>
+    <script src="theme/js/bootstrap.bundle.min.js"></script>
+    <script src="theme/js/swiper-bundle.min.js"></script>
+    <script src="theme/vendor/jquery-maskedinput/jquery.maskedinput.js"></script>
+    {*<script src="theme/vendor/jquery-mask/jquery.mask.min.js"></script>*}
+    <script src="theme/vendor/intl-tel-input/js/intlTelInput.js"></script>
+    <script src="{'!fileCashFix' | snippet : ['input' => 'theme/js/app.js']}"></script>
+    {block 'js'}{/block}
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript" >
+       (function(m,e,t,r,i,k,a){ m[i]=m[i]||function(){ (m[i].a=m[i].a||[]).push(arguments)};
+       m[i].l=1*new Date();
+       for (var j = 0; j < document.scripts.length; j++) { if (document.scripts[j].src === r) { return; }}
+       k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+       (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+    
+       ym(102703376, "init", {
+            clickmap:true,
+            trackLinks:true,
+            accurateTrackBounce:true,
+            webvisor:true
+       });
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/56809636" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+</body>
+</html>

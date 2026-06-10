@@ -1,0 +1,76 @@
+{extends 'template:01.base'}
+
+{block 'content'}
+    {if !$_modx->isAuthenticated('web')}
+        {$_modx->sendRedirect(12 | url)}
+    {/if}
+    <div class="filter-history d-flex flex-wrap mb-4">
+        <div class="col-12 col-md form-group me-3 mb-3 mb-md-0">
+            {set $inn = $_modx->user.field_list_inn | split : ";"}
+            {set $company = $_modx->user.field_list_company | split : ";"}
+            {set $inn_tmp = $inn[0] | split : ':'}
+            <label class="title mb-1 form-label">Компания</label>
+            <select name="company" class="form-control">
+                <option value="all">Все</option>
+                {foreach $company as $key => $item}
+                    {set $inn_tmp = $inn[$key] | split : ':'}
+                    <option value="{$inn_tmp[0]}">{$item}</option>
+                {/foreach}
+            </select>
+        </div>
+        <div class="col-12 col-md form-group">
+            {set $status = ['pay' => 'Оплачен', 'nopay' => 'Не оплачен', 'shipped' => 'Отгружен', 'noshipped' => 'Не отгружен']}
+            <label class="title mb-1 form-label">Статус заказа</label>
+            <select name="status" class="form-control">
+                <option value="all">Все</option>
+                {foreach $status as $key => $item}
+                    <option value="{$key}">{$item}</option>
+                {/foreach}
+            </select>
+        </div>
+    </div>
+    <div class="title mb-3">{$_modx->resource.longtitle ?: $_modx->resource.pagetitle}</div>
+    <div class="order-history">
+        {set $inn_tmp = []}
+        {foreach $_modx->user.field_list_inn | split : ";" as $inn}
+            {set $inn_t = $inn | split : ":"}
+            {set $inn_tmp[] = $inn_t[0]}
+        {/foreach}
+        <div id="pdopage">
+            <div class="rows">
+                {'!pdoPage' | snippet : [
+                    'limit' => 10,
+                    'element' => 'msListOrders',
+                    'tpl' => 'tpl.msListOrders-history'
+                	'tplOrder' => 'tpl.msListOrders.order-history',
+                	'includeProducts' => true,
+                	'actions' => 'cart',
+                	'user' => 149,
+                	'showLog' => 0,
+                	'ajaxMode' => 'default',
+                	'tplPageWrapper' => '@INLINE <div class="pagination d-flex justify-content-center"><ul class="pagination d-flex align-items-center gap-3 mt-4">{$pages}</ul></div>',
+                	'tplPageActive' => '@INLINE <li class="active"><a href="{$href}">{$pageNo}</a></li>',
+                	'tplPage' => '@INLINE <li><a href="{$href}">{$pageNo}</a></li>',
+                    'where' => [
+                	    'msOrder.status:IN' => [2],
+                	    'msOrder.order_comment:IN' => $inn_tmp
+                	],
+                ]}
+            </div>
+            {'page.nav' | placeholder}
+        </div>
+        {*'!msListOrders' | snippet : [
+        	'tpl' => 'tpl.msListOrders-history'
+        	'tplOrder' => 'tpl.msListOrders.order-history',
+        	'showLog' => 0,
+        	'limit' => 0,
+        	'user' => 149,
+        	'includeProducts' => true, 
+        	'actions' => 'cart',
+        	'where' => [
+        	    'msOrder.status:IN' => [2],
+        	    'msOrder.order_comment:IN' => $inn_tmp
+        	],
+        ]*}
+    </div>
+{/block}

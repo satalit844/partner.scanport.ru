@@ -1,0 +1,1 @@
+<a href="#" class="js-msie-download btn btn-primary" data-key='{$key}'>{$caption}</a>

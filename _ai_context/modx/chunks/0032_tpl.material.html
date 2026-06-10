@@ -1,0 +1,10 @@
+<div class="d-flex flex-column justify-content-between item p-4">
+    {set $image = $image | replace : "/assets/files_upload/" : ""}
+    <img src="/assets/files_upload/{$image}" class="w-100">
+    <div class="item-title mt-3 mb-4">{$pagetitle}</div>
+    {if $download_check}
+        <a href="{$download}" class="btn btn-white w-100" download>Скачать</a>
+    {else}
+        <a href="{$link}" class="btn btn-white w-100" target="_blank">Подробнее</a>
+    {/if}
+</div>

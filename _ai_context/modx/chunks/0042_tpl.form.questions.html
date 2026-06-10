@@ -1,0 +1,153 @@
+<form action="" method="post" class="ajax_form" id="keises" enctype="multipart/form-data">
+    <input type="hidden" name="page_name" value="{$_modx->resource.pagetitle}">
+    {set $inn = $_modx->user.field_list_inn | split : ';'}
+    {set $inn = $inn[0] | split : ':'}
+    {if $file}
+        <input type="hidden" name="questions_in_file" value="{$file}">
+        <input type="hidden" name="time_project" value="{'' | date : 'd.m.Y'}">
+    {/if}
+    <input type="hidden" name="inn" value="{$inn[0]}">
+    {set $company = $_modx->user.field_list_company | split : ';'}
+    <input type="hidden" name="company" value="{$company[0]}">
+    <input type="hidden" name="email" value="{$_modx->user.email}">
+    <input type="hidden" name="phone" value="{$_modx->user.mobilephone}">
+    <input type="hidden" name="title_quiz" value="{$_modx->resource.title_quiz}">
+    <input type="hidden" name="fullname" value="{$_modx->user.fullname}">
+    {set $itemsPerPage = 8}
+    {set $totalPages = $.php.ceil(count($questions) / $itemsPerPage)}
+    {set $i = 1}
+    <div class="block-title-button d-flex flex-column flex-xl-row justify-content-between align-items-center mb-4 gap-3">
+        <div class="d-flex flex-column gap-2 align-items-start">
+            {if $_modx->resource.title_quiz}
+                <div class="title">{$_modx->resource.title_quiz}</div>
+            {/if}
+            {if $_modx->resource.desc_quiz}
+                <div class="sub-title">{$_modx->resource.desc_quiz}</div>
+            {/if}
+        </div>
+        <div class="button-group d-flex flex-wrap align-items-center gap-3">
+            {if $_modx->resource.memo}
+                    <div class="">Памятка партнёрам для подготовки кейса</div>
+                    <a href="{$_modx->resource.memo}" class="btn btn-violet" download>Скачать</a>
+            {/if}
+            {*<a href="#" class="btn btn-back btn-white-violet" style="display: none;">Назад</a>
+            {if $totalPages > 1}
+                <a href="#" class="btn btn-next btn-violet">Далее</a>
+                <button type="submit" href="#" class="btn btn-submit btn-violet" style="display: none;">Отправить</button>
+            {else}
+                <button type="submit" href="#" class="btn btn-submit btn-violet">Отправить</button>
+            {/if*}
+        </div>
+    </div>
+    <div class="survey-user mb-5">
+        {foreach $questions as $key => $item}
+            {if $key % 8 == 0}
+                <div class="row row-cols-1 row-cols-xxl-2 g-3 g-xxl-3 block-questions {if $key == 0}active{/if}">
+            {/if}
+            {if $key % 4 == 0}
+                <div class="col">
+                    <div class="item-questions p-4 h-100">
+            {/if}
+            {if $item.checked_selection}
+                <div class="form-group mb-3 selected_item">
+                    <label class="form-label">{$item.text}</label>
+                    {if $file}
+                        <input type="hidden" name="question_{$i}" value="{$item.text}">
+                    {/if}
+                    <input type="hidden" name="responce_{$i}" value="" class="value_item">
+                    {set $vatiants = $item.variants | split : ','}
+                    <div class="d-flex flex-wrap gap-3 align-items-center">
+                        {foreach $vatiants as $variant}
+                            <span class="option">{$variant}</span>
+                        {/foreach}
+                        {if $item.your_version}
+                            <input class="form-control your_version" type="text" placeholder="Свой вариант">
+                        {/if}
+                    </div>
+                </div>
+            {else}
+                <div class="form-group mb-3">
+                    {if $item['multiple_files']}
+                        <label class="form-label mb-0">{$item.text}</label>
+                        <p class="desc-label">Можно прикрепить до <span>{$item['count_files'] | declension : 'файла|файлов' : true}</span> с типом <span>{$item['type_files']}</span> и размером до <span>10Мбайт</span>.</p>
+                    {else}
+                        <label class="form-label">{$item.text}</label>
+                    {/if}
+                    {if $item['checked_file']}
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="col-auto button-group {if $item['multiple_files']}multiple-files{/if}">
+                                <input type="hidden" name="responce_{$i}" value="true">
+                                {if $item['multiple_files']}
+                                    <input type="hidden" name="responce_{$i}_type_files" value="{$item['type_files']}">
+                                    <input type="hidden" name="responce_{$i}_max_files" value="{$item['count_files']}">
+                                {/if}
+                                <input class="file-input" type="file" name="uploads[]" style="display: none;" {if $item['multiple_files']}multiple{/if}>
+                                <button type="button" class="btn btn-violet upload-btn">
+                                    {if $item['multiple_files']}
+                                        Загрузить файлы
+                                    {else}
+                                        Загрузить файл
+                                    {/if}
+                                </button>
+                                {if $item['multiple_files']}
+                                    <div class="block_thumbs mt-3 d-flex align-items-center gap-3">
+                                        
+                                    </div>
+                                {/if}
+                                <p class="error_uploads m-0">[[+fi.error.uploads]]</p>
+                            </div>
+                        </div>
+                    {else}
+                        {if $file}
+                            <input type="hidden" name="question_{$i}" value="{$item.text}">
+                        {/if}
+                        <input class="form-control" type="text" name="responce_{$i}" placeholder="Введите текст">
+                    {/if}
+                </div>
+            {/if}
+            {if $key % 4 == 3 || $key == count($questions) - 1}
+                    </div>
+                </div>
+            {/if}
+            {if $key % 8 == 7 || $key == count($questions) - 1}
+                </div>
+            {/if}
+            {set $i = $i + 1}
+        {/foreach}
+        {if $totalPages > 1}
+            {set $array = $.php.range(1, $totalPages)}
+            <div class="nav-questions d-flex justify-content-between align-items-center mt-4 gap-3">
+                <ul class="col d-flex ps-0 gap-3 m-0 justify-content-center">
+                    {foreach $array as $page}
+                        <li {if $page@first}class="active"{/if}>{$page}</li>
+                    {/foreach}
+                </ul>
+                <div class="button-group col-auto d-none d-lg-flex align-items-center gap-3">
+                    <a href="#" class="btn btn-back btn-white-violet" style="display: none;">Назад</a>
+                    <a href="#" class="btn btn-next btn-violet">Далее</a>
+                    <button type="submit" href="#" class="btn btn-submit btn-violet" style="display: none;">Отправить</button>
+                </div>
+            </div>
+        {else}
+            {** одна страница — просто десктоп-кнопка отправки без кружка **}
+            <div class="button-group d-none d-lg-flex justify-content-end align-items-center gap-3 mt-4">
+                <button type="submit" href="#" class="btn btn-submit btn-violet">Отправить</button>
+            </div>
+        {/if}
+        <div class="button-group d-flex d-lg-none flex-wrap flex-md-nowrap gap-3 justify-content-center mt-4">
+            <a href="#" class="btn btn-back btn-white-violet" style="display: none;">Назад</a>
+            {if $totalPages > 1}
+                <a href="#" class="btn btn-next btn-violet">Далее</a>
+                <button type="submit" href="#" class="btn btn-submit btn-violet" style="display: none;">Отправить</button>
+            {else}
+                <button type="submit" href="#" class="btn btn-submit btn-violet">Отправить</button>
+            {/if}
+        </div>
+    </div>
+    [[+fi.success:is=`1`:then=`
+        <div class="alert alert-success">[[+fi.successMessage]]</div>
+    `]]
+    [[+fi.validation_error:is=`1`:then=`
+        <div class="alert alert-danger">[[+fi.validation_error_message]]</div>
+    `]]
+</form>

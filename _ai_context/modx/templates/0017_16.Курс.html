@@ -1,0 +1,234 @@
+{extends 'template:01.base'}
+{block 'css'}
+    <link href="theme/css/swiper-bundle.min.css" rel="stylesheet">
+    <link href="{'!fileCashFix' | snippet : ['input' => 'theme/css/training.css']}" rel="stylesheet">
+{/block}
+{block 'content'}
+    {if !$_modx->isAuthenticated('web')}
+        {$_modx->sendRedirect(12 | url)}
+    {/if}
+    {'!trainingCoursePage' | snippet : [
+        'resource_id' => $_modx->resource.id
+    ]}
+    {*<div class="section-block course-page mb-3 mb-lg-4">
+        <div class="course-hero mb-3 mb-xl-4">
+            <div class="course-hero__badge d-flex d-xxl-none">
+                Просрочено с 27 марта 2025
+            </div>
+            <div class="d-flex d-xxl-none align-items-start gap-2">
+                <div class="course-hero__img">
+                    <img src="theme/images/training/curses/image_1.jpg" alt="image_1">
+                </div>
+                <div class="course-hero__chips d-flex d-xxl-none flex-column align-items-start gap-2">
+                    
+                    <div class="label-chip label-chip--purple label-chip--sm"><span>В процессе</span></div>
+                    
+                    <span class="course-chip">
+                        <span class="course-chip__ico" aria-hidden="true">
+                            <img src="theme/images/training/curses/user-ico.svg" class="img-svg" alt="">
+                        </span>
+                        <span class="course-chip__txt">Компания Сканпорт</span>
+                    </span>
+                    <span class="course-chip">
+                        <span class="course-chip__ico" aria-hidden="true">
+                            <img src="theme/images/training/curses/clock-ico.svg" class="img-svg" alt="">
+                        </span>
+                        <span class="course-chip__txt">Продолжительность {$_modx->resource.time_curse}</span>
+                    </span>
+                </div>
+            </div>
+            <div class="course-hero__media d-none d-xxl-block">
+                <div class="course-hero__img">
+                    <img src="{$_modx->resource.image_curse}" alt="{$_modx->resource.pagetitle}">
+                </div>
+            </div>
+            <div class="course-hero__body d-flex flex-column align-items-start gap-4">
+                <div class="course-hero__top">
+                    <div class="course-hero__title">
+                        {$_modx->resource.pagetitle}
+                    </div>
+                    <div class="course-hero__badge d-none d-xxl-flex">
+                        Просрочено с 27 марта 2025
+                    </div>
+                </div>
+                <div class="course-hero__chips d-none d-xxl-flex">
+                    <div class="label-chip label-chip--purple"><span>В процессе</span></div>
+                    <span class="course-chip">
+                        <span class="course-chip__ico" aria-hidden="true">
+                            <img src="theme/images/training/curses/user-ico.svg" class="img-svg" alt="">
+                        </span>
+                        <span class="course-chip__txt">Компания Сканпорт</span>
+                    </span>
+                    <span class="course-chip">
+                        <span class="course-chip__ico" aria-hidden="true">
+                            <img src="theme/images/training/curses/clock-ico.svg" class="img-svg" alt="">
+                        </span>
+                        <span class="course-chip__txt">Продолжительность {$_modx->resource.time_curse}</span>
+                    </span>
+                </div>
+                <div class="course-item__info">
+                    <div class="course-item__stats">
+                        <div class="course-stat">
+                            <div class="course-stat__value">31/64</div>
+                            <div class="course-stat__label">видео</div>
+                        </div>
+                        <div class="course-stat">
+                            <div class="course-stat__value">1/2</div>
+                            <div class="course-stat__label">Практические работы</div>
+                        </div>
+                        <div class="course-stat">
+                            <div class="course-stat__value">3</div>
+                            <div class="course-stat__label">Теста</div>
+                        </div>
+                    </div>
+    
+                    <div class="course-item__progress">
+                        <div class="progress-track">
+                            <div class="progress-fill" style="width: 50%"></div>
+                        </div>
+                        <div class="progress-value">50%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="course-about">
+            <div class="course-about__title mb-3">О курсе</div>
+            <div class="course-about__text mb-3" data-course-about>
+                {$_modx->resource.desc}
+            </div>
+        
+            <button type="button" class="course-about__toggle" data-course-about-toggle>
+                Показать больше
+            </button>
+        </div>
+    </div>
+    
+    <div class="section-block course-structure-block">
+        <div class="title-training mb-3 mb-xl-4">Структура курса</div>
+        <div class="course-structure">
+            <div class="cs-module is-open" data-cs-module>
+                <button type="button" class="cs-head" data-cs-toggle aria-expanded="true">
+                    <span class="cs-head__ico" aria-hidden="true">
+                      <img src="theme/images/training/curses/shapka-ico.png" alt="">
+                    </span>
+                    <span class="cs-head__main">
+                        <span class="cs-head__title">Модуль 0. Приветствие</span>
+            
+                        <span class="cs-head__meta">
+                            <span class="cs-head__count">1 материал <span class="d-flex d-xl-none">&nbsp;•&nbsp;6 минут</span></span>
+                            <img src="theme/images/training/curses/arrow-down-ico.svg" class="img-svg cs-head__arrow d-none d-xl-block" alt="">
+                        </span>
+                    </span>
+    
+                    <span class="cs-head__right d-none d-xl-flex">
+                        <span class="cs-head__time"><img src="theme/images/training/curses/clock-ico.svg" class="img-svg"><span>6 минут</span></span>
+                        <span class="label-chip label-chip--purple"><span>В процессе (0/1)</span></span>
+                    </span>
+                    <span class="cs-head__right d-flex d-xl-none">
+                        <img src="theme/images/training/curses/arrow-down-ico.svg" class="img-svg cs-head__arrow" alt="">
+                    </span>
+                </button>
+    
+                <div class="cs-body" data-cs-body>
+                    <div class="cs-item">
+                        <span class="cs-item__ico" aria-hidden="true">
+                            <img src="theme/images/training/curses/play-ico.png" alt="">
+                        </span>
+                        <div class="cs-item__txt">
+                            <div class="cs-item__title">Вступление</div>
+                            <div class="cs-item__type">Учебный материал</div>
+                        </div>
+                        <div class="cs-item__status d-none d-xl-flex">
+                            <span class="label-chip label-chip--purple"><span>В процессе (0%)</span></span>
+                        </div>
+                        <div class="cs-item__status d-flex d-xl-none">
+                            <span class="label-chip"><span>0%</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cs-module" data-cs-module>
+                <button type="button" class="cs-head" data-cs-toggle aria-expanded="true">
+                    <span class="cs-head__ico" aria-hidden="true">
+                      <img src="theme/images/training/curses/shapka-ico.png" alt="">
+                    </span>
+                    <span class="cs-head__main">
+                        <span class="cs-head__title">Модуль 1. Общие понятия и определения</span>
+            
+                        <span class="cs-head__meta">
+                            <span class="cs-head__count">3 материала <span class="d-flex d-xl-none">&nbsp;•&nbsp;1 час 27 минут</span></span>
+                            <img src="theme/images/training/curses/arrow-down-ico.svg" class="img-svg cs-head__arrow d-none d-xl-block" alt="">
+                        </span>
+                    </span>
+    
+                    <span class="cs-head__right d-none d-xl-flex">
+                        <span class="cs-head__time"><img src="theme/images/training/curses/clock-ico.svg" class="img-svg"><span>1 час 27 минут</span></span>
+                        <span class="label-chip label-chip--purple"><span>В процессе (0/1)</span></span>
+                    </span>
+                    <span class="cs-head__right d-flex d-xl-none">
+                        <img src="theme/images/training/curses/arrow-down-ico.svg" class="img-svg cs-head__arrow" alt="">
+                    </span>
+                </button>
+    
+                <div class="cs-body" data-cs-body>
+                    <div class="cs-item">
+                        <span class="cs-item__ico" aria-hidden="true">
+                            <img src="theme/images/training/curses/play-ico.png" alt="">
+                        </span>
+                        <div class="cs-item__txt">
+                            <div class="cs-item__title">Модуль 1. Урок 1. Термины и определения</div>
+                            <div class="cs-item__type">Учебный материал</div>
+                        </div>
+                        <div class="cs-item__status d-none d-xl-flex">
+                            <span class="label-chip label-chip--purple"><span>В процессе (62%)</span></span>
+                        </div>
+                        <div class="cs-item__status d-flex d-xl-none">
+                            <span class="label-chip"><span>62%</span></span>
+                        </div>
+                    </div>
+                    
+                    <div class="cs-item">
+                        <span class="cs-item__ico" aria-hidden="true">
+                            <img src="theme/images/training/curses/play-ico.png" alt="">
+                        </span>
+                        <div class="cs-item__txt">
+                            <div class="cs-item__title">Модуль 1. Урок 2. Товар и учет</div>
+                            <div class="cs-item__type">Учебный материал</div>
+                        </div>
+                        <div class="cs-item__status d-none d-xl-flex">
+                            <span class="label-chip label-chip--purple"><span>В процессе (30%)</span></span>
+                        </div>
+                        <div class="cs-item__status d-flex d-xl-none">
+                            <span class="label-chip"><span>30%</span></span>
+                        </div>
+                    </div>
+                    
+                    <div class="cs-item">
+                        <span class="cs-item__ico" aria-hidden="true">
+                            <img src="theme/images/training/curses/play-ico.png" alt="">
+                        </span>
+                        <div class="cs-item__txt">
+                            <div class="cs-item__title">Модуль 1. Урок 2. Товар и учет</div>
+                            <div class="cs-item__type">Учебный материал</div>
+                        </div>
+                        <div class="cs-item__status d-none d-xl-flex">
+                            <span class="cs-lock">
+                                <img src="theme/images/training/curses/lock-keyhole-ico.svg" class="img-svg" alt="">
+                                <span>Заблокировано</span>
+                            </span>
+                        </div>
+                        <div class="cs-item__status d-flex d-xl-none">
+                            <span class="label-chip"><img src="theme/images/training/curses/lock-keyhole-ico.svg" class="img-svg" alt=""></span>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>*}
+{/block}
+{block 'js'}
+    <script src="theme/js/swiper-bundle.min.js"></script>
+    <script src="{'!fileCashFix' | snippet : ['input' => 'theme/js/app-training.js']}"></script>
+{/block}

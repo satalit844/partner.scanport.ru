@@ -1,0 +1,98 @@
+{extends 'template:01.base'}
+
+{block 'content'}
+    {if !$_modx->isAuthenticated('web')}
+        {$_modx->sendRedirect(12 | url)}
+    {/if}
+    {set $segments = '!pdoMenu' | snippet : [
+        'parents' => $_modx->resource.id,
+        'level' => 1,
+        'tplOuter' => '@INLINE {$wrapper}',
+        'tpl' => 'tpl.collection',
+        'where' => '{
+            "class_key:=" : "CollectionContainer"
+        }',
+    ]}
+    {if $segments}
+        {$segments}
+    {else}
+        {if $_modx->resource.longtitle}
+            <div class="title mb-3">{$_modx->resource.longtitle ?: $_modx->resource.pagetitle}</div>
+        {/if}
+        <div id="pdopage">
+            [[!+page.nav]]
+            <div class="d-flex rows gap-4 flex-wrap">
+                {'!pdoPage' | snippet : [
+                    'parents' => $_modx->resource.id,
+                    'ajaxMode' => 'scroll',
+                    'includeTVs' => 'image,download_check,download,link',
+                    'tvPrefix' => '',
+                    'limit' => 10,
+                    'depth' => 1,
+                    'sortby' => 'menuindex',
+                    'sortdir' => 'DESC',
+                    'tpl' => 'tpl.material',
+                    'tplPageWrapper' => '@INLINE <div class="pagination" style="display: none;"><ul class="pagination">{$prev}{$pages}{$next}</ul></div>',
+                    'where' => '{
+                        "class_key:=" : "modDocument", "hidemenu:=" : 0
+                    }',
+                ]}
+            </div>
+        </div>
+    {/if}
+    {if $_modx->resource.switch_form == 1}
+        <div class="form_questions mt-3 mt-lg-5">
+            {set $mailto = $_modx->resource.emails_form_questions}
+            {set $sender = 'emailsender' | config}
+            {set $rows = json_decode($_modx->resource.id | resource : "questions", true)}
+            {if $rows}
+                {set $i = 1}
+                {foreach $rows as $row}
+                    {set $validate[] = 'responce_' ~ $i ~ ':required'}
+                    {set $i = $i + 1}
+                {/foreach}
+                {set $validate = $validate | join ~ ',uploads:formit2checkfiles'}
+                {set $file = $_modx->resource.questions_in_file}
+                {if $file}
+                    {set $options = [
+                        'snippet' => 'FormIt',
+                        'hooks' => 'FormItSaveForm,email_to_file_xlsx',
+                        'customValidators' => 'formit2checkfiles',
+                        'formFields' => 'inn,email,phone,company,fullname',
+                        'fieldNames' => 'fullname==Имя,inn==ИНН,email==Электронная почта,phone==Телефон,company==Компания',
+                        'formName' => $_modx->resource.pagetitle,
+                        'emailFrom' => $sender,
+                        'form' => 'tpl.form.questions',
+                        'emailTpl' => 'tpl.email.form.questions',
+                        'emailSubject' => $_modx->resource.title_quiz,
+                        'emailTo' => $mailto,
+                        'validate' => $validate,
+                        'validationErrorMessage' => 'В форме содержатся ошибки!',
+                        'successMessage' => 'Сообщение успешно отправлено',
+                        'questions' => $rows,
+                        'file' => $file,
+                    ]}
+                {else}
+                    {set $options = [
+                        'snippet' => 'FormIt',
+                        'hooks' => 'FormItSaveForm,email',
+                        'customValidators' => 'formit2checkfiles',
+                        'formFields' => 'inn,email,phone,company,fullname',
+                        'fieldNames' => 'fullname==Имя,inn==ИНН,email==Электронная почта,phone==Телефон,company==Компания',
+                        'formName' => $_modx->resource.pagetitle,
+                        'emailFrom' => $sender,
+                        'form' => 'tpl.form.questions',
+                        'emailTpl' => 'tpl.email.form.questions',
+                        'emailSubject' => $_modx->resource.title_quiz,
+                        'emailTo' => $mailto,
+                        'validate' => $validate,
+                        'validationErrorMessage' => 'В форме содержатся ошибки!',
+                        'successMessage' => 'Сообщение успешно отправлено',
+                        'questions' => $rows,
+                    ]}
+                {/if}
+                {'!AjaxForm' | snippet : $options}
+            {/if}
+        </div>
+    {/if}
+{/block}

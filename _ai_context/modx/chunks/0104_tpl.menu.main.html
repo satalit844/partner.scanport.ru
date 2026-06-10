@@ -1,0 +1,31 @@
+<li class="nav-item {$link_attributes} {$classnames}">
+    {if $link_attributes}
+        <div class="menu-button">
+            <a href="{$uri}" class="nav-link d-flex gap-2">
+                <img src="{$img}" class="img-svg menu-ico">
+                <span>{$pagetitle}</span>
+            </a>
+            <button type="button" class="button-menu" class="toggle"><img src="theme/images/training/curses/arrow-up-ico.svg" class="img-svg toggle-ico"></button>
+        </div>
+        <ul class="sumbenu">
+            {'!pdoResources' | snippet : [
+                'parents' => 4,
+                'limit' => 0,
+                'depth' => 0,
+                'sortby' => 'menuindex',
+                'sortdir' => 'ASC', 
+                'tpl' => '@CODE: 
+                    <li><a href="{$uri}">{$pagetitle}</a></li>
+                ',
+                'where' => '{
+                    "class_key:=" : "CollectionContainer"
+                }',
+            ]}
+        </ul>
+    {else}
+        <a href="{$uri}" class="nav-link {$classnames} d-flex gap-2">
+            <img src="{$img}" class="img-svg">
+            <span>{$pagetitle}</span>
+        </a>
+    {/if}
+</li>

@@ -1,0 +1,2394 @@
+{
+    "templates": [
+        {
+            "id": 1,
+            "name": "01.base",
+            "description": "",
+            "file": "modx/templates/0001_01.base.html"
+        },
+        {
+            "id": 2,
+            "name": "02.Купить лицензию",
+            "description": "",
+            "file": "modx/templates/0002_02.Купить_лицензию.html"
+        },
+        {
+            "id": 3,
+            "name": "03.Материал",
+            "description": "",
+            "file": "modx/templates/0003_03.Материал.html"
+        },
+        {
+            "id": 4,
+            "name": "04.Квиз+ДопФункции",
+            "description": "",
+            "file": "modx/templates/0004_04.Квиз_ДопФункции.html"
+        },
+        {
+            "id": 5,
+            "name": "05.Контент",
+            "description": "",
+            "file": "modx/templates/0005_05.Контент.html"
+        },
+        {
+            "id": 6,
+            "name": "06.Рассылки",
+            "description": "",
+            "file": "modx/templates/0006_06.Рассылки.html"
+        },
+        {
+            "id": 7,
+            "name": "07.Профиль",
+            "description": "",
+            "file": "modx/templates/0007_07.Профиль.html"
+        },
+        {
+            "id": 8,
+            "name": "08.Авторизация",
+            "description": "",
+            "file": "modx/templates/0008_08.Авторизация.html"
+        },
+        {
+            "id": 9,
+            "name": "09.Товар",
+            "description": "",
+            "file": "modx/templates/0009_09.Товар.html"
+        },
+        {
+            "id": 10,
+            "name": "10.Категория",
+            "description": "",
+            "file": "modx/templates/0010_10.Категория.html"
+        },
+        {
+            "id": 11,
+            "name": "11.Партнерский статус",
+            "description": "",
+            "file": "modx/templates/0011_11.Партнерский_статус.html"
+        },
+        {
+            "id": 12,
+            "name": "12.История заказов",
+            "description": "",
+            "file": "modx/templates/0012_12.История_заказов.html"
+        },
+        {
+            "id": 14,
+            "name": "13.404",
+            "description": "",
+            "file": "modx/templates/0014_13.404.html"
+        },
+        {
+            "id": 15,
+            "name": "14.Обучение",
+            "description": "",
+            "file": "modx/templates/0015_14.Обучение.html"
+        },
+        {
+            "id": 16,
+            "name": "15.Курс-интерфейс",
+            "description": "",
+            "file": "modx/templates/0016_15.Курс-интерфейс.html"
+        },
+        {
+            "id": 17,
+            "name": "16.Курс",
+            "description": "",
+            "file": "modx/templates/0017_16.Курс.html"
+        },
+        {
+            "id": 18,
+            "name": "18.Модуль курса",
+            "description": "",
+            "file": "modx/templates/0018_18.Модуль_курса.html"
+        }
+    ],
+    "chunks": [
+        {
+            "id": 1,
+            "name": "msProduct.content",
+            "description": "Чанк вывода карточки товара.",
+            "file": "modx/chunks/0001_msProduct.content.html"
+        },
+        {
+            "id": 2,
+            "name": "msProduct.content.fenom",
+            "description": "",
+            "file": "modx/chunks/0002_msProduct.content.fenom.html"
+        },
+        {
+            "id": 3,
+            "name": "tpl.msProducts.row",
+            "description": "Чанк товара miniShop2.",
+            "file": "modx/chunks/0003_tpl.msProducts.row.html"
+        },
+        {
+            "id": 4,
+            "name": "tpl.msCart",
+            "description": "Чанк вывода корзины miniShop2.",
+            "file": "modx/chunks/0004_tpl.msCart.html"
+        },
+        {
+            "id": 5,
+            "name": "tpl.msCartNew",
+            "description": "",
+            "file": "modx/chunks/0005_tpl.msCartNew.html"
+        },
+        {
+            "id": 6,
+            "name": "tpl.msMiniCart",
+            "description": "Чанк вывода мини корзины miniShop2.",
+            "file": "modx/chunks/0006_tpl.msMiniCart.html"
+        },
+        {
+            "id": 7,
+            "name": "tpl.msOrder",
+            "description": "Чанк вывода формы оформления заказа miniShop2.",
+            "file": "modx/chunks/0007_tpl.msOrder.html"
+        },
+        {
+            "id": 8,
+            "name": "tpl.msGetOrder",
+            "description": "Чанк вывода заказа miniShop2.",
+            "file": "modx/chunks/0008_tpl.msGetOrder.html"
+        },
+        {
+            "id": 9,
+            "name": "tpl.msOptions",
+            "description": "Чанк вывода дополнительных свойств товара miniShop2.",
+            "file": "modx/chunks/0009_tpl.msOptions.html"
+        },
+        {
+            "id": 10,
+            "name": "tpl.msProductOptions",
+            "description": "Чанк вывода дополнительных опций товара miniShop2.",
+            "file": "modx/chunks/0010_tpl.msProductOptions.html"
+        },
+        {
+            "id": 11,
+            "name": "tpl.msGallery",
+            "description": "Чанк вывода галереи товара miniShop2.",
+            "file": "modx/chunks/0011_tpl.msGallery.html"
+        },
+        {
+            "id": 12,
+            "name": "tpl.msGalleryNew",
+            "description": "",
+            "file": "modx/chunks/0012_tpl.msGalleryNew.html"
+        },
+        {
+            "id": 13,
+            "name": "tpl.msEmail",
+            "description": "Базовый чанк оформления писем miniShop2.",
+            "file": "modx/chunks/0013_tpl.msEmail.html"
+        },
+        {
+            "id": 14,
+            "name": "tpl.msEmail.new.user",
+            "description": "Чанк письма нового заказа пользователю.",
+            "file": "modx/chunks/0014_tpl.msEmail.new.user.html"
+        },
+        {
+            "id": 15,
+            "name": "tpl.msEmail.new.manager",
+            "description": "Чанк письма нового заказа менеджеру.",
+            "file": "modx/chunks/0015_tpl.msEmail.new.manager.html"
+        },
+        {
+            "id": 16,
+            "name": "tpl.msEmail.paid.user",
+            "description": "Чанк письма оплаченного заказа пользователю.",
+            "file": "modx/chunks/0016_tpl.msEmail.paid.user.html"
+        },
+        {
+            "id": 17,
+            "name": "tpl.msEmail.paid.manager",
+            "description": "Чанк письма оплаченного заказа менеджеру.",
+            "file": "modx/chunks/0017_tpl.msEmail.paid.manager.html"
+        },
+        {
+            "id": 18,
+            "name": "tpl.msEmail.sent.user",
+            "description": "Чанк письма отправленного заказа пользователю.",
+            "file": "modx/chunks/0018_tpl.msEmail.sent.user.html"
+        },
+        {
+            "id": 19,
+            "name": "tpl.msEmail.cancelled.user",
+            "description": "Чанк письма отмененного заказа пользователю.",
+            "file": "modx/chunks/0019_tpl.msEmail.cancelled.user.html"
+        },
+        {
+            "id": 20,
+            "name": "errorLogPanel.tpl",
+            "description": "",
+            "file": "modx/chunks/0020_errorLogPanel.tpl.html"
+        },
+        {
+            "id": 21,
+            "name": "msieDownloadTpl",
+            "description": "",
+            "file": "modx/chunks/0021_msieDownloadTpl.html"
+        },
+        {
+            "id": 22,
+            "name": "tpl.msOptionsPrice.modification",
+            "description": "",
+            "file": "modx/chunks/0022_tpl.msOptionsPrice.modification.html"
+        },
+        {
+            "id": 23,
+            "name": "tpl.Office.auth.login",
+            "description": "",
+            "file": "modx/chunks/0023_tpl.Office.auth.login.html"
+        },
+        {
+            "id": 24,
+            "name": "tpl.Office.auth.logout",
+            "description": "",
+            "file": "modx/chunks/0024_tpl.Office.auth.logout.html"
+        },
+        {
+            "id": 25,
+            "name": "tpl.Office.remote.login",
+            "description": "",
+            "file": "modx/chunks/0025_tpl.Office.remote.login.html"
+        },
+        {
+            "id": 26,
+            "name": "tpl.Office.remote.logout",
+            "description": "",
+            "file": "modx/chunks/0026_tpl.Office.remote.logout.html"
+        },
+        {
+            "id": 27,
+            "name": "tpl.Office.auth.activate",
+            "description": "",
+            "file": "modx/chunks/0027_tpl.Office.auth.activate.html"
+        },
+        {
+            "id": 28,
+            "name": "tpl.Office.auth.register",
+            "description": "",
+            "file": "modx/chunks/0028_tpl.Office.auth.register.html"
+        },
+        {
+            "id": 29,
+            "name": "tpl.Office.profile.form",
+            "description": "",
+            "file": "modx/chunks/0029_tpl.Office.profile.form.html"
+        },
+        {
+            "id": 30,
+            "name": "tpl.Office.profile.activate",
+            "description": "",
+            "file": "modx/chunks/0030_tpl.Office.profile.activate.html"
+        },
+        {
+            "id": 31,
+            "name": "tpl.Office.ms2.outer",
+            "description": "",
+            "file": "modx/chunks/0031_tpl.Office.ms2.outer.html"
+        },
+        {
+            "id": 32,
+            "name": "tpl.material",
+            "description": "",
+            "file": "modx/chunks/0032_tpl.material.html"
+        },
+        {
+            "id": 33,
+            "name": "tpl.Office.auth",
+            "description": "",
+            "file": "modx/chunks/0033_tpl.Office.auth.html"
+        },
+        {
+            "id": 34,
+            "name": "tpl.Office.rescue-password",
+            "description": "",
+            "file": "modx/chunks/0034_tpl.Office.rescue-password.html"
+        },
+        {
+            "id": 35,
+            "name": "tpl.Office.auth-register",
+            "description": "",
+            "file": "modx/chunks/0035_tpl.Office.auth-register.html"
+        },
+        {
+            "id": 36,
+            "name": "tpl.Office.profile.user-form",
+            "description": "",
+            "file": "modx/chunks/0036_tpl.Office.profile.user-form.html"
+        },
+        {
+            "id": 37,
+            "name": "tpl.AjaxForm.example",
+            "description": "",
+            "file": "modx/chunks/0037_tpl.AjaxForm.example.html"
+        },
+        {
+            "id": 38,
+            "name": "fiDefaultEmailTpl",
+            "description": "The default chunk used for the email. Please do not edit this chunk, as this will be overwritten when updating FormIt.",
+            "file": "modx/chunks/0038_fiDefaultEmailTpl.html"
+        },
+        {
+            "id": 39,
+            "name": "fiDefaultFiarTpl",
+            "description": "The default chunk used for the autoresponder email. Please do not edit this chunk, as this will be overwritten when updating FormIt.",
+            "file": "modx/chunks/0039_fiDefaultFiarTpl.html"
+        },
+        {
+            "id": 40,
+            "name": "fiDefaultOptGroupTpl",
+            "description": "The default chunk used by the FormItCountryOptions snippet for the select optgroup. Please do not edit this chunk, as this will be overwritten when updating FormIt.",
+            "file": "modx/chunks/0040_fiDefaultOptGroupTpl.html"
+        },
+        {
+            "id": 41,
+            "name": "fiDefaultOptionTpl",
+            "description": "The default chunk used by the FormItCountryOptions snippet for the select option. Please do not edit this chunk, as this will be overwritten when updating FormIt.",
+            "file": "modx/chunks/0041_fiDefaultOptionTpl.html"
+        },
+        {
+            "id": 42,
+            "name": "tpl.form.questions",
+            "description": "",
+            "file": "modx/chunks/0042_tpl.form.questions.html"
+        },
+        {
+            "id": 43,
+            "name": "tpl.email.form.questions",
+            "description": "",
+            "file": "modx/chunks/0043_tpl.email.form.questions.html"
+        },
+        {
+            "id": 44,
+            "name": "tpl.options.lic",
+            "description": "",
+            "file": "modx/chunks/0044_tpl.options.lic.html"
+        },
+        {
+            "id": 45,
+            "name": "msCartOuter",
+            "description": "",
+            "file": "modx/chunks/0045_msCartOuter.html"
+        },
+        {
+            "id": 46,
+            "name": "msCartRow",
+            "description": "",
+            "file": "modx/chunks/0046_msCartRow.html"
+        },
+        {
+            "id": 47,
+            "name": "tpl.msCart.custom",
+            "description": "Чанк вывода корзины miniShop2.",
+            "file": "modx/chunks/0047_tpl.msCart.custom.html"
+        },
+        {
+            "id": 48,
+            "name": "tpl.msOrder.custom",
+            "description": "Чанк вывода формы оформления заказа miniShop2.",
+            "file": "modx/chunks/0048_tpl.msOrder.custom.html"
+        },
+        {
+            "id": 50,
+            "name": "tpl.msGetOrder.custom",
+            "description": "Чанк вывода заказа miniShop2.",
+            "file": "modx/chunks/0050_tpl.msGetOrder.custom.html"
+        },
+        {
+            "id": 51,
+            "name": "tpl.Order_row",
+            "description": "",
+            "file": "modx/chunks/0051_tpl.Order_row.html"
+        },
+        {
+            "id": 52,
+            "name": "tpl.productRow",
+            "description": "",
+            "file": "modx/chunks/0052_tpl.productRow.html"
+        },
+        {
+            "id": 53,
+            "name": "tpl.reg.form",
+            "description": "",
+            "file": "modx/chunks/0053_tpl.reg.form.html"
+        },
+        {
+            "id": 54,
+            "name": "ajaxLoginTpl",
+            "description": "",
+            "file": "modx/chunks/0054_ajaxLoginTpl.html"
+        },
+        {
+            "id": 55,
+            "name": "ajaxLoginActivateEmailTpl",
+            "description": "",
+            "file": "modx/chunks/0055_ajaxLoginActivateEmailTpl.html"
+        },
+        {
+            "id": 56,
+            "name": "ajaxLoginErrTpl",
+            "description": "",
+            "file": "modx/chunks/0056_ajaxLoginErrTpl.html"
+        },
+        {
+            "id": 57,
+            "name": "ajaxLoginForgotFormTpl",
+            "description": "",
+            "file": "modx/chunks/0057_ajaxLoginForgotFormTpl.html"
+        },
+        {
+            "id": 58,
+            "name": "ajaxLoginForgotPassEmailTpl",
+            "description": "",
+            "file": "modx/chunks/0058_ajaxLoginForgotPassEmailTpl.html"
+        },
+        {
+            "id": 59,
+            "name": "ajaxLoginForgotPassSentTpl",
+            "description": "",
+            "file": "modx/chunks/0059_ajaxLoginForgotPassSentTpl.html"
+        },
+        {
+            "id": 60,
+            "name": "ajaxLoginFormTpl",
+            "description": "",
+            "file": "modx/chunks/0060_ajaxLoginFormTpl.html"
+        },
+        {
+            "id": 61,
+            "name": "ajaxLoginModalTpl",
+            "description": "",
+            "file": "modx/chunks/0061_ajaxLoginModalTpl.html"
+        },
+        {
+            "id": 62,
+            "name": "ajaxLoginRegisterFormTpl",
+            "description": "",
+            "file": "modx/chunks/0062_ajaxLoginRegisterFormTpl.html"
+        },
+        {
+            "id": 63,
+            "name": "lgnLoginTpl",
+            "description": "",
+            "file": "modx/chunks/0063_lgnLoginTpl.html"
+        },
+        {
+            "id": 64,
+            "name": "lgnLogoutTpl",
+            "description": "",
+            "file": "modx/chunks/0064_lgnLogoutTpl.html"
+        },
+        {
+            "id": 65,
+            "name": "lgnErrTpl",
+            "description": "",
+            "file": "modx/chunks/0065_lgnErrTpl.html"
+        },
+        {
+            "id": 66,
+            "name": "lgnForgotPassEmail",
+            "description": "",
+            "file": "modx/chunks/0066_lgnForgotPassEmail.html"
+        },
+        {
+            "id": 67,
+            "name": "lgnForgotPassSentTpl",
+            "description": "",
+            "file": "modx/chunks/0067_lgnForgotPassSentTpl.html"
+        },
+        {
+            "id": 68,
+            "name": "lgnForgotPassTpl",
+            "description": "",
+            "file": "modx/chunks/0068_lgnForgotPassTpl.html"
+        },
+        {
+            "id": 69,
+            "name": "lgnResetPassTpl",
+            "description": "",
+            "file": "modx/chunks/0069_lgnResetPassTpl.html"
+        },
+        {
+            "id": 70,
+            "name": "lgnRegisterFormTpl",
+            "description": "",
+            "file": "modx/chunks/0070_lgnRegisterFormTpl.html"
+        },
+        {
+            "id": 71,
+            "name": "lgnActivateEmailTpl",
+            "description": "",
+            "file": "modx/chunks/0071_lgnActivateEmailTpl.html"
+        },
+        {
+            "id": 72,
+            "name": "lgnActiveUser",
+            "description": "",
+            "file": "modx/chunks/0072_lgnActiveUser.html"
+        },
+        {
+            "id": 73,
+            "name": "lgnResetPassChangePassTpl",
+            "description": "",
+            "file": "modx/chunks/0073_lgnResetPassChangePassTpl.html"
+        },
+        {
+            "id": 74,
+            "name": "lgnExpiredTpl",
+            "description": "",
+            "file": "modx/chunks/0074_lgnExpiredTpl.html"
+        },
+        {
+            "id": 75,
+            "name": "tpl.Office.auth.register.custom",
+            "description": "",
+            "file": "modx/chunks/0075_tpl.Office.auth.register.custom.html"
+        },
+        {
+            "id": 76,
+            "name": "tpl.user.activate",
+            "description": "",
+            "file": "modx/chunks/0076_tpl.user.activate.html"
+        },
+        {
+            "id": 77,
+            "name": "tpl.user.manager",
+            "description": "",
+            "file": "modx/chunks/0077_tpl.user.manager.html"
+        },
+        {
+            "id": 78,
+            "name": "modals",
+            "description": "",
+            "file": "modx/chunks/0078_modals.html"
+        },
+        {
+            "id": 79,
+            "name": "tpl.callback.form",
+            "description": "",
+            "file": "modx/chunks/0079_tpl.callback.form.html"
+        },
+        {
+            "id": 80,
+            "name": "email.callback.admin",
+            "description": "",
+            "file": "modx/chunks/0080_email.callback.admin.html"
+        },
+        {
+            "id": 81,
+            "name": "tpl.collection",
+            "description": "",
+            "file": "modx/chunks/0081_tpl.collection.html"
+        },
+        {
+            "id": 82,
+            "name": "tpl.msListOrders",
+            "description": "",
+            "file": "modx/chunks/0082_tpl.msListOrders.html"
+        },
+        {
+            "id": 83,
+            "name": "tpl.msListOrders.order",
+            "description": "",
+            "file": "modx/chunks/0083_tpl.msListOrders.order.html"
+        },
+        {
+            "id": 84,
+            "name": "tpl.msListOrders-history",
+            "description": "",
+            "file": "modx/chunks/0084_tpl.msListOrders-history.html"
+        },
+        {
+            "id": 85,
+            "name": "tpl.msListOrders.order-history",
+            "description": "",
+            "file": "modx/chunks/0085_tpl.msListOrders.order-history.html"
+        },
+        {
+            "id": 86,
+            "name": "tpl.user.order-active",
+            "description": "",
+            "file": "modx/chunks/0086_tpl.user.order-active.html"
+        },
+        {
+            "id": 87,
+            "name": "tpl.user.activate-transfer",
+            "description": "",
+            "file": "modx/chunks/0087_tpl.user.activate-transfer.html"
+        },
+        {
+            "id": 88,
+            "name": "tpl.Telegram.item",
+            "description": "",
+            "file": "modx/chunks/0088_tpl.Telegram.item.html"
+        },
+        {
+            "id": 89,
+            "name": "tpl.Telegram.office",
+            "description": "",
+            "file": "modx/chunks/0089_tpl.Telegram.office.html"
+        },
+        {
+            "id": 90,
+            "name": "tpl.UserTest.main",
+            "description": "",
+            "file": "modx/chunks/0090_tpl.UserTest.main.html"
+        },
+        {
+            "id": 91,
+            "name": "tpl.UserTest.mainNoResult",
+            "description": "",
+            "file": "modx/chunks/0091_tpl.UserTest.mainNoResult.html"
+        },
+        {
+            "id": 92,
+            "name": "tpl.UserTest.AjaxForm",
+            "description": "",
+            "file": "modx/chunks/0092_tpl.UserTest.AjaxForm.html"
+        },
+        {
+            "id": 93,
+            "name": "tpl.UserTest.AjaxForm.Email",
+            "description": "",
+            "file": "modx/chunks/0093_tpl.UserTest.AjaxForm.Email.html"
+        },
+        {
+            "id": 94,
+            "name": "tpl.UserTest.ListTests",
+            "description": "",
+            "file": "modx/chunks/0094_tpl.UserTest.ListTests.html"
+        },
+        {
+            "id": 95,
+            "name": "tpl.UserTest.error",
+            "description": "",
+            "file": "modx/chunks/0095_tpl.UserTest.error.html"
+        },
+        {
+            "id": 96,
+            "name": "tpl.UserTest.ResultAnswer",
+            "description": "",
+            "file": "modx/chunks/0096_tpl.UserTest.ResultAnswer.html"
+        },
+        {
+            "id": 97,
+            "name": "tpl.UserTest.ResultShow",
+            "description": "",
+            "file": "modx/chunks/0097_tpl.UserTest.ResultShow.html"
+        },
+        {
+            "id": 98,
+            "name": "tpl.UserTest.InviteEmail",
+            "description": "",
+            "file": "modx/chunks/0098_tpl.UserTest.InviteEmail.html"
+        },
+        {
+            "id": 99,
+            "name": "tpl.UserTest.InviteEmailUserWithEmptyTest",
+            "description": "",
+            "file": "modx/chunks/0099_tpl.UserTest.InviteEmailUserWithEmptyTest.html"
+        },
+        {
+            "id": 100,
+            "name": "tpl.UserTest.Teacher.Email",
+            "description": "",
+            "file": "modx/chunks/0100_tpl.UserTest.Teacher.Email.html"
+        },
+        {
+            "id": 101,
+            "name": "tpl.UserTest.CatResult",
+            "description": "",
+            "file": "modx/chunks/0101_tpl.UserTest.CatResult.html"
+        },
+        {
+            "id": 102,
+            "name": "tpl.UserTest.OprosSANResult",
+            "description": "",
+            "file": "modx/chunks/0102_tpl.UserTest.OprosSANResult.html"
+        },
+        {
+            "id": 103,
+            "name": "tpl.UserTest.AskUserDataForm",
+            "description": "",
+            "file": "modx/chunks/0103_tpl.UserTest.AskUserDataForm.html"
+        },
+        {
+            "id": 104,
+            "name": "tpl.menu.main",
+            "description": "",
+            "file": "modx/chunks/0104_tpl.menu.main.html"
+        },
+        {
+            "id": 105,
+            "name": "tpl.main.curses",
+            "description": "",
+            "file": "modx/chunks/0105_tpl.main.curses.html"
+        },
+        {
+            "id": 106,
+            "name": "training.manage.request-course.form",
+            "description": "Training course request AjaxForm chunk",
+            "file": "modx/chunks/0106_training.manage.request-course.form.html"
+        },
+        {
+            "id": 107,
+            "name": "training.manage.request-course.email",
+            "description": "Training course request AjaxForm chunk",
+            "file": "modx/chunks/0107_training.manage.request-course.email.html"
+        }
+    ],
+    "snippets": [
+        {
+            "id": 1,
+            "name": "pdoResources",
+            "description": "",
+            "file": "modx/snippets/0001_pdoResources.php"
+        },
+        {
+            "id": 2,
+            "name": "pdoUsers",
+            "description": "",
+            "file": "modx/snippets/0002_pdoUsers.php"
+        },
+        {
+            "id": 3,
+            "name": "pdoCrumbs",
+            "description": "",
+            "file": "modx/snippets/0003_pdoCrumbs.php"
+        },
+        {
+            "id": 4,
+            "name": "pdoField",
+            "description": "",
+            "file": "modx/snippets/0004_pdoField.php"
+        },
+        {
+            "id": 5,
+            "name": "pdoSitemap",
+            "description": "",
+            "file": "modx/snippets/0005_pdoSitemap.php"
+        },
+        {
+            "id": 6,
+            "name": "pdoNeighbors",
+            "description": "",
+            "file": "modx/snippets/0006_pdoNeighbors.php"
+        },
+        {
+            "id": 7,
+            "name": "pdoPage",
+            "description": "",
+            "file": "modx/snippets/0007_pdoPage.php"
+        },
+        {
+            "id": 8,
+            "name": "pdoMenu",
+            "description": "",
+            "file": "modx/snippets/0008_pdoMenu.php"
+        },
+        {
+            "id": 9,
+            "name": "pdoTitle",
+            "description": "",
+            "file": "modx/snippets/0009_pdoTitle.php"
+        },
+        {
+            "id": 10,
+            "name": "pdoArchive",
+            "description": "",
+            "file": "modx/snippets/0010_pdoArchive.php"
+        },
+        {
+            "id": 11,
+            "name": "msProducts",
+            "description": "",
+            "file": "modx/snippets/0011_msProducts.php"
+        },
+        {
+            "id": 12,
+            "name": "msCart",
+            "description": "",
+            "file": "modx/snippets/0012_msCart.php"
+        },
+        {
+            "id": 13,
+            "name": "msMiniCart",
+            "description": "",
+            "file": "modx/snippets/0013_msMiniCart.php"
+        },
+        {
+            "id": 14,
+            "name": "msGallery",
+            "description": "",
+            "file": "modx/snippets/0014_msGallery.php"
+        },
+        {
+            "id": 15,
+            "name": "msOptions",
+            "description": "",
+            "file": "modx/snippets/0015_msOptions.php"
+        },
+        {
+            "id": 16,
+            "name": "msOrder",
+            "description": "",
+            "file": "modx/snippets/0016_msOrder.php"
+        },
+        {
+            "id": 17,
+            "name": "msGetOrder",
+            "description": "",
+            "file": "modx/snippets/0017_msGetOrder.php"
+        },
+        {
+            "id": 18,
+            "name": "msProductOptions",
+            "description": "",
+            "file": "modx/snippets/0018_msProductOptions.php"
+        },
+        {
+            "id": 19,
+            "name": "ajax",
+            "description": "",
+            "file": "modx/snippets/0019_ajax.php"
+        },
+        {
+            "id": 20,
+            "name": "user_info",
+            "description": "",
+            "file": "modx/snippets/0020_user_info.php"
+        },
+        {
+            "id": 21,
+            "name": "fileCashFix",
+            "description": "",
+            "file": "modx/snippets/0021_fileCashFix.php"
+        },
+        {
+            "id": 22,
+            "name": "msieDownload",
+            "description": "",
+            "file": "modx/snippets/0022_msieDownload.php"
+        },
+        {
+            "id": 23,
+            "name": "msOptionsPrice.initialize",
+            "description": "",
+            "file": "modx/snippets/0023_msOptionsPrice.initialize.php"
+        },
+        {
+            "id": 24,
+            "name": "msOptionsPrice.modification",
+            "description": "",
+            "file": "modx/snippets/0024_msOptionsPrice.modification.php"
+        },
+        {
+            "id": 25,
+            "name": "msOptionsPrice.option",
+            "description": "",
+            "file": "modx/snippets/0025_msOptionsPrice.option.php"
+        },
+        {
+            "id": 26,
+            "name": "Office",
+            "description": "",
+            "file": "modx/snippets/0026_Office.php"
+        },
+        {
+            "id": 27,
+            "name": "officeProfile",
+            "description": "",
+            "file": "modx/snippets/0027_officeProfile.php"
+        },
+        {
+            "id": 28,
+            "name": "officeAuth",
+            "description": "",
+            "file": "modx/snippets/0028_officeAuth.php"
+        },
+        {
+            "id": 29,
+            "name": "officeRemoteAuth",
+            "description": "",
+            "file": "modx/snippets/0029_officeRemoteAuth.php"
+        },
+        {
+            "id": 30,
+            "name": "officeRemoteServer",
+            "description": "",
+            "file": "modx/snippets/0030_officeRemoteServer.php"
+        },
+        {
+            "id": 31,
+            "name": "officeMiniShop2",
+            "description": "",
+            "file": "modx/snippets/0031_officeMiniShop2.php"
+        },
+        {
+            "id": 32,
+            "name": "getImageList",
+            "description": "",
+            "file": "modx/snippets/0032_getImageList.php"
+        },
+        {
+            "id": 33,
+            "name": "migxGetRelations",
+            "description": "",
+            "file": "modx/snippets/0033_migxGetRelations.php"
+        },
+        {
+            "id": 34,
+            "name": "migx",
+            "description": "",
+            "file": "modx/snippets/0034_migx.php"
+        },
+        {
+            "id": 35,
+            "name": "migxLoopCollection",
+            "description": "",
+            "file": "modx/snippets/0035_migxLoopCollection.php"
+        },
+        {
+            "id": 36,
+            "name": "migxResourceMediaPath",
+            "description": "",
+            "file": "modx/snippets/0036_migxResourceMediaPath.php"
+        },
+        {
+            "id": 37,
+            "name": "migxImageUpload",
+            "description": "",
+            "file": "modx/snippets/0037_migxImageUpload.php"
+        },
+        {
+            "id": 38,
+            "name": "migxChunklistToJson",
+            "description": "",
+            "file": "modx/snippets/0038_migxChunklistToJson.php"
+        },
+        {
+            "id": 39,
+            "name": "migxSwitchDetailChunk",
+            "description": "",
+            "file": "modx/snippets/0039_migxSwitchDetailChunk.php"
+        },
+        {
+            "id": 40,
+            "name": "getSwitchColumnCol",
+            "description": "",
+            "file": "modx/snippets/0040_getSwitchColumnCol.php"
+        },
+        {
+            "id": 41,
+            "name": "getDayliMIGXrecord",
+            "description": "",
+            "file": "modx/snippets/0041_getDayliMIGXrecord.php"
+        },
+        {
+            "id": 42,
+            "name": "filterbytag",
+            "description": "",
+            "file": "modx/snippets/0042_filterbytag.php"
+        },
+        {
+            "id": 43,
+            "name": "migxObjectMediaPath",
+            "description": "",
+            "file": "modx/snippets/0043_migxObjectMediaPath.php"
+        },
+        {
+            "id": 44,
+            "name": "exportMIGX2db",
+            "description": "",
+            "file": "modx/snippets/0044_exportMIGX2db.php"
+        },
+        {
+            "id": 45,
+            "name": "preparedatewhere",
+            "description": "",
+            "file": "modx/snippets/0045_preparedatewhere.php"
+        },
+        {
+            "id": 46,
+            "name": "migxJsonToPlaceholders",
+            "description": "",
+            "file": "modx/snippets/0046_migxJsonToPlaceholders.php"
+        },
+        {
+            "id": 47,
+            "name": "migxGetCollectionTree",
+            "description": "",
+            "file": "modx/snippets/0047_migxGetCollectionTree.php"
+        },
+        {
+            "id": 48,
+            "name": "migxIsNewObject",
+            "description": "",
+            "file": "modx/snippets/0048_migxIsNewObject.php"
+        },
+        {
+            "id": 49,
+            "name": "migx_example_validate",
+            "description": "",
+            "file": "modx/snippets/0049_migx_example_validate.php"
+        },
+        {
+            "id": 50,
+            "name": "migxHookAftercollectmigxitems",
+            "description": "",
+            "file": "modx/snippets/0050_migxHookAftercollectmigxitems.php"
+        },
+        {
+            "id": 51,
+            "name": "migxAutoPublish",
+            "description": "",
+            "file": "modx/snippets/0051_migxAutoPublish.php"
+        },
+        {
+            "id": 52,
+            "name": "migxGetObject",
+            "description": "",
+            "file": "modx/snippets/0052_migxGetObject.php"
+        },
+        {
+            "id": 53,
+            "name": "getSelections",
+            "description": "",
+            "file": "modx/snippets/0053_getSelections.php"
+        },
+        {
+            "id": 55,
+            "name": "FormIt",
+            "description": "A dynamic form processing snippet.",
+            "file": "modx/snippets/0055_FormIt.php"
+        },
+        {
+            "id": 56,
+            "name": "FormItRetriever",
+            "description": "Fetches a form submission for a user for displaying on a thank you page.",
+            "file": "modx/snippets/0056_FormItRetriever.php"
+        },
+        {
+            "id": 57,
+            "name": "FormItIsChecked",
+            "description": "A custom output filter used with checkboxes/radios for checking checked status.",
+            "file": "modx/snippets/0057_FormItIsChecked.php"
+        },
+        {
+            "id": 58,
+            "name": "FormItIsSelected",
+            "description": "A custom output filter used with dropdowns for checking selected status.",
+            "file": "modx/snippets/0058_FormItIsSelected.php"
+        },
+        {
+            "id": 59,
+            "name": "FormItCountryOptions",
+            "description": "A utility snippet for generating a dropdown list of countries.",
+            "file": "modx/snippets/0059_FormItCountryOptions.php"
+        },
+        {
+            "id": 60,
+            "name": "FormItStateOptions",
+            "description": "A utility snippet for generating a dropdown list of U.S. states.",
+            "file": "modx/snippets/0060_FormItStateOptions.php"
+        },
+        {
+            "id": 61,
+            "name": "FormItLoadSavedForm",
+            "description": "Prehook to load previously saved form.",
+            "file": "modx/snippets/0061_FormItLoadSavedForm.php"
+        },
+        {
+            "id": 62,
+            "name": "projects",
+            "description": "",
+            "file": "modx/snippets/0062_projects.php"
+        },
+        {
+            "id": 63,
+            "name": "msOrder.custom",
+            "description": "",
+            "file": "modx/snippets/0063_msOrder.custom.php"
+        },
+        {
+            "id": 64,
+            "name": "msCart.custom",
+            "description": "",
+            "file": "modx/snippets/0064_msCart.custom.php"
+        },
+        {
+            "id": 65,
+            "name": "getProductsOrder.snippet",
+            "description": "",
+            "file": "modx/snippets/0065_getProductsOrder.snippet.php"
+        },
+        {
+            "id": 66,
+            "name": "checkSpamTime",
+            "description": "",
+            "file": "modx/snippets/0066_checkSpamTime.php"
+        },
+        {
+            "id": 68,
+            "name": "AjaxForm",
+            "description": "",
+            "file": "modx/snippets/0068_AjaxForm.php"
+        },
+        {
+            "id": 69,
+            "name": "ajaxLogin",
+            "description": "",
+            "file": "modx/snippets/0069_ajaxLogin.php"
+        },
+        {
+            "id": 70,
+            "name": "ActiveUsers",
+            "description": "Shows a list of active, logged-in users.",
+            "file": "modx/snippets/0070_ActiveUsers.php"
+        },
+        {
+            "id": 71,
+            "name": "ChangePassword",
+            "description": "Processes a form for changing the password for a User.",
+            "file": "modx/snippets/0071_ChangePassword.php"
+        },
+        {
+            "id": 72,
+            "name": "ConfirmRegister",
+            "description": "Handles activation of registered user.",
+            "file": "modx/snippets/0072_ConfirmRegister.php"
+        },
+        {
+            "id": 73,
+            "name": "ForgotPassword",
+            "description": "Displays a forgot password form.",
+            "file": "modx/snippets/0073_ForgotPassword.php"
+        },
+        {
+            "id": 74,
+            "name": "isLoggedIn",
+            "description": "Checks to see if the user is logged in. If not, redirects to Unauthorized Page.",
+            "file": "modx/snippets/0074_isLoggedIn.php"
+        },
+        {
+            "id": 75,
+            "name": "Login",
+            "description": "Displays a login and logout form.",
+            "file": "modx/snippets/0075_Login.php"
+        },
+        {
+            "id": 76,
+            "name": "Profile",
+            "description": "Displays Profile data for a User.",
+            "file": "modx/snippets/0076_Profile.php"
+        },
+        {
+            "id": 77,
+            "name": "Register",
+            "description": "Handles forms for registering users on the front-end.",
+            "file": "modx/snippets/0077_Register.php"
+        },
+        {
+            "id": 78,
+            "name": "ResetPassword",
+            "description": "Resets a password from a confirmation email.",
+            "file": "modx/snippets/0078_ResetPassword.php"
+        },
+        {
+            "id": 79,
+            "name": "UpdateProfile",
+            "description": "Allows front-end updating of a users own profile.",
+            "file": "modx/snippets/0079_UpdateProfile.php"
+        },
+        {
+            "id": 80,
+            "name": "activate_transfer",
+            "description": "",
+            "file": "modx/snippets/0080_activate_transfer.php"
+        },
+        {
+            "id": 81,
+            "name": "end_date",
+            "description": "",
+            "file": "modx/snippets/0081_end_date.php"
+        },
+        {
+            "id": 82,
+            "name": "msListOrders",
+            "description": "",
+            "file": "modx/snippets/0082_msListOrders.php"
+        },
+        {
+            "id": 83,
+            "name": "formit2checkfiles",
+            "description": "",
+            "file": "modx/snippets/0083_formit2checkfiles.php"
+        },
+        {
+            "id": 84,
+            "name": "user_add_fields",
+            "description": "",
+            "file": "modx/snippets/0084_user_add_fields.php"
+        },
+        {
+            "id": 85,
+            "name": "quarter",
+            "description": "",
+            "file": "modx/snippets/0085_quarter.php"
+        },
+        {
+            "id": 86,
+            "name": "QuickEmail",
+            "description": "Email sending and diagnostic snippet.",
+            "file": "modx/snippets/0086_QuickEmail.php"
+        },
+        {
+            "id": 88,
+            "name": "email_to_file_xlsx",
+            "description": "",
+            "file": "modx/snippets/0088_email_to_file_xlsx.php"
+        },
+        {
+            "id": 89,
+            "name": "TelegramHookHandler",
+            "description": "Привет обработчика входящего Хука",
+            "file": "modx/snippets/0089_TelegramHookHandler.php"
+        },
+        {
+            "id": 90,
+            "name": "Статистика по пользователям удаление деактивация",
+            "description": "",
+            "file": "modx/snippets/0090_Статистика_по_пользователям_удаление_деактивация.php"
+        },
+        {
+            "id": 91,
+            "name": "1c_partners",
+            "description": "",
+            "file": "modx/snippets/0091_1c_partners.php"
+        },
+        {
+            "id": 92,
+            "name": "UserTest",
+            "description": "",
+            "file": "modx/snippets/0092_UserTest.php"
+        },
+        {
+            "id": 93,
+            "name": "UserTestListTests",
+            "description": "",
+            "file": "modx/snippets/0093_UserTestListTests.php"
+        },
+        {
+            "id": 94,
+            "name": "UserTestAnswerResult",
+            "description": "",
+            "file": "modx/snippets/0094_UserTestAnswerResult.php"
+        },
+        {
+            "id": 95,
+            "name": "UserTestResultShow",
+            "description": "",
+            "file": "modx/snippets/0095_UserTestResultShow.php"
+        },
+        {
+            "id": 96,
+            "name": "UserTestFormItHook",
+            "description": "",
+            "file": "modx/snippets/0096_UserTestFormItHook.php"
+        },
+        {
+            "id": 97,
+            "name": "UserTestAuthInvites",
+            "description": "",
+            "file": "modx/snippets/0097_UserTestAuthInvites.php"
+        },
+        {
+            "id": 98,
+            "name": "trainingCoursePage",
+            "description": "",
+            "file": "modx/snippets/0098_trainingCoursePage.php"
+        },
+        {
+            "id": 99,
+            "name": "trainingPlayerPage",
+            "description": "",
+            "file": "modx/snippets/0099_trainingPlayerPage.php"
+        },
+        {
+            "id": 100,
+            "name": "trainingMyCourses",
+            "description": "",
+            "file": "modx/snippets/0100_trainingMyCourses.php"
+        },
+        {
+            "id": 101,
+            "name": "trainingActivityPage",
+            "description": "",
+            "file": "modx/snippets/0101_trainingActivityPage.php"
+        },
+        {
+            "id": 102,
+            "name": "trainingManageCoursesPage",
+            "description": "",
+            "file": "modx/snippets/0102_trainingManageCoursesPage.php"
+        },
+        {
+            "id": 103,
+            "name": "trainingHistoryPage",
+            "description": "",
+            "file": "modx/snippets/0103_trainingHistoryPage.php"
+        },
+        {
+            "id": 104,
+            "name": "trainingManageHistoryPage",
+            "description": "",
+            "file": "modx/snippets/0104_trainingManageHistoryPage.php"
+        },
+        {
+            "id": 105,
+            "name": "trainingCertificatesPage",
+            "description": "",
+            "file": "modx/snippets/0105_trainingCertificatesPage.php"
+        },
+        {
+            "id": 106,
+            "name": "trainingManageCertificatesPage",
+            "description": "",
+            "file": "modx/snippets/0106_trainingManageCertificatesPage.php"
+        },
+        {
+            "id": 107,
+            "name": "trainingPracticePage",
+            "description": "",
+            "file": "modx/snippets/0107_trainingPracticePage.php"
+        },
+        {
+            "id": 108,
+            "name": "UserTest_backup_before_stage24_20260507_125522",
+            "description": "Backup of UserTest snippet before stage24 PHP8 patch",
+            "file": "modx/snippets/0108_UserTest_backup_before_stage24_20260507_125522.php"
+        },
+        {
+            "id": 109,
+            "name": "UserTest_backup_before_stage25_20260507_130139",
+            "description": "Backup before stage25 UserTest fix",
+            "file": "modx/snippets/0109_UserTest_backup_before_stage25_20260507_130139.php"
+        },
+        {
+            "id": 110,
+            "name": "UserTest_backup_before_stage27_20260507_131150",
+            "description": "Backup before Training stage27 UserTest no empty POST save fix",
+            "file": "modx/snippets/0110_UserTest_backup_before_stage27_20260507_131150.php"
+        },
+        {
+            "id": 111,
+            "name": "trainingActivityPage_backup_stage31_20260507_13394",
+            "description": "Backup before stage31 trainingActivityPage URL context fix",
+            "file": "modx/snippets/0111_trainingActivityPage_backup_stage31_20260507_13394.php"
+        },
+        {
+            "id": 112,
+            "name": "trainingHasTrainingMenuAccess",
+            "description": "Checks whether current user should see the expanded Training menu.",
+            "file": "modx/snippets/0112_trainingHasTrainingMenuAccess.php"
+        },
+        {
+            "id": 113,
+            "name": "trainingMenuAccess",
+            "description": "Training menu access/render helper",
+            "file": "modx/snippets/0113_trainingMenuAccess.php"
+        },
+        {
+            "id": 114,
+            "name": "trainingMenuRender",
+            "description": "Training menu access/render helper",
+            "file": "modx/snippets/0114_trainingMenuRender.php"
+        }
+    ],
+    "plugins": [
+        {
+            "id": 1,
+            "name": "Ace",
+            "description": "Ace code editor plugin for MODx Revolution",
+            "events": [
+                {
+                    "pluginid": 1,
+                    "event": "OnChunkFormPrerender",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 1,
+                    "event": "OnDocFormPrerender",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 1,
+                    "event": "OnFileCreateFormPrerender",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 1,
+                    "event": "OnFileEditFormPrerender",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 1,
+                    "event": "OnManagerPageBeforeRender",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 1,
+                    "event": "OnPluginFormPrerender",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 1,
+                    "event": "OnRichTextEditorRegister",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 1,
+                    "event": "OnSnipFormPrerender",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 1,
+                    "event": "OnTempFormPrerender",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 1,
+                    "event": "OnTVInputRenderList",
+                    "priority": 0,
+                    "propertyset": 0
+                }
+            ],
+            "file": "modx/plugins/0001_Ace.php"
+        },
+        {
+            "id": 2,
+            "name": "pdoTools",
+            "description": "",
+            "events": [
+                {
+                    "pluginid": 2,
+                    "event": "OnMODXInit",
+                    "priority": -100,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 2,
+                    "event": "OnSiteRefresh",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 2,
+                    "event": "OnWebPagePrerender",
+                    "priority": -100,
+                    "propertyset": 0
+                }
+            ],
+            "file": "modx/plugins/0002_pdoTools.php"
+        },
+        {
+            "id": 3,
+            "name": "miniShop2",
+            "description": "",
+            "events": [
+                {
+                    "pluginid": 3,
+                    "event": "msOnChangeOrderStatus",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 3,
+                    "event": "OnHandleRequest",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 3,
+                    "event": "OnLoadWebDocument",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 3,
+                    "event": "OnManagerPageBeforeRender",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 3,
+                    "event": "OnMODXInit",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 3,
+                    "event": "OnUserSave",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 3,
+                    "event": "OnWebPageInit",
+                    "priority": 0,
+                    "propertyset": 0
+                }
+            ],
+            "file": "modx/plugins/0003_miniShop2.php"
+        },
+        {
+            "id": 4,
+            "name": "SweetAlert2",
+            "description": "",
+            "events": [
+                {
+                    "pluginid": 4,
+                    "event": "OnWebPageInit",
+                    "priority": 0,
+                    "propertyset": 0
+                }
+            ],
+            "file": "modx/plugins/0004_SweetAlert2.php"
+        },
+        {
+            "id": 5,
+            "name": "controlErrorLog",
+            "description": "",
+            "events": [
+                {
+                    "pluginid": 5,
+                    "event": "OnBeforeRegisterClientScripts",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 5,
+                    "event": "OnManagerPageBeforeRender",
+                    "priority": 0,
+                    "propertyset": 0
+                }
+            ],
+            "file": "modx/plugins/0005_controlErrorLog.php"
+        },
+        {
+            "id": 6,
+            "name": "addFieldsUsers",
+            "description": "",
+            "events": [
+                {
+                    "pluginid": 6,
+                    "event": "OnMODXInit",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 6,
+                    "event": "OnUserFormPrerender",
+                    "priority": 0,
+                    "propertyset": 0
+                }
+            ],
+            "file": "modx/plugins/0006_addFieldsUsers.php"
+        },
+        {
+            "id": 7,
+            "name": "ieMs2",
+            "description": "",
+            "events": [
+                {
+                    "pluginid": 7,
+                    "event": "msieOnLoadServices",
+                    "priority": 0,
+                    "propertyset": 0
+                }
+            ],
+            "file": "modx/plugins/0007_ieMs2.php"
+        },
+        {
+            "id": 8,
+            "name": "ieMsOptionsPrice2",
+            "description": "",
+            "events": [
+                {
+                    "pluginid": 8,
+                    "event": "msieOnGetServiceFields",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 8,
+                    "event": "msieOnImport",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 8,
+                    "event": "msieOnImportStart",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 8,
+                    "event": "msieOnLoadServices",
+                    "priority": 0,
+                    "propertyset": 0
+                }
+            ],
+            "file": "modx/plugins/0008_ieMsOptionsPrice2.php"
+        },
+        {
+            "id": 9,
+            "name": "msimportexport",
+            "description": "",
+            "events": [
+                {
+                    "pluginid": 9,
+                    "event": "msieOnLoadServices",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 9,
+                    "event": "OnBeforeEmptyTrash",
+                    "priority": 0,
+                    "propertyset": 0
+                }
+            ],
+            "file": "modx/plugins/0009_msimportexport.php"
+        },
+        {
+            "id": 10,
+            "name": "ieGallery",
+            "description": "",
+            "events": [
+                {
+                    "pluginid": 10,
+                    "event": "msieOnExportBeforeArchive",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 10,
+                    "event": "msieOnExportStart",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 10,
+                    "event": "msieOnGetServiceFields",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 10,
+                    "event": "msieOnImport",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 10,
+                    "event": "msieOnImportStart",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 10,
+                    "event": "msieOnLoadServices",
+                    "priority": 0,
+                    "propertyset": 0
+                }
+            ],
+            "file": "modx/plugins/0010_ieGallery.php"
+        },
+        {
+            "id": 11,
+            "name": "ieMsSalePrice",
+            "description": "",
+            "events": [
+                {
+                    "pluginid": 11,
+                    "event": "msieOnExportStart",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 11,
+                    "event": "msieOnGetServiceFields",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 11,
+                    "event": "msieOnLoadServices",
+                    "priority": 0,
+                    "propertyset": 0
+                }
+            ],
+            "file": "modx/plugins/0011_ieMsSalePrice.php"
+        },
+        {
+            "id": 12,
+            "name": "ieMsOptionsColor",
+            "description": "",
+            "events": [
+                {
+                    "pluginid": 12,
+                    "event": "msieOnLoadServices",
+                    "priority": 0,
+                    "propertyset": 0
+                }
+            ],
+            "file": "modx/plugins/0012_ieMsOptionsColor.php"
+        },
+        {
+            "id": 13,
+            "name": "ieMsProductRemains",
+            "description": "",
+            "events": [
+                {
+                    "pluginid": 13,
+                    "event": "msieOnGetServiceFields",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 13,
+                    "event": "msieOnImport",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 13,
+                    "event": "msieOnImportStart",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 13,
+                    "event": "msieOnLoadServices",
+                    "priority": 0,
+                    "propertyset": 0
+                }
+            ],
+            "file": "modx/plugins/0013_ieMsProductRemains.php"
+        },
+        {
+            "id": 14,
+            "name": "ieYandexMarket",
+            "description": "",
+            "events": [
+                {
+                    "pluginid": 14,
+                    "event": "msieOnLoadServices",
+                    "priority": 0,
+                    "propertyset": 0
+                }
+            ],
+            "file": "modx/plugins/0014_ieYandexMarket.php"
+        },
+        {
+            "id": 15,
+            "name": "msOptionsPrice",
+            "description": "",
+            "events": [
+                {
+                    "pluginid": 15,
+                    "event": "msOnBeforeAddToCart",
+                    "priority": 10,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 15,
+                    "event": "msOnBeforeChangeInCart",
+                    "priority": 10,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 15,
+                    "event": "msOnBeforeCreateOrderProduct",
+                    "priority": 10,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 15,
+                    "event": "msOnBeforeRemoveOrderProduct",
+                    "priority": 10,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 15,
+                    "event": "msOnBeforeUpdateOrderProduct",
+                    "priority": 10,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 15,
+                    "event": "msOnChangeOrderStatus",
+                    "priority": 10,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 15,
+                    "event": "msOnGetProductPrice",
+                    "priority": 10,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 15,
+                    "event": "msOnGetProductWeight",
+                    "priority": 10,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 15,
+                    "event": "msOnRemoveOrder",
+                    "priority": 10,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 15,
+                    "event": "msOnSaveOrder",
+                    "priority": 10,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 15,
+                    "event": "OnDocFormPrerender",
+                    "priority": 10,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 15,
+                    "event": "OnDocFormSave",
+                    "priority": 10,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 15,
+                    "event": "OnEmptyTrash",
+                    "priority": 10,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 15,
+                    "event": "OnResourceDuplicate",
+                    "priority": 10,
+                    "propertyset": 0
+                }
+            ],
+            "file": "modx/plugins/0015_msOptionsPrice.php"
+        },
+        {
+            "id": 16,
+            "name": "msOptionsPriceOnInit",
+            "description": "",
+            "events": [
+                {
+                    "pluginid": 16,
+                    "event": "OnMODXInit",
+                    "priority": 10,
+                    "propertyset": 0
+                }
+            ],
+            "file": "modx/plugins/0016_msOptionsPriceOnInit.php"
+        },
+        {
+            "id": 17,
+            "name": "Office",
+            "description": "",
+            "events": [
+                {
+                    "pluginid": 17,
+                    "event": "OnHandleRequest",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 17,
+                    "event": "OnManagerPageBeforeRender",
+                    "priority": 0,
+                    "propertyset": 0
+                }
+            ],
+            "file": "modx/plugins/0017_Office.php"
+        },
+        {
+            "id": 18,
+            "name": "officeProfile",
+            "description": "",
+            "events": [
+                {
+                    "pluginid": 18,
+                    "event": "OnLoadWebDocument",
+                    "priority": 0,
+                    "propertyset": 0
+                }
+            ],
+            "file": "modx/plugins/0018_officeProfile.php"
+        },
+        {
+            "id": 19,
+            "name": "officeAuth",
+            "description": "",
+            "events": [
+                {
+                    "pluginid": 19,
+                    "event": "OnHandleRequest",
+                    "priority": 20,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 19,
+                    "event": "OnUserSave",
+                    "priority": 10,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 19,
+                    "event": "OnWebAuthentication",
+                    "priority": 10,
+                    "propertyset": 0
+                }
+            ],
+            "file": "modx/plugins/0019_officeAuth.php"
+        },
+        {
+            "id": 20,
+            "name": "msImportExportPlugin",
+            "description": "",
+            "events": [
+                {
+                    "pluginid": 20,
+                    "event": "msieOnBeforeImport",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 20,
+                    "event": "msieOnGetServiceFields",
+                    "priority": 0,
+                    "propertyset": 0
+                }
+            ],
+            "file": "modx/plugins/0020_msImportExportPlugin.php"
+        },
+        {
+            "id": 21,
+            "name": "MIGX",
+            "description": "",
+            "events": [
+                {
+                    "pluginid": 21,
+                    "event": "OnDocFormPrerender",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 21,
+                    "event": "OnTVInputPropertiesList",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 21,
+                    "event": "OnTVInputRenderList",
+                    "priority": 0,
+                    "propertyset": 0
+                }
+            ],
+            "file": "modx/plugins/0021_MIGX.php"
+        },
+        {
+            "id": 22,
+            "name": "MIGXquip",
+            "description": "",
+            "events": [
+                {
+                    "pluginid": 22,
+                    "event": "OnDocFormPrerender",
+                    "priority": 0,
+                    "propertyset": 0
+                }
+            ],
+            "file": "modx/plugins/0022_MIGXquip.php"
+        },
+        {
+            "id": 23,
+            "name": "migxResizeOnUpload",
+            "description": "",
+            "events": [
+                {
+                    "pluginid": 23,
+                    "event": "OnFileManagerUpload",
+                    "priority": 0,
+                    "propertyset": 0
+                }
+            ],
+            "file": "modx/plugins/0023_migxResizeOnUpload.php"
+        },
+        {
+            "id": 24,
+            "name": "Collections",
+            "description": "",
+            "events": [
+                {
+                    "pluginid": 24,
+                    "event": "FredBeforeRender",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 24,
+                    "event": "FredOnBeforeGetResourceTree",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 24,
+                    "event": "OnBeforeDocFormSave",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 24,
+                    "event": "OnBeforeEmptyTrash",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 24,
+                    "event": "OnDocFormPrerender",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 24,
+                    "event": "OnDocFormRender",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 24,
+                    "event": "OnManagerPageBeforeRender",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 24,
+                    "event": "OnManagerPageInit",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 24,
+                    "event": "OnResourceBeforeSort",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 24,
+                    "event": "OnResourceDuplicate",
+                    "priority": 0,
+                    "propertyset": 0
+                }
+            ],
+            "file": "modx/plugins/0024_Collections.php"
+        },
+        {
+            "id": 25,
+            "name": "OnBeforeWebLogin",
+            "description": "",
+            "events": [
+                {
+                    "pluginid": 25,
+                    "event": "OnBeforeWebLogin",
+                    "priority": 0,
+                    "propertyset": 0
+                }
+            ],
+            "file": "modx/plugins/0025_OnBeforeWebLogin.php"
+        },
+        {
+            "id": 26,
+            "name": "OnBeforeUserFormSave",
+            "description": "",
+            "events": [
+                {
+                    "pluginid": 26,
+                    "event": "OnBeforeUserFormSave",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 26,
+                    "event": "OnUserFormSave",
+                    "priority": 0,
+                    "propertyset": 0
+                }
+            ],
+            "file": "modx/plugins/0026_OnBeforeUserFormSave.php"
+        },
+        {
+            "id": 27,
+            "name": "ClientConfig",
+            "description": "Sets system settings from the Client Config CMP.",
+            "events": [
+                {
+                    "pluginid": 27,
+                    "event": "OnHandleRequest",
+                    "priority": 1,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 27,
+                    "event": "OnMODXInit",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 27,
+                    "event": "pdoToolsOnFenomInit",
+                    "priority": 0,
+                    "propertyset": 0
+                }
+            ],
+            "file": "modx/plugins/0027_ClientConfig.php"
+        },
+        {
+            "id": 28,
+            "name": "FormIt",
+            "description": "",
+            "events": [
+                {
+                    "pluginid": 28,
+                    "event": "OnManagerPageBeforeRender",
+                    "priority": 0,
+                    "propertyset": 0
+                }
+            ],
+            "file": "modx/plugins/0028_FormIt.php"
+        },
+        {
+            "id": 29,
+            "name": "Minishop2_plugin",
+            "description": "",
+            "events": [
+                {
+                    "pluginid": 29,
+                    "event": "msOnAddToCart",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 29,
+                    "event": "msOnBeforeAddToCart",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 29,
+                    "event": "msOnBeforeCreateOrder",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 29,
+                    "event": "msOnChangeInCart",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 29,
+                    "event": "msOnCreateOrder",
+                    "priority": 0,
+                    "propertyset": 0
+                }
+            ],
+            "file": "modx/plugins/0029_Minishop2_plugin.php"
+        },
+        {
+            "id": 30,
+            "name": "ColorPicker",
+            "description": "ColorPicker runtime hooks - registers custom TV input & output types and includes javascripts on document edit pages.",
+            "events": [
+                {
+                    "pluginid": 30,
+                    "event": "OnManagerPageBeforeRender",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 30,
+                    "event": "OnTVInputPropertiesList",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 30,
+                    "event": "OnTVInputRenderList",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 30,
+                    "event": "OnTVOutputRenderList",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 30,
+                    "event": "OnTVOutputRenderPropertiesList",
+                    "priority": 0,
+                    "propertyset": 0
+                }
+            ],
+            "file": "modx/plugins/0030_ColorPicker.php"
+        },
+        {
+            "id": 31,
+            "name": "OnLoadWebDocument-end_date-",
+            "description": "",
+            "events": [
+                {
+                    "pluginid": 31,
+                    "event": "OnLoadWebDocument",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 31,
+                    "event": "OnWebPageInit",
+                    "priority": 0,
+                    "propertyset": 0
+                }
+            ],
+            "file": "modx/plugins/0031_OnLoadWebDocument-end_date.php"
+        },
+        {
+            "id": 33,
+            "name": "composer",
+            "description": "",
+            "events": [
+                {
+                    "pluginid": 33,
+                    "event": "OnMODXInit",
+                    "priority": 0,
+                    "propertyset": 0
+                }
+            ],
+            "file": "modx/plugins/0033_composer.php"
+        },
+        {
+            "id": 34,
+            "name": "msExportUsersExcel",
+            "description": "",
+            "events": [
+                {
+                    "pluginid": 34,
+                    "event": "OnManagerPageBeforeRender",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 34,
+                    "event": "OnMODXInit",
+                    "priority": 0,
+                    "propertyset": 0
+                }
+            ],
+            "file": "modx/plugins/0034_msExportUsersExcel.php"
+        },
+        {
+            "id": 35,
+            "name": "UserTest",
+            "description": "",
+            "events": [
+                {
+                    "pluginid": 35,
+                    "event": "OnTestComplect",
+                    "priority": 0,
+                    "propertyset": 0
+                }
+            ],
+            "file": "modx/plugins/0035_UserTest.php"
+        },
+        {
+            "id": 36,
+            "name": "CKEditor",
+            "description": "CKEditor WYSIWYG editor plugin for MODX2 and MODX3",
+            "events": [
+                {
+                    "pluginid": 36,
+                    "event": "OnManagerPageBeforeRender",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 36,
+                    "event": "OnRichTextBrowserInit",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 36,
+                    "event": "OnRichTextEditorInit",
+                    "priority": 0,
+                    "propertyset": 0
+                },
+                {
+                    "pluginid": 36,
+                    "event": "OnRichTextEditorRegister",
+                    "priority": 0,
+                    "propertyset": 0
+                }
+            ],
+            "file": "modx/plugins/0036_CKEditor.php"
+        },
+        {
+            "id": 37,
+            "name": "trainingInit",
+            "description": "",
+            "events": [
+                {
+                    "pluginid": 37,
+                    "event": "OnMODXInit",
+                    "priority": 0,
+                    "propertyset": 0
+                }
+            ],
+            "file": "modx/plugins/0037_trainingInit.php"
+        },
+        {
+            "id": 38,
+            "name": "TrainingUserTestCKEditorSafe",
+            "description": "Защита CKEditor от повторной инициализации в окнах UserTest/MODX manager.",
+            "events": [
+                {
+                    "pluginid": 38,
+                    "event": "OnManagerPageBeforeRender",
+                    "priority": -1000,
+                    "propertyset": 0
+                }
+            ],
+            "file": "modx/plugins/0038_TrainingUserTestCKEditorSafe.php"
+        }
+    ]
+}

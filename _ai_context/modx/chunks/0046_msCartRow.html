@@ -1,0 +1,38 @@
+<div class="d-flex flex-wrap align-items-center item-product pb-3 mb-4 gap-3 gap-xl-0 position-relative" id="{$key}">
+    <div class="col-auto delete-cart">
+        <form method="post" class="ms2_form text-md-right">
+            <input type="hidden" name="key" value="{$key}">
+            <button class="btn btn-image" type="submit" name="ms2_action" value="cart/remove"><img src="theme/images/recycle-ico.svg" class="img-svg"></button>
+        </form>
+    </div>
+    <div class="col-10 col-sm-auto ms-5 ms-sm-0">
+        <div class="title-product">
+            {if $_pls['option.pagetitle']}
+                {$_pls['option.pagetitle']}
+            {else}
+                {$_pls['option.kit']}
+            {/if}
+        </div>
+    </div>
+    <div class="col-12 col-sm-auto real-price ms-xl-auto me-auto me-xl-5 d-flex justify-content-start justify-content-sm-end">
+        <div class="title-price text-right">
+            Розничная цена <span class="ms-2">{$old_price} ₽</span>
+        </div>
+    </div>
+    <div class="col-auto count me-auto me-sm-4">
+        <form method="post" class="ms2_form cart-count">
+            <input type="hidden" name="key" value="{$key}"/>
+            <div class="card-cart-product__count">
+                <div class="card-product__count d-flex gap-2">
+                    <button type="button" class="countButton input-number__sub" data-add="minus"><img src="theme/images/minus.svg" class="img-svg"></button>
+                    <input name="count" class="input-number__input number-form add_number" type="text" max="50" min="1" value="{$count}">
+                    <button type="submit" class="d-none" name="ms2_action" value="cart/change"/></button>
+                    <button type="button" class="countButton input-number__add" data-add="plus"><img src="theme/images/plus.svg" class="img-svg"></button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-auto price">
+        <span class="ms2_cost">{$cost}</span> ₽
+    </div>
+</div>

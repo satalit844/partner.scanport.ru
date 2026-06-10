@@ -1,0 +1,37 @@
+<div class="title {if $description}mb-2{else}mb-3{/if}">{$longtitle ?: $pagetitle}</div>
+{if $description}
+    <div class="sub-title mb-4">{$description}</div>
+{/if}
+<div id="pdopage_{$id}" class="mb-5">
+    [[!+page_[[+id]].nav]]
+    {set $ajaxElemWrapper = '#pdopage_' ~ $id}
+    {set $ajaxElemRows = '#pdopage_' ~ $id ~ ' .rows'}
+    {set $ajaxElemPagination = '#pdopage_' ~ $id ~ ' .pagination'}
+    {set $ajaxElemLink = '#pdopage_' ~ $id ~ ' .pagination a'}
+    {set $ajaxElemMore = '#pdopage_' ~ $id ~ ' .btn-more'}
+    {set $pageVarKey = 'page_' ~ $id}
+    {set $pageNavVar = 'page_' ~ $id ~ '.nav'}
+    <div class="d-flex rows gap-4 flex-wrap">
+        {'!pdoPage' | snippet : [
+            'parents' => $id,
+            'ajaxMode' => 'scroll',
+            'includeTVs' => 'image,download_check,download,link',
+            'tvPrefix' => '',
+            'limit' => 10,
+            'sortby' => 'menuindex',
+            'sortdir' => 'ASC',
+            'tpl' => 'tpl.material',
+            'tplPageWrapper' => '@INLINE <div class="pagination" style="display: none;"><ul class="pagination">{$prev}{$pages}{$next}</ul></div>',
+            'ajaxElemWrapper' => $ajaxElemWrapper,	
+            'ajaxElemRows' => $ajaxElemRows,	
+            'ajaxElemPagination' => $ajaxElemPagination,
+            'ajaxElemLink' => $ajaxElemLink,
+            'ajaxElemMore' => $ajaxElemMore,
+            'pageVarKey' => $pageVarKey,
+            'pageNavVar' => $pageNavVar,
+            'where' => '{
+                "class_key:=" : "modDocument"
+            }',
+        ]}
+    </div>
+</div>

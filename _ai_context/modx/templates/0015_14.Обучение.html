@@ -1,0 +1,33 @@
+{extends 'template:01.base'}
+{block 'css'}
+    <link href="theme/css/swiper-bundle.min.css" rel="stylesheet">
+    <link href="{'!fileCashFix' | snippet : ['input' => 'theme/css/training.css']}" rel="stylesheet">
+{/block}
+{block 'content'}
+    {if !$_modx->isAuthenticated('web')}
+        {$_modx->sendRedirect(12 | url)}
+    {/if}
+
+    {set $testPageId = ('training.training_test_resource_id' | config) ?: 170}
+    {set $practicePageId = ('training.training_practice_resource_id' | config) ?: 176}
+    {set $activityId = $.get.activity ?: 0}
+    {set $activityType = $.get.type ?: $.get.link_type ?: ''}
+
+    {if $activityId && ($activityType == 'practice' || $_modx->resource.id == $practicePageId)}
+        {'!trainingPracticePage' | snippet : [
+            'resource_id' => $_modx->resource.id,
+            'activity' => $.get.activity,
+            'link' => $.get.link
+        ]}
+    {elseif $activityId}
+        {'!trainingActivityPage' | snippet : [
+            'resource_id' => $_modx->resource.id
+        ]}
+    {else}
+        {$_modx->resource.content}
+    {/if}
+{/block}
+{block 'js'}
+    <script src="theme/js/swiper-bundle.min.js"></script>
+    <script src="{'!fileCashFix' | snippet : ['input' => 'theme/js/app-training.js']}"></script>
+{/block}

@@ -1,0 +1,110 @@
+{extends 'template:01.base'}
+{block 'content'}
+    {if $_modx->isAuthenticated('web')}
+        {$_modx->sendRedirect(9 | url)}
+    {/if}
+    {switch $_modx->resource.id}
+        {case 12}
+            <div class="d-flex justify-content-center align-items-center">
+                <div class="window-form">
+                    <div class="auth-form">
+                        <a href="{13 | url}" class="btn btn-image btn-white mb-3">
+                            <img src="theme/images/auth/user-ico.svg" class="img-svg">
+                            <span>Регистрация</span>
+                        </a>
+                        <div class="d-flex mb-5 gap-4 logo">
+                            <div class="col">
+                                <a href="https://scanport.ru" target="_blank">
+                                    <img src="theme/images/auth/scanport-orange-logo.svg" class="img-svg h-100 w-100">
+                                </a>
+                            </div>
+                            <div class="col">
+                                <a href="https://data-mobile.ru">
+                                    <img src="theme/images/auth/datamobile-orange-logo.svg" class="img-svg h-100 w-100">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="auth-title pb-1 mb-3">Авторизация в партнёрский доступ</div>
+                        {'!officeAuth' | snippet : [
+                            'groups' => 'Users',
+                            'loginResourceId' => 119,
+                            'logoutResourceId' => 12,
+                            'rememberme' => 0,
+                            'tplActivate' => 'tpl.Office.auth.activate',
+                            'tplLogin' => 'tpl.Office.auth',
+                            'HybridAuth' => 0,
+                        ]}
+                    </div>
+                </div>
+            </div>
+        {case 13}
+            <div class="d-flex justify-content-center align-items-center h-100">
+                <div class="window-form form-reg">
+                    <div class="reg-form">
+                        <a href="{12 | url}" class="btn btn-image btn-white mb-3">
+                            <img src="theme/images/auth/user-auth-ico.svg" class="img-svg">
+                            <span>Авторизация</span>
+                        </a>
+                        <div class="d-flex mb-5 gap-4 logo">
+                            <div class="col text-end">
+                                <a href="https://scanport.ru" target="_blank">
+                                    <img src="theme/images/auth/scanport-orange-logo.svg" class="img-svg h-100">
+                                </a>
+                            </div>
+                            <div class="col">
+                                <a href="https://data-mobile.ru">
+                                    <img src="theme/images/auth/datamobile-orange-logo.svg" class="img-svg h-100">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="auth-title pb-1 mb-3">Регистрация</div>
+                        {'!officeAuth' | snippet : [
+                            'groups' => 'Users',
+                            'loginResourceId' => 119,
+                            'logoutResourceId' => 12,
+                            'rememberme' => 0,
+                            'requiredFields' => 'fullname,field_list_company,mobilephone,email,state,password,re-password,politic',
+                            'tplActivate' => 'tpl.Office.auth.activate',
+                            'tplRegister' => 'tpl.Office.auth.register.custom',
+                            'tplLogin' => 'tpl.Office.auth-register',
+                            'HybridAuth' => 0,
+                        ]}
+                    </div>
+                </div>
+            </div>
+        {case 14}
+            <div class="d-flex justify-content-center align-items-center h-100">
+                <div class="window-form">
+                    <div class="reset-form">
+                        <a href="{12 | url}" class="btn btn-image btn-white mb-3">
+                            <img src="theme/images/auth/user-auth-ico.svg" class="img-svg">
+                            <span>Авторизация</span>
+                        </a>
+                        <div class="d-flex mb-5 gap-4 logo">
+                            <div class="col">
+                                <a href="https://scanport.ru" target="_blank">
+                                    <img src="theme/images/auth/scanport-orange-logo.svg" class="img-svg h-100 w-100">
+                                </a>
+                            </div>
+                            <div class="col">
+                                <a href="https://data-mobile.ru">
+                                    <img src="theme/images/auth/datamobile-orange-logo.svg" class="img-svg h-100 w-100">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="auth-title pb-1 mb-3">Восстановление доступа</div>
+                        {'!officeAuth' | snippet : [
+                            'groups' => 'Users',
+                            'loginResourceId' => 12,
+                            'logoutResourceId' => 12,
+                            'rememberme' => 0,
+                            'tplActivate' => 'tpl.Office.auth.activate',
+                            'tplLogin' => 'tpl.Office.rescue-password',
+                            'HybridAuth' => 0,
+                        ]}
+                    </div>
+                </div>
+            </div>
+        {case default}
+    {/switch}
+{/block}

@@ -1,0 +1,49 @@
+{extends 'template:01.base'}
+
+{block 'content'}
+    {if !$_modx->isAuthenticated('web')}
+        {$_modx->sendRedirect(12 | url)}
+    {/if}
+    <div class="title mb-3">Настроить персональные рассылки</div>
+
+    <div class="row">
+        <div class="col-xl-5">
+            {set $user_info = '!user_info' | snippet}
+            <form method="post" class="mailing d-flex flex-column p-4">
+                <input type="hidden" name="action" value="subscription">
+                <div class="form-group">
+                    <label class="form-title d-block form-label mute">Укажите Вашу почту для рассылок</label>
+                    <input class="form-control" type="email" name="email" placeholder="email@email.ru" value="{$_modx->user.email}">
+                </div>
+                <hr class="opacity-100">
+                 <div class="form-title d-block mute mb-3">Выберите категории рассылок</div>
+                <div class="d-flex flex-column">
+                    <label class="custom-checkbox mb-2">
+                        <input type="checkbox" name="webinar" value="1" {$user_info['webinar'] ? 'checked' : ''}>
+                        <span>Вебинары</span>
+                    </label>
+                    <label class="custom-checkbox mb-2">
+                        <input type="checkbox" name="partner_events" value="1" {$user_info['partner_events'] ? 'checked' : ''}>
+                        <span>Партнёрские мероприятия</span>
+                    </label>
+                    <label class="custom-checkbox mb-2">
+                        <input type="checkbox" name="news" value="1" {$user_info['news'] ? 'checked' : ''}>
+                        <span>Новости</span>
+                    </label>
+                    <label class="custom-checkbox">
+                        <input type="checkbox" name="software_updates" value="1" {$user_info['software_updates'] ? 'checked' : ''}>
+                        <span>Обновления ПО</span>
+                    </label>
+                </div>
+                <hr class="opacity-100">
+                <div class="d-flex flex-column ">
+                    <label class="custom-checkbox mb-3">
+                        <input type="checkbox" name="personal_data" value="1" {$user_info['personal_data'] ? 'checked' : ''}>
+                        <span>Я даю <a href="Politics.pdf" target="_blank">согласие на обработку</a> своих персональных данных</span>
+                    </label>
+                    <button type="submit" class="btn btn-red">Отправить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{/block}

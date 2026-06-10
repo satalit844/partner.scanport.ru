@@ -1,0 +1,70 @@
+<div id="mslistorders">
+	{if !count($orders)}
+		{'mslistorders_orders_empty' | lexicon}
+	{else}
+		<div class="table-responsive">
+			<table class="table table-striped">
+				<tr class="header">
+					<th class="num">{'mslistorders_num' | lexicon}</th>
+					<th class="createdon">{'mslistorders_createdon' | lexicon}</th>
+					<th class="updatedon">{'mslistorders_updatedon' | lexicon}</th>
+					<th class="customer">{'mslistorders_customer' | lexicon}</th>
+					<th class="cost">{'mslistorders_cost' | lexicon}</th>
+					<th class="status">{'mslistorders_status' | lexicon}</th>
+					<th class="actions">{'mslistorders_actions' | lexicon}</th>
+				</tr>
+				{$orders | print}
+				{foreach $orders as $order}
+					<tr id="{$order.id}">
+						<td class="num">{$order.num}</td>
+						<td class="createdon">{$order.createdon | date :"d.m.Y"}</td>
+						<td class="updatedon">{$order.updatedon | date :"d.m.Y"}</td>
+						<td class="customer">{$order.profile_fullname}</td>
+						<td class="cost">
+							{$order.cost}
+							<sub>{$order.total_product} {'ms2_frontend_count_unit' | lexicon}</sub>
+						</td>
+						<td class="status" style="color: #{$order.status_color}">{$order.status_name}</td>
+						<td class="view">
+							<ul class="mslistorders-row-actions">
+								{foreach $actions as $action}
+									<li class="">
+										<form method="post" class="mslistorders-form">
+											<input type="hidden" name="id" value="{$order.id}">
+											<input type="hidden" name="propkey" value="{$order.propkey}">
+											<button class="btn btn-default mslistorders-action" type="submit"
+													value="{$action}"
+													title="{('mslistorders_action_' ~ $action) | lexicon}">
+											</button>
+										</form>
+									</li>
+								{/foreach}
+							</ul>
+						</td>
+					</tr>
+				{/foreach}
+				<tr class="footer">
+				</tr>
+			</table>
+		</div>
+	{/if}
+</div>
+<br>
+
+{if $total?}
+	<div class="mslistorder-total row">
+		<div class="col-md-3 col-md-offset-9">
+			<strong>{'mslistorders_cost' | lexicon}:</strong><br>
+		<span>
+			{'mslistorders_sum_orders' | lexicon}: {$total.sum} {'ms2_frontend_currency' | lexicon}
+		</span><br>
+		<span>
+			{'mslistorders_count_orders' | lexicon}: {$total.orders} {'ms2_frontend_count_unit' | lexicon}
+		</span><br>
+		<span>
+			{'mslistorders_count_products' | lexicon}: {$total.products} {'ms2_frontend_count_unit' | lexicon}
+		</span>
+		</div>
+	</div>
+	<br>
+{/if}

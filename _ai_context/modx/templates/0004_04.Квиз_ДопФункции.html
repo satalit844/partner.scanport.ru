@@ -1,0 +1,104 @@
+{extends 'template:01.base'}
+
+{block 'content'}
+    {if !$_modx->isAuthenticated('web')}
+        {$_modx->sendRedirect(12 | url)}
+    {/if}
+    {set $mailto = $_modx->resource.emails_form_questions}
+    {set $sender = 'emailsender' | config}
+    {set $rows = json_decode($_modx->resource.id | resource : "questions", true)}
+    {if $rows}
+        {set $i = 1}
+        {foreach $rows as $row}
+            {set $validate[] = 'responce_' ~ $i ~ ':required'}
+            {set $i = $i + 1}
+        {/foreach}
+        {set $validate = $validate | join ~ ',uploads:formit2checkfiles'}
+        {set $file = $_modx->resource.questions_in_file}
+        {if $file}
+            {set $options = [
+                'snippet' => 'FormIt',
+                'hooks' => 'FormItSaveForm,email_to_file_xlsx',
+                'customValidators' => 'formit2checkfiles',
+                'formFields' => 'inn,email,phone,company,fullname',
+                'fieldNames' => 'fullname==Имя,inn==ИНН,email==Электронная почта,phone==Телефон,company==Компания',
+                'formName' => $_modx->resource.pagetitle,
+                'emailFrom' => $sender,
+                'form' => 'tpl.form.questions',
+                'emailTpl' => 'tpl.email.form.questions',
+                'emailSubject' => $_modx->resource.title_quiz,
+                'emailTo' => $mailto,
+                'validate' => $validate,
+                'validationErrorMessage' => 'В форме содержатся ошибки!',
+                'successMessage' => 'Сообщение успешно отправлено',
+                'questions' => $rows,
+                'file' => $file,
+            ]}
+        {else}
+            {set $options = [
+                'snippet' => 'FormIt',
+                'hooks' => 'FormItSaveForm,email',
+                'customValidators' => 'formit2checkfiles',
+                'formFields' => 'inn,email,phone,company,fullname',
+                'fieldNames' => 'fullname==Имя,inn==ИНН,email==Электронная почта,phone==Телефон,company==Компания',
+                'formName' => $_modx->resource.pagetitle,
+                'emailFrom' => $sender,
+                'form' => 'tpl.form.questions',
+                'emailTpl' => 'tpl.email.form.questions',
+                'emailSubject' => $_modx->resource.title_quiz,
+                'emailTo' => $mailto,
+                'validate' => $validate,
+                'validationErrorMessage' => 'В форме содержатся ошибки!',
+                'successMessage' => 'Сообщение успешно отправлено',
+                'questions' => $rows,
+            ]}
+        {/if}
+        {'!AjaxForm' | snippet : $options}
+    {/if}
+    {*if $_modx->resource.memo}
+        <div class="my-4">
+            <div class="button-group d-flex flex-wrap align-items-center gap-3">
+                <div class="">Памятка партнёрам для подготовки кейса</div>
+                <a href="{$_modx->resource.memo}" class="btn btn-violet" download>Скачать</a>
+            </div>
+        </div>
+    {/if*}
+    {switch $_modx->resource.function_kviz}
+        {case '1'}
+            {*set $projects = '!projects' | snippet : [
+                'inn' => $_modx->user.field_list_inn,
+            ]*}
+            {if $projects['sucsess'] == 1}
+                <div class="projects-user">
+                    <div class="title mb-4">Опубликованные кейсы</div>
+                    <div class="projects-slider">
+                        <div class="swiper-container">
+                            <div class="swiper-wrapper">
+                                {foreach $projects['res'] as $item}
+                                    <div class="swiper-slide">
+                                        <a href="{$item.link}" class="project-link text-center" target="_blank">
+                                            <div class="project-image mb-3">
+                                                <img src="{$item.image}" alt="project-1" class="w-100">
+                                            </div>
+                                            <div class="project-title mb-4 pb-2">
+                                                {$item.pagetitle}
+                                            </div>
+                                            <div class="project-text mb-3">
+                                                {$item.introtext}
+                                            </div>
+                                        </a>
+                                    </div>
+                                {/foreach}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-navigation mt-4">
+                        <div class="swiper-prev"><img src="theme/images/projects/arrow-left-gray-ico.svg" class="img-svg"></div>
+                        <div class="swiper-pagination"></div>
+                        <div class="swiper-next"><img src="theme/images/projects/arrow-right-gray-ico.svg" class="img-svg"></div>
+                    </div>
+                </div>
+            {/if}
+        {case default}
+    {/switch}
+{/block}
