@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model package="usertest" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" phpdoc-package="usertest"
+       version="1.1">
+
+       
+    <object class="UserTestGroups" table="usertest_groups" extends="xPDOSimpleObject">
+        <field key="name" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
+        <field key="description" dbtype="text" phptype="string" null="true" default=""/>
+        <field key="parent" dbtype="int" precision="10" phptype="integer" null="true" default="0"/>
+        
+        <index alias="name" name="name" primary="false" unique="false" type="BTREE">
+            <column key="name" length="" collation="A" null="false"/>
+        </index>
+        <index alias="parent" name="parent" primary="false" unique="false" type="BTREE">
+            <column key="parent" length="" collation="A" null="false"/>
+        </index>
+        <composite alias="UserTestGroupsLink" class="UserTestGroupsLink" local="id" foreign="group_id" cardinality="many" owner="local"/>
+    </object>
+    
+    <object class="UserTestGroupsLink" table="usertest_groups_link" extends="xPDOSimpleObject">
+        <field key="menuindex" dbtype="int" precision="10" phptype="integer" null="false" default="0" index="index" />
+        <field key="group_id" dbtype="int" precision="10" phptype="integer" null="true"/>
+        <field key="test_id" dbtype="int" precision="10" phptype="integer" null="true"/>
+        
+        <index alias="group_id" name="group_id" primary="false" unique="false" type="BTREE">
+            <column key="group_id" length="" collation="A" null="false"/>
+        </index>
+        <index alias="test_id" name="test_id" primary="false" unique="false" type="BTREE">
+            <column key="test_id" length="" collation="A" null="false"/>
+        </index>
+        <index alias="menuindex" name="menuindex" primary="false" unique="false" type="BTREE">
+            <column key="menuindex" length="" collation="A" null="false" />
+        </index>
+        <aggregate alias="UserTestGroups" class="UserTestGroups" local="group_id" foreign="id" cardinality="one" owner="foreign"/>
+        <aggregate alias="UserTestTests" class="UserTestTests" local="test_id" foreign="id" cardinality="one" owner="foreign"/>
+    </object>
+    
+    <object class="UserTestTests" table="usertest_tests" extends="xPDOSimpleObject">
+        <field key="name" dbtype="varchar" precision="255" phptype="string" null="false" default=""/>
+        <field key="description" dbtype="text" phptype="string" null="true" default=""/>
+        <field key="count_questions" dbtype="int" precision="4" phptype="integer" null="true"/>
+        <field key="count_questions_on_page" dbtype="int" precision="4" phptype="integer" null="true"/>
+        <field key="count_test_answer" dbtype="int" precision="4" phptype="integer" null="true"/>
+        <field key="time_test" dbtype="int" precision="4" phptype="integer" null="true"/>
+        <field key="type" dbtype="int" precision="4" phptype="integer" null="true"/>
+        <field key="use_category" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="0"/>
+        <field key="active" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="1"/>
+        
+        <field key="customer" dbtype="text" phptype="string" null="true" default=""/>
+        <field key="appeal" dbtype="text" phptype="string" null="true" default=""/>
+        <field key="instruction" dbtype="text" phptype="string" null="true" default=""/>
+        <field key="use_block_q_number" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="1"/>
+        <field key="pub_date" dbtype="int" precision="20" phptype="timestamp" null="false" default="0"/>
+        <field key="unpub_date" dbtype="int" precision="20" phptype="timestamp" null="false" default="0"/>
+        
+        <field key="variant_set_id" dbtype="int" precision="10" phptype="integer" null="true"/>
+        
+        <field key="test_type" dbtype="int" precision="3" phptype="integer" null="false" default="1"/>
+        <field key="ask_user_data" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="0"/>
+        
+        <index alias="name" name="name" primary="false" unique="false" type="BTREE">
+            <column key="name" length="" collation="A" null="false"/>
+        </index>
+        <index alias="active" name="active" primary="false" unique="false" type="BTREE">
+            <column key="active" length="" collation="A" null="false"/>
+        </index>
+        <index alias="type" name="type" primary="false" unique="false" type="BTREE">
+            <column key="type" length="" collation="A" null="false"/>
+        </index>
+        <index alias="variant_set_id" name="variant_set_id" primary="false" unique="false" type="BTREE">
+            <column key="variant_set_id" length="" collation="A" null="false"/>
+        </index>
+        
+        <composite alias="UserTestTestQuestionLink" class="UserTestTestQuestionLink" local="id" foreign="test_id" cardinality="many" owner="local"/>
+        <composite alias="UserTestTestVariantLink" class="UserTestTestVariantLink" local="id" foreign="test_id" cardinality="many" owner="local"/>
+        <composite alias="UserTestGroupsLink" class="UserTestGroupsLink" local="id" foreign="test_id" cardinality="many" owner="local"/>
+    </object>
+    
+    <object class="UserTestQuestions" table="usertest_questions" extends="xPDOSimpleObject">
+        <field key="menuindex" dbtype="int" precision="10" phptype="integer" null="false" default="0" index="index" />
+        <field key="test_id" dbtype="int" precision="10" phptype="integer" null="true"/>
+        <field key="parent" dbtype="int" precision="10" phptype="integer" null="false" default="0"/>
+        <field key="category_id" dbtype="int" precision="10" phptype="integer" null="true"/>
+        <field key="question" dbtype="text" phptype="string" null="true" default=""/>
+        <field key="type" dbtype="int" precision="4" phptype="integer" null="true"/>
+        <field key="type_file" dbtype="int" precision="4" phptype="integer" null="true"/>
+        <field key="file" dbtype="varchar" precision="255" phptype="string" null="true" default=""/>
+        <field key="extended" dbtype="text" phptype="string" null="true" default=""/>
+        <field key="max_point" dbtype="double" phptype="double" null="true" default="0" />
+        
+        <field key="random_answer" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="0"/>
+        <field key="validate" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="0"/>
+        
+        <index alias="test_id" name="test_id" primary="false" unique="false" type="BTREE">
+            <column key="test_id" length="" collation="A" null="false"/>
+        </index>
+        <index alias="menuindex" name="menuindex" primary="false" unique="false" type="BTREE">
+            <column key="menuindex" length="" collation="A" null="false" />
+        </index>
+        <index alias="parent" name="parent" primary="false" unique="false" type="BTREE">
+            <column key="parent" length="" collation="A" null="false" />
+        </index>
+        
+        <composite alias="UserTestTestQuestionLink" class="UserTestTestQuestionLink" local="id" foreign="question_id" cardinality="many" owner="local"/>
+        <composite alias="UserTestAnswers" class="UserTestAnswers" local="id" foreign="question_id" cardinality="many" owner="local"/>
+    </object>
+    
+    <object class="UserTestTestQuestionLink" table="usertest_test_question_link" extends="xPDOSimpleObject">
+        <field key="menuindex" dbtype="int" precision="10" phptype="integer" null="false" default="0" index="index" />
+        <field key="test_id" dbtype="int" precision="10" phptype="integer" null="true"/>
+        <field key="question_id" dbtype="int" precision="10" phptype="integer" null="true"/>
+        
+        <index alias="question_id" name="question_id" primary="false" unique="false" type="BTREE">
+            <column key="question_id" length="" collation="A" null="false"/>
+        </index>
+        <index alias="test_id" name="test_id" primary="false" unique="false" type="BTREE">
+            <column key="test_id" length="" collation="A" null="false"/>
+        </index>
+        <index alias="menuindex" name="menuindex" primary="false" unique="false" type="BTREE">
+            <column key="menuindex" length="" collation="A" null="false" />
+        </index>
+        
+        <aggregate alias="UserTestQuestions" class="UserTestQuestions" local="question_id" foreign="id" cardinality="one" owner="foreign"/>
+        <aggregate alias="UserTestTests" class="UserTestTests" local="test_id" foreign="id" cardinality="one" owner="foreign"/>
+    </object>
+    
+    <object class="UserTestAnswers" table="usertest_answers" extends="xPDOSimpleObject">
+        <field key="menuindex" dbtype="int" precision="10" phptype="integer" null="false" default="0" index="index" />
+        <field key="question_id" dbtype="int" precision="10" phptype="integer" null="true"/>
+        <field key="answer" dbtype="text" phptype="string" null="true" default=""/>
+        <field key="type_file" dbtype="int" precision="4" phptype="integer" null="true"/>
+        <field key="file" dbtype="varchar" precision="255" phptype="string" null="true" default=""/>
+        <field key="point" dbtype="double" phptype="double" null="true"/>
+        <field key="right" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="0"/>
+        
+        <index alias="question_id" name="question_id" primary="false" unique="false" type="BTREE">
+            <column key="question_id" length="" collation="A" null="false"/>
+        </index>
+        <index alias="menuindex" name="menuindex" primary="false" unique="false" type="BTREE">
+            <column key="menuindex" length="" collation="A" null="false" />
+        </index>
+        <index alias="right" name="right" primary="false" unique="false" type="BTREE">
+            <column key="right" length="" collation="A" null="false" />
+        </index>
+        <aggregate alias="UserTestQuestions" class="UserTestQuestions" local="question_id" foreign="id" cardinality="one" owner="foreign"/>
+    </object>
+    
+    <object class="UserTestVariantSets" table="usertest_variant_sets" extends="xPDOSimpleObject">
+        <field key="name" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
+        <field key="description" dbtype="text" phptype="string" null="true" default=""/>
+        
+        <index alias="name" name="name" primary="false" unique="false" type="BTREE">
+            <column key="name" length="" collation="A" null="false"/>
+        </index>
+        
+        <composite alias="UserTestVariants" class="UserTestVariants" local="id" foreign="variant_set_id" cardinality="many" owner="local"/>
+    </object>
+    
+    <object class="UserTestVariants" table="usertest_variants" extends="xPDOSimpleObject">
+        <field key="test_id" dbtype="int" precision="10" phptype="integer" null="true"/>
+        <field key="variant_set_id" dbtype="int" precision="10" phptype="integer" null="true"/>
+        <field key="start_point" dbtype="double" phptype="double" null="true"/>
+        <field key="end_point" dbtype="double" phptype="double" null="true"/>
+        <field key="passed" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="0"/>
+        <field key="result" dbtype="text" phptype="string" null="true" default=""/>
+        <field key="category_id" dbtype="int" precision="10" phptype="integer" null="false" default="0"/>
+        <field key="haker" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="0"/>
+
+        <index alias="variant_set_id" name="variant_set_id" primary="false" unique="false" type="BTREE">
+            <column key="variant_set_id" length="" collation="A" null="false"/>
+        </index>
+        <index alias="test_id" name="test_id" primary="false" unique="false" type="BTREE">
+            <column key="test_id" length="" collation="A" null="false"/>
+        </index>
+        <index alias="category_id" name="category_id" primary="false" unique="false" type="BTREE">
+            <column key="category_id" length="" collation="A" null="false"/>
+        </index>
+        
+        <composite alias="UserTestTestVariantLink" class="UserTestTestVariantLink" local="id" foreign="variant_id" cardinality="many" owner="local"/>
+        <aggregate alias="UserTestCategorys" class="UserTestCategorys" local="category_id" foreign="id" cardinality="one" owner="foreign"/>
+        <aggregate alias="UserTestVariantSets" class="UserTestVariantSets" local="variant_set_id" foreign="id" cardinality="one" owner="foreign"/>
+    </object>
+    
+    <object class="UserTestTestVariantLink" table="usertest_test_variant_link" extends="xPDOSimpleObject">
+        <field key="test_id" dbtype="int" precision="10" phptype="integer" null="true"/>
+        <field key="variant_id" dbtype="int" precision="10" phptype="integer" null="true"/>
+        <field key="use_custom_point" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="0"/>
+        <field key="start_point" dbtype="double" phptype="double" null="true"/>
+        <field key="end_point" dbtype="double" phptype="double" null="true"/>
+        
+        <index alias="variant_id" name="variant_id" primary="false" unique="false" type="BTREE">
+            <column key="variant_id" length="" collation="A" null="false"/>
+        </index>
+        <index alias="test_id" name="test_id" primary="false" unique="false" type="BTREE">
+            <column key="test_id" length="" collation="A" null="false"/>
+        </index>
+        
+        <aggregate alias="UserTestVariants" class="UserTestVariants" local="variant_id" foreign="id" cardinality="one" owner="foreign"/>
+        <aggregate alias="UserTestTests" class="UserTestTests" local="test_id" foreign="id" cardinality="one" owner="foreign"/>
+    </object>
+    
+    <object class="UserTestResults" table="usertest_results" extends="xPDOSimpleObject">
+        <field key="test_id" dbtype="int" precision="10" phptype="integer" null="true"/>
+        <field key="user_id" dbtype="int" precision="10" phptype="integer" null="true"/>
+        <field key="user_name" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
+        <field key="user_email" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
+        <field key="date" dbtype="datetime" phptype="datetime" null="true" />
+        <field key="test_point" dbtype="double" phptype="double" null="true"/>
+        <field key="max_point" dbtype="double" phptype="double" null="true" default="0"/>
+        <field key="test_time" dbtype="int" precision="10" phptype="integer" null="true"/>
+        <field key="variant_id" dbtype="int" precision="10" phptype="integer" null="true"/>
+        <field key="status_id" dbtype="int" precision="4" phptype="integer" null="true"/>
+        <field key="comment" dbtype="text" phptype="string" null="true" default=""/>
+        <field key="session" dbtype="text" phptype="string" null="true" default=""/>
+        <field key="invite_id" dbtype="int" precision="10" phptype="integer" null="false" default="0"/>
+        
+        <field key="properties" dbtype="text" phptype="string" null="true" default=""/>
+        
+        <index alias="test_id" name="test_id" primary="false" unique="false" type="BTREE">
+            <column key="test_id" length="" collation="A" null="false"/>
+        </index>
+        <index alias="user_id" name="user_id" primary="false" unique="false" type="BTREE">
+            <column key="user_id" length="" collation="A" null="false"/>
+        </index>
+        <index alias="user_name" name="user_name" primary="false" unique="false" type="BTREE">
+            <column key="user_name" length="" collation="A" null="false"/>
+        </index>
+        <index alias="status_id" name="status_id" primary="false" unique="false" type="BTREE">
+            <column key="status_id" length="" collation="A" null="false"/>
+        </index>
+        <index alias="invite_id" name="invite_id" primary="false" unique="false" type="BTREE">
+            <column key="invite_id" length="" collation="A" null="false"/>
+        </index>
+        
+        <composite alias="UserTestResultAnswers" class="UserTestResultAnswers" local="id" foreign="result_id" cardinality="many" owner="local"/>
+        <composite alias="UserTestResultCategorys" class="UserTestResultCategorys" local="id" foreign="result_id" cardinality="many" owner="local"/>
+    </object>
+    
+    <object class="UserTestResultStatus" table="usertest_result_status" extends="xPDOSimpleObject">
+        <field key="label" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
+    </object>
+    
+    <object class="UserTestResultAnswers" table="usertest_resultanswers" extends="xPDOSimpleObject">
+        <field key="result_id" dbtype="int" precision="10" phptype="integer" null="true"/>
+        <field key="question_id" dbtype="int" precision="10" phptype="integer" null="true"/>
+        <field key="answer_id" dbtype="int" precision="10" phptype="integer" null="false" default="0"/>
+        <field key="answer_ids" dbtype="varchar" precision="255" phptype="string" null="false" default=""/>
+        <field key="answer" dbtype="text" phptype="string" null="true" default=""/>
+        <field key="point" dbtype="double" phptype="double" null="true"/>
+        <field key="comment" dbtype="text" phptype="string" null="true" default=""/>
+        <field key="time" dbtype="int" precision="10" phptype="integer" null="true"/>
+        
+        <index alias="result_id" name="result_id" primary="false" unique="false" type="BTREE">
+            <column key="result_id" length="" collation="A" null="false"/>
+        </index>
+        
+        <index alias="question_id" name="question_id" primary="false" unique="false" type="BTREE">
+            <column key="question_id" length="" collation="A" null="false"/>
+        </index>
+        
+        <aggregate alias="UserTestResults" class="UserTestResults" local="result_id" foreign="id" cardinality="one" owner="foreign"/>
+    </object>
+    
+    <object class="UserTestCategorys" table="usertest_categorys" extends="xPDOSimpleObject">
+        <field key="name" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
+        <field key="description" dbtype="text" phptype="string" null="true" default=""/>
+        
+        <index alias="name" name="name" primary="false" unique="false" type="BTREE">
+            <column key="name" length="" collation="A" null="false"/>
+        </index>
+        <composite alias="UserTestVariants" class="UserTestVariants" local="id" foreign="category_id" cardinality="many" owner="local"/>
+    </object>
+    
+    <object class="UserTestResultCategorys" table="usertest_result_categorys" extends="xPDOSimpleObject">
+        <field key="result_id" dbtype="int" precision="10" phptype="integer" null="true"/>
+        <field key="category_id" dbtype="int" precision="10" phptype="integer" null="true"/>
+        <field key="variant_id" dbtype="int" precision="10" phptype="integer" null="true"/>
+        <field key="cat_point" dbtype="double" phptype="double" null="true"/>
+        <field key="max_point" dbtype="double" phptype="double" null="true" default="0"/>
+        
+        <index alias="result_id" name="result_id" primary="false" unique="false" type="BTREE">
+            <column key="result_id" length="" collation="A" null="false"/>
+        </index>
+        <index alias="category_id" name="category_id" primary="false" unique="false" type="BTREE">
+            <column key="category_id" length="" collation="A" null="false"/>
+        </index>
+        <index alias="variant_id" name="variant_id" primary="false" unique="false" type="BTREE">
+            <column key="variant_id" length="" collation="A" null="false"/>
+        </index>
+        
+        <aggregate alias="UserTestResults" class="UserTestResults" local="result_id" foreign="id" cardinality="one" owner="foreign"/>
+    </object>
+    
+    
+    <object class="UserTestInvites" table="usertest_result_invites" extends="xPDOSimpleObject">
+        <field key="test_id" dbtype="int" precision="10" phptype="integer" null="true"/>
+        <field key="user_id" dbtype="int" precision="10" phptype="integer" null="true"/>
+        <field key="user_email" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
+        <field key="user_name" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
+        <field key="user_pass" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
+        <field key="active" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="1"/>
+        
+        <field key="test_page_id" dbtype="int" precision="10" phptype="integer" null="true"/>
+        <field key="auth_page_id" dbtype="int" precision="10" phptype="integer" null="true"/>
+        <field key="user_auth_code" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
+        <field key="url_scheme" dbtype="varchar" precision="5" phptype="string" null="false" default="0"/>
+        <field key="url" dbtype="varchar" precision="400" phptype="string" null="false" default=""/>
+        <field key="date" dbtype="datetime" phptype="datetime" null="true" />
+        <field key="result_id" dbtype="int" precision="10" phptype="integer" null="false" default="0"/>
+        
+        <field key="date_expired" dbtype="datetime" phptype="datetime" null="true"/>
+        <field key="send_email_if_empty_test" dbtype="tinyint" precision="1" phptype="boolean" null="false" default="0"/>
+        
+        <index alias="test_id" name="test_id" primary="false" unique="false" type="BTREE">
+            <column key="test_id" length="" collation="A" null="false"/>
+        </index>
+        <index alias="user_email" name="user_email" primary="false" unique="false" type="BTREE">
+            <column key="user_email" length="" collation="A" null="false"/>
+        </index>
+        <index alias="user_auth_code" name="user_auth_code" primary="false" unique="false" type="BTREE">
+            <column key="user_auth_code" length="" collation="A" null="false"/>
+        </index>
+        <index alias="active" name="active" primary="false" unique="false" type="BTREE">
+            <column key="active" length="" collation="A" null="false"/>
+        </index>
+        <index alias="send_email_if_empty_test" name="send_email_if_empty_test" primary="false" unique="false" type="BTREE">
+            <column key="send_email_if_empty_test" length="" collation="A" null="false"/>
+        </index>
+    </object>
+</model>

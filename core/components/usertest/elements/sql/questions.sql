@@ -1,0 +1,6 @@
+INSERT INTO `modx_usertest_questions` (`id`, `menuindex`, `test_id`, `question`, `type`, `type_file`, `file`, `extended`) VALUES (1, 3, 2, 'Множественный выбор', 2, 0, '', '');
+INSERT INTO `modx_usertest_questions` (`id`, `menuindex`, `test_id`, `question`, `type`, `type_file`, `file`, `extended`) VALUES (2, 1, 2, 'Одиночный выбор', 1, 0, '', '');
+INSERT INTO `modx_usertest_questions` (`id`, `menuindex`, `test_id`, `question`, `type`, `type_file`, `file`, `extended`) VALUES (3, 2, 2, 'Сопоставление', 5, 0, '', '{"q":["test1","\\u0442\\u0435\\u0441\\u04422","\\u0442\\u0435\\u0441\\u04423"],"a":["1","2","3"],"type_point":"0","point":"1"}');
+INSERT INTO `modx_usertest_questions` (`id`, `menuindex`, `test_id`, `question`, `type`, `type_file`, `file`, `extended`) VALUES (4, 5, 2, 'Открытый вопрос', 4, 0, '', '');
+INSERT INTO `modx_usertest_questions` (`id`, `menuindex`, `test_id`, `question`, `type`, `type_file`, `file`, `extended`) VALUES (5, 4, 2, 'Простой текст', 3, 0, '', '');
+INSERT INTO `modx_usertest_questions` (`id`, `menuindex`, `test_id`, `question`, `type`, `type_file`, `file`, `extended`) VALUES (6, 1, 1, 'Сопоставление', 5, 0, '', '{"q":["test1","\\u0442\\u0435\\u0441\\u04422","\\u0442\\u0435\\u0441\\u04423"],"a":["1","2","3"],"type_point":"0","point":"1"}');

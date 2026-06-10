@@ -1,0 +1,305 @@
+<?php
+
+class UserTest
+{
+    /** @var modX $modx */
+    public $modx;
+
+
+    /**
+     * @param modX $modx
+     * @param array $config
+     */
+    function __construct(modX &$modx, array $config = array())
+    {
+        $this->modx =& $modx;
+
+        $corePath = $this->modx->getOption('usertest_core_path', $config,
+            $this->modx->getOption('core_path') . 'components/usertest/'
+        );
+        $assetsUrl = $this->modx->getOption('usertest_assets_url', $config,
+            $this->modx->getOption('assets_url') . 'components/usertest/'
+        );
+        $connectorUrl = $assetsUrl . 'connector.php';
+
+        $this->config = array_merge(array(
+            'assetsUrl' => $assetsUrl,
+            'cssUrl' => $assetsUrl . 'css/',
+            'jsUrl' => $assetsUrl . 'js/',
+            'imagesUrl' => $assetsUrl . 'images/',
+            'connectorUrl' => $connectorUrl,
+
+            'corePath' => $corePath,
+            'modelPath' => $corePath . 'model/',
+            'chunksPath' => $corePath . 'elements/chunks/',
+            'templatesPath' => $corePath . 'elements/templates/',
+            'chunkSuffix' => '.chunk.tpl',
+            'snippetsPath' => $corePath . 'elements/snippets/',
+            'processorsPath' => $corePath . 'processors/',
+            'useRTE'=>$this->modx->getOption('usertest_use_richtexteditor',null,false),
+            'useRTEinTest'=>$this->modx->getOption('usertest_use_richtexteditor_in_edit_test',null,false),
+            'useRTEinQuestions'=>$this->modx->getOption('usertest_use_richtexteditor_in_questions',null,false),
+            'useRTEinChildQuestions'=>$this->modx->getOption('usertest_use_richtexteditor_in_child_questions',null,false),
+            'useRTEinAnswers'=>$this->modx->getOption('usertest_use_richtexteditor_in_answers',null,false),
+            'useRTEinVariants'=>$this->modx->getOption('usertest_use_richtexteditor_in_variants',null,false),
+            'DefaultQuestionsValidate'=>$this->modx->getOption('usertest_default_questions_validate',null,false),
+        ), $config);
+
+        $this->modx->addPackage('usertest', $this->config['modelPath']);
+        $this->modx->lexicon->load('usertest:default');
+    }
+    
+    /**
+     * Создаем пользователя MODX
+     * @param $userdata
+     * @return integer
+     */
+    public function createUser($userdata)
+    {
+        //создаем юзера если его нет
+        $user_id = 0;
+        $email = $userdata['email'];
+        $name = $userdata['name'];
+        if ($profile = $this->modx->getObject("modUserProfile", array("email" => $email))) {
+            $user = $profile->getOne("User");
+            return $profile->get("internalKey");
+        } else {
+            $username = $email;
+            $password = md5(time());
+            $active = true;
+            
+            $fullname = $name;
+            $data = array(
+                "sudo"     => 0,
+                "email"    => $email,
+                "username" => $username,
+                "fullname" => $fullname,
+                "active"   => $active,
+                "password" => $password,
+                "phone"=>$userdata['phone'],
+            );
+
+            // set extended
+            //$extended = array();
+
+            //$extended["password"] = $password;
+            //$data["extended"] = $extended;
+
+            $user = $this->modx->newObject("modUser", $data);
+            $profile = $this->modx->newObject("modUserProfile", $data);
+            $user->addOne($profile);
+            if ($user->save()) {
+                $user_id = $user->get("id");
+                $groups = $this->explodeAndClean($this->modx->getOption('usertest_group_created_modx_users'));
+                foreach ($groups as $group) {
+                    $user->joinGroup($group);
+                }
+                $subject = $this->modx->lexicon('usertest_email_create_user_subject',['site_name' => $this->modx->getOption('site_name')]);
+                $body = $this->modx->lexicon('usertest_email_create_user_body',[
+                    'site_name' => $this->modx->getOption('site_name'),
+                    'email' => $email,
+                    'password' => $password,
+                ]);
+                $this->sendEmail($email,$subject,$body);
+                return $user_id;
+            }
+        }
+        return 0;
+    }
+    public function sendEmail($email,$subject,$body)
+    {
+        $this->modx->getService('mail', 'mail.modPHPMailer');
+        $this->modx->mail->set(modMail::MAIL_FROM, $this->modx->getOption('emailsender'));
+        $this->modx->mail->set(modMail::MAIL_FROM_NAME, $this->modx->getOption('site_name'));
+
+        $this->modx->mail->address('to', $email);
+
+        $this->modx->mail->set(modMail::MAIL_SUBJECT, $subject);
+        $this->modx->mail->set(modMail::MAIL_BODY, $body);
+
+        /*Отправляем*/
+        $this->modx->mail->setHTML(false);
+        if (!$this->modx->mail->send()) {
+            $this->modx->log(modX::LOG_LEVEL_ERROR,'An error occurred while trying to send the email: '.$this->modx->mail->mailer->ErrorInfo);
+        }
+        $this->modx->mail->reset();
+    }
+
+    public function explodeAndClean($array, $delimiter = ",")
+    {
+        $array = explode($delimiter, $array);     // Explode fields to array
+        $array = array_map("trim", $array);       // Trim array"s values
+        $array = array_keys(array_flip($array));  // Remove duplicate fields
+        $array = array_filter($array);            // Remove empty values from array
+
+        return $array;
+    }
+    /**
+     * Очищаем строку
+     * @param $str
+     * @return string
+     */
+    public function fooStrClear($str)
+    {
+        if(is_string($str) or is_int($str)){
+            //return trim(strip_tags($str));
+            return htmlspecialchars($str, ENT_QUOTES);
+        } else {
+            return '';
+        }
+    }
+
+    /**
+     * Приводим к положительному числу
+     * @param $value
+     * @return float|int
+     */
+    public function fooIntAbsClear($value)
+    {
+        return abs((int)$value);
+    }
+
+    /**
+     * Возвращаем отфильтрованное значение из POST или GET
+     * @param $name
+     * @param $filter
+     * @return false|mixed
+     */
+    public function fooClearPostGet($name, $filter)
+    {
+        if (isset($_POST[$name]) or isset($_GET[$name])) {
+            if (isset($_POST[$name])) {
+                return $this->{$filter}($_POST[$name]);
+            } else {
+                return $this->{$filter}($_GET[$name]);
+            }
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Если массив, очищаем ключи и значения элементов (рекурсия)
+     * @param $arr
+     * @return array|string
+     *
+     */
+    public function fooClearArr($arr)
+    {
+        if(is_array($arr)){
+            $arr_new = array();
+            foreach ($arr as $k => $v) {
+                $k = $this->fooStrClear($k);
+                if(is_array($v)){
+                    $arr_new[$k] = $this->fooClearArr($v);
+                } else {
+                    $arr_new[$k] = $this->fooStrClear($v);
+                }
+            }
+            return $arr_new;
+        } else {
+            return ''; //?
+        }
+    }
+    public function getMaxPoint($test_id, $category_id = 0){
+    
+        $c = $this->modx->newQuery('UserTestQuestions');
+        $c->leftJoin('UserTestTestQuestionLink','UserTestTestQuestionLink', '`UserTestTestQuestionLink`.`question_id` = `UserTestQuestions`.`id`');
+        $c->select($this->modx->getSelectColumns('UserTestQuestions','UserTestQuestions','',array(
+            'id',
+            'parent',
+            'category_id',
+            'question',
+            'type',
+            'type_file',
+            'file',
+            'extended',
+            'max_point'
+            )));
+        $c->select($this->modx->getSelectColumns('UserTestTestQuestionLink','UserTestTestQuestionLink','',array(
+            'menuindex',
+            'test_id',
+            )));
+        if(isset($_SESSION['UserTest'][$test_id]['q_ids'])){
+            $q_ids = $_SESSION['UserTest'][$test_id]['q_ids'];
+            $c->where(array('`UserTestTestQuestionLink`.`test_id`'=>$test_id,'`UserTestQuestions`.`parent`'=>0,'`UserTestQuestions`.`id`:IN'=>$q_ids));
+        }else{
+            $c->where(array('`UserTestTestQuestionLink`.`test_id`'=>$test_id,'`UserTestQuestions`.`parent`'=>0));
+        }
+        
+        if($category_id){
+            $c->where(array('`UserTestQuestions`.`category_id`'=>$category_id));
+        }
+        //$c->prepare();echo $c->toSQL();
+        $Questions = $this->modx->getCollection('UserTestQuestions', $c);
+        $maxPoint=0;
+        foreach($Questions as $q){
+            switch($q->type){
+                case 8: //Таблица текстовых полей
+                case 4: //Открытый вопрос
+                case 6: //Комбинированный вариант
+                case 10: //usertest_type_questions_combined_radiobutton
+                    $maxPoint += $q->max_point;
+                    break;
+                case 1: //Одиночный выбор
+                case 12: //Опросник САН
+                    $c1 = $this->modx->newQuery('UserTestAnswers');
+                    $c1->where(array('question_id'=>$q->id));
+                    $c1->select('MAX(point) as max_point');
+                    if($max = $this->modx->getObject('UserTestAnswers',$c1)){
+                       $maxPoint += $max->max_point;
+                    }
+                    break;
+                case 2: //Множественный выбор
+                    $c1 = $this->modx->newQuery('UserTestAnswers');
+                    $c1->where(array('question_id'=>$q->id));
+                    $c1->select('SUM(point) as max_point');
+                    if($max = $this->modx->getObject('UserTestAnswers',$c1)){
+                       $maxPoint += $max->max_point;
+                    }
+                    break;
+                case 3: //Простой текст
+                    $c1 = $this->modx->newQuery('UserTestAnswers');
+                    $c1->where(array('question_id'=>$q->id));
+                    $c1->select('MAX(point) as max_point');
+                    if($max = $this->modx->getObject('UserTestAnswers',$c1)){
+                       $maxPoint += $max->max_point;
+                    }
+                    break;
+                case 5: //На сопоставление. Простой
+                    $ext = json_decode($q->extended, 1);
+                    $q1 = $ext['q'];
+                    //$type_point = $ext['type_point']; //0 за правильный ответ. 1 за совпадения.
+                    if($ext['type_point'] == 0){
+                        $maxPoint += $ext['point'];
+                    }else{
+                        $maxPoint += $ext['point']*count($q1);
+                    }
+                    break;
+                case 7: //Таблица чек-боксов
+                    $Q_childs = $this->modx->getIterator('UserTestQuestions', array('parent'=>$q->id));
+                    foreach($Q_childs as $qc){
+                        $c1 = $this->modx->newQuery('UserTestAnswers');
+                        $c1->where(array('question_id'=>$qc->id));
+                        $c1->select('SUM(point) as max_point');
+                        if($max = $this->modx->getObject('UserTestAnswers',$c1)){
+                           $maxPoint += $max->max_point;
+                        }
+                    }
+                    break;
+                case 9: //Селекты в тексте
+                    $Q_childs = $this->modx->getIterator('UserTestQuestions', array('parent'=>$q->id));
+                    foreach($Q_childs as $qc){
+                        $c1 = $this->modx->newQuery('UserTestAnswers');
+                        $c1->where(array('question_id'=>$qc->id));
+                        $c1->select('MAX(point) as max_point');
+                        if($max = $this->modx->getObject('UserTestAnswers',$c1)){
+                           $maxPoint += $max->max_point;
+                        }
+                    }
+                    break;
+            }
+        }
+        return $maxPoint;
+    }
+}

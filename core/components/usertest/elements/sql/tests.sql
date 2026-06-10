@@ -1,0 +1,2 @@
+INSERT INTO `modx_usertest_tests` (`id`, `name`, `description`, `count_questions`, `count_questions_on_page`, `count_test_answer`, `time_test`, `type`, `active`) VALUES (1, 'test', 'Пример теста', 0, 0, 1, 0, 1, 1);
+INSERT INTO `modx_usertest_tests` (`id`, `name`, `description`, `count_questions`, `count_questions_on_page`, `count_test_answer`, `time_test`, `type`, `active`) VALUES (2, 'test2', '', 0, 2, 1, 0, 2, 1);

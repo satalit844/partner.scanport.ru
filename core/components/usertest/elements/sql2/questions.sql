@@ -1,0 +1,13 @@
+INSERT INTO `modx_usertest_questions` (`id`, `test_id`, `question`) VALUES (19, 1, 'Овладеть собой и сохранить самообладание, даже если поступок ребенка вывел вас из себя?');
+INSERT INTO `modx_usertest_questions` (`id`, `test_id`, `question`) VALUES (18, 1, 'Извиниться перед ребенком в случае своей неправоты?');
+INSERT INTO `modx_usertest_questions` (`id`, `test_id`, `question`) VALUES (23, 1, 'Всегда воздерживаться от употреблений слов и выражений, которые могут ранить ребенка?');
+INSERT INTO `modx_usertest_questions` (`id`, `test_id`, `question`) VALUES (22, 1, 'Рассказать ребенку поучительный случай из детства, представляющий вас в невыгодном свете?');
+INSERT INTO `modx_usertest_questions` (`id`, `test_id`, `question`) VALUES (20, 1, 'Поставить себя на место ребенка');
+INSERT INTO `modx_usertest_questions` (`id`, `test_id`, `question`) VALUES (21, 1, 'Поверить хотя бы на минуту, что вы добрая фея (прекрасный принц)');
+INSERT INTO `modx_usertest_questions` (`id`, `test_id`, `question`) VALUES (17, 1, 'Признаться ребенку в ошибке, совершенной по отношению к нему?');
+INSERT INTO `modx_usertest_questions` (`id`, `test_id`, `question`) VALUES (16, 1, 'Посоветоваться с ребенком, невзирая на его возраст?');
+INSERT INTO `modx_usertest_questions` (`id`, `test_id`, `question`) VALUES (15, 1, 'В любой момент остановить все свои дела и заняться ребенком?');
+INSERT INTO `modx_usertest_questions` (`id`, `test_id`, `question`) VALUES (24, 1, 'Пообещать ребенку исполнить его желание за хорошее поведение?');
+INSERT INTO `modx_usertest_questions` (`id`, `test_id`, `question`) VALUES (25, 1, 'Выделить ребенку один день, когда он может делать то, что желает, и вести себя так, как хочет, и ни во что не вмешиваться?');
+INSERT INTO `modx_usertest_questions` (`id`, `test_id`, `question`) VALUES (26, 1, 'Не прореагировать, если ваш ребенок ударил, грубо толкнул или просто незаслуженно обидел другого человека?');
+INSERT INTO `modx_usertest_questions` (`id`, `test_id`, `question`) VALUES (27, 1, 'Устоять против детских просьб и слез, если уверены, что это каприз, мимолетная прихоть?');
