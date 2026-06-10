@@ -1,0 +1,450 @@
+/* UserTest factcheck overrides — StudLMS */
+
+/* Общий экран тестов */
+.tests-block,
+#testuser-main .tests-block {
+    background: #fff;
+}
+
+.tests-block .page-content,
+#testuser-main .page-content {
+    min-height: calc(100vh - 120px);
+    background: #fff;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.tests-block .test-card,
+#testuser-main .test-card {
+    flex: 1 1 auto;
+    min-height: 620px;
+    background: #fff;
+    border-radius: 0;
+    box-shadow: none;
+    border: 0;
+    padding: 28px 64px 34px;
+}
+
+.tests-block .test-header,
+#testuser-main .test-header {
+    margin-bottom: 42px;
+}
+
+.tests-block .test-header .img-svg,
+.tests-block .test-header img,
+#testuser-main .test-header .img-svg,
+#testuser-main .test-header img {
+    max-width: 172px;
+    height: auto;
+}
+
+.tests-block .test-content,
+.tests-block .test-content-list,
+#testuser-main .test-content-list {
+    text-align: left;
+}
+
+.tests-block .test-title,
+#testuser-main .test-title {
+    margin: 0 0 24px;
+    color: #2B2A29;
+    font-size: 34px;
+    line-height: 40px;
+    font-weight: 700;
+}
+
+.tests-block .test-subtitle,
+#testuser-main .test-subtitle {
+    margin: 0;
+    color: #2B2A29;
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 400;
+}
+
+.tests-block .test-subtitle p,
+#testuser-main .test-subtitle p {
+    margin: 0 0 14px;
+}
+
+.tests-block .test-subtitle p:last-child,
+#testuser-main .test-subtitle p:last-child {
+    margin-bottom: 0;
+}
+
+.tests-block .text-info-test,
+#testuser-main .text-info-test {
+    color: #2B2A29;
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 500;
+}
+
+.tests-block .test-footer,
+#testuser-main .test-footer {
+    width: 100%;
+    padding: 18px 0 0;
+    background: #fff;
+}
+
+.tests-block .btn-test,
+#testuser-main .btn-test {
+    min-height: 46px;
+    border-radius: 999px;
+    padding: 0 34px;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 500;
+}
+
+.tests-block .btn-test img,
+#testuser-main .btn-test img {
+    width: 16px;
+    height: 16px;
+}
+
+/* Старт и инструкция */
+.tests-block--start .test-content,
+.tests-block--instruction .test-content {
+    max-width: 720px;
+    margin-top: 0;
+    margin-bottom: auto;
+}
+
+.tests-block--start .test-subtitle {
+    max-width: 620px;
+}
+
+.tests-block--instruction .test-title {
+    margin-bottom: 16px;
+}
+
+.tests-block--instruction .test-subtitle {
+    max-width: 680px;
+}
+
+/* Экран вопроса */
+#testuser-main .test-step-box {
+    border-radius: 999px;
+    background: #F8F5FC;
+    color: #4426A8;
+    padding: 8px 16px;
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 500;
+}
+
+#testuser-main .test-question {
+    color: #2B2A29;
+    font-size: 22px;
+    line-height: 28px;
+    font-weight: 600;
+    margin-bottom: 24px;
+}
+
+#testuser-main .test-answer {
+    gap: 14px;
+}
+
+#testuser-main .ut-answer-row {
+    margin: 0;
+}
+
+#testuser-main .custom-radio-test,
+#testuser-main .custom-checkbox-test {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    color: #2B2A29;
+    font-size: 17px;
+    line-height: 23px;
+    font-weight: 400;
+}
+
+#testuser-main .radio-mark,
+#testuser-main .checkbox-mark {
+    margin-top: 2px;
+    flex: 0 0 auto;
+}
+
+#testuser-main .test-footer .btn-list-test {
+    min-height: 42px;
+    border: 0;
+    background: transparent;
+    color: #8D33C7;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 400;
+}
+
+#testuser-main .test-footer .text-info-test {
+    min-width: 104px;
+    text-align: center;
+    margin-right: 24px;
+}
+
+/* Попап списка вопросов */
+.testListModal .modal-dialog,
+.testListModal__dialog {
+    max-width: 920px;
+}
+
+.testListModal .modal-content,
+.testListModal__content {
+    border: 0;
+    border-radius: 24px;
+    background: #fff;
+    padding: 28px 32px 30px;
+    box-shadow: 0 24px 80px rgba(25, 13, 57, .22);
+}
+
+.testListModal__close {
+    position: absolute;
+    right: 22px;
+    top: 18px;
+    z-index: 2;
+    width: 32px;
+    height: 32px;
+    border: 0;
+    background: transparent;
+    color: #2B2A29;
+    font-size: 24px;
+    line-height: 32px;
+}
+
+.testListModal__head {
+    padding-right: 34px;
+}
+
+.testListModal__grid,
+.testListModal__row {
+    display: grid;
+    grid-template-columns: 54px minmax(0, 1fr) 150px 110px;
+    gap: 18px;
+    align-items: center;
+}
+
+.testListModal__grid--head {
+    min-height: 34px;
+    color: #7D7784;
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 500;
+}
+
+.testListModal__row {
+    padding: 14px 0;
+    border-bottom: 1px solid #F0ECF5;
+    color: #2B2A29;
+    font-size: 15px;
+    line-height: 20px;
+}
+
+.testListModal__row:last-child {
+    border-bottom: 0;
+}
+
+.testListModal__question {
+    min-width: 0;
+}
+
+.testListModal__score {
+    white-space: nowrap;
+    text-align: left;
+}
+
+/* Планшет */
+@media (max-width: 1199.98px) {
+    .tests-block .test-card,
+    #testuser-main .test-card {
+        min-height: 600px;
+        padding: 24px 40px 30px;
+    }
+
+    .tests-block .test-title,
+    #testuser-main .test-title {
+        font-size: 30px;
+        line-height: 36px;
+    }
+
+    .testListModal .modal-dialog,
+    .testListModal__dialog {
+        max-width: calc(100% - 48px);
+    }
+}
+
+/* Мобилка */
+@media (max-width: 767.98px) {
+    .tests-block,
+    #testuser-main .tests-block {
+        background: #fff;
+    }
+
+    .tests-block .page-content,
+    #testuser-main .page-content {
+        min-height: calc(100vh - 96px);
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .tests-block .test-card,
+    #testuser-main .test-card {
+        min-height: calc(100vh - 96px);
+        padding: 20px 16px 18px;
+    }
+
+    .tests-block .test-header,
+    #testuser-main .test-header {
+        margin-bottom: 28px;
+    }
+
+    .tests-block .test-header .img-svg,
+    .tests-block .test-header img,
+    #testuser-main .test-header .img-svg,
+    #testuser-main .test-header img {
+        max-width: 128px;
+    }
+
+    .tests-block .test-title,
+    #testuser-main .test-title {
+        margin-bottom: 24px;
+        font-size: 20px;
+        line-height: 24px;
+        font-weight: 700;
+    }
+
+    .tests-block .test-subtitle,
+    #testuser-main .test-subtitle {
+        font-size: 14px;
+        line-height: 19px;
+    }
+
+    .tests-block--instruction .test-title {
+        margin-bottom: 16px;
+    }
+
+    .tests-block .test-footer,
+    #testuser-main .test-footer {
+        position: sticky;
+        bottom: 0;
+        z-index: 5;
+        margin-left: -16px;
+        margin-right: -16px;
+        padding: 12px 16px 10px;
+        border-radius: 22px 22px 0 0;
+        box-shadow: 0 -8px 24px rgba(32, 18, 71, .08);
+        gap: 8px;
+    }
+
+    .tests-block .btn-test,
+    #testuser-main .btn-test {
+        width: 100%;
+        min-height: 42px;
+        padding: 0 20px;
+        font-size: 14px;
+        line-height: 18px;
+    }
+
+    #testuser-main .test-header {
+        gap: 12px;
+        align-items: flex-start;
+    }
+
+    #testuser-main .test-step-box {
+        padding: 6px 10px;
+        font-size: 12px;
+        line-height: 16px;
+        white-space: nowrap;
+    }
+
+    #testuser-main .test-question {
+        font-size: 18px;
+        line-height: 23px;
+        margin-bottom: 18px;
+    }
+
+    #testuser-main .custom-radio-test,
+    #testuser-main .custom-checkbox-test {
+        font-size: 14px;
+        line-height: 19px;
+        gap: 10px;
+    }
+
+    #testuser-main .test-footer .btn-list-test {
+        width: auto;
+        min-height: 30px;
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    #testuser-main .test-footer .btn-list-test img,
+    #testuser-main .test-footer .btn-list-test svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    #testuser-main .test-footer .text-info-test {
+        min-width: 68px;
+        margin-right: 0;
+        font-size: 12px;
+        line-height: 15px;
+    }
+
+    #testuser-main .test-footer .js-ut-submit {
+        width: 100%;
+        order: 3;
+    }
+
+    .testListModal .modal-dialog,
+    .testListModal__dialog {
+        max-width: calc(100% - 20px);
+        margin: 10px auto;
+    }
+
+    .testListModal .modal-content,
+    .testListModal__content {
+        border-radius: 20px;
+        padding: 24px 16px 20px;
+    }
+
+    .testListModal__close {
+        right: 12px;
+        top: 10px;
+    }
+
+    .testListModal__head {
+        padding-right: 30px;
+    }
+
+    .testListModal__grid,
+    .testListModal__row {
+        grid-template-columns: 28px minmax(0, 1fr) 72px 52px;
+        gap: 8px;
+    }
+
+    .testListModal__grid--head {
+        font-size: 11px;
+        line-height: 14px;
+    }
+
+    .testListModal__row {
+        padding: 10px 0;
+        font-size: 11px;
+        line-height: 14px;
+    }
+
+    .testListModal__score {
+        font-size: 11px;
+        line-height: 14px;
+    }
+
+    .testListModal__result .ut-mini-badge {
+        font-size: 10px;
+        line-height: 13px;
+        padding: 2px 4px;
+    }
+}
