@@ -1,0 +1,312 @@
+/* UserTest factcheck v6 — adaptive layer
+ * Подключать после v4 и v5.
+ * ПК не трогаем, ужимаем планшет/мобилку плавнее.
+ */
+
+/* Ноутбук / маленький ПК */
+@media (max-width: 1399.98px) and (min-width: 1200px) {
+    .tests-block--start .test-title {
+        font-size: 34px;
+        line-height: 42px;
+    }
+
+    .tests-block--start .test-subtitle {
+        font-size: 20px;
+        line-height: 26px;
+    }
+
+    .tests-block--instruction .test-title,
+    #testuser-main .test-question {
+        font-size: 34px;
+        line-height: 42px;
+        margin-bottom: 30px;
+    }
+
+    .tests-block--instruction .test-subtitle,
+    #testuser-main .custom-radio-test,
+    #testuser-main .custom-checkbox-test {
+        font-size: 22px;
+        line-height: 30px;
+    }
+
+    #testuser-main .test-step-box,
+    #testuser-main .test-footer .btn-list-test,
+    #testuser-main .test-footer .text-info-test,
+    .tests-block .btn-test,
+    #testuser-main .btn-test {
+        font-size: 18px;
+        line-height: 24px;
+    }
+
+    .tests-block .btn-test,
+    #testuser-main .btn-test {
+        height: 44px;
+        min-height: 44px;
+    }
+}
+
+/* Планшет / узкий экран */
+@media (max-width: 1199.98px) and (min-width: 768px) {
+    .tests-block .page-content,
+    #testuser-main .page-content {
+        min-height: calc(100vh - 104px);
+    }
+
+    .tests-block .test-card,
+    #testuser-main .test-card {
+        min-height: calc(100vh - 104px);
+        padding: 0;
+    }
+
+    .tests-block .test-header img,
+    .tests-block .test-header svg,
+    .tests-block .test-header .img-svg,
+    #testuser-main .test-header img,
+    #testuser-main .test-header svg,
+    #testuser-main .test-header .img-svg {
+        width: 150px;
+        max-width: 150px;
+        height: auto;
+    }
+
+    .tests-block--instruction .test-header,
+    #testuser-main .test-header {
+        margin-bottom: 26px;
+    }
+
+    .tests-block--start .test-title {
+        font-size: 28px;
+        line-height: 34px;
+        margin-bottom: 12px;
+    }
+
+    .tests-block--start .test-subtitle {
+        font-size: 16px;
+        line-height: 22px;
+    }
+
+    .tests-block--instruction .test-title,
+    #testuser-main .test-question {
+        font-size: 26px;
+        line-height: 32px;
+        margin-bottom: 22px;
+    }
+
+    .tests-block--instruction .test-subtitle {
+        font-size: 17px;
+        line-height: 26px;
+    }
+
+    #testuser-main .test-content-list {
+        max-width: 760px;
+    }
+
+    #testuser-main .test-answer {
+        gap: 10px;
+    }
+
+    #testuser-main .custom-radio-test,
+    #testuser-main .custom-checkbox-test {
+        gap: 10px;
+        font-size: 18px;
+        line-height: 24px;
+    }
+
+    #testuser-main .radio-mark,
+    #testuser-main .checkbox-mark {
+        transform: scale(.9);
+        transform-origin: left center;
+    }
+
+    #testuser-main .test-step-box {
+        min-height: 40px;
+        padding: 8px 12px;
+        font-size: 16px;
+        line-height: 22px;
+    }
+
+    #testuser-main .test-footer {
+        gap: 20px;
+    }
+
+    #testuser-main .test-footer .btn-list-test,
+    #testuser-main .test-footer .text-info-test,
+    .tests-block .btn-test,
+    #testuser-main .btn-test {
+        font-size: 16px;
+        line-height: 22px;
+    }
+
+    #testuser-main .test-footer .btn-list-test {
+        min-height: 40px;
+        padding: 6px 8px;
+    }
+
+    .tests-block .btn-test,
+    #testuser-main .btn-test {
+        height: 40px;
+        min-height: 40px;
+        padding: 6px 14px;
+    }
+
+    .tests-block .btn-test img,
+    .tests-block .btn-test svg,
+    #testuser-main .btn-test img,
+    #testuser-main .btn-test svg,
+    #testuser-main .test-footer .btn-list-test img,
+    #testuser-main .test-footer .btn-list-test svg {
+        width: 16px;
+        height: 16px;
+        flex-basis: 16px;
+    }
+}
+
+/* Мобилка */
+@media (max-width: 767.98px) {
+    .tests-block .page-content,
+    #testuser-main .page-content {
+        min-height: calc(100vh - 92px);
+    }
+
+    .tests-block .test-card,
+    #testuser-main .test-card {
+        min-height: calc(100vh - 92px);
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+    }
+
+    .tests-block .test-header,
+    #testuser-main .test-header {
+        margin-bottom: 18px;
+    }
+
+    .tests-block .test-header img,
+    .tests-block .test-header svg,
+    .tests-block .test-header .img-svg,
+    #testuser-main .test-header img,
+    #testuser-main .test-header svg,
+    #testuser-main .test-header .img-svg {
+        width: 112px;
+        max-width: 112px;
+        height: auto;
+    }
+
+    .tests-block--start .test-content {
+        text-align: left;
+    }
+
+    .tests-block--start .test-title,
+    .tests-block--instruction .test-title,
+    #testuser-main .test-question {
+        margin-bottom: 14px;
+        font-size: 20px;
+        line-height: 24px;
+        text-align: left;
+    }
+
+    .tests-block--start .test-subtitle,
+    .tests-block--instruction .test-subtitle {
+        font-size: 14px;
+        line-height: 19px;
+        text-align: left;
+    }
+
+    .tests-block--instruction .test-subtitle ul,
+    .tests-block--instruction .test-subtitle ol {
+        padding-left: 18px;
+    }
+
+    .tests-block--instruction .test-subtitle li {
+        margin-bottom: 6px;
+    }
+
+    #testuser-main .test-header {
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    #testuser-main .test-step-box {
+        min-height: 30px;
+        padding: 6px 10px;
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    #testuser-main .test-content-list {
+        max-width: none;
+    }
+
+    #testuser-main .test-answer {
+        gap: 8px;
+    }
+
+    #testuser-main .custom-radio-test,
+    #testuser-main .custom-checkbox-test {
+        align-items: flex-start;
+        gap: 8px;
+        font-size: 14px;
+        line-height: 19px;
+    }
+
+    #testuser-main .radio-mark,
+    #testuser-main .checkbox-mark {
+        transform: scale(.85);
+        transform-origin: left top;
+        margin-top: 0;
+    }
+
+    #testuser-main .test-footer,
+    .tests-block .test-footer {
+        position: sticky;
+        bottom: 0;
+        z-index: 5;
+        margin-left: 0;
+        margin-right: 0;
+        padding: 10px 0 8px;
+        border-radius: 18px 18px 0 0;
+        box-shadow: 0 -8px 24px rgba(32, 18, 71, .08);
+        gap: 8px;
+        background: #fff;
+    }
+
+    #testuser-main .test-footer .btn-list-test {
+        min-height: 28px;
+        padding: 0;
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    #testuser-main .test-footer .text-info-test {
+        min-width: 64px;
+        font-size: 12px;
+        line-height: 15px;
+        white-space: normal;
+    }
+
+    .tests-block .btn-test,
+    #testuser-main .btn-test {
+        width: 100%;
+        height: 40px;
+        min-height: 40px;
+        padding: 0 18px;
+        font-size: 14px;
+        line-height: 18px;
+    }
+
+    .tests-block .btn-test img,
+    .tests-block .btn-test svg,
+    #testuser-main .btn-test img,
+    #testuser-main .btn-test svg,
+    #testuser-main .test-footer .btn-list-test img,
+    #testuser-main .test-footer .btn-list-test svg {
+        width: 16px;
+        height: 16px;
+        flex-basis: 16px;
+    }
+
+    #testuser-main .test-footer .js-ut-submit {
+        width: 100%;
+        order: 3;
+    }
+}
