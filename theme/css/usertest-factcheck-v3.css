@@ -1,0 +1,459 @@
+/* UserTest factcheck v3 — quick fixes after first browser check
+ * Fixes:
+ * - remove extra inner border on test card;
+ * - stretch form/content back to full width;
+ * - keep questions on the left;
+ * - reduce button icons.
+ */
+
+.tests-block,
+#testuser-main .tests-block,
+.tests-block .page-content,
+#testuser-main .page-content {
+    background: #fff;
+}
+
+.tests-block .page-content,
+#testuser-main .page-content {
+    min-height: calc(100vh - 120px);
+    padding: 0;
+}
+
+/* Внешняя рамка уже есть у section-block, внутреннюю рамку не рисуем */
+.tests-block .test-card,
+#testuser-main .test-card {
+    flex: 1 1 auto;
+    width: 100%;
+    min-height: 610px;
+    padding: 32px;
+    border: 0;
+    border-radius: 0;
+    background: #fff;
+    box-shadow: none;
+    overflow: hidden;
+    align-items: stretch;
+    justify-content: space-between;
+}
+
+#testuser-main #UserTestForm {
+    width: 100%;
+    align-self: stretch;
+}
+
+.tests-block .test-header,
+#testuser-main .test-header {
+    width: 100%;
+    margin: 0;
+}
+
+.tests-block .test-header img,
+.tests-block .test-header svg,
+.tests-block .test-header .img-svg,
+#testuser-main .test-header img,
+#testuser-main .test-header svg,
+#testuser-main .test-header .img-svg {
+    display: block;
+    width: 213px;
+    max-width: 213px;
+    height: 66px;
+    object-fit: contain;
+}
+
+.tests-block--start .test-content {
+    width: 100%;
+    max-width: none;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.tests-block--start .test-title {
+    max-width: 1551px;
+    margin: 0 auto 16px;
+    color: #252424;
+    font-size: 40px;
+    line-height: 50px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.tests-block--start .test-subtitle {
+    max-width: 1551px;
+    margin: 0 auto;
+    color: #777;
+    font-size: 24px;
+    line-height: 28px;
+    font-weight: 400;
+    text-align: center;
+}
+
+.tests-block--start .test-subtitle p {
+    margin: 0;
+}
+
+.tests-block--start .text-info-test {
+    margin-top: 24px;
+    color: #777;
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 400;
+}
+
+.tests-block--start .test-footer,
+.tests-block--instruction .test-footer {
+    width: 100%;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 16px;
+    background: transparent;
+}
+
+.tests-block--instruction .test-header {
+    margin-bottom: 44px;
+}
+
+.tests-block--instruction .test-content {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    text-align: left;
+}
+
+.tests-block--instruction .test-title {
+    margin: 0 0 44px;
+    color: #252424;
+    font-size: 40px;
+    line-height: 50px;
+    font-weight: 400;
+    text-align: left;
+}
+
+.tests-block--instruction .test-subtitle {
+    margin: 0;
+    color: #777;
+    font-size: 28px;
+    line-height: 44px;
+    font-weight: 400;
+    text-align: left;
+}
+
+.tests-block--instruction .test-subtitle p,
+.tests-block--instruction .test-subtitle ul,
+.tests-block--instruction .test-subtitle ol {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+#testuser-main .test-header {
+    margin-bottom: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+#testuser-main .test-step-box {
+    min-height: 56px;
+    padding: 12px 16px;
+    border: 1px solid #93D6FB;
+    border-radius: 100px;
+    background: #F5FBFF;
+    color: #777;
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+/* Не даём блоку вопроса уехать вправо */
+#testuser-main .test-content-list {
+    width: 100%;
+    max-width: 1071px;
+    margin-left: 0;
+    margin-right: auto;
+    text-align: left;
+}
+
+#testuser-main .test-question {
+    margin: 0 0 44px;
+    color: #252424;
+    font-size: 40px;
+    line-height: 50px;
+    font-weight: 400;
+}
+
+#testuser-main .test-answer {
+    gap: 16px;
+}
+
+#testuser-main .ut-answer-row,
+#testuser-main .form-label {
+    margin: 0;
+}
+
+#testuser-main .custom-radio-test,
+#testuser-main .custom-checkbox-test {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #777;
+    font-size: 28px;
+    line-height: 32px;
+    font-weight: 400;
+}
+
+#testuser-main .radio-mark,
+#testuser-main .checkbox-mark {
+    flex: 0 0 auto;
+    margin: 0;
+}
+
+#testuser-main .text-answer {
+    min-width: 0;
+}
+
+#testuser-main .test-footer {
+    width: 100%;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 44px;
+    background: transparent;
+}
+
+#testuser-main .test-footer .btn-list-test {
+    min-height: 48px;
+    padding: 8px 12px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: #A861C1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 400;
+}
+
+#testuser-main .test-footer .btn-list-test img,
+#testuser-main .test-footer .btn-list-test svg {
+    width: 24px;
+    height: 24px;
+}
+
+#testuser-main .test-footer .text-info-test {
+    margin: 0;
+    color: #777;
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 400;
+    text-align: right;
+    white-space: nowrap;
+}
+
+#testuser-main .test-footer .ms-auto {
+    margin-left: auto;
+}
+
+#testuser-main .test-footer .me-4 {
+    margin-right: 0;
+}
+
+.tests-block .btn-test,
+#testuser-main .btn-test {
+    min-width: auto;
+    min-height: 48px;
+    height: 48px;
+    padding: 8px 12px;
+    border: 0;
+    border-radius: 999px;
+    background: #06B664;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 400;
+    text-decoration: none;
+}
+
+.tests-block .btn-test:hover,
+#testuser-main .btn-test:hover {
+    background: #06B664;
+    color: #fff;
+}
+
+/* Иконки кнопок меньше, как в макете: сама стрелка не должна быть огромной */
+.tests-block .btn-test img,
+.tests-block .btn-test svg,
+#testuser-main .btn-test img,
+#testuser-main .btn-test svg {
+    width: 24px;
+    height: 24px;
+    flex: 0 0 auto;
+}
+
+@media (max-width: 1199.98px) {
+    .tests-block .test-card,
+    #testuser-main .test-card {
+        min-height: calc(100vh - 120px);
+        padding: 24px;
+    }
+
+    .tests-block--start .test-title,
+    .tests-block--instruction .test-title,
+    #testuser-main .test-question {
+        font-size: 32px;
+        line-height: 40px;
+    }
+
+    .tests-block--start .test-subtitle,
+    .tests-block--instruction .test-subtitle,
+    #testuser-main .custom-radio-test,
+    #testuser-main .custom-checkbox-test,
+    #testuser-main .test-footer .btn-list-test,
+    #testuser-main .test-footer .text-info-test,
+    .tests-block .btn-test,
+    #testuser-main .btn-test {
+        font-size: 20px;
+        line-height: 28px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .tests-block .page-content,
+    #testuser-main .page-content {
+        min-height: calc(100vh - 96px);
+    }
+
+    .tests-block .test-card,
+    #testuser-main .test-card {
+        min-height: calc(100vh - 96px);
+        padding: 20px 16px 18px;
+        border: 0;
+        border-radius: 0;
+    }
+
+    .tests-block .test-header img,
+    .tests-block .test-header svg,
+    .tests-block .test-header .img-svg,
+    #testuser-main .test-header img,
+    #testuser-main .test-header svg,
+    #testuser-main .test-header .img-svg {
+        width: 128px;
+        max-width: 128px;
+        height: auto;
+    }
+
+    .tests-block--start .test-content {
+        text-align: left;
+    }
+
+    .tests-block--start .test-title,
+    .tests-block--instruction .test-title,
+    #testuser-main .test-question {
+        margin-bottom: 16px;
+        font-size: 20px;
+        line-height: 24px;
+        text-align: left;
+    }
+
+    .tests-block--start .test-subtitle,
+    .tests-block--instruction .test-subtitle {
+        font-size: 14px;
+        line-height: 19px;
+        text-align: left;
+    }
+
+    .tests-block--instruction .test-header,
+    #testuser-main .test-header {
+        margin-bottom: 24px;
+    }
+
+    .tests-block--instruction .test-subtitle {
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    #testuser-main .test-step-box {
+        min-height: 30px;
+        padding: 6px 10px;
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    #testuser-main .test-content-list {
+        max-width: none;
+    }
+
+    #testuser-main .custom-radio-test,
+    #testuser-main .custom-checkbox-test {
+        align-items: flex-start;
+        gap: 10px;
+        font-size: 14px;
+        line-height: 19px;
+    }
+
+    #testuser-main .test-footer,
+    .tests-block .test-footer {
+        position: sticky;
+        bottom: 0;
+        z-index: 5;
+        margin-left: -16px;
+        margin-right: -16px;
+        padding: 12px 16px 10px;
+        border-radius: 22px 22px 0 0;
+        box-shadow: 0 -8px 24px rgba(32, 18, 71, .08);
+        gap: 8px;
+        background: #fff;
+    }
+
+    #testuser-main .test-footer .btn-list-test {
+        min-height: 30px;
+        padding: 0;
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    #testuser-main .test-footer .btn-list-test img,
+    #testuser-main .test-footer .btn-list-test svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    #testuser-main .test-footer .text-info-test {
+        min-width: 68px;
+        font-size: 12px;
+        line-height: 15px;
+        white-space: normal;
+    }
+
+    .tests-block .btn-test,
+    #testuser-main .btn-test {
+        width: 100%;
+        height: 42px;
+        min-height: 42px;
+        padding: 0 20px;
+        font-size: 14px;
+        line-height: 18px;
+    }
+
+    .tests-block .btn-test img,
+    .tests-block .btn-test svg,
+    #testuser-main .btn-test img,
+    #testuser-main .btn-test svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    #testuser-main .test-footer .js-ut-submit {
+        width: 100%;
+        order: 3;
+    }
+}
