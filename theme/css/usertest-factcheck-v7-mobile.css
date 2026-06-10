@@ -1,0 +1,114 @@
+/* UserTest factcheck v7 — mobile/tablet compact layer
+ * Подключать после v4, v5, v6.
+ * Не трогаем .training-type: там уже есть padding: 16px.
+ */
+
+@media (max-width: 991.98px) {
+    /* Снаружи уже работает .training-type { padding: 16px; } — не добавляем ещё один паддинг */
+    .section-block.tests-block,
+    .section-block.results-block {
+        min-height: calc(100vh - 110px) !important;
+    }
+
+    /* Перебиваем старый mobile-rule из training.css: padding: 20px 16px 16px !important */
+    .tests-block .test-card,
+    .results-block .test-card,
+    #testuser-main .test-card {
+        padding: 0 !important;
+        border-radius: 16px !important;
+    }
+
+    #testuser-main #UserTestForm,
+    #testuser-main .test-content-list {
+        width: 100%;
+        max-width: none;
+    }
+
+    /* В мобильном/планшетном блоке весь рабочий текст компактнее */
+    #testuser-main .test-question,
+    #testuser-main .custom-radio-test,
+    #testuser-main .custom-checkbox-test,
+    #testuser-main .text-answer,
+    #testuser-main .test-footer .btn-list-test,
+    #testuser-main .test-footer .text-info-test,
+    #testuser-main .btn-test,
+    .tests-block .btn-test {
+        font-size: 16px;
+        line-height: 22px;
+    }
+
+    #testuser-main .test-question {
+        margin-bottom: 14px;
+        font-weight: 400;
+    }
+
+    #testuser-main .test-answer {
+        gap: 8px;
+    }
+
+    #testuser-main .custom-radio-test,
+    #testuser-main .custom-checkbox-test {
+        gap: 8px;
+        align-items: flex-start;
+    }
+
+    #testuser-main .radio-mark,
+    #testuser-main .checkbox-mark {
+        transform: scale(.85);
+        transform-origin: left top;
+        margin-top: 1px;
+    }
+
+    /* Нижний блок: внутренний padding 12px, без лишнего раздувания */
+    #testuser-main .test-footer,
+    .tests-block .test-footer {
+        margin-left: 0;
+        margin-right: 0;
+        padding: 12px;
+        gap: 8px;
+        border-radius: 16px;
+        background: #fff;
+    }
+
+    #testuser-main .test-footer .text-info-test {
+        min-width: 56px;
+        white-space: normal;
+        text-align: right;
+    }
+
+    #testuser-main .btn-test,
+    .tests-block .btn-test {
+        height: 40px;
+        min-height: 40px;
+        padding: 0 18px;
+    }
+
+    #testuser-main .btn-test img,
+    #testuser-main .btn-test svg,
+    .tests-block .btn-test img,
+    .tests-block .btn-test svg,
+    #testuser-main .test-footer .btn-list-test img,
+    #testuser-main .test-footer .btn-list-test svg {
+        width: 16px;
+        height: 16px;
+        flex: 0 0 16px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    #testuser-main .test-header {
+        margin-bottom: 16px;
+    }
+
+    #testuser-main .test-step-box {
+        min-height: 28px;
+        padding: 4px 9px;
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    #testuser-main .test-footer .js-ut-submit {
+        width: 100%;
+        order: 3;
+    }
+}
