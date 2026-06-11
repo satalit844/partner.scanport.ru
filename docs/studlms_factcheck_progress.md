@@ -60,14 +60,48 @@ HTML-признак:
 }
 ```
 
+### PC-03 / TABLET-01 / MOBILE-02 — описание курса, расстояние между абзацами
+
+Статус: `done-host`
+
+Файл:
+- сниппет `trainingCoursePage`
+
+Что нашли:
+- описание хранится не в `content`, а в TV `desc` (`tv_id=24`, caption `Описание`, type `richtext`) ресурса курса.
+- в TV уже хранится HTML с `<p>...</p>`.
+- лишний разрыв на фронте давала строка `nl2br($courseDescription)`, которая превращала переносы между `<p>` в `<br><br>`.
+
+Рабочая логика:
+
+```php
+$courseDescription = trim((string)$resource->getTVValue('desc'));
+$courseDescriptionIsRichtext = $courseDescription !== '';
+
+if ($courseDescription === '') {
+    $courseDescription = trim((string)$resource->get('description'));
+}
+
+if ($courseDescription === '') {
+    $courseDescription = 'Описание курса пока не заполнено.';
+}
+
+if (!$courseDescriptionIsRichtext) {
+    $courseDescription = nl2br($courseDescription);
+}
+```
+
 ## Следующий пункт
 
-### PC-03 / TABLET-01 / MOBILE-02 — описание курса, расстояние между абзацами
+### PC-04 — структура курса на нешироком ПК
 
 Статус: `next`
 
-Файл:
-- `theme/css/training.css`
+Проблема:
+- при раскрытом списке курсов на не самом широком экране некорректно отображаются подписи `Учебные материалы`, `Практическое задание`, `Тест`.
 
-Задача:
-- уменьшить расстояние между абзацами в описании курса примерно в 2 раза.
+Ожидание:
+- на небольших ПК сделать как на планшете: подпись под названием модуля.
+
+Вероятный файл:
+- `theme/css/training.css`
