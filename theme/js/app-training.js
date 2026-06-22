@@ -14,7 +14,7 @@ var AppTraining = (function () {
             this.trainingRequestCourseModal();
             this.trainingPlayer();
         },
-
+        
         bindMyCourseLinks: function () {
             $(document)
                 .off('click.appTrainingMyCourseLink')
@@ -3271,18 +3271,77 @@ AppTraining.init();
         if (button.__practiceMoreReady) {
             return;
         }
+
         button.__practiceMoreReady = true;
 
-        button.addEventListener('click', function () {
-            var card = closest(button, '.practice-task-card');
-            if (!card) {
+        var card = closest(button, '.practice-task-card');
+        if (!card) {
+            return;
+        }
+
+        var text = card.querySelector('[data-practice-description]');
+        if (!text) {
+            return;
+        }
+
+        var limit = 144;
+
+        function setOpen(state) {
+            state = !!state;
+
+            card.classList.toggle('is-open', state);
+            text.classList.toggle('is-expanded', state);
+            button.textContent = state ? 'Скрыть' : 'Показать больше';
+        }
+
+        function measureHeight() {
+            var wasOpen = card.classList.contains('is-open') || text.classList.contains('is-expanded');
+
+            card.classList.remove('is-open');
+            text.classList.remove('is-expanded');
+
+            var height = text.scrollHeight;
+
+            if (wasOpen) {
+                card.classList.add('is-open');
+                text.classList.add('is-expanded');
+            }
+
+            return height;
+        }
+
+        function updateButtonState() {
+            var wasOpen = card.classList.contains('is-open') || text.classList.contains('is-expanded');
+            var realHeight = measureHeight();
+            var hasMore = realHeight > limit + 2;
+
+            card.classList.toggle('has-more', hasMore);
+            card.classList.toggle('is-short', !hasMore);
+
+            if (!hasMore) {
+                button.classList.add('is-hidden');
+                setOpen(false);
                 return;
             }
 
-            var isOpen = card.classList.toggle('is-open');
-            button.textContent = isOpen ? 'Свернуть' : 'Показать больше';
+            button.classList.remove('is-hidden');
+            setOpen(wasOpen);
+        }
+
+        updateButtonState();
+
+        window.setTimeout(updateButtonState, 150);
+        window.addEventListener('resize', updateButtonState);
+
+        button.addEventListener('click', function () {
+            if (button.classList.contains('is-hidden')) {
+                return;
+            }
+
+            setOpen(!card.classList.contains('is-open'));
         });
     }
+
 
     function init() {
         document.querySelectorAll('[data-practice-tabs]').forEach(initPracticeTabs);
@@ -3514,3 +3573,109 @@ AppTraining.init();
         }
     }
 })();
+
+/* === FACTCHECK PACK 2 START === */
+(function () {
+    'use strict';
+
+    function ready(fn) {
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', fn);
+        } else {
+            fn();
+        }
+    }
+
+    function initPracticeMore() {
+        var text = document.querySelector('[data-practice-description]');
+        var btn = document.querySelector('[data-practice-more]');
+
+        if (!text || !btn || btn.dataset.factcheckPack2Bound === '1') {
+            return;
+        }
+
+        btn.dataset.factcheckPack2Bound = '1';
+
+        function refresh() {
+            text.classList.remove('is-expanded');
+            btn.textContent = 'Показать больше';
+
+            if (text.scrollHeight <= text.clientHeight + 4) {
+                btn.classList.add('is-hidden');
+            } else {
+                btn.classList.remove('is-hidden');
+            }
+        }
+
+        btn.addEventListener('click', function () {
+            var expanded = text.classList.toggle('is-expanded');
+            btn.textContent = expanded ? 'Скрыть' : 'Показать больше';
+        });
+
+        window.setTimeout(refresh, 50);
+        window.addEventListener('resize', refresh);
+    }
+
+    function initPracticeFormState() {
+        var form = document.querySelector('[data-practice-form]');
+        if (!form || form.dataset.factcheckPack2Bound === '1') {
+            return;
+        }
+
+        form.dataset.factcheckPack2Bound = '1';
+
+        var textarea = form.querySelector('[data-practice-message]');
+        var fileInput = form.querySelector('[data-practice-files]');
+        var submit = form.querySelector('[data-practice-submit]');
+        var preview = form.querySelector('[data-practice-files-preview]');
+
+        function getFilesCount() {
+            return fileInput && fileInput.files ? fileInput.files.length : 0;
+        }
+
+        function updatePreview() {
+            if (!preview || !fileInput || !fileInput.files) {
+                return;
+            }
+
+            preview.innerHTML = '';
+
+            Array.prototype.forEach.call(fileInput.files, function (file) {
+                var item = document.createElement('div');
+                item.className = 'practice-files-preview__item';
+                item.textContent = file.name;
+                preview.appendChild(item);
+            });
+        }
+
+        function updateSubmit() {
+            if (!submit) {
+                return;
+            }
+
+            var hasText = textarea && textarea.value.trim() !== '';
+            var hasFiles = getFilesCount() > 0;
+
+            submit.disabled = !(hasText || hasFiles);
+        }
+
+        if (textarea) {
+            textarea.addEventListener('input', updateSubmit);
+        }
+
+        if (fileInput) {
+            fileInput.addEventListener('change', function () {
+                updatePreview();
+                updateSubmit();
+            });
+        }
+
+        updatePreview();
+        updateSubmit();
+    }
+
+    ready(function () {
+        initPracticeFormState();
+    });
+}());
+/* === FACTCHECK PACK 2 END === */

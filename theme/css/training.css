@@ -855,68 +855,179 @@
     height: 100%;
 }
 
-/* фиксируем размеры модалки */
-#sertModal .modal-dialog {
-  max-width: 1094px;
-  width: 1094px;
+/* ===== Certificate modal: only modal styles ===== */
+
+#sertModal .modal-dialog.sert-modal__dialog {
+    width: 1060px;
+    max-width: 1060px;
+    margin: 24px auto;
 }
 
 #sertModal .modal-content.sert-modal {
-  width: 1094px;
-  height: 774px;
-  border-radius: 16px;
-  overflow: hidden;
+    width: 1060px;
+    border: 0;
+    border-radius: 0;
+    overflow: visible;
+    background: transparent;
+    box-shadow: none;
 }
 
-/* главное: фиксируем высоту и позиционирование */
-#sertModal .modal-body {
-  padding: 0;
-  height: 774px;
+#sertModal .modal-body.sert-modal__body {
+    padding: 0;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-#sertModal .sert-modal__wrap{
-  position: relative;
-  height: 774px;
+#sertModal .sert-modal__preview {
+    width: 1060px;
+    min-height: 0;
+    padding: 0;
+    border-radius: 0;
+    overflow: visible;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* картинка занимает всю модалку, но без “выталкивания” кнопки */
-#sertModal .sert-modal__img{
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: contain;   /* если хочешь без полей — ставь cover */
-  object-position: center;
+#sertModal .sert-modal__img {
+    display: block;
+    width: 960px;
+    min-width: 960px;
+    max-width: none;
+    height: auto;
+    max-height: none;
+    object-fit: contain;
+    object-position: center;
+    border-radius: 0;
+    margin: 0 auto;
+    background: transparent;
 }
 
-/* кнопка всегда поверх, внизу, и не участвует в потоке */
-#sertModal .sert-modal__actions{
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 18px;
-  display: flex;
-  justify-content: center;
-  pointer-events: none;
-  z-index: 2;
+#sertModal .sert-modal__actions {
+    width: 100%;
+    margin-top: 27px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #sertModal .sert-modal__download {
-    pointer-events: auto;
     display: inline-flex;
-    height: 48px;
-    padding: 0 12px;
-    justify-content: center;
+    min-height: 48px;
+    padding: 0 18px;
     align-items: center;
+    justify-content: center;
     gap: 8px;
-    border-radius: var(--Radius-full, 999px);
-    background: #FFF;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 32px;
+    border-radius: 999px;
+    background: #fff;
     color: #A861C1;
     text-decoration: none;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    box-shadow: 0 6px 18px rgba(68, 38, 168, .08);
 }
+
+#sertModal .sert-modal__download svg,
+#sertModal .sert-modal__download img {
+    width: 23px;
+    height: 23px;
+    display: block;
+}
+
+@media (max-width: 1140px) and (min-width: 768px) {
+    #sertModal .modal-dialog.sert-modal__dialog {
+        width: 760px;
+        max-width: calc(100vw - 24px);
+        margin: 18px auto;
+    }
+
+    #sertModal .modal-content.sert-modal {
+        width: 100%;
+    }
+
+    #sertModal .modal-body.sert-modal__body {
+        position: relative;
+        min-height: 560px;
+    }
+
+    #sertModal .sert-modal__preview {
+        width: 1060px;
+        transform: scale(0.7);
+        transform-origin: top center;
+    }
+
+    #sertModal .sert-modal__actions {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 133px;
+        width: 100%;
+        margin-top: 0;
+        pointer-events: none;
+        z-index: 2;
+    }
+
+    #sertModal .sert-modal__download {
+        pointer-events: auto;
+    }
+}
+
+@media (max-width: 767.98px) {
+    #sertModal .modal-dialog.sert-modal__dialog {
+        width: calc(100% - 20px);
+        max-width: none;
+        margin: 10px auto;
+    }
+
+    #sertModal .modal-content.sert-modal {
+        width: 100%;
+    }
+
+    #sertModal .modal-body.sert-modal__body {
+        display: block;
+        padding: 0;
+    }
+
+    #sertModal .sert-modal__preview {
+        width: 100%;
+    }
+
+    #sertModal .sert-modal__img {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        height: auto;
+    }
+
+    #sertModal .sert-modal__actions {
+        position: static;
+        margin-top: 12px;
+    }
+
+    #sertModal .sert-modal__download {
+        min-height: 38px;
+        padding: 0 16px;
+        font-size: 14px;
+        line-height: 18px;
+    }
+
+    #sertModal .sert-modal__download svg,
+    #sertModal .sert-modal__download img {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* ===== /Certificate modal ===== */
+
+
 .training-type {
     padding: 24px;
     min-height: 100%;
@@ -2075,6 +2186,7 @@ main {
     font-weight: 700;
     line-height: 1.2;
     color: #252424;
+    margin-bottom: 16px;
 }
 .test-subtitle {
     font-size: 24px;
@@ -2082,6 +2194,9 @@ main {
     font-weight: 400;
     line-height: 28px;
     color: #777;
+}
+.test-subtitle p {
+    margin-bottom: 0;
 }
 .btn-test {
     height: 48px;
@@ -3013,24 +3128,7 @@ main {
         height: calc(100vh - 120px);
     }
 }
-/* на узких экранах не вылезаем за пределы */
-@media (max-width: 1140px) {
-  #sertModal .modal-dialog {
-    width: calc(100vw - 24px);
-    max-width: calc(100vw - 24px);
-  }
-  #sertModal .modal-content.sert-modal,
-  #sertModal .modal-body,
-  #sertModal .sert-modal__wrap{
-    width: 100%;
-    height: auto;
-    max-height: calc(100vh - 24px);
-  }
-  #sertModal .sert-modal__img{
-    height: auto;
-    max-height: calc(100vh - 24px);
-  }
-}
+
 @media (max-width: 991px) {
     .title-training {
         font-size: 20px;
@@ -3174,6 +3272,7 @@ main {
     .test-list {
         font-size: 18px;
     }
+    
 }
 @media (max-width: 576px){
     .action-panel{
@@ -5539,11 +5638,11 @@ main {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M12 7V13' stroke='%23D57B21' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='12' cy='17' r='1.5' fill='%23D57B21'/%3E%3Ccircle cx='12' cy='12' r='9' stroke='%23D57B21' stroke-width='2'/%3E%3C/svg%3E");
 }
 .testListModal__row{
-    grid-template-columns: minmax(0, 1fr) 140px 110px;
+    grid-template-columns: minmax(0, 1fr) 140px 120px;
     height: auto;
 }
 .testListModal__head .testListModal__grid{
-    grid-template-columns: minmax(0, 1fr) 140px 110px;
+    grid-template-columns: minmax(0, 1fr) 140px 120px;
 }
 .testListModal__question{
     min-width: 0;
@@ -5669,10 +5768,10 @@ main {
     margin-top:16px !important;
 }
 .testListModal__head .testListModal__grid{
-    grid-template-columns:44px minmax(0,1fr) 140px 110px !important;
+    grid-template-columns:44px minmax(0,1fr) 140px 120px !important;
 }
 .testListModal__row{
-    grid-template-columns:44px minmax(0,1fr) 140px 110px !important;
+    grid-template-columns:44px minmax(0,1fr) 140px 120px !important;
     height:auto !important;
 }
 .testListModal__number{
@@ -5876,7 +5975,7 @@ main {
     .section-block.tests-block,
     .section-block.results-block {
         min-height: calc(100vh - 110px) !important;
-        padding: 12px !important;
+        padding: 0 !important;
     }
 
     .tests-block .page-content,
@@ -10242,4 +10341,1668 @@ html body .training-player[data-training-page="player"].is-pseudo-fullscreen .pl
     background: #111 !important;
     box-shadow: none !important;
     border: 0 !important;
+}
+
+/* === FACTCHECK PACK 1 START === */
+
+@media (max-width: 1199.98px) {
+    html,
+    body {
+        background: #fff;
+    }
+
+    body main,
+    body .site-body,
+    body .section-block,
+    body .course-page,
+    body .course-structure-block,
+    body .course-about,
+    body .history-page,
+    body .manage-history-page,
+    body .certificates-page,
+    body .manage-certificates-page,
+    body .manage-courses-page,
+    body .practice-page,
+    body .training-practice-page,
+    body .training-activity-page,
+    body .training-test-page,
+    body .training-page,
+    body .training-content {
+        background: #fff;
+    }
+
+    body main .container,
+    body .site-body > .container,
+    body .training-content,
+    body .training-page,
+    body .section-block {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    body .title-training,
+    body .page-title,
+    body .training-title,
+    body .training-page-title,
+    body .courses-title,
+    body .certificates-title,
+    body .history-title,
+    body .practice-title,
+    body .manage-title,
+    body .section-title,
+    body main h1 {
+        font-size: 20px;
+        line-height: 24px;
+    }
+}
+
+.course-about__text {
+    margin-bottom: 10px;
+}
+
+.course-about__text p {
+    margin-top: 0;
+    margin-bottom: 12px;
+}
+
+.course-about__text p:last-child {
+    margin-bottom: 0;
+}
+
+.course-about__text > * + * {
+    margin-top: 12px;
+}
+
+@media (max-width: 767.98px) {
+    .course-about__text p {
+        margin-bottom: 10px;
+    }
+
+    .course-about__text > * + * {
+        margin-top: 10px;
+    }
+}
+
+@media (min-width: 1200px) and (max-width: 1399.98px) {
+    .cs-item {
+        align-items: flex-start;
+    }
+
+    .cs-item__txt {
+        min-width: 0;
+    }
+
+    .cs-item__title {
+        white-space: normal;
+    }
+
+    .cs-item__type {
+        display: block;
+        margin-top: 4px;
+        white-space: normal;
+    }
+
+    .cs-item__status {
+        flex: 0 0 auto;
+        margin-left: auto;
+    }
+}
+
+.history-page,
+.manage-history-page {
+    background: #fff;
+}
+
+.history-card.lesson-card {
+    height: 100%;
+    min-height: 136px;
+    display: flex;
+    flex-direction: column;
+}
+
+.history-card .lesson-title {
+    flex: 1 1 auto;
+}
+
+.history-card .lesson-card__bottom {
+    margin-top: auto;
+}
+
+.history-card__title,
+.history-card .lesson-name {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    min-height: 40px;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+@media (min-width: 768px) and (max-width: 1199.98px) {
+    .history-card.lesson-card {
+        min-height: 144px;
+    }
+
+    .history-card__title,
+    .history-card .lesson-name {
+        min-height: 48px;
+        font-size: 20px;
+        line-height: 24px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .history-card.lesson-card {
+        min-height: 118px;
+        padding: 12px;
+    }
+
+    .history-card__title,
+    .history-card .lesson-name {
+        min-height: 36px;
+        font-size: 14px;
+        line-height: 18px;
+    }
+
+    .history-card .lesson-date,
+    .history-card .history-card__date,
+    .history-card .history-card__time {
+        font-size: 12px;
+        line-height: 16px;
+    }
+}
+
+.training-request-modal__submit {
+    font-weight: 400;
+}
+
+/* === FACTCHECK PACK 1 END === */
+
+/* === FACTCHECK PACK 2 START === */
+
+/*
+ * FACTCHECK PACK 2:
+ * - практика: табы, карточка задания, кнопка "Показать больше", форма ответа, скрепка внутри поля;
+ * - сертификаты: карточки, иконка скачать, модалка сертификата, кнопка скачать под сертификатом;
+ * - безопасно добавляется в конец training.css.
+ */
+
+/* ===== Практика ===== */
+
+.practice-page {
+    background: #fff;
+}
+
+.practice-task-card {
+    background: #fff;
+    border: 1px solid #E8E8E8;
+    border-radius: 24px;
+    padding: 32px;
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 32px;
+    align-items: flex-start;
+}
+
+.practice-task-card__media {
+    width: 220px;
+    height: 220px;
+    min-width: 220px;
+    border-radius: 24px;
+    background: #F7F7F7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.practice-task-card__media img,
+.practice-task-card__media svg {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.practice-task-card__body {
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+.practice-task-card__top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.practice-task-card__title {
+    margin: 0;
+    font-size: 28px;
+    line-height: 34px;
+    font-weight: 500;
+}
+
+.practice-task-card__subtitle {
+    margin-top: 16px;
+    margin-bottom: 8px;
+    color: #A4A4A4;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+.practice-task-card__text {
+    font-size: 18px;
+    line-height: 26px;
+    color: #2B2A29;
+    max-height: 144px;
+    overflow: hidden;
+    position: relative;
+}
+
+.practice-task-card.has-more:not(.is-open) .practice-task-card__text:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 44px;
+    background: linear-gradient(180deg, rgba(255,255,255,0) 0%, #fff 80%);
+    pointer-events: none;
+}
+
+.practice-task-card.is-open .practice-task-card__text,
+.practice-task-card__text.is-expanded {
+    max-height: none;
+    overflow: visible;
+}
+
+.practice-task-card.is-open .practice-task-card__text:after,
+.practice-task-card:not(.has-more) .practice-task-card__text:after {
+    display: none;
+}
+
+.practice-task-card__text p:last-child {
+    margin-bottom: 0;
+}
+
+.practice-more-btn {
+    display: inline-flex;
+    margin-top: 10px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #007FC4;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.practice-more-btn.is-hidden {
+    display: none;
+}
+
+.practice-chat-card {
+    background: #fff;
+    border: 1px solid #E8E8E8;
+    border-radius: 24px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.practice-tabs {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0;
+    border-radius: 999px;
+    background: transparent;
+    margin-bottom: 20px;
+}
+
+.practice-tab {
+    min-height: 44px;
+    padding: 0 18px;
+    border: 1px solid #8C31AC;
+    border-radius: 999px;
+    background: #fff;
+    color: #8C31AC;
+    font-size: 20px;
+    line-height: 20px;
+    font-weight: 400;
+    cursor: pointer;
+    box-shadow: none;
+}
+
+.practice-tab.is-active {
+    background: #8C31AC;
+    color: #fff;
+    box-shadow: none;
+}
+
+.practice-panel:not(.is-active) {
+    display: none;
+}
+
+.practice-panel__title {
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 500;
+    margin-bottom: 16px;
+}
+
+.practice-chat-form {
+    margin-top: 20px;
+}
+
+.practice-chat-form__row {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    gap: 12px;
+}
+
+.practice-file-btn {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    width: 28px;
+    height: 28px;
+    transform: translateY(-50%);
+    z-index: 2;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.practice-file-btn input {
+    display: none;
+}
+
+.practice-file-btn img,
+.practice-file-btn svg {
+    width: 22px;
+    height: 22px;
+    display: block;
+}
+
+.practice-chat-input {
+    min-height: 56px;
+    padding: 16px 18px 16px 54px;
+    border: 1px solid #D9D9D9;
+    border-radius: 28px;
+    background: #fff;
+    resize: none;
+    font-size: 16px;
+    line-height: 22px;
+    flex: 1 1 auto;
+}
+
+.practice-chat-input:focus {
+    outline: none;
+    border-color: #C6469D;
+}
+
+.practice-send-btn {
+    min-width: 150px;
+    height: 56px;
+    padding: 0 22px;
+    border: 0;
+    border-radius: 999px;
+    background: #06B664;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 400;
+}
+
+.practice-send-btn:disabled {
+    opacity: .45;
+    cursor: default;
+}
+
+.practice-send-btn img,
+.practice-send-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+.practice-files-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.practice-files-preview__item {
+    display: inline-flex;
+    align-items: center;
+    min-height: 30px;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: #F7F7F7;
+    color: #4A4A4A;
+    font-size: 13px;
+    line-height: 16px;
+}
+
+.practice-message-file {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    max-width: 100%;
+}
+
+.practice-message-file__ico {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 auto;
+}
+
+.practice-message-file__name {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ===== Сертификаты ===== */
+
+.certificates-page,
+.manage-certificates-page {
+    background: #fff;
+}
+
+.certificates-page__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.certificates-page__filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.cert-filter__chip {
+    min-height: 40px;
+    padding: 0 18px;
+    border: 1px solid #E8E8E8;
+    border-radius: 999px;
+    background: #fff;
+    color: #4A4A4A;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 400;
+}
+
+.cert-filter__chip.is-active {
+    color: #fff;
+    border-color: transparent;
+    background: linear-gradient(100deg, #4426A8 4.36%, #C6469D 91.49%);
+}
+
+.sert-items {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.sert-item {
+    min-height: 184px;
+    border: 1px solid #E8E8E8;
+    border-radius: 24px;
+    background: #fff;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 18px;
+}
+
+.sert-item__head {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    min-width: 0;
+}
+
+.sert-item__logo {
+    width: 56px;
+    height: 56px;
+    min-width: 56px;
+    border-radius: 16px;
+    background: #F7F7F7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sert-item__logo img,
+.sert-item__logo svg {
+    width: 34px;
+    height: 34px;
+    display: block;
+}
+
+.sert-item__body {
+    min-width: 0;
+}
+
+.sert-item__title {
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 500;
+    color: #2B2A29;
+}
+
+.sert-status {
+    margin-top: 8px;
+    font-size: 16px;
+    line-height: 20px;
+    color: #06B664;
+}
+
+.sert-btn {
+    align-self: flex-start;
+    min-height: 44px;
+    padding: 0 18px;
+    border: 0;
+    border-radius: 999px;
+    background: #06B664;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 400;
+}
+
+@media (max-width: 991.98px) {
+    body .section-block.practice-page {
+        padding: 0;
+    }
+    .practice-task-card {
+        padding: 16px;
+        border-radius: 20px;
+        gap: 14px;
+    }
+    .practice-chat-card {
+        margin-top: 0;
+    }
+    .practice-task-card__media {
+        width: 76px;
+        height: 76px;
+        min-width: 76px;
+        border-radius: 16px;
+    }
+
+    .practice-task-card__media img {
+        width: 44px;
+        height: 44px;
+    }
+
+    .practice-task-card__title {
+        font-size: 22px;
+        line-height: 28px;
+    }
+
+    .practice-chat-card {
+        padding: 16px;
+        border-radius: 20px;
+    }
+
+    .sert-items {
+        grid-template-columns: 1fr;
+    }
+    .practice-task-card {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .practice-task-card {
+        padding: 14px;
+        gap: 12px;
+    }
+
+    .practice-task-card__media {
+        width: 64px;
+        height: 64px;
+        min-width: 64px;
+        border-radius: 14px;
+    }
+
+    .practice-task-card__media img {
+        width: 36px;
+        height: 36px;
+    }
+
+    .practice-task-card__top {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .practice-task-card__title {
+        font-size: 20px;
+        line-height: 24px;
+    }
+
+    .practice-task-card__text {
+        font-size: 15px;
+        line-height: 22px;
+        max-height: 88px;
+    }
+
+    .practice-tabs {
+        width: auto;
+        display: inline-flex;
+        gap: 6px;
+    }
+
+    .practice-tab {
+        flex: 0 0 auto;
+        min-height: 32px;
+        font-size: 16px;
+        padding: 0 12px;
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    .practice-chat-form__row {
+        gap: 8px;
+    }
+
+    .practice-file-btn {
+        
+    }
+
+    .practice-chat-input {
+        
+    }
+
+    .practice-send-btn {
+        width: 56px;
+        min-width: 50px;
+        padding: 0;
+    }
+
+    .certificates-page__top {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+    .practice-send-btn span {
+        display: none;
+    }
+    .sert-item {
+        min-height: 156px;
+        padding: 14px;
+        border-radius: 20px;
+    }
+
+    .sert-item__logo {
+        width: 48px;
+        height: 48px;
+        min-width: 48px;
+    }
+
+    .sert-item__logo img,
+    .sert-item__logo svg {
+        width: 28px;
+        height: 28px;
+    }
+
+    .sert-item__title {
+        font-size: 16px;
+        line-height: 20px;
+    }
+
+    .sert-status {
+        font-size: 14px;
+        line-height: 18px;
+    }
+
+    .sert-btn {
+        width: 100%;
+    }
+    .practice-task-card__top .practice-image {
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+    }
+}
+
+/* === FACTCHECK PACK 2 END === */
+
+/* === FACTCHECK PACK 3 START === */
+
+/*
+ * FACTCHECK PACK 3
+ * - запросить курс: красивый чекбокс согласия;
+ * - управление сертификатами: ПК / планшет / мобилка;
+ * - модалка сертификата: ПК / планшет / мобилка;
+ * - практика: фикс иконки файла;
+ * - левое меню обучения: стрелка и её поворот.
+ */
+
+/* ===== Запросить курс: чекбокс ===== */
+
+.training-request-modal .form-checkbox,
+.training-request-modal .form-check,
+.training-request-modal .agreement-checkbox,
+.training-request-modal__agreement,
+.training-request-modal__agree,
+.request-course-agreement,
+.request-course-policy {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 24px;
+    margin: 12px 0 0;
+    padding: 0;
+    font-size: 14px;
+    line-height: 18px;
+    color: #7E7692;
+}
+
+.training-request-modal .form-checkbox input[type="checkbox"],
+.training-request-modal .form-check input[type="checkbox"],
+.training-request-modal .agreement-checkbox input[type="checkbox"],
+.training-request-modal__agreement input[type="checkbox"],
+.training-request-modal__agree input[type="checkbox"],
+.request-course-agreement input[type="checkbox"],
+.request-course-policy input[type="checkbox"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    margin: 0;
+    border: 1.5px solid #C8B7DB;
+    border-radius: 5px;
+    background: #fff;
+    position: relative;
+    cursor: pointer;
+    transition: all .2s ease;
+    box-shadow: none;
+    outline: none;
+}
+
+.training-request-modal .form-checkbox input[type="checkbox"]::after,
+.training-request-modal .form-check input[type="checkbox"]::after,
+.training-request-modal .agreement-checkbox input[type="checkbox"]::after,
+.training-request-modal__agreement input[type="checkbox"]::after,
+.training-request-modal__agree input[type="checkbox"]::after,
+.request-course-agreement input[type="checkbox"]::after,
+.request-course-policy input[type="checkbox"]::after {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 1px;
+    width: 5px;
+    height: 10px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg) scale(0);
+    transition: transform .15s ease;
+}
+
+.training-request-modal .form-checkbox input[type="checkbox"]:checked,
+.training-request-modal .form-check input[type="checkbox"]:checked,
+.training-request-modal .agreement-checkbox input[type="checkbox"]:checked,
+.training-request-modal__agreement input[type="checkbox"]:checked,
+.training-request-modal__agree input[type="checkbox"]:checked,
+.request-course-agreement input[type="checkbox"]:checked,
+.request-course-policy input[type="checkbox"]:checked {
+    border-color: #8D33C7;
+    background: linear-gradient(135deg, #7B2CBF 0%, #C6469D 100%);
+}
+
+.training-request-modal .form-checkbox input[type="checkbox"]:checked::after,
+.training-request-modal .form-check input[type="checkbox"]:checked::after,
+.training-request-modal .agreement-checkbox input[type="checkbox"]:checked::after,
+.training-request-modal__agreement input[type="checkbox"]:checked::after,
+.training-request-modal__agree input[type="checkbox"]:checked::after,
+.request-course-agreement input[type="checkbox"]:checked::after,
+.request-course-policy input[type="checkbox"]:checked::after {
+    transform: rotate(45deg) scale(1);
+}
+
+.training-request-modal .form-checkbox label,
+.training-request-modal .form-check label,
+.training-request-modal .agreement-checkbox label,
+.training-request-modal__agreement label,
+.training-request-modal__agree label,
+.request-course-agreement label,
+.request-course-policy label {
+    margin: 0;
+    cursor: pointer;
+    color: #8A85A0;
+    font-size: 14px;
+    line-height: 18px;
+}
+
+@media (max-width: 767.98px) {
+    .training-request-modal .form-checkbox,
+    .training-request-modal .form-check,
+    .training-request-modal .agreement-checkbox,
+    .training-request-modal__agreement,
+    .training-request-modal__agree,
+    .request-course-agreement,
+    .request-course-policy {
+        align-items: flex-start;
+        gap: 8px;
+        font-size: 13px;
+        line-height: 17px;
+    }
+
+    .training-request-modal .form-checkbox label,
+    .training-request-modal .form-check label,
+    .training-request-modal .agreement-checkbox label,
+    .training-request-modal__agreement label,
+    .training-request-modal__agree label,
+    .request-course-agreement label,
+    .request-course-policy label {
+        font-size: 13px;
+        line-height: 17px;
+    }
+}
+
+/* ===== Практика: иконка файла ===== */
+
+.practice-message-file {
+    align-items: center;
+    max-width: 100%;
+}
+
+.practice-message-file__ico,
+.practice-message-file__ico.img-svg,
+.practice-message-file__ico .img-svg {
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px;
+    flex: 0 0 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.practice-message-file__ico img,
+.practice-message-file__ico svg,
+.practice-message-file__ico .img-svg svg {
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px;
+    display: block;
+    max-width: none;
+    max-height: none;
+    flex: 0 0 20px;
+}
+
+.practice-message__files {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.practice-message-file__name {
+    display: inline-block;
+    min-width: 0;
+    max-width: 100%;
+    word-break: break-word;
+}
+
+/* ===== Управление сертификатами ===== */
+
+.manage-certificates-page,
+.certificates-page {
+    background: #fff;
+}
+
+.manage-certificates-page .training-page__inner,
+.certificates-page .training-page__inner,
+.manage-certificates-page .section-block,
+.certificates-page .section-block {
+    background: #fff;
+}
+
+.manage-certificates-page .sert-page-head,
+.manage-certificates-page .certificates-page__top,
+.certificates-page .certificates-page__top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.manage-certificates-page .certificates-page__filters,
+.manage-certificates-page .sert-filters,
+.certificates-page .certificates-page__filters,
+.certificates-page .sert-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.manage-certificates-page .cert-filter__chip,
+.manage-certificates-page .tag-chip,
+.manage-certificates-page .sert-filter,
+.certificates-page .cert-filter__chip,
+.certificates-page .tag-chip,
+.certificates-page .sert-filter {
+    min-height: 40px;
+    padding: 0 18px;
+    border: 1px solid #C98DE6;
+    border-radius: 999px;
+    background: #fff;
+    color: #8D33C7;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 400;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all .2s ease;
+}
+
+.manage-certificates-page .cert-filter__chip.is-active,
+.manage-certificates-page .tag-chip.is-active,
+.manage-certificates-page .sert-filter.is-active,
+.manage-certificates-page .cert-filter__chip.active,
+.manage-certificates-page .tag-chip.active,
+.manage-certificates-page .sert-filter.active,
+.certificates-page .cert-filter__chip.is-active,
+.certificates-page .tag-chip.is-active,
+.certificates-page .sert-filter.is-active,
+.certificates-page .cert-filter__chip.active,
+.certificates-page .tag-chip.active,
+.certificates-page .sert-filter.active {
+    color: #fff;
+    border-color: transparent;
+    background: linear-gradient(100deg, #4426A8 4.36%, #C6469D 91.49%);
+}
+
+.manage-certificates-page .training-select,
+.manage-certificates-page .custom-select,
+.manage-certificates-page select,
+.certificates-page .training-select,
+.certificates-page .custom-select,
+.certificates-page select {
+    min-height: 54px;
+    border-radius: 27px;
+}
+
+.manage-certificates-page .sert-items,
+.certificates-page .sert-items {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+
+.manage-certificates-page .sert-item,
+.certificates-page .sert-item {
+    min-height: 174px;
+    padding: 18px 22px;
+    border: 1px solid #ECE7F3;
+    border-radius: 24px;
+    background: #fff;
+    box-shadow: 0 8px 22px rgba(32, 18, 71, .04);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 18px;
+}
+
+.manage-certificates-page .sert-item__head,
+.certificates-page .sert-item__head {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    min-width: 0;
+}
+
+.manage-certificates-page .sert-item__logo,
+.certificates-page .sert-item__logo {
+    width: 54px;
+    height: 54px;
+    min-width: 54px;
+    border-radius: 16px;
+    background: #FAF7FD;
+    border: 1px solid #EEE7F6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.manage-certificates-page .sert-item__logo img,
+.manage-certificates-page .sert-item__logo svg,
+.certificates-page .sert-item__logo img,
+.certificates-page .sert-item__logo svg {
+    width: 24px;
+    height: 24px;
+    display: block;
+}
+
+.manage-certificates-page .sert-item__body,
+.certificates-page .sert-item__body {
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+.manage-certificates-page .sert-item__title,
+.certificates-page .sert-item__title {
+    font-size: 22px;
+    line-height: 28px;
+    font-weight: 500;
+    color: #2B2A29;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.manage-certificates-page .sert-item__date,
+.manage-certificates-page .sert-item__period,
+.certificates-page .sert-item__date,
+.certificates-page .sert-item__period {
+    margin-top: 6px;
+    color: #A49CB5;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+.manage-certificates-page .sert-status,
+.certificates-page .sert-status {
+    margin-top: 8px;
+    color: #06B664;
+    font-size: 14px;
+    line-height: 18px;
+}
+
+.manage-certificates-page .sert-btn,
+.manage-certificates-page .sert-item__download,
+.certificates-page .sert-btn,
+.certificates-page .sert-item__download {
+    align-self: flex-start;
+    min-height: 42px;
+    padding: 0 16px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: #8D33C7;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 400;
+}
+
+.manage-certificates-page .sert-btn img,
+.manage-certificates-page .sert-btn svg,
+.manage-certificates-page .sert-item__download img,
+.manage-certificates-page .sert-item__download svg,
+.certificates-page .sert-btn img,
+.certificates-page .sert-btn svg,
+.certificates-page .sert-item__download img,
+.certificates-page .sert-item__download svg {
+    width: 18px;
+    height: 18px;
+    display: block;
+}
+
+@media (min-width: 992px) {
+    .manage-certificates-page .sert-items,
+    .certificates-page .sert-items {
+        max-width: 780px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .manage-certificates-page .sert-page-head,
+    .manage-certificates-page .certificates-page__top,
+    .certificates-page .certificates-page__top {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+    }
+
+    .manage-certificates-page .training-select,
+    .manage-certificates-page .custom-select,
+    .manage-certificates-page select,
+    .certificates-page .training-select,
+    .certificates-page .custom-select,
+    .certificates-page select {
+        width: 100%;
+    }
+
+    .manage-certificates-page .sert-item,
+    .certificates-page .sert-item {
+        min-height: 156px;
+        padding: 16px 18px;
+        border-radius: 22px;
+    }
+
+    .manage-certificates-page .sert-item__title,
+    .certificates-page .sert-item__title {
+        font-size: 20px;
+        line-height: 24px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .manage-certificates-page .certificates-page__filters,
+    .manage-certificates-page .sert-filters,
+    .certificates-page .certificates-page__filters,
+    .certificates-page .sert-filters {
+        gap: 8px;
+        margin-bottom: 14px;
+    }
+
+    .manage-certificates-page .cert-filter__chip,
+    .manage-certificates-page .tag-chip,
+    .manage-certificates-page .sert-filter,
+    .certificates-page .cert-filter__chip,
+    .certificates-page .tag-chip,
+    .certificates-page .sert-filter {
+        min-height: 34px;
+        padding: 0 14px;
+        font-size: 14px;
+        line-height: 18px;
+    }
+
+    .manage-certificates-page .sert-item,
+    .certificates-page .sert-item {
+        min-height: 124px;
+        padding: 14px;
+        border-radius: 18px;
+        gap: 12px;
+    }
+
+    .manage-certificates-page .sert-item__head,
+    .certificates-page .sert-item__head {
+        gap: 12px;
+    }
+
+    .manage-certificates-page .sert-item__logo,
+    .certificates-page .sert-item__logo {
+        width: 42px;
+        height: 42px;
+        min-width: 42px;
+        border-radius: 12px;
+    }
+
+    .manage-certificates-page .sert-item__logo img,
+    .manage-certificates-page .sert-item__logo svg,
+    .certificates-page .sert-item__logo img,
+    .certificates-page .sert-item__logo svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .manage-certificates-page .sert-item__title,
+    .certificates-page .sert-item__title {
+        font-size: 16px;
+        line-height: 20px;
+    }
+
+    .manage-certificates-page .sert-item__date,
+    .manage-certificates-page .sert-item__period,
+    .certificates-page .sert-item__date,
+    .certificates-page .sert-item__period {
+        margin-top: 4px;
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    .manage-certificates-page .sert-btn,
+    .manage-certificates-page .sert-item__download,
+    .certificates-page .sert-btn,
+    .certificates-page .sert-item__download {
+        min-height: 36px;
+        padding: 0;
+        font-size: 14px;
+        line-height: 18px;
+    }
+}
+
+/* ===== Левое меню: стрелка обучения ===== */
+
+.menu_arrow,
+.left-menu-arrow,
+.study-menu__arrow,
+.training-menu__arrow,
+.sidebar-menu__arrow,
+.nav-arrow {
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    display: inline-block;
+    vertical-align: middle;
+    transform: rotate(0deg);
+    transform-origin: center;
+    transition: transform .2s ease;
+}
+
+li.active > .menu_arrow,
+li.open > .menu_arrow,
+li.show > .menu_arrow,
+.menu-item.active .menu_arrow,
+.menu-item.open .menu_arrow,
+.menu-item.show .menu_arrow,
+.has-submenu.active .menu_arrow,
+.has-submenu.open .menu_arrow,
+.has-submenu.show .menu_arrow,
+.is-active > .menu_arrow,
+.is-open > .menu_arrow,
+.is-expanded > .menu_arrow,
+li.active > .left-menu-arrow,
+li.open > .left-menu-arrow,
+li.show > .left-menu-arrow,
+li.active > .study-menu__arrow,
+li.open > .study-menu__arrow,
+li.show > .study-menu__arrow,
+li.active > .training-menu__arrow,
+li.open > .training-menu__arrow,
+li.show > .training-menu__arrow {
+    transform: rotate(180deg);
+}
+
+.menu_arrow img,
+.menu_arrow svg,
+.left-menu-arrow img,
+.left-menu-arrow svg,
+.study-menu__arrow img,
+.study-menu__arrow svg,
+.training-menu__arrow img,
+.training-menu__arrow svg,
+.sidebar-menu__arrow img,
+.sidebar-menu__arrow svg,
+.nav-arrow img,
+.nav-arrow svg {
+    width: 18px;
+    height: 18px;
+    display: block;
+}
+
+.training-menu-toggle,
+.study-menu-toggle,
+.menu-toggle-arrow {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* === FACTCHECK PACK 3 END === */
+
+/* === FACTCHECK PACK 4 START === */
+
+/*
+ * FACTCHECK PACK 4
+ * Точечная доводка после проверки PACK 3:
+ * - выравнивание галочки чекбокса в "Запросить курс";
+ * - управление сертификатами: карточка на всю ширину, иконка в sert-item__logo;
+ * - модалка сертификата: убрать белые подложки/фоны/лишние padding, оставить чистый сертификат и кнопку снизу.
+ */
+
+/* Чекбокс: ровнее галочка */
+.training-request-modal .form-checkbox input[type="checkbox"]::after,
+.training-request-modal .form-check input[type="checkbox"]::after,
+.training-request-modal .agreement-checkbox input[type="checkbox"]::after,
+.training-request-modal__agreement input[type="checkbox"]::after,
+.training-request-modal__agree input[type="checkbox"]::after,
+.request-course-agreement input[type="checkbox"]::after,
+.request-course-policy input[type="checkbox"]::after {
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 9px;
+}
+
+/* Управление сертификатами: карточка не должна быть узкой */
+.manage-certificates-page .sert-items,
+.certificates-page .sert-items {
+    width: 100%;
+    max-width: none;
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 992px) {
+    .manage-certificates-page .sert-items,
+    .certificates-page .sert-items {
+        width: 100%;
+        max-width: none;
+        grid-template-columns: 1fr;
+    }
+}
+
+.manage-certificates-page .sert-item,
+.certificates-page .sert-item {
+    width: 100%;
+}
+
+/* Лого сертификата: иконка занимает весь блок аккуратно */
+.manage-certificates-page .sert-item__logo,
+.certificates-page .sert-item__logo {
+    width: 54px;
+    height: 54px;
+    min-width: 54px;
+    padding: 0;
+    overflow: hidden;
+}
+
+.manage-certificates-page .sert-item__logo img,
+.manage-certificates-page .sert-item__logo svg,
+.certificates-page .sert-item__logo img,
+.certificates-page .sert-item__logo svg {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 14px;
+    box-sizing: border-box;
+}
+
+@media (max-width: 767.98px) {
+    .manage-certificates-page .sert-item__logo,
+    .certificates-page .sert-item__logo {
+        width: 42px;
+        height: 42px;
+        min-width: 42px;
+    }
+
+    .manage-certificates-page .sert-item__logo img,
+    .manage-certificates-page .sert-item__logo svg,
+    .certificates-page .sert-item__logo img,
+    .certificates-page .sert-item__logo svg {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .custom-radio-test, .custom-checkbox-test {
+        min-height: auto;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .training-type {
+        padding: 0;
+    }
+}
+
+/* Управление сертификатами: карточка строкой на всю ширину */
+.manage-certificates-page .sert-items,
+.certificates-page .sert-items {
+    width: 100%;
+    max-width: none;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+
+@media (min-width: 992px) {
+    .manage-certificates-page .sert-items,
+    .certificates-page .sert-items {
+        width: 100%;
+        max-width: none;
+        grid-template-columns: 1fr;
+    }
+}
+
+.manage-certificates-page .sert-item,
+.certificates-page .sert-item,
+.sert-item {
+    width: 100%;
+    min-height: auto;
+    padding: 18px 22px;
+    border: 1px solid #ECE7F3;
+    border-radius: 24px;
+    background: #fff;
+    box-shadow: 0 8px 22px rgba(32, 18, 71, .04);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+}
+
+/* Левая часть карточки: иконка + текст */
+.manage-certificates-page .sert-item__head,
+.certificates-page .sert-item__head,
+.sert-item__head {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+/* Лого сертификата: блок как в макете */
+.manage-certificates-page .sert-item__logo,
+.certificates-page .sert-item__logo,
+.sert-item__logo {
+    width: 54px;
+    height: 54px;
+    min-width: 54px;
+    padding: 0;
+    overflow: hidden;
+    border-radius: 16px;
+    background: #FAF7FD;
+    border: 1px solid #EEE7F6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Иконка занимает весь блок, без padding */
+.manage-certificates-page .sert-item__logo img,
+.manage-certificates-page .sert-item__logo svg,
+.certificates-page .sert-item__logo img,
+.certificates-page .sert-item__logo svg,
+.sert-item__logo img,
+.sert-item__logo svg {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 0;
+    box-sizing: border-box;
+    display: block;
+}
+
+/* Если img-svg заменил картинку на inline svg */
+.manage-certificates-page .sert-item__logo .img-svg,
+.manage-certificates-page .sert-item__logo .img-svg svg,
+.certificates-page .sert-item__logo .img-svg,
+.certificates-page .sert-item__logo .img-svg svg,
+.sert-item__logo .img-svg,
+.sert-item__logo .img-svg svg {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    display: block;
+}
+
+/* Текст в карточке */
+.manage-certificates-page .sert-item__body,
+.certificates-page .sert-item__body,
+.sert-item__body {
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+.manage-certificates-page .sert-item__title,
+.certificates-page .sert-item__title,
+.sert-item__title {
+    font-size: 22px;
+    line-height: 28px;
+    font-weight: 500;
+    color: #2B2A29;
+    margin: 0;
+}
+
+.manage-certificates-page .sert-item__date,
+.manage-certificates-page .sert-item__period,
+.certificates-page .sert-item__date,
+.certificates-page .sert-item__period,
+.sert-item__date,
+.sert-item__period {
+    margin-top: 6px;
+    color: #00A651;
+    font-size: 14px;
+    line-height: 18px;
+}
+
+/* Кнопка скачать справа, не на всю ширину */
+.manage-certificates-page .sert-btn,
+.manage-certificates-page .sert-item__download,
+.certificates-page .sert-btn,
+.certificates-page .sert-item__download,
+.sert-btn,
+.sert-item__download {
+    width: auto;
+    min-width: auto;
+    min-height: 42px;
+    padding: 0 16px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: #8D33C7;
+    text-decoration: none;
+    align-self: center;
+    margin-left: auto;
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 400;
+}
+
+/* Адаптив: на мобилке тоже строкой, без растягивания кнопки на 100% */
+@media (max-width: 767.98px) {
+    .manage-certificates-page .sert-item,
+    .certificates-page .sert-item,
+    .sert-item {
+        min-height: auto;
+        padding: 14px;
+        border-radius: 18px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .manage-certificates-page .sert-item__head,
+    .certificates-page .sert-item__head,
+    .sert-item__head {
+        gap: 12px;
+    }
+
+    .manage-certificates-page .sert-item__logo,
+    .certificates-page .sert-item__logo,
+    .sert-item__logo {
+        width: 42px;
+        height: 42px;
+        min-width: 42px;
+        border-radius: 12px;
+    }
+
+    .manage-certificates-page .sert-item__logo img,
+    .manage-certificates-page .sert-item__logo svg,
+    .certificates-page .sert-item__logo img,
+    .certificates-page .sert-item__logo svg,
+    .sert-item__logo img,
+    .sert-item__logo svg {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+    }
+
+    .manage-certificates-page .sert-item__title,
+    .certificates-page .sert-item__title,
+    .sert-item__title {
+        font-size: 16px;
+        line-height: 20px;
+    }
+
+    .manage-certificates-page .sert-item__date,
+    .manage-certificates-page .sert-item__period,
+    .certificates-page .sert-item__date,
+    .certificates-page .sert-item__period,
+    .sert-item__date,
+    .sert-item__period {
+        margin-top: 4px;
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    .manage-certificates-page .sert-btn,
+    .manage-certificates-page .sert-item__download,
+    .certificates-page .sert-btn,
+    .certificates-page .sert-item__download,
+    .sert-btn,
+    .sert-item__download {
+        width: auto;
+        min-height: 36px;
+        padding: 0 6px;
+        margin-left: auto;
+        font-size: 14px;
+        line-height: 18px;
+    }
+    .section-block.tests-block {
+        padding: 0 16px 16px !important;
+    }
+    .tests-block .test-card {
+        overflow: visible!important;
+    }
+    #testuser-main .test-footer .text-info-test span:nth-child(2) {
+        color: #252424;
+    }
+}
+
+/* === FACTCHECK PACK 6 END === */
+@media (max-width: 1600px) {
+    .course-structure-block .cs-item__txt {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+        min-width: 0;
+    }
+
+    .course-structure-block .cs-item__title {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .course-structure-block .cs-item__type {
+        width: 100%;
+        margin-left: 0;
+        text-align: left;
+    }
 }

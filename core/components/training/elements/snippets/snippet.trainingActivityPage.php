@@ -322,7 +322,12 @@ if ($linkType === 'test') {
 
     if ($screen === 'instruction') {
         return trainingActivityRenderFile2($corePath, 'training/activity/instruction.tpl', array(
-            'instruction_html' => $testInstruction !== '' ? $testInstruction : '<p>Перед ответом внимательно прочитайте текст вопроса. Затем выберите правильный вариант ответа. В некоторых вопросах может быть несколько правильных ответов. Нажмите кнопку «Начать тест», чтобы перейти к вопросам.</p>',
+            'instruction_html' => $testInstruction !== '' ? $testInstruction : '<ul>
+                <li>Перед ответом внимательно прочитайте текст вопроса</li>
+                <li>Затем выберите правильный вариант ответа. В некоторых вопросах может быть несколько правильных ответов</li>
+                <li>Нажмите кнопку <b>“Ответить”</b> для подтверждения ответа</li>
+                <li>Для просмотра и выбора вопросов используйте <b>Список вопросов</b> слева вверху</li>
+            </ul>',
             'min_pass_percent' => $minPassPercentText,
             'attempts_text' => $attemptsText,
             'start_url' => trainingActivityEsc2($testUrl),

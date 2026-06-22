@@ -4,12 +4,21 @@
      data-training-context="{$context_key}"
      data-practice-id="{$practice_id}">
     <div class="practice-task-card">
-        <div class="practice-task-card__media">
+        <div class="practice-task-card__media d-none d-lg-flex">
             <img src="{$practice_image}" alt="{$practice_title}" class="img-svg">
         </div>
 
         <div class="practice-task-card__body">
-            <div class="practice-task-card__top">
+            <div class="practice-task-card__top d-flex d-lg-none">
+                <div class="d-flex flex-column w-100">
+                    <div class="d-flex align-items-start justify-content-between mb-2">
+                        <img src="{$practice_image}" alt="{$practice_title}" class="practice-image">
+                        <div class="practice-status {$status_class}" data-practice-status>{$status_text}</div>
+                    </div>
+                    <h1 class="practice-task-card__title">{$practice_title}</h1>
+                </div>
+            </div>
+            <div class="practice-task-card__top d-none d-lg-flex">
                 <h1 class="practice-task-card__title">{$practice_title}</h1>
                 <div class="practice-status {$status_class}" data-practice-status>{$status_text}</div>
             </div>
