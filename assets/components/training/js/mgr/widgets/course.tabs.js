@@ -27,6 +27,10 @@ Training.panel.CourseTabs = function(config) {
             title: 'Сертификат',
             xtype: 'training-course-certificate-panel',
             courseId: this.courseId
+        }, {
+            title: 'Прогресс',
+            xtype: 'training-course-progress-panel',
+            courseId: this.courseId
         }]
     });
 
