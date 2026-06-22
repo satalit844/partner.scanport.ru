@@ -76,6 +76,7 @@ class TrainingHomeManagerController extends modExtraManagerController
         $this->addJavascript($assetsJsUrl . 'widgets/course.panel.js');
         $this->addJavascript($assetsJsUrl . 'widgets/course.tabs.js');
         $this->addJavascript($assetsJsUrl . 'widgets/course.certificate.grid.js');
+        $this->addJavascript($assetsJsUrl . 'widgets/course.progress.panel.js');
         $this->addJavascript($assetsJsUrl . 'widgets/module.grid.js');
         $this->addJavascript($assetsJsUrl . 'widgets/course.access.grid.js');
         $this->addJavascript($assetsJsUrl . 'widgets/manager.link.grid.js');
