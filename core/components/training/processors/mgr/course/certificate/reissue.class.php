@@ -28,11 +28,33 @@ class TrainingCourseCertificateReissueProcessor extends modProcessor
             }
         }
 
+        $mode = trim((string)$this->getProperty('mode', 'reissue'));
+        $service = new TrainingCertificateReissueService($this->modx, new Training($this->modx));
+
+        if ($mode === 'generate') {
+            if (!empty($userIds)) {
+                $certificates = $service->generateForUsers($courseId, $userIds, false);
+                return $this->success('', array(
+                    'generated_count' => count($certificates),
+                    'total_selected' => count($userIds),
+                    'mode' => 'selected_generate',
+                ));
+            }
+
+            $users = $service->getCompletedUsersForCourse($courseId);
+            $certificates = $service->generateAllForCourse($courseId, false);
+
+            return $this->success('', array(
+                'generated_count' => count($certificates),
+                'total_completed' => count($users),
+                'mode' => 'all_generate',
+            ));
+        }
+
         if (empty($userIds)) {
             return $this->failure('Выберите пользователей');
         }
 
-        $service = new TrainingCertificateReissueService($this->modx, new Training($this->modx));
         $certificates = $service->reissueForUsers($courseId, $userIds);
 
         return $this->success('', array(
