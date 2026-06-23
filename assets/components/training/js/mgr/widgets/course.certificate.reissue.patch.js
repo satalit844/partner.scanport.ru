@@ -27,8 +27,9 @@
                 MODx.Ajax.request({
                     url: Training.config.connector_url,
                     params: {
-                        action: 'mgr/course/certificate/generateversioned',
-                        course_id: this.courseId
+                        action: 'mgr/course/certificate/generate',
+                        course_id: this.courseId,
+                        force: 0
                     },
                     listeners: {
                         success: {fn: function(response) {
@@ -87,8 +88,9 @@
                 Ext.Ajax.request({
                     url: Training.config.connector_url,
                     params: {
-                        action: 'mgr/course/certificate/generateversioned',
+                        action: 'mgr/course/certificate/generate',
                         course_id: this.courseId,
+                        force: 0,
                         user_ids: ids.join(',')
                     },
                     success: function(response) {
