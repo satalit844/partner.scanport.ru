@@ -3,6 +3,8 @@ Training.panel.CourseProgress = function(config) {
 
     this.courseId = parseInt(config.courseId || Training.config.course_id || 0, 10) || 0;
     this.applyButtonId = Ext.id();
+    this.previewButtonId = Ext.id();
+    this.moduleFieldId = Ext.id();
     this.lessonFieldId = Ext.id();
     this.planPanelId = Ext.id();
     this.summaryPanelId = Ext.id();
@@ -16,7 +18,7 @@ Training.panel.CourseProgress = function(config) {
     this.selectedUserId = 0;
     this.selectedModuleId = 0;
     this.selectedLessonId = 0;
-    this.selectedMode = 'lesson';
+    this.selectedMode = 'view';
 
     this.userStore = new Ext.data.JsonStore({
         url: Training.config.connector_url,
@@ -52,7 +54,13 @@ Training.panel.CourseProgress = function(config) {
             'display_name',
             'menuindex',
             'is_active',
-            'is_required'
+            'is_required',
+            'status',
+            'progress_percent',
+            'completed',
+            'lessons_total',
+            'lessons_completed',
+            'is_current'
         ],
         baseParams: {
             action: 'mgr/course/progress/modules/getlist',
@@ -70,7 +78,11 @@ Training.panel.CourseProgress = function(config) {
             'display_name',
             'sort_order',
             'is_active',
-            'duration_seconds'
+            'duration_seconds',
+            'status',
+            'progress_percent',
+            'completed',
+            'is_current'
         ],
         baseParams: {
             action: 'mgr/course/progress/lessons/getlist',
@@ -94,7 +106,9 @@ Training.panel.CourseProgress = function(config) {
             bodyStyle: 'padding:16px;background:#fff;border:1px solid #e5e5e5;border-radius:6px;',
             items: [{
                 html: '<div style="padding:0 0 16px;color:#666;line-height:1.6;">'
-                    + 'Назначение учебной точки для пользователя курса. Сначала показывается план: какие модули, уроки, обязательные тесты и практики будут закрыты. '
+                    + 'Режим «Просмотр прогресса» ничего не изменяет и показывает, где пользователь остановился. '
+                    + 'В режимах назначения доступны только незавершённые модули и уроки. '
+                    + 'Сначала показывается план: какие модули, уроки, обязательные тесты и практики будут закрыты. '
                     + 'После подтверждения изменения применяются одной транзакцией. '
                     + 'Перенос назад здесь намеренно отключён: для сброса прогресса нужен отдельный сценарий.</div>',
                 border: false
@@ -125,8 +139,11 @@ Training.panel.CourseProgress = function(config) {
                         select: {
                             fn: function(combo, record) {
                                 this.selectedUserId = parseInt(record.get('user_id') || record.id || 0, 10) || 0;
+                                this.selectedModuleId = 0;
+                                this.selectedLessonId = 0;
                                 this.resetPlan();
-                                this.loadUserSummary(this.selectedUserId);
+                                this.loadUserSummary(this.selectedUserId, this.isViewMode());
+                                this.updateModeControls(true);
                             },
                             scope: this
                         }
@@ -143,10 +160,11 @@ Training.panel.CourseProgress = function(config) {
                     allowBlank: false,
                     valueField: 'value',
                     displayField: 'label',
-                    value: 'lesson',
+                    value: 'view',
                     store: new Ext.data.ArrayStore({
                         fields: ['value', 'label'],
                         data: [
+                            ['view', 'Просмотр прогресса'],
                             ['lesson', 'Остановить на уроке'],
                             ['module', 'Завершить модуль']
                         ]
@@ -154,15 +172,23 @@ Training.panel.CourseProgress = function(config) {
                     listeners: {
                         select: {
                             fn: function(combo) {
-                                this.selectedMode = combo.getValue() === 'module' ? 'module' : 'lesson';
-                                this.toggleLessonField();
+                                var value = combo.getValue();
+                                this.selectedMode = value === 'module' ? 'module' : (value === 'view' ? 'view' : 'lesson');
+                                this.selectedModuleId = 0;
+                                this.selectedLessonId = 0;
                                 this.resetPlan();
+                                this.updateModeControls(true);
+
+                                if (this.selectedUserId > 0) {
+                                    this.loadUserSummary(this.selectedUserId, this.isViewMode());
+                                }
                             },
                             scope: this
                         }
                     }
                 }, {
                     xtype: 'combo',
+                    id: this.moduleFieldId,
                     fieldLabel: 'Целевой модуль',
                     name: 'module_id',
                     store: this.moduleStore,
@@ -173,7 +199,8 @@ Training.panel.CourseProgress = function(config) {
                     editable: false,
                     forceSelection: true,
                     allowBlank: false,
-                    emptyText: 'Выберите модуль',
+                    disabled: true,
+                    emptyText: 'Сначала выберите пользователя',
                     listeners: {
                         select: {
                             fn: function(combo, record) {
@@ -181,6 +208,7 @@ Training.panel.CourseProgress = function(config) {
                                 this.selectedLessonId = 0;
                                 this.reloadLessons(this.selectedModuleId);
                                 this.resetPlan();
+                                this.updateModeControls(false);
                             },
                             scope: this
                         }
@@ -193,11 +221,6 @@ Training.panel.CourseProgress = function(config) {
                     store: this.lessonStore,
                     valueField: 'id',
                     displayField: 'display_name',
-                    /*
-                     * Уроки загружаются вручную после выбора модуля.
-                     * Local-режим здесь важен: ExtJS не должен выполнять второй
-                     * удалённый запрос при клике по стрелке и терять module_id.
-                     */
                     mode: 'local',
                     triggerAction: 'all',
                     editable: false,
@@ -216,6 +239,7 @@ Training.panel.CourseProgress = function(config) {
                     }
                 }],
                 buttons: [{
+                    id: this.previewButtonId,
                     text: 'Показать план',
                     minWidth: 150,
                     handler: this.requestPlan,
@@ -254,8 +278,16 @@ Training.panel.CourseProgress = function(config) {
     Training.panel.CourseProgress.superclass.constructor.call(this, config);
 
     this.on('afterrender', function() {
+        this.updateModeControls(false);
+        this.doLayout();
+
+        /*
+         * Инициализируем штатные ExtJS-списки после первого layout,
+         * пока поля уже имеют корректную ширину и никогда не скрываются.
+         */
+        Ext.defer(this.initializeProgressComboLists, 1, this);
+
         this.reloadData();
-        this.toggleLessonField();
     }, this);
 };
 
@@ -263,6 +295,28 @@ Ext.extend(Training.panel.CourseProgress, Ext.Panel, {
     getForm: function() {
         var panel = Ext.getCmp('training-course-progress-form');
         return panel ? panel.getForm() : null;
+    },
+
+    isViewMode: function() {
+        return this.selectedMode === 'view';
+    },
+
+    initializeProgressComboLists: function() {
+        var form = this.getForm();
+
+        if (!form) {
+            return;
+        }
+
+        Ext.each(['module_id', 'lesson_id'], function(fieldName) {
+            var combo = form.findField(fieldName);
+
+            if (!combo || !combo.rendered || combo.list || typeof combo.initList !== 'function') {
+                return;
+            }
+
+            combo.initList();
+        });
     },
 
     getValues: function() {
@@ -277,11 +331,6 @@ Ext.extend(Training.panel.CourseProgress, Ext.Panel, {
         var lessonField = form.findField('lesson_id');
         var modeField = form.findField('mode');
 
-        /*
-         * Приоритет: реальные ID из последнего select event.
-         * Затем: getValue() ComboBox. Form.getValues() оставлен только как
-         * последний запасной вариант.
-         */
         var userId = this.selectedUserId
             || (userField ? parseInt(userField.getValue() || 0, 10) : 0)
             || parseInt(values.user_id || 0, 10)
@@ -300,13 +349,13 @@ Ext.extend(Training.panel.CourseProgress, Ext.Panel, {
         var mode = this.selectedMode
             || (modeField ? modeField.getValue() : '')
             || values.mode
-            || 'lesson';
+            || 'view';
 
         values.course_id = this.courseId;
         values.user_id = userId;
         values.module_id = moduleId;
         values.lesson_id = lessonId;
-        values.mode = mode === 'module' ? 'module' : 'lesson';
+        values.mode = mode === 'module' ? 'module' : (mode === 'view' ? 'view' : 'lesson');
 
         return values;
     },
@@ -315,15 +364,6 @@ Ext.extend(Training.panel.CourseProgress, Ext.Panel, {
         this.userStore.load({
             params: {
                 action: 'mgr/course/progress/users/getlist',
-                course_id: this.courseId,
-                start: 0,
-                limit: 0
-            }
-        });
-
-        this.moduleStore.load({
-            params: {
-                action: 'mgr/course/progress/modules/getlist',
                 course_id: this.courseId,
                 start: 0,
                 limit: 0
@@ -339,17 +379,13 @@ Ext.extend(Training.panel.CourseProgress, Ext.Panel, {
             form.findField('lesson_id').reset();
         }
 
+        this.selectedModuleId = 0;
+        this.selectedLessonId = 0;
         this.resetPlan();
-        this.toggleLessonField();
+        this.updateModeControls(true);
     },
 
     setFieldEmptyText: function(field, text) {
-        /*
-         * В ExtJS 3 у ComboBox нет setEmptyText().
-         * emptyText — свойство конфигурации; applyEmptyText есть не во всех
-         * полях. Поэтому обновляем текст безопасно, без вызова несуществующего
-         * метода и без изменения значения поля.
-         */
         if (!field) {
             return;
         }
@@ -359,6 +395,123 @@ Ext.extend(Training.panel.CourseProgress, Ext.Panel, {
         if (typeof field.applyEmptyText === 'function') {
             field.applyEmptyText();
         }
+    },
+
+    updateModeControls: function(reloadOptions) {
+        var form = this.getForm();
+        if (!form) {
+            return;
+        }
+
+        var modeField = form.findField('mode');
+        var moduleField = form.findField('module_id');
+        var lessonField = form.findField('lesson_id');
+        var mode = this.selectedMode || (modeField ? modeField.getValue() : '') || 'view';
+        var isViewMode = mode === 'view';
+        var isLessonMode = mode === 'lesson';
+        var previewButton = Ext.getCmp(this.previewButtonId);
+        var applyButton = Ext.getCmp(this.applyButtonId);
+
+        if (modeField && modeField.getValue() !== mode) {
+            modeField.setValue(mode);
+        }
+
+        if (isViewMode) {
+            this.selectedModuleId = 0;
+            this.selectedLessonId = 0;
+            moduleField.reset();
+            lessonField.reset();
+            moduleField.setDisabled(true);
+            lessonField.setDisabled(true);
+            this.setFieldEmptyText(moduleField, 'Режим просмотра не изменяет прогресс');
+            this.setFieldEmptyText(lessonField, 'Режим просмотра не изменяет прогресс');
+
+            if (previewButton) {
+                previewButton.setDisabled(true);
+            }
+
+            if (applyButton) {
+                applyButton.setDisabled(true);
+            }
+
+            return;
+        }
+
+        if (previewButton) {
+            previewButton.setDisabled(this.selectedUserId <= 0);
+        }
+
+        if (applyButton) {
+            applyButton.setDisabled(true);
+        }
+
+        moduleField.setDisabled(this.selectedUserId <= 0);
+        this.setFieldEmptyText(
+            moduleField,
+            this.selectedUserId > 0 ? 'Выберите незавершённый модуль' : 'Сначала выберите пользователя'
+        );
+
+        if (isLessonMode) {
+            lessonField.setDisabled(this.selectedModuleId <= 0);
+            this.setFieldEmptyText(
+                lessonField,
+                this.selectedModuleId > 0 ? 'Выберите незавершённый урок' : 'Сначала выберите модуль'
+            );
+        } else {
+            this.selectedLessonId = 0;
+            lessonField.reset();
+            lessonField.setDisabled(true);
+            this.setFieldEmptyText(lessonField, 'Урок не требуется для завершения модуля');
+        }
+
+        if (reloadOptions && this.selectedUserId > 0) {
+            this.reloadModules(this.selectedUserId);
+        }
+    },
+
+    reloadModules: function(userId) {
+        userId = parseInt(userId || 0, 10) || 0;
+        this.selectedModuleId = 0;
+        this.selectedLessonId = 0;
+
+        var form = this.getForm();
+        if (!form) {
+            return;
+        }
+
+        var moduleField = form.findField('module_id');
+        var lessonField = form.findField('lesson_id');
+
+        moduleField.reset();
+        lessonField.reset();
+        lessonField.setDisabled(true);
+        this.setFieldEmptyText(lessonField, 'Сначала выберите модуль');
+
+        this.moduleStore.baseParams = this.moduleStore.baseParams || {};
+        this.moduleStore.baseParams.action = 'mgr/course/progress/modules/getlist';
+        this.moduleStore.baseParams.course_id = this.courseId;
+        this.moduleStore.baseParams.user_id = userId;
+        this.moduleStore.baseParams.only_incomplete = 1;
+
+        this.moduleStore.removeAll();
+
+        if (userId <= 0) {
+            moduleField.setDisabled(true);
+            return;
+        }
+
+        moduleField.setDisabled(false);
+
+        this.moduleStore.load({
+            params: {
+                action: 'mgr/course/progress/modules/getlist',
+                course_id: this.courseId,
+                user_id: userId,
+                only_incomplete: 1,
+                start: 0,
+                limit: 0
+            }
+        });
     },
 
     reloadLessons: function(moduleId) {
@@ -372,132 +525,68 @@ Ext.extend(Training.panel.CourseProgress, Ext.Panel, {
 
         var lessonField = form.findField('lesson_id');
         lessonField.reset();
-        lessonField.setDisabled(moduleId <= 0);
-        this.setFieldEmptyText(lessonField, moduleId > 0 ? 'Выберите урок' : 'Сначала выберите модуль');
+        lessonField.setDisabled(moduleId <= 0 || !this.selectedUserId || !this.isViewMode() && this.selectedMode !== 'lesson');
+        this.setFieldEmptyText(lessonField, moduleId > 0 ? 'Выберите незавершённый урок' : 'Сначала выберите модуль');
 
         this.lessonStore.baseParams = this.lessonStore.baseParams || {};
         this.lessonStore.baseParams.action = 'mgr/course/progress/lessons/getlist';
         this.lessonStore.baseParams.course_id = this.courseId;
         this.lessonStore.baseParams.module_id = moduleId;
+        this.lessonStore.baseParams.user_id = this.selectedUserId;
+        this.lessonStore.baseParams.only_incomplete = 1;
 
         this.lessonStore.removeAll();
 
-        if (moduleId > 0) {
+        if (moduleId > 0 && this.selectedUserId > 0 && this.selectedMode === 'lesson') {
+            lessonField.setDisabled(false);
             this.lessonStore.load({
                 params: {
                     action: 'mgr/course/progress/lessons/getlist',
                     course_id: this.courseId,
                     module_id: moduleId,
+                    user_id: this.selectedUserId,
+                    only_incomplete: 1,
                     start: 0,
                     limit: 0
-                },
-                callback: function(records, operation, success) {
-                    /*
-                     * Список уроков небольшой и работает локально после загрузки.
-                     * Сбрасываем lastQuery, иначе ExtJS может показать пустой
-                     * старый результат при первом открытии стрелки.
-                     */
-                    lessonField.lastQuery = null;
-
-                    if (success && records && records.length > 0) {
-                        lessonField.setDisabled(false);
-                        this.setFieldEmptyText(lessonField, 'Выберите урок');
-                    } else {
-                        lessonField.reset();
-                        lessonField.setDisabled(true);
-                        this.setFieldEmptyText(lessonField, 'Для этого модуля нет активных уроков');
-                    }
-
-                    this.toggleLessonField();
-                },
-                scope: this
+                }
             });
-        } else {
-            lessonField.reset();
-            lessonField.setDisabled(true);
-            this.setFieldEmptyText(lessonField, 'Сначала выберите модуль');
         }
     },
 
-    toggleLessonField: function() {
-        var form = this.getForm();
-        if (!form) {
-            return;
-        }
-
-        var modeField = form.findField('mode');
-        var lessonField = form.findField('lesson_id');
-        var moduleField = form.findField('module_id');
-        var isLessonMode = modeField && modeField.getValue() !== 'module';
-
-        if (isLessonMode) {
-            lessonField.show();
-            lessonField.setDisabled(!(moduleField && moduleField.getValue()));
-        } else {
-            lessonField.hide();
-            lessonField.setDisabled(true);
-            lessonField.reset();
-        }
-
-        this.doLayout();
-    },
-
-    setPanelHtml: function(panelId, html) {
-        var panel = Ext.getCmp(panelId);
-
-        if (!panel) {
-            return;
-        }
-
-        if (panel.rendered && panel.body) {
-            panel.body.update(html);
-        } else {
-            panel.html = html;
-        }
-    },
-
-    loadUserSummary: function(userId) {
+    loadUserSummary: function(userId, viewMode) {
         userId = parseInt(userId || 0, 10) || 0;
         var summaryPanel = Ext.getCmp(this.summaryPanelId);
 
-        if (!userId || !summaryPanel) {
+        if (!summaryPanel) {
             return;
         }
 
-        this.setPanelHtml(this.summaryPanelId, '<div style="color:#777;">Загружаем текущий прогресс...</div>');
-        summaryPanel.getEl().mask('Загрузка...');
+        if (userId <= 0) {
+            summaryPanel.update('<div style="color:#777;">Выберите пользователя, чтобы увидеть его текущий прогресс.</div>');
+            return;
+        }
+
+        summaryPanel.update('<div style="color:#777;">Загружаем текущий прогресс…</div>');
 
         MODx.Ajax.request({
             url: Training.config.connector_url,
             params: {
                 action: 'mgr/course/progress/summary',
                 course_id: this.courseId,
-                user_id: userId
+                user_id: userId,
+                include_lessons: viewMode ? 1 : 0
             },
             listeners: {
                 success: {
-                    fn: function(r) {
-                        summaryPanel.getEl().unmask();
-                        var obj = Training.utils.getResultData(r) || {};
-                        var html = '<div><b>Текущий прогресс пользователя</b></div>'
-                            + '<div style="margin-top:8px;">'
-                            + '<b>Статус курса:</b> ' + Ext.util.Format.htmlEncode(obj.course_status || '—') + '<br>'
-                            + '<b>Прогресс:</b> ' + Ext.util.Format.htmlEncode(String(obj.progress_percent || 0)) + '%'
-                            + ' (' + Ext.util.Format.htmlEncode(String(obj.completed_modules || 0))
-                            + '/' + Ext.util.Format.htmlEncode(String(obj.total_modules || 0)) + ' модулей)<br>'
-                            + '<b>Текущий модуль:</b> ' + Ext.util.Format.htmlEncode(obj.current_module_label || '—') + '<br>'
-                            + '<b>Текущий урок:</b> ' + Ext.util.Format.htmlEncode(obj.current_lesson_label || '—')
-                            + '</div>';
-                        this.setPanelHtml(this.summaryPanelId, html);
-                        summaryPanel.doLayout();
+                    fn: function(response) {
+                        var data = response.object || {};
+                        summaryPanel.update(data.html || '<div style="color:#777;">Данные о прогрессе не найдены.</div>');
                     },
                     scope: this
                 },
                 failure: {
-                    fn: function(r) {
-                        summaryPanel.getEl().unmask();
-                        var message = (r && r.message) ? r.message : 'Не удалось загрузить прогресс';
-                        this.setPanelHtml(this.summaryPanelId, '<div style="color:#b30000;">' + Ext.util.Format.htmlEncode(message) + '</div>');
+                    fn: function(response) {
+                        summaryPanel.update('<div style="color:#c00;">Не удалось загрузить прогресс: ' + Ext.util.Format.htmlEncode(response.message || 'Неизвестная ошибка') + '</div>');
                     },
                     scope: this
                 }
@@ -506,40 +595,52 @@ Ext.extend(Training.panel.CourseProgress, Ext.Panel, {
     },
 
     requestPlan: function() {
-        var form = this.getForm();
-        if (!form || !form.isValid()) {
-            MODx.msg.alert('Прогресс', 'Выберите пользователя, режим и модуль. Для режима «Остановить на уроке» также выберите урок.');
+        if (this.isViewMode()) {
             return;
         }
 
         var values = this.getValues();
-        if (values.mode === 'lesson' && values.lesson_id <= 0) {
-            MODx.msg.alert('Прогресс', 'Выберите урок, на котором пользователь должен остановиться.');
-            return;
-        }
-
+        var form = this.getForm();
         var planPanel = Ext.getCmp(this.planPanelId);
-        if (!planPanel) {
+
+        if (!values || !form) {
             return;
         }
 
-        this.resetPlan();
-        this.setPanelHtml(this.planPanelId, '<div style="color:#777;">Формируем безопасный план изменений...</div>');
-        planPanel.getEl().mask('Расчёт...');
+        if (!values.user_id) {
+            MODx.msg.alert(_('error'), 'Выберите пользователя');
+            return;
+        }
+
+        if (!values.module_id) {
+            MODx.msg.alert(_('error'), 'Выберите незавершённый модуль');
+            return;
+        }
+
+        if (values.mode === 'lesson' && !values.lesson_id) {
+            MODx.msg.alert(_('error'), 'Выберите незавершённый урок');
+            return;
+        }
+
+        planPanel.update('<div style="color:#777;">Формируем план изменений…</div>');
 
         MODx.Ajax.request({
             url: Training.config.connector_url,
-            params: Ext.apply(values, {
-                action: 'mgr/course/progress/plan'
-            }),
+            params: {
+                action: 'mgr/course/progress/plan',
+                course_id: this.courseId,
+                user_id: values.user_id,
+                module_id: values.module_id,
+                lesson_id: values.lesson_id,
+                mode: values.mode
+            },
             listeners: {
                 success: {
-                    fn: function(r) {
-                        planPanel.getEl().unmask();
-                        var obj = Training.utils.getResultData(r) || {};
-                        this.setPanelHtml(this.planPanelId, obj.plan_html || '<div>План сформирован.</div>');
-                        planPanel.doLayout();
+                    fn: function(response) {
+                        var data = response.object || {};
                         this.planReady = true;
+                        this.lastPlanValues = values;
+                        planPanel.update(data.html || '<div style="color:#777;">План изменений пуст.</div>');
                         var applyButton = Ext.getCmp(this.applyButtonId);
                         if (applyButton) {
                             applyButton.setDisabled(false);
@@ -548,84 +649,9 @@ Ext.extend(Training.panel.CourseProgress, Ext.Panel, {
                     scope: this
                 },
                 failure: {
-                    fn: function(r) {
-                        planPanel.getEl().unmask();
-                        var message = (r && r.message) ? r.message : 'Не удалось сформировать план';
-                        this.setPanelHtml(this.planPanelId, '<div style="color:#b30000;">' + Ext.util.Format.htmlEncode(message) + '</div>');
-                    },
-                    scope: this
-                }
-            }
-        });
-    },
-
-    confirmApply: function() {
-        if (!this.planReady) {
-            MODx.msg.alert('Прогресс', 'Сначала сформируйте план изменений.');
-            return;
-        }
-
-        var values = this.getValues();
-        var userRecord = this.userStore.getById ? this.userStore.getById(values.user_id) : null;
-        var userName = userRecord ? userRecord.get('display_name') : ('Пользователь #' + values.user_id);
-
-        Ext.Msg.confirm(
-            'Подтверждение',
-            'Применить сформированный план для пользователя <b>' + Ext.util.Format.htmlEncode(userName) + '</b>?',
-            function(button) {
-                if (button === 'yes') {
-                    this.applyPlan(values);
-                }
-            },
-            this
-        );
-    },
-
-    applyPlan: function(values) {
-        var panel = Ext.getCmp(this.planPanelId);
-        if (!panel) {
-            return;
-        }
-
-        panel.getEl().mask('Применяем изменения...');
-        var applyButton = Ext.getCmp(this.applyButtonId);
-        if (applyButton) {
-            applyButton.setDisabled(true);
-        }
-
-        MODx.Ajax.request({
-            url: Training.config.connector_url,
-            params: Ext.apply(values, {
-                action: 'mgr/course/progress/apply'
-            }),
-            listeners: {
-                success: {
-                    fn: function(r) {
-                        panel.getEl().unmask();
-                        var obj = Training.utils.getResultData(r) || {};
-                        this.setPanelHtml(this.planPanelId, obj.result_html || '<div>Прогресс обновлён.</div>');
-                        panel.doLayout();
-                        this.planReady = false;
-                        this.loadUserSummary(values.user_id);
-
-                        var applyButton = Ext.getCmp(this.applyButtonId);
-                        if (applyButton) {
-                            applyButton.setDisabled(true);
-                        }
-
-                        MODx.msg.alert('Готово', (r && r.message) ? r.message : 'Прогресс пользователя обновлён');
-                    },
-                    scope: this
-                },
-                failure: {
-                    fn: function(r) {
-                        panel.getEl().unmask();
-                        this.planReady = false;
-                        var applyButton = Ext.getCmp(this.applyButtonId);
-                        if (applyButton) {
-                            applyButton.setDisabled(true);
-                        }
-                        MODx.msg.alert('Ошибка', (r && r.message) ? r.message : 'Не удалось применить прогресс');
+                    fn: function(response) {
+                        this.resetPlan();
+                        planPanel.update('<div style="color:#c00;">Не удалось сформировать план: ' + Ext.util.Format.htmlEncode(response.message || 'Неизвестная ошибка') + '</div>');
                     },
                     scope: this
                 }
@@ -635,16 +661,49 @@ Ext.extend(Training.panel.CourseProgress, Ext.Panel, {
 
     resetPlan: function() {
         this.planReady = false;
+        this.lastPlanValues = null;
         var applyButton = Ext.getCmp(this.applyButtonId);
+        var planPanel = Ext.getCmp(this.planPanelId);
+
         if (applyButton) {
             applyButton.setDisabled(true);
         }
 
-        var planPanel = Ext.getCmp(this.planPanelId);
         if (planPanel) {
-            this.setPanelHtml(this.planPanelId, '<div style="color:#777;">План изменений ещё не сформирован.</div>');
+            planPanel.update('<div style="color:#777;">План изменений ещё не сформирован.</div>');
         }
+    },
+
+    confirmApply: function() {
+        if (this.isViewMode() || !this.planReady || !this.lastPlanValues) {
+            return;
+        }
+
+        MODx.msg.confirm({
+            title: 'Подтверждение изменений',
+            text: 'Применить показанный план? Изменения будут записаны в прогресс пользователя.',
+            url: Training.config.connector_url,
+            params: {
+                action: 'mgr/course/progress/apply',
+                course_id: this.courseId,
+                user_id: this.lastPlanValues.user_id,
+                module_id: this.lastPlanValues.module_id,
+                lesson_id: this.lastPlanValues.lesson_id,
+                mode: this.lastPlanValues.mode
+            },
+            listeners: {
+                success: {
+                    fn: function(response) {
+                        MODx.msg.alert(_('success'), response.message || 'Изменения применены');
+                        this.reloadData();
+
+                        if (this.selectedUserId > 0) {
+                            this.loadUserSummary(this.selectedUserId, this.isViewMode());
+                        }
+                    },
+                    scope: this
+                }
+            }
+        });
     }
 });
-
-Ext.reg('training-course-progress-panel', Training.panel.CourseProgress);
