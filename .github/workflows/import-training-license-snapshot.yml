@@ -131,11 +131,13 @@ jobs:
           ! grep -RIn --include='*.php' 'public[[:space:]]\+public[[:space:]]\+function' core/components/training
           git diff --check
 
-      - name: Replace the bootstrap commit with one application commit
+      - name: Replace bootstrap history with one application commit
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          git reset --soft origin/main
           git add \
             assets/components/training/js/mgr/widgets/course.access.grid.js \
             core/components/training/elements/chunks/training/manage/course-access-modal.tpl \
@@ -157,5 +159,5 @@ jobs:
             theme/css/training.css \
             theme/js/app-training.js
           git rm -f .github/workflows/import-training-license-snapshot.yml
-          git commit --amend -m "Add training course licenses"
+          git commit -m "Add training course licenses"
           git push --force-with-lease origin HEAD:codex/training-licenses-ui
