@@ -1,0 +1,161 @@
+name: Import training license snapshot
+
+on:
+  push:
+    branches:
+      - codex/training-licenses-ui
+    paths:
+      - .github/workflows/import-training-license-snapshot.yml
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: codex/training-licenses-ui
+          fetch-depth: 2
+
+      - name: Download, verify and stage the server snapshot
+        env:
+          SNAPSHOT_URL: https://partner.scanport.ru/assets/components/training/diagnostics/git-sync/training_licenses_git_snapshot_20260626_125231.zip
+        run: |
+          set -euo pipefail
+          workdir="$(mktemp -d)"
+          archive="$workdir/training-snapshot.zip"
+          snapshot="$workdir/snapshot"
+          mkdir -p "$snapshot"
+          curl --fail --location --retry 3 --retry-delay 2 "$SNAPSHOT_URL" --output "$archive"
+          unzip -q "$archive" -d "$snapshot"
+          python3 - "$snapshot" "$GITHUB_WORKSPACE" <<'PY'
+          from pathlib import Path
+          import hashlib
+          import re
+          import shutil
+          import sys
+
+          snapshot = Path(sys.argv[1])
+          repo = Path(sys.argv[2])
+          manifest = snapshot / 'manifest.txt'
+          if not manifest.is_file():
+              raise SystemExit('manifest.txt is missing from the snapshot')
+
+          entries = []
+          pattern = re.compile(r'^(?:ADDED|MODIFIED|UNCHANGED)\s+(.+?)\s+\|\s+bytes=(\d+)\s+\|\s+sha256=([0-9a-f]{64})$')
+          for line in manifest.read_text(encoding='utf-8').splitlines():
+              match = pattern.match(line.strip())
+              if match:
+                  entries.append((match.group(1), int(match.group(2)), match.group(3)))
+          if len(entries) != 19:
+              raise SystemExit('expected 19 manifest entries, got %d' % len(entries))
+
+          for relative, size, expected_hash in entries:
+              source = snapshot / relative
+              if not source.is_file():
+                  raise SystemExit('snapshot file is missing: ' + relative)
+              payload = source.read_bytes()
+              if len(payload) != size or hashlib.sha256(payload).hexdigest() != expected_hash:
+                  raise SystemExit('manifest mismatch: ' + relative)
+              destination = repo / relative
+              destination.parent.mkdir(parents=True, exist_ok=True)
+              shutil.copy2(source, destination)
+
+          progress = repo / 'core/components/training/model/training/services/trainingprogress.class.php'
+          content = progress.read_text(encoding='utf-8')
+          expected_before = 'd1b8e751642968b855b8e9733550b1511d4989899561c48d6e1ec7bee8fb2587'
+          if hashlib.sha256(content.encode('utf-8')).hexdigest() != expected_before:
+              raise SystemExit('unexpected trainingprogress.class.php snapshot checksum')
+          gate = '''            if ($principalType === 'user' && $principalId === $userId) {
+                /*
+                 * training-license-core-v1
+                 * Директор с настроенным пулом получает право проходить
+                 * свой курс только при активной собственной лицензии.
+                 */
+                if (
+                    $this->normalizeRole($item->get('access_role')) === 'director'
+                    && (int)$item->get('licenses_enabled') === 1
+                    && (int)$item->get('licenses_total') > 0
+                ) {
+                    $licensePath = rtrim((string)$this->modx->getOption(
+                        'training.core_path',
+                        null,
+                        $this->modx->getOption('core_path') . 'components/training/'
+                    ), '/\\') . '/model/training/services/traininglicense.class.php';
+
+                    if (is_file($licensePath)) {
+                        require_once $licensePath;
+                    }
+
+                    if (
+                        class_exists('TrainingLicenseService')
+                        && !TrainingLicenseService::getInstance($this->modx, $this)->canDirectorPassCourse(
+                            $courseId,
+                            $userId,
+                            (int)$item->get('id')
+                        )
+                    ) {
+                        continue;
+                    }
+                }
+
+                return true;
+            }
+'''
+          direct = '''            if ($principalType === 'user' && $principalId === $userId) {
+                return true;
+            }
+'''
+          if content.count(gate) != 1:
+              raise SystemExit('director self-license gate was not found exactly once')
+          content = content.replace(gate, direct, 1)
+          expected_after = '1e18e023c3e82cc90727f43ebbc5ef49319f8bd912c47ca0bbd76c3a7c80bc03'
+          if hashlib.sha256(content.encode('utf-8')).hexdigest() != expected_after:
+              raise SystemExit('unexpected hotfix checksum')
+          progress.write_text(content, encoding='utf-8')
+          print('Verified and staged %d snapshot files plus the director access hotfix.' % len(entries))
+          PY
+
+      - name: Validate staged sources
+        run: |
+          set -euo pipefail
+          php -l core/components/training/elements/snippets/trainingManageCoursesPage.php
+          php -l core/components/training/model/training/mysql/trainingcourseaccess.map.inc.php
+          php -l core/components/training/model/training/services/trainingcertificate.class.php
+          php -l core/components/training/model/training/services/traininglicense.class.php
+          php -l core/components/training/model/training/services/trainingprogress.class.php
+          find core/components/training/processors -type f -name '*.php' -print0 | xargs -0 -n1 php -l
+          node --check theme/js/app-training.js
+          ! grep -RIn --include='*.php' 'public[[:space:]]\+public[[:space:]]\+function' core/components/training
+          git diff --check
+
+      - name: Replace the bootstrap commit with one application commit
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            assets/components/training/js/mgr/widgets/course.access.grid.js \
+            core/components/training/elements/chunks/training/manage/course-access-modal.tpl \
+            core/components/training/elements/chunks/training/manage/courses.tpl \
+            core/components/training/elements/snippets/trainingManageCoursesPage.php \
+            core/components/training/model/training/mysql/trainingcourseaccess.map.inc.php \
+            core/components/training/model/training/services/trainingcertificate.class.php \
+            core/components/training/model/training/services/traininglicense.class.php \
+            core/components/training/model/training/services/trainingprogress.class.php \
+            core/components/training/processors/mgr/course/access/create.class.php \
+            core/components/training/processors/mgr/course/access/getlist.class.php \
+            core/components/training/processors/mgr/course/access/remove.class.php \
+            core/components/training/processors/mgr/course/access/update.class.php \
+            core/components/training/processors/web/_helpers.php \
+            core/components/training/processors/web/course/assign.class.php \
+            core/components/training/processors/web/course/assignableusers.class.php \
+            core/components/training/processors/web/course/unassign.class.php \
+            docs/migrations/applied/2026-06-25_training_course_licenses.sql \
+            theme/css/training.css \
+            theme/js/app-training.js
+          git rm -f .github/workflows/import-training-license-snapshot.yml
+          git commit --amend -m "Add training course licenses"
+          git push --force-with-lease origin HEAD:codex/training-licenses-ui
