@@ -1,6 +1,6 @@
 # Training course performance snapshot — 2026-06-26
 
-This branch records the exact production state after course-page performance work.
+This branch records the verified production performance changes for the course page.
 
 ## Verified production source hashes
 
@@ -20,7 +20,6 @@ This branch records the exact production state after course-page performance wor
 
 ## Files in this snapshot
 
-- `training-course-performance.patch` — readable patch against the verified live baselines.
-- `live-source.tar.gz.base64` — compressed exact production source snapshot. Decode with `base64 -d live-source.tar.gz.base64 > live-source.tar.gz`, then unpack with `tar -xzf live-source.tar.gz`.
+- `training-course-performance.patch` — readable performance patch against the verified live baselines.
 
-The repository `main` had older versions of these source files when this snapshot was created, so the snapshot is kept separate for a deliberate merge rather than overwriting unrelated history.
+The repository `main` had older versions of these source files when this snapshot was created, so this branch documents the live, tested patch separately instead of overwriting unrelated source history.
