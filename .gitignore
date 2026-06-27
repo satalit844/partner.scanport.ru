@@ -9,3 +9,26 @@ core/cache/
 *.sql.gz
 *.bak
 .DS_Store
+
+# Local backups, diagnostics and temporary artifacts
+*.backup-*
+*.broken-*
+*.tmp
+*.temp
+core/components/training/.backups/
+core/components/training/backups/
+assets/components/training/diagnostics/
+theme/images/training/player/video/
+/dir/
+/git/
+
+# Vendor documentation, examples and local test outputs
+assets/components/usertest/canvasjs/examples/
+assets/components/usertest/PHPExcel/Shared/JAMA/docs/
+assets/components/usertest/PHPExcel/Shared/JAMA/examples/
+assets/components/usertest/PHPExcel/Shared/JAMA/tests/
+assets/components/usertest/export_test.xlsx
+assets/components/usertest/test_invites.xls
+assets/components/usertest/test_result.xls
+assets/components/usertest/action.stage30.original.php
+assets/components/usertest/action.training-original.php

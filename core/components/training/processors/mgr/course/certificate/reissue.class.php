@@ -1,9 +1,7 @@
 <?php
-
 $corePath = dirname(dirname(dirname(dirname(dirname(__FILE__))))) . '/';
 require_once $corePath . 'model/training/training.class.php';
 require_once $corePath . 'model/training/services/trainingcertificate.class.php';
-require_once $corePath . 'model/training/services/trainingcertificatereissue.class.php';
 
 class TrainingCourseCertificateReissueProcessor extends modProcessor
 {
@@ -19,42 +17,21 @@ class TrainingCourseCertificateReissueProcessor extends modProcessor
             return $this->failure('Не указан курс');
         }
 
-        $userIds = array();
         $userIdsRaw = trim((string)$this->getProperty('user_ids', ''));
-        foreach (preg_split('/[^0-9]+/', $userIdsRaw) as $userId) {
-            $userId = (int)$userId;
-            if ($userId > 0 && !in_array($userId, $userIds, true)) {
-                $userIds[] = $userId;
+        $userIds = array();
+
+        foreach (preg_split('/[^0-9]+/', $userIdsRaw) as $id) {
+            $id = (int)$id;
+            if ($id > 0 && !in_array($id, $userIds, true)) {
+                $userIds[] = $id;
             }
-        }
-
-        $mode = trim((string)$this->getProperty('mode', 'reissue'));
-        $service = new TrainingCertificateReissueService($this->modx, new Training($this->modx));
-
-        if ($mode === 'generate') {
-            if (!empty($userIds)) {
-                $certificates = $service->generateForUsers($courseId, $userIds, false);
-                return $this->success('', array(
-                    'generated_count' => count($certificates),
-                    'total_selected' => count($userIds),
-                    'mode' => 'selected_generate',
-                ));
-            }
-
-            $users = $service->getCompletedUsersForCourse($courseId);
-            $certificates = $service->generateAllForCourse($courseId, false);
-
-            return $this->success('', array(
-                'generated_count' => count($certificates),
-                'total_completed' => count($users),
-                'mode' => 'all_generate',
-            ));
         }
 
         if (empty($userIds)) {
             return $this->failure('Выберите пользователей');
         }
 
+        $service = new TrainingCertificateService($this->modx, new Training($this->modx));
         $certificates = $service->reissueForUsers($courseId, $userIds);
 
         return $this->success('', array(

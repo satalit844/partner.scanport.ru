@@ -139,7 +139,9 @@
     margin-top: 0;
     margin-bottom: 0;
 }
-
+.tests-block--instruction .test-subtitle ul b {
+    color: #000;
+}
 #testuser-main .test-header {
     margin-bottom: 44px;
     display: flex;

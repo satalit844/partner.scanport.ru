@@ -1,0 +1,14 @@
+<svg width="24.000000" height="24.000000" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<desc>
+			Created with Pixso.
+	</desc>
+	<defs>
+		<clipPath id="clip281_17933">
+			<rect id="icon / sidebar / inactive / 4. contacts" width="24.000000" height="24.000000" fill="white" fill-opacity="0"/>
+		</clipPath>
+	</defs>
+	<g clip-path="url(#clip281_17933)">
+		<path id="Vector" d="M12 12C15.2241 12 17.8335 9.31616 17.8335 6C17.8335 2.68384 15.2241 0 12 0C8.77588 0 6.1665 2.68384 6.1665 6C6.1665 9.31616 8.77588 12 12 12ZM16 13.7144L15.5679 13.7144C14.4844 14.25 13.2812 14.5715 12 14.5715C10.7188 14.5715 9.521 14.25 8.43213 13.7144L8 13.7144C4.6875 13.7144 2 16.4785 2 19.8857L2 21.4285C2 22.8481 3.11963 24 4.5 24L19.5 24C20.8804 24 22 22.8481 22 21.4285L22 19.8857C22 16.4785 19.3125 13.7144 16 13.7144Z" fill="#FFFFFF" fill-opacity="1.000000" fill-rule="evenodd"/>
+		<path id="Vector" d="M12.0015 12C15.2251 12 17.8345 9.31616 17.8345 6C17.8345 2.68384 15.2251 0 12.0015 0C8.77734 0 6.16797 2.68384 6.16797 6C6.16797 9.31616 8.77734 12 12.0015 12Z" fill="#FFFFFF" fill-opacity="1.000000" fill-rule="evenodd"/>
+	</g>
+</svg>

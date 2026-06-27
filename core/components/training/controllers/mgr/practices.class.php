@@ -11,7 +11,6 @@ class TrainingPracticesManagerController extends modExtraManagerController
         $assetsUrl = $this->modx->getOption('training.assets_url', null, $this->modx->getOption('assets_url') . 'components/training/');
         $assetsUrl = rtrim($assetsUrl, '/') . '/';
 
-        $this->addCss($assetsUrl . 'css/mgr/practices.css');
         $this->addJavascript($assetsUrl . 'js/mgr/practices/practices.panel.js');
 
         $connectorUrl = $assetsUrl . 'connector.php';

@@ -33,6 +33,40 @@ class TrainingCourseAccessUpdateProcessor extends modObjectUpdateProcessor
         $principalId = (int)$this->getProperty('principal_id');
         $accessRole = trim((string)$this->getProperty('access_role', 'employee'));
         $isActive = (int)((string)$this->getProperty('is_active', '1') === '0' ? 0 : 1);
+        /* training-license-access-ui-v1 */
+        $licensesTotal = max(0, (int)$this->getProperty('licenses_total', 0));
+        $licensesEnabled = ($accessRole === 'director' && $principalType === 'user' && $licensesTotal > 0) ? 1 : 0;
+
+        $accessTable = trim((string)$this->modx->getTableName('TrainingCourseAccess'), '`');
+        $licenseAssignmentsTable = preg_replace('/_course_access$/', '_license_assignments', $accessTable);
+        $usedLicenses = 0;
+
+        if ($id > 0 && $licenseAssignmentsTable && $licenseAssignmentsTable !== $accessTable) {
+            $safeAssignmentsTable = str_replace('`', '``', $licenseAssignmentsTable);
+            $usedStmt = $this->modx->prepare(
+                'SELECT COUNT(*) FROM `' . $safeAssignmentsTable . '` '
+                . 'WHERE `director_access_id` = :director_access_id '
+                . 'AND `state` IN ("reserved", "consumed")'
+            );
+
+            if ($usedStmt && $usedStmt->execute(array(':director_access_id' => $id))) {
+                $usedLicenses = (int)$usedStmt->fetchColumn();
+            }
+        }
+
+        if ($accessRole === 'director' && $principalType === 'user') {
+            if ($licensesTotal < $usedLicenses) {
+                return 'Нельзя указать меньше лицензий, чем уже занято или потрачено: ' . $usedLicenses;
+            }
+        } elseif ($usedLicenses > 0) {
+            return 'Нельзя изменить роль или тип директора: на нём есть занятые/потраченные лицензии (' . $usedLicenses . ')';
+        } else {
+            $licensesTotal = 0;
+            $licensesEnabled = 0;
+        }
+
+        $this->setProperty('licenses_total', $licensesTotal);
+        $this->setProperty('licenses_enabled', $licensesEnabled);
 
         if ($id <= 0) {
             return 'Не указан ID доступа';

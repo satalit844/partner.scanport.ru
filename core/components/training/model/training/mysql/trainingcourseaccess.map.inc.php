@@ -14,6 +14,8 @@ $xpdo_meta_map['TrainingCourseAccess']= array (
     'principal_type' => 'user',
     'principal_id' => 0,
     'access_role' => 'employee',
+        'licenses_total' => 0,
+        'licenses_enabled' => 0,
     'assigned_by' => 0,
     'active_from' => NULL,
     'active_to' => NULL,
@@ -56,7 +58,23 @@ $xpdo_meta_map['TrainingCourseAccess']= array (
       'null' => false,
       'default' => 'employee',
     ),
-    'assigned_by' => 
+        'licenses_total' => 
+        array (
+          'dbtype' => 'int',
+          'precision' => '10',
+          'attributes' => 'unsigned',
+          'phptype' => 'integer',
+          'null' => false,
+          'default' => 0,
+        ),
+        'licenses_enabled' => 
+        array (
+          'dbtype' => 'tinyint',
+          'precision' => '1',
+          'phptype' => 'boolean',
+          'null' => false,
+          'default' => 0,
+        ),    'assigned_by' => 
     array (
       'dbtype' => 'int',
       'precision' => '10',

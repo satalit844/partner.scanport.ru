@@ -1575,7 +1575,7 @@ body.is-modal-open{
   border-right: 2px solid #fff;
   border-bottom: 2px solid #fff;
   transform: rotate(45deg);
-  margin-top: -1px;
+  margin-top: -3px;
 }
 
 .users-check:focus-visible{
@@ -3272,7 +3272,6 @@ main {
     .test-list {
         font-size: 18px;
     }
-    
 }
 @media (max-width: 576px){
     .action-panel{
@@ -5638,11 +5637,11 @@ main {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M12 7V13' stroke='%23D57B21' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='12' cy='17' r='1.5' fill='%23D57B21'/%3E%3Ccircle cx='12' cy='12' r='9' stroke='%23D57B21' stroke-width='2'/%3E%3C/svg%3E");
 }
 .testListModal__row{
-    grid-template-columns: minmax(0, 1fr) 140px 120px;
+    grid-template-columns: minmax(0, 1fr) 140px 110px;
     height: auto;
 }
 .testListModal__head .testListModal__grid{
-    grid-template-columns: minmax(0, 1fr) 140px 120px;
+    grid-template-columns: minmax(0, 1fr) 140px 110px;
 }
 .testListModal__question{
     min-width: 0;
@@ -5768,10 +5767,10 @@ main {
     margin-top:16px !important;
 }
 .testListModal__head .testListModal__grid{
-    grid-template-columns:44px minmax(0,1fr) 140px 120px !important;
+    grid-template-columns:44px minmax(0,1fr) 140px 110px !important;
 }
 .testListModal__row{
-    grid-template-columns:44px minmax(0,1fr) 140px 120px !important;
+    grid-template-columns:44px minmax(0,1fr) 140px 110px !important;
     height:auto !important;
 }
 .testListModal__number{
@@ -9451,7 +9450,9 @@ html body .training-player[data-training-page="player"].is-fullscreen .player-sl
         height: 22px !important;
         flex: 0 0 22px !important;
     }
-
+    html body .training-player[data-training-page="player"] .btn-player-next .img-svg path {
+        stroke: #fff;
+    }
     html body .training-player[data-training-page="player"] .player-mobile-caption{
         grid-area: caption !important;
         display: block !important;
@@ -9575,8 +9576,7 @@ html body .training-player[data-training-page="player"].is-fullscreen .player-sl
     html body .training-player[data-training-page="player"].is-playing-video:not(.is-controls-visible) .js-player-restart,
     html body .training-player[data-training-page="player"].is-playing-video:not(.is-controls-visible) .player-volume-wrap,
     html body .training-player[data-training-page="player"].is-playing-video:not(.is-controls-visible) .player-quality,
-    html body .training-player[data-training-page="player"].is-playing-video:not(.is-controls-visible) .js-player-fullscreen,
-    html body .training-player[data-training-page="player"].is-playing-video:not(.is-controls-visible) .player-floating-video{
+    html body .training-player[data-training-page="player"].is-playing-video:not(.is-controls-visible) .js-player-fullscreen{
         opacity: 0 !important;
         visibility: hidden !important;
         pointer-events: none !important;
@@ -10933,17 +10933,13 @@ html body .training-player[data-training-page="player"].is-pseudo-fullscreen .pl
 }
 
 @media (max-width: 991.98px) {
-    body .section-block.practice-page {
-        padding: 0;
-    }
     .practice-task-card {
         padding: 16px;
         border-radius: 20px;
         gap: 14px;
+        grid-template-columns: 1fr;
     }
-    .practice-chat-card {
-        margin-top: 0;
-    }
+
     .practice-task-card__media {
         width: 76px;
         height: 76px;
@@ -10967,9 +10963,6 @@ html body .training-player[data-training-page="player"].is-pseudo-fullscreen .pl
     }
 
     .sert-items {
-        grid-template-columns: 1fr;
-    }
-    .practice-task-card {
         grid-template-columns: 1fr;
     }
 }
@@ -11024,30 +11017,35 @@ html body .training-player[data-training-page="player"].is-pseudo-fullscreen .pl
     }
 
     .practice-chat-form__row {
-        gap: 8px;
+        flex-direction: column;
+        gap: 10px;
     }
 
     .practice-file-btn {
-        
+        top: 15px;
+        transform: none;
     }
 
     .practice-chat-input {
-        
+        width: 100%;
+        min-height: 56px;
     }
 
     .practice-send-btn {
-        width: 56px;
-        min-width: 50px;
-        padding: 0;
+        width: 100%;
+        min-width: 0;
+    }
+
+    .practice-send-btn img,
+    .practice-send-btn svg {
+        display: none;
     }
 
     .certificates-page__top {
         align-items: flex-start;
         flex-direction: column;
     }
-    .practice-send-btn span {
-        display: none;
-    }
+
     .sert-item {
         min-height: 156px;
         padding: 14px;
@@ -11082,7 +11080,6 @@ html body .training-player[data-training-page="player"].is-pseudo-fullscreen .pl
     .practice-task-card__top .practice-image {
         width: 40px;
         height: 40px;
-        object-fit: cover;
     }
 }
 
@@ -11749,7 +11746,7 @@ li.show > .training-menu__arrow {
 
 @media (max-width: 767.98px) {
     .training-type {
-        padding: 0;
+        padding: 16px;
     }
 }
 
@@ -11974,15 +11971,6 @@ li.show > .training-menu__arrow {
         font-size: 14px;
         line-height: 18px;
     }
-    .section-block.tests-block {
-        padding: 0 16px 16px !important;
-    }
-    .tests-block .test-card {
-        overflow: visible!important;
-    }
-    #testuser-main .test-footer .text-info-test span:nth-child(2) {
-        color: #252424;
-    }
 }
 
 /* === FACTCHECK PACK 6 END === */
@@ -12005,4 +11993,195 @@ li.show > .training-menu__arrow {
         margin-left: 0;
         text-align: left;
     }
+}
+
+/* ===== training manage mobile slider + cards containment fix =====
+ * Только страница «Управление курсами».
+ * 1) Убирает конфликт Swiper с CSS gap/нативной горизонтальной прокруткой.
+ * 2) Не даёт карточкам сотрудников расширять сетку шире родительского контейнера.
+ */
+@media (max-width: 991.98px){
+    .training-manage-page[data-training-page="managecourses"] .course-filters-swiper{
+        overflow: hidden !important;
+        touch-action: pan-y;
+    }
+
+    .training-manage-page[data-training-page="managecourses"] .course-filters-swiper .swiper-wrapper{
+        gap: 0 !important;
+        overflow: visible !important;
+        padding: 0 !important;
+        -webkit-overflow-scrolling: auto;
+    }
+
+    .training-manage-page[data-training-page="managecourses"] [data-users-cards],
+    .training-manage-page[data-training-page="managecourses"] .label-block,
+    .training-manage-page[data-training-page="managecourses"] #usersCards,
+    .training-manage-page[data-training-page="managecourses"] .course-cards,
+    .training-manage-page[data-training-page="managecourses"] .users-cards{
+        grid-template-columns: minmax(0, 1fr) !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+    }
+
+    .training-manage-page[data-training-page="managecourses"] .course-card{
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .training-manage-page[data-training-page="managecourses"] .course-card__top,
+    .training-manage-page[data-training-page="managecourses"] .course-user,
+    .training-manage-page[data-training-page="managecourses"] .course-user__text,
+    .training-manage-page[data-training-page="managecourses"] .course-meta,
+    .training-manage-page[data-training-page="managecourses"] .course-meta__item{
+        min-width: 0 !important;
+    }
+
+    .training-manage-page[data-training-page="managecourses"] .course-org,
+    .training-manage-page[data-training-page="managecourses"] .course-name,
+    .training-manage-page[data-training-page="managecourses"] .course-email{
+        min-width: 0 !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+
+    .training-manage-page[data-training-page="managecourses"] .course-org{
+        white-space: nowrap !important;
+    }
+}
+
+
+/* ===== training-license-ui-v1 ===== */
+.training-manage-page .courses-available__count strong{
+    display: inline-block;
+    min-width: 22px;
+    text-align: center;
+}
+
+.training-course-access-modal__license-info{
+    margin: 12px 0 0;
+    padding: 12px 14px;
+    border-radius: 14px;
+    font-size: 15px;
+    line-height: 21px;
+}
+
+.training-course-access-modal__license-info.is-hidden{
+    display: none;
+}
+
+.training-course-access-modal__license-info.is-return{
+    color: #065B35;
+    background: #E6FEF3;
+    border: 1px solid #8CE1BA;
+}
+
+.training-course-access-modal__license-info.is-consumed{
+    color: #A04100;
+    background: #FFF4E8;
+    border: 1px solid #F9B877;
+}
+
+.training-course-access-modal__license-info.is-legacy{
+    color: #595959;
+    background: #F4F4F4;
+    border: 1px solid #D8D8D8;
+}
+
+/* ===== training-license-front-ui-v1 ===== */
+.training-course-access-modal .training-course-access-modal__license-info{
+    margin: 14px 0 16px !important;
+    padding: 12px 14px !important;
+    border-radius: 14px !important;
+    font-size: 16px !important;
+    line-height: 22px !important;
+}
+
+.training-course-access-modal .training-course-access-modal__license-info.is-hidden{
+    display: none !important;
+}
+
+.training-course-access-modal .training-course-access-modal__actions{
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    width: 100% !important;
+    min-height: 52px !important;
+    margin-top: 18px !important;
+    padding: 0 !important;
+}
+
+.training-course-access-modal .training-course-access-modal__cancel,
+.training-course-access-modal .training-course-access-modal__confirm,
+.training-course-access-modal [data-access-modal-confirm]{
+    position: static !important;
+    float: none !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.training-course-access-modal .training-course-access-modal__confirm,
+.training-course-access-modal [data-access-modal-confirm]{
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 164px !important;
+    height: 46px !important;
+    padding: 0 22px !important;
+    margin: 0 0 0 auto !important;
+    border: 0 !important;
+    border-radius: 999px !important;
+    color: #FFFFFF !important;
+    font-size: 18px !important;
+    font-weight: 500 !important;
+    line-height: 22px !important;
+    white-space: nowrap !important;
+    box-shadow: none !important;
+}
+
+.training-course-access-modal .training-course-access-modal__confirm.is-success,
+.training-course-access-modal [data-access-modal-confirm].is-success{
+    background: #06B664 !important;
+}
+
+.training-course-access-modal .training-course-access-modal__confirm.is-danger,
+.training-course-access-modal [data-access-modal-confirm].is-danger{
+    background: #FE000E !important;
+}
+
+.training-course-access-modal .training-course-access-modal__confirm.is-success:hover,
+.training-course-access-modal [data-access-modal-confirm].is-success:hover{
+    background: #059250 !important;
+}
+
+.training-course-access-modal .training-course-access-modal__confirm.is-danger:hover,
+.training-course-access-modal [data-access-modal-confirm].is-danger:hover{
+    background: #CF000B !important;
+}
+
+.training-course-access-modal .training-course-access-modal__confirm:disabled,
+.training-course-access-modal [data-access-modal-confirm]:disabled{
+    display: inline-flex !important;
+    opacity: .45 !important;
+    cursor: not-allowed !important;
+}
+
+.training-course-access-modal .training-course-access-modal__dates{
+    margin-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.training-manage-page .action-panel .action-btn{
+    transition: opacity .2s ease, transform .2s ease, background-color .2s ease !important;
+}
+
+.training-manage-page .action-panel .action-btn:not(:disabled):hover{
+    transform: translateY(-1px);
+}
+
+.training-manage-page .action-panel .action-btn:disabled{
+    filter: grayscale(.08);
 }

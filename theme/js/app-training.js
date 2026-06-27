@@ -580,7 +580,7 @@ var AppTraining = (function () {
                     return;
                 }
 
-                var $targetHolder = (isFullscreenActive() || isSmallPlayerViewport()) ? $floatingPreviewHolder : $sidebarVideoHolder;
+                var $targetHolder = isFullscreenActive() ? $floatingPreviewHolder : $sidebarVideoHolder;
                 if (!$targetHolder.length) {
                     return;
                 }
@@ -1227,12 +1227,8 @@ var AppTraining = (function () {
                     return;
                 }
 
-                // iPhone/iPad Safari нестабильно включает fullscreen для кастомного блока.
-                // Не отдаём видео в нативный fullscreen, чтобы не потерять наши контролы.
-                if (isIosSafariLike()) {
-                    setPseudoFullscreen(true);
-                    return;
-                }
+                // iPhone/iPad Safari: сначала пробуем нативный Fullscreen API для контейнера плеера.
+                // При отказе или отсутствии поддержки штатный код ниже включит прежний pseudo-fullscreen.
 
                 var fsResult = requestNativeFullscreen(node);
                 if (!fsResult) {
@@ -2370,6 +2366,13 @@ var AppTraining = (function () {
             var searchTimer = null;
             var pendingAction = '';
             var pendingIds = [];
+            var activeLicenseSummary = {
+                enabled: 0,
+                total: 0,
+                reserved: 0,
+                consumed: 0,
+                free: 0
+            };
             var modalEl = document.getElementById('trainingCourseAccessModal');
             var accessModal = null;
 
@@ -2531,6 +2534,98 @@ var AppTraining = (function () {
                 return '<div class="label-chip ' + self.escapeHtml(item.status_class || 'label-chip--blue') + '"><span>' + self.escapeHtml(item.status_text || '—') + '</span></div>';
             }
 
+            /*
+             * training-license-ui-v1
+             *
+             * Все расчёты лимита приходят от сервера. Браузер только
+             * показывает результат и не решает, можно ли выдать лицензию.
+             */
+            function normalizeLicenseSummary(summary) {
+                summary = summary || {};
+
+                return {
+                    enabled: parseInt(summary.enabled || 0, 10) === 1 ? 1 : 0,
+                    total: Math.max(0, parseInt(summary.total || 0, 10) || 0),
+                    reserved: Math.max(0, parseInt(summary.reserved || 0, 10) || 0),
+                    consumed: Math.max(0, parseInt(summary.consumed || 0, 10) || 0),
+                    free: Math.max(0, parseInt(summary.free || 0, 10) || 0)
+                };
+            }
+
+            function getLicenseAction(row) {
+                var action = row && row.license_action ? String(row.license_action) : '';
+
+                if (action) {
+                    return action;
+                }
+
+                if (row && parseInt(row.can_assign || 0, 10) === 1 && parseInt(row.has_access || 0, 10) !== 1) {
+                    return 'assign';
+                }
+
+                if (row && parseInt(row.can_unassign || 0, 10) === 1) {
+                    return 'unassign_legacy';
+                }
+
+                return '';
+            }
+
+            function getSelectedActionProfile(selectedIds) {
+                selectedIds = selectedIds || getSelectedIds();
+
+                var profile = {
+                    count: selectedIds.length,
+                    action: '',
+                    mixed: false,
+                    valid: selectedIds.length > 0
+                };
+
+                $.each(selectedIds, function (_, id) {
+                    var row = getRowById(id);
+                    var action = getLicenseAction(row);
+
+                    if (!row || !action) {
+                        profile.valid = false;
+                        profile.mixed = true;
+                        return false;
+                    }
+
+                    if (!profile.action) {
+                        profile.action = action;
+                    } else if (profile.action !== action) {
+                        profile.mixed = true;
+                        profile.valid = false;
+                        return false;
+                    }
+                });
+
+                return profile;
+            }
+
+            function updateLicenseCounter() {
+                var $counter = $wrap.find('[data-license-free]').first();
+
+                if (!$counter.length) {
+                    return;
+                }
+
+                $counter.text(activeLicenseSummary.enabled ? activeLicenseSummary.free : '—');
+            }
+
+            function setModalLicenseInfo($modal, text, tone) {
+                var $info = $modal.find('[data-access-modal-license-info]').first();
+
+                if (!$info.length) {
+                    $info = $('<div class="training-course-access-modal__license-info" data-access-modal-license-info></div>');
+                    $modal.find('.training-course-access-modal__summary').after($info);
+                }
+
+                $info
+                    .removeClass('is-return is-consumed is-legacy is-hidden')
+                    .addClass(tone ? ('is-' + tone) : 'is-hidden')
+                    .text(text || '');
+            }
+
             function renderTable(rows) {
                 var html = '' +
                     '<div class="users-table__head">' +
@@ -2660,24 +2755,47 @@ var AppTraining = (function () {
 
             function updateBulkButtons(selectedIds) {
                 selectedIds = selectedIds || getSelectedIds();
+
                 var hasCourse = activeCourseId > 0 || activeResourceId > 0;
-                var hasSelection = selectedIds.length > 0;
-                var canUnassign = false;
+                var profile = getSelectedActionProfile(selectedIds);
+                var assignEnabled = hasCourse && profile.valid && !profile.mixed && profile.action === 'assign';
+                var unassignEnabled = hasCourse
+                    && profile.valid
+                    && !profile.mixed
+                    && (
+                        profile.action === 'unassign_return'
+                        || profile.action === 'unassign_close'
+                        || profile.action === 'unassign_legacy'
+                    );
 
-                $.each(selectedIds, function (_, id) {
-                    var row = getRowById(id);
-                    if (row && parseInt(row.can_unassign || 0, 10) === 1) {
-                        canUnassign = true;
-                        return false;
-                    }
-                });
+                if (
+                    assignEnabled
+                    && activeLicenseSummary.enabled
+                    && activeLicenseSummary.free < profile.count
+                ) {
+                    assignEnabled = false;
+                }
 
-                $wrap.find('[data-bulk-action="assign"]').prop('disabled', !(hasCourse && hasSelection));
-                $wrap.find('[data-bulk-action="unassign"]').prop('disabled', !(hasCourse && hasSelection && canUnassign));
+                $wrap.find('[data-bulk-action="assign"]')
+                    .prop('disabled', !assignEnabled)
+                    .attr('aria-disabled', assignEnabled ? 'false' : 'true');
+
+                $wrap.find('[data-bulk-action="unassign"]')
+                    .prop('disabled', !unassignEnabled)
+                    .attr('aria-disabled', unassignEnabled ? 'false' : 'true');
+
+                var unassignText = 'Заблокировать';
+                if (profile.action === 'unassign_close' || profile.action === 'unassign_legacy') {
+                    unassignText = 'Закрыть';
+                }
+
+                $wrap.find('[data-bulk-action="unassign"] .action-btn__text').text(unassignText);
             }
 
             function loadUsers() {
                 if (!activeCourseId && !activeResourceId) {
+                    activeLicenseSummary = normalizeLicenseSummary();
+                    updateLicenseCounter();
                     setRows([]);
                     renderTable([]);
                     renderCards([]);
@@ -2691,14 +2809,24 @@ var AppTraining = (function () {
                     include_self: 0
                 }, $wrap).done(function (res) {
                     var rows = [];
-                    if (res && res.success && res.object && $.isArray(res.object.results)) {
-                        rows = res.object.results;
+                    var summary = {};
+
+                    if (res && res.success && res.object) {
+                        if ($.isArray(res.object.results)) {
+                            rows = res.object.results;
+                        }
+                        summary = res.object.license_summary || {};
                     }
+
+                    activeLicenseSummary = normalizeLicenseSummary(summary);
+                    updateLicenseCounter();
                     setRows(rows);
                     renderTable(rows);
                     renderCards(rows);
                     renderMobileSearchResults();
                 }).fail(function () {
+                    activeLicenseSummary = normalizeLicenseSummary();
+                    updateLicenseCounter();
                     setRows([]);
                     renderTable([]);
                     renderCards([]);
@@ -2731,16 +2859,50 @@ var AppTraining = (function () {
             function openBulkModal(action, ids) {
                 if (!ids.length) return;
 
+                var profile = getSelectedActionProfile(ids);
+                var isAssign = action === 'assign';
+                var isUnassign = action === 'unassign';
+
+                if (
+                    !profile.valid
+                    || profile.mixed
+                    || (isAssign && profile.action !== 'assign')
+                    || (
+                        isUnassign
+                        && profile.action !== 'unassign_return'
+                        && profile.action !== 'unassign_close'
+                        && profile.action !== 'unassign_legacy'
+                    )
+                ) {
+                    window.alert('Для одного действия выберите сотрудников с одинаковым состоянием доступа.');
+                    return;
+                }
+
+                if (
+                    isAssign
+                    && activeLicenseSummary.enabled
+                    && activeLicenseSummary.free < ids.length
+                ) {
+                    window.alert(
+                        'Недостаточно свободных лицензий. Доступно: '
+                        + activeLicenseSummary.free
+                        + ', выбрано сотрудников: '
+                        + ids.length
+                        + '.'
+                    );
+                    return;
+                }
+
                 if (!accessModal || !modalEl) {
-                    if (action === 'assign') {
-                        var now = new Date();
+                    if (isAssign) {
+                        var nowFallback = new Date();
                         executeBulk('assign', ids, {
                             access_role: 'employee',
                             is_active: 1,
-                            active_from: formatDateTimeLocal(now),
-                            active_to: formatDateTimeLocal(addMonths(now, 3))
+                            active_from: formatDateTimeLocal(nowFallback),
+                            active_to: formatDateTimeLocal(addMonths(nowFallback, 3))
                         });
-                    } else if (window.confirm('Снять доступ к курсу у выбранных сотрудников?')) {
+                    } else if (window.confirm('Закрыть доступ к курсу у выбранных сотрудников?')) {
                         executeBulk('unassign', ids, {});
                     }
                     return;
@@ -2763,18 +2925,56 @@ var AppTraining = (function () {
                 $count.text(ids.length);
                 $course.text(activeCourseTitle || '—');
 
-                if (action === 'assign') {
+                if (isAssign) {
                     $title.text('Активация курса');
                     $text.text('Подтвердите активацию курса для выбранных сотрудников.');
                     $dates.removeClass('d-none');
                     $from.val(formatDateTimeLocal(now));
                     $to.val(formatDateTimeLocal(addMonths(now, 3)));
                     $confirm.text('Активировать');
+
+                    if (activeLicenseSummary.enabled) {
+                        setModalLicenseInfo(
+                            $modal,
+                            'Будет зарезервировано лицензий: ' + ids.length
+                            + '. Останется свободно: '
+                            + Math.max(0, activeLicenseSummary.free - ids.length) + '.',
+                            'return'
+                        );
+                    } else {
+                        setModalLicenseInfo($modal, '', '');
+                    }
                 } else {
-                    $title.text('Блокировка курса');
-                    $text.text('Подтвердите блокировку курса для выбранных сотрудников.');
                     $dates.addClass('d-none');
-                    $confirm.text('Заблокировать');
+
+                    if (profile.action === 'unassign_return') {
+                        $title.text('Блокировка курса');
+                        $text.text('Доступ будет закрыт. Лицензии вернутся в пул.');
+                        $confirm.text('Заблокировать');
+                        setModalLicenseInfo(
+                            $modal,
+                            'Вернётся лицензий в пул: ' + ids.length + '.',
+                            'return'
+                        );
+                    } else if (profile.action === 'unassign_close') {
+                        $title.text('Закрытие доступа');
+                        $text.text('Доступ будет закрыт. Лицензии уже списаны и не возвращаются.');
+                        $confirm.text('Закрыть доступ');
+                        setModalLicenseInfo(
+                            $modal,
+                            'Лицензии не возвращаются: порог 80% или сертификат уже достигнут.',
+                            'consumed'
+                        );
+                    } else {
+                        $title.text('Закрытие доступа');
+                        $text.text('Доступ будет закрыт. Этот доступ не использует лицензию директора.');
+                        $confirm.text('Закрыть доступ');
+                        setModalLicenseInfo(
+                            $modal,
+                            'Лицензии директора не затрагиваются.',
+                            'legacy'
+                        );
+                    }
                 }
 
                 accessModal.show();
@@ -3271,77 +3471,56 @@ AppTraining.init();
         if (button.__practiceMoreReady) {
             return;
         }
-
         button.__practiceMoreReady = true;
-
+    
         var card = closest(button, '.practice-task-card');
         if (!card) {
             return;
         }
-
+    
         var text = card.querySelector('[data-practice-description]');
         if (!text) {
             return;
         }
-
-        var limit = 144;
-
-        function setOpen(state) {
-            state = !!state;
-
-            card.classList.toggle('is-open', state);
-            text.classList.toggle('is-expanded', state);
-            button.textContent = state ? 'Скрыть' : 'Показать больше';
-        }
-
-        function measureHeight() {
-            var wasOpen = card.classList.contains('is-open') || text.classList.contains('is-expanded');
-
+    
+        var limit = 114;
+    
+        function updateButtonState() {
+            var wasOpen = card.classList.contains('is-open');
+    
             card.classList.remove('is-open');
             text.classList.remove('is-expanded');
-
-            var height = text.scrollHeight;
-
+    
+            var realHeight = text.scrollHeight;
+    
+            if (realHeight <= limit + 2) {
+                button.classList.add('is-hidden');
+                button.textContent = 'Показать больше';
+                return;
+            }
+    
+            button.classList.remove('is-hidden');
+    
             if (wasOpen) {
                 card.classList.add('is-open');
                 text.classList.add('is-expanded');
+                button.textContent = 'Скрыть';
+            } else {
+                button.textContent = 'Показать больше';
             }
-
-            return height;
         }
-
-        function updateButtonState() {
-            var wasOpen = card.classList.contains('is-open') || text.classList.contains('is-expanded');
-            var realHeight = measureHeight();
-            var hasMore = realHeight > limit + 2;
-
-            card.classList.toggle('has-more', hasMore);
-            card.classList.toggle('is-short', !hasMore);
-
-            if (!hasMore) {
-                button.classList.add('is-hidden');
-                setOpen(false);
-                return;
-            }
-
-            button.classList.remove('is-hidden');
-            setOpen(wasOpen);
-        }
-
+    
         updateButtonState();
-
-        window.setTimeout(updateButtonState, 150);
+    
         window.addEventListener('resize', updateButtonState);
-
+    
         button.addEventListener('click', function () {
-            if (button.classList.contains('is-hidden')) {
-                return;
-            }
-
-            setOpen(!card.classList.contains('is-open'));
+            var isOpen = card.classList.toggle('is-open');
+    
+            text.classList.toggle('is-expanded', isOpen);
+            button.textContent = isOpen ? 'Скрыть' : 'Показать больше';
         });
     }
-
 
     function init() {
         document.querySelectorAll('[data-practice-tabs]').forEach(initPracticeTabs);
@@ -3675,7 +3854,153 @@ AppTraining.init();
     }
 
     ready(function () {
+        initPracticeMore();
         initPracticeFormState();
     });
 }());
 /* === FACTCHECK PACK 2 END === */
+
+
+/* ===== training-license-front-ui-v1 ===== */
+(function ($, window, document) {
+    'use strict';
+
+    if (!$ || window.__trainingLicenseFrontUiV1) {
+        return;
+    }
+
+    window.__trainingLicenseFrontUiV1 = true;
+
+    function getWrap() {
+        return $('#training-manage-page[data-training-page="managecourses"], .training-manage-page[data-training-page="managecourses"]').first();
+    }
+
+    function getUniqueSelectedCount($wrap) {
+        var map = {};
+
+        $wrap.find('.users-check[data-user-id]:checked').each(function () {
+            var id = parseInt($(this).attr('data-user-id') || 0, 10) || 0;
+
+            if (id > 0) {
+                map[id] = true;
+            }
+        });
+
+        return Object.keys(map).length;
+    }
+
+    function normalizeLegacyLabels($root) {
+        $root.find('.label-chip span').each(function () {
+            var $label = $(this);
+
+            if ($.trim($label.text()) === 'Старый доступ') {
+                $label.text('Доступ активен');
+            }
+        });
+    }
+
+    function applyBulkButtonVisuals() {
+        var $wrap = getWrap();
+
+        if (!$wrap.length) {
+            return;
+        }
+
+        var selected = getUniqueSelectedCount($wrap);
+        var $assign = $wrap.find('[data-bulk-action="assign"]').first();
+        var $unassign = $wrap.find('[data-bulk-action="unassign"]').first();
+        var assignText = selected > 0 ? 'Активировать (' + selected + ')' : 'Активировать';
+        var unassignText = selected > 0 ? 'Заблокировать (' + selected + ')' : 'Заблокировать';
+
+        $assign.find('.action-btn__text').text(assignText);
+
+        /*
+         * Основной JS может подменять текст на «Закрыть». Не затираем это,
+         * когда серверная логика уже определила, что доступ надо закрыть,
+         * а не блокировать с возвратом лицензии.
+         */
+        if ($.trim($unassign.find('.action-btn__text').text()) !== 'Закрыть') {
+            $unassign.find('.action-btn__text').text(unassignText);
+        }
+    }
+
+    function applyModalVisuals($modal) {
+        var $confirm = $modal.find('[data-access-modal-confirm]').first();
+
+        if (!$confirm.length) {
+            return;
+        }
+
+        var confirmText = $.trim($confirm.text());
+        var title = $.trim($modal.find('.modal-title').first().text());
+        var isDanger = /Заблокировать|Закрыть/.test(confirmText + ' ' + title);
+
+        $confirm
+            .removeClass('is-success is-danger')
+            .addClass(isDanger ? 'is-danger' : 'is-success');
+
+        if (isDanger) {
+            $confirm.attr('data-license-modal-theme', 'danger');
+        } else {
+            $confirm.attr('data-license-modal-theme', 'success');
+        }
+    }
+
+    function refreshVisuals() {
+        var $wrap = getWrap();
+
+        if (!$wrap.length) {
+            return;
+        }
+
+        normalizeLegacyLabels($wrap);
+        applyBulkButtonVisuals();
+
+        var $modal = $('#trainingCourseAccessModal');
+        if ($modal.length) {
+            normalizeLegacyLabels($modal);
+            applyModalVisuals($modal);
+        }
+    }
+
+    $(document)
+        .off('shown.bs.modal.trainingLicenseFrontUiV1')
+        .on('shown.bs.modal.trainingLicenseFrontUiV1', '#trainingCourseAccessModal', function () {
+            applyModalVisuals($(this));
+        })
+        .off('change.trainingLicenseFrontUiV1')
+        .on('change.trainingLicenseFrontUiV1', '#training-manage-page .users-check, .training-manage-page .users-check', function () {
+            window.setTimeout(refreshVisuals, 0);
+        })
+        .off('click.trainingLicenseFrontUiV1')
+        .on('click.trainingLicenseFrontUiV1', '#training-manage-page [data-bulk-action], .training-manage-page [data-bulk-action]', function () {
+            window.setTimeout(refreshVisuals, 0);
+        });
+
+    $(function () {
+        var $wrap = getWrap();
+
+        if ($wrap.length && window.MutationObserver) {
+            var queued = false;
+            var observer = new MutationObserver(function () {
+                if (queued) {
+                    return;
+                }
+
+                queued = true;
+                window.requestAnimationFrame(function () {
+                    queued = false;
+                    refreshVisuals();
+                });
+            });
+
+            observer.observe($wrap.get(0), {
+                childList: true,
+                subtree: true,
+                characterData: true
+            });
+        }
+
+        refreshVisuals();
+    });
+})(window.jQuery, window, document);

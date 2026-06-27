@@ -78,6 +78,49 @@ class TrainingCourseAccessGetListProcessor extends modObjectGetListProcessor
         $array['principal_type_label'] = $array['principal_type'] === 'group' ? 'Группа' : 'Пользователь';
         $array['access_role_label'] = $array['access_role'] === 'director' ? 'Директор' : 'Сотрудник';
         $array['assigned_by_label'] = TrainingCourseAccessHelper::getAssignedByLabel($this->modx, $array['assigned_by']);
+        /* training-license-access-ui-v1 */
+        $array['licenses_total'] = isset($array['licenses_total']) ? (int)$array['licenses_total'] : 0;
+        $array['licenses_enabled'] = isset($array['licenses_enabled']) ? (int)$array['licenses_enabled'] : 0;
+        $array['licenses_reserved'] = 0;
+        $array['licenses_consumed'] = 0;
+        $array['licenses_free'] = 0;
+        $array['licenses_label'] = '—';
+
+        if (
+            (string)$array['access_role'] === 'director'
+            && (string)$array['principal_type'] === 'user'
+            && (int)$array['licenses_enabled'] === 1
+        ) {
+            $accessTable = trim((string)$this->modx->getTableName('TrainingCourseAccess'), '`');
+            $licenseAssignmentsTable = preg_replace('/_course_access$/', '_license_assignments', $accessTable);
+
+            if ($licenseAssignmentsTable && $licenseAssignmentsTable !== $accessTable) {
+                $safeAssignmentsTable = str_replace('`', '``', $licenseAssignmentsTable);
+                $licensesStmt = $this->modx->prepare(
+                    'SELECT '
+                    . 'SUM(CASE WHEN `state` = "reserved" THEN 1 ELSE 0 END) AS `reserved_count`, '
+                    . 'SUM(CASE WHEN `state` = "consumed" THEN 1 ELSE 0 END) AS `consumed_count` '
+                    . 'FROM `' . $safeAssignmentsTable . '` '
+                    . 'WHERE `director_access_id` = :director_access_id'
+                );
+
+                if ($licensesStmt && $licensesStmt->execute(array(':director_access_id' => (int)$array['id']))) {
+                    $licensesRow = (array)$licensesStmt->fetch(PDO::FETCH_ASSOC);
+                    $array['licenses_reserved'] = (int)(isset($licensesRow['reserved_count']) ? $licensesRow['reserved_count'] : 0);
+                    $array['licenses_consumed'] = (int)(isset($licensesRow['consumed_count']) ? $licensesRow['consumed_count'] : 0);
+                }
+            }
+
+            $array['licenses_free'] = max(
+                0,
+                (int)$array['licenses_total']
+                - (int)$array['licenses_reserved']
+                - (int)$array['licenses_consumed']
+            );
+
+            $array['licenses_label'] = (int)$array['licenses_total']
+                . ' всего · ' . (int)$array['licenses_free'] . ' свободно';
+        }
         $array['active_from'] = !empty($array['active_from']) ? $array['active_from'] : '';
         $array['active_to'] = !empty($array['active_to']) ? $array['active_to'] : '';
 

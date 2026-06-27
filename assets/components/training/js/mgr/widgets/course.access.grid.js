@@ -124,6 +124,7 @@ Training.window.CourseAccess = function(config) {
     this.isUpdate = !!this.record;
     this.userFieldId = Ext.id();
     this.groupFieldId = Ext.id();
+    this.licensesFieldId = Ext.id();
 
     Ext.applyIf(config, {
         title: this.isUpdate ? 'Редактирование доступа' : 'Добавление доступа',
@@ -163,6 +164,17 @@ Training.window.CourseAccess = function(config) {
             xtype: 'training-combo-access-role',
             name: 'access_role',
             value: this.record ? (this.record.access_role || 'employee') : 'employee'
+        }, {
+            xtype: 'numberfield',
+            name: 'licenses_total',
+            fieldLabel: 'Лицензий всего',
+            minValue: 0,
+            allowDecimals: false,
+            allowNegative: false,
+            value: this.record ? parseInt(this.record.licenses_total || 0, 10) : 0,
+            hidden: true,
+            id: this.licensesFieldId,
+            anchor: '100%'
         }, {
             xtype: 'hidden',
             name: 'principal_id'
@@ -338,7 +350,13 @@ Training.grid.CourseAccess = function(config) {
             'principal_label',
             'access_role',
             'access_role_label',
-            'assigned_by',
+            'licenses_total',
+            'licenses_enabled',
+            'licenses_reserved',
+            'licenses_consumed',
+            'licenses_free',
+            'licenses_label',
+'assigned_by',
             'assigned_by_label',
             'active_from',
             'active_to',
@@ -363,6 +381,32 @@ Training.grid.CourseAccess = function(config) {
             dataIndex: 'access_role_label',
             width: 110
         }, {
+            header: 'Лицензии',
+            dataIndex: 'licenses_label',
+            width: 190,
+            renderer: function(value, meta, record) {
+                if (
+                    record.get('access_role') !== 'director' ||
+                    record.get('principal_type') !== 'user'
+                ) {
+                    return '—';
+                }
+
+                if (parseInt(record.get('licenses_enabled') || 0, 10) !== 1) {
+                    return 'Не настроено';
+                }
+
+                return Ext.util.Format.htmlEncode(
+                    value || (
+                        String(record.get('licenses_total') || 0)
+                        + ' всего · '
+                        + String(record.get('licenses_free') || 0)
+                        + ' свободно'
+                    )
+                );
+            }
+        },
+{
             header: 'Активно',
             dataIndex: 'is_active',
             width: 80,
@@ -746,3 +790,77 @@ Ext.extend(Training.grid.CourseAccess, MODx.grid.Grid, {
 });
 
 Ext.reg('training-grid-course-access', Training.grid.CourseAccess);
+
+/* training-license-access-ui-v1 */
+(function() {
+    if (!Training.window || !Training.window.CourseAccess) {
+        return;
+    }
+
+    var proto = Training.window.CourseAccess.prototype;
+    if (proto.__trainingLicenseAccessUiV1) {
+        return;
+    }
+
+    proto.__trainingLicenseAccessUiV1 = true;
+
+    var originalApplyRecord = proto.applyRecord;
+
+    proto.applyRecord = function() {
+        if (originalApplyRecord) {
+            originalApplyRecord.apply(this, arguments);
+        }
+
+        var form = this.fp ? this.fp.getForm() : null;
+        if (!form) {
+            return;
+        }
+
+        var roleField = form.findField('access_role');
+        var principalField = form.findField('principal_type');
+
+        if (roleField && !roleField.__trainingLicenseAccessUiV1Bound) {
+            roleField.on('select', function() {
+                this.toggleLicenseTotalField();
+            }, this);
+            roleField.__trainingLicenseAccessUiV1Bound = true;
+        }
+
+        if (principalField && !principalField.__trainingLicenseAccessUiV1Bound) {
+            principalField.on('select', function() {
+                this.toggleLicenseTotalField();
+            }, this);
+            principalField.__trainingLicenseAccessUiV1Bound = true;
+        }
+
+        this.toggleLicenseTotalField();
+    };
+
+    proto.toggleLicenseTotalField = function() {
+        var form = this.fp ? this.fp.getForm() : null;
+        if (!form) {
+            return;
+        }
+
+        var roleField = form.findField('access_role');
+        var principalField = form.findField('principal_type');
+        var licensesField = form.findField('licenses_total');
+
+        if (!licensesField) {
+            return;
+        }
+
+        var role = roleField ? String(roleField.getValue() || '') : '';
+        var principalType = principalField ? String(principalField.getValue() || 'user') : 'user';
+        var show = role === 'director' && principalType === 'user';
+
+        if (show) {
+            licensesField.show();
+        } else {
+            licensesField.setValue(0);
+            licensesField.hide();
+        }
+    };
+})();
+
+/* training-license-grid-store-v1 */

@@ -418,9 +418,11 @@ class TrainingProgressService
 
             $principalType = (string)$item->get('principal_type');
             $principalId = (int)$item->get('principal_id');
+
             if ($principalType === 'user' && $principalId === $userId) {
                 return true;
             }
+
             if ($principalType === 'group' && in_array($principalId, $groupIds, true)) {
                 return true;
             }
@@ -1055,6 +1057,24 @@ public function syncModuleUserTestStatuses($courseId, $moduleId, $userId)
         $courseId = (int)$courseId;
         $moduleId = (int)$moduleId;
         $userId = (int)$userId;
+
+        /*
+         * training-get-request-memo-v2:module-activity-rows
+         *
+         * In a course page GET, the same module rows are requested by the
+         * page, its summary and access-gate calculations. The first call still
+         * executes syncModuleUserTestStatuses(); subsequent identical calls
+         * reuse the same calculated result. POST handlers are never cached.
+         */
+        static $requestMemo = array();
+        $memoEnabled = isset($_SERVER['REQUEST_METHOD'])
+            && strtoupper((string)$_SERVER['REQUEST_METHOD']) === 'GET';
+        $memoKey = $courseId . '|' . $moduleId . '|' . $userId;
+
+        if ($memoEnabled && array_key_exists($memoKey, $requestMemo)) {
+            return $requestMemo[$memoKey];
+        }
+
         $rows = [];
 
         $links = $this->getModuleActivityLinks($moduleId, $courseId);
@@ -1170,6 +1190,10 @@ public function syncModuleUserTestStatuses($courseId, $moduleId, $userId)
                 'last_result_id' => $lastResultId,
                 'test_type' => $testType,
             ];
+        }
+
+        if ($memoEnabled) {
+            $requestMemo[$memoKey] = $rows;
         }
 
         return $rows;
@@ -1431,6 +1455,20 @@ public function syncModuleUserTestStatuses($courseId, $moduleId, $userId)
         $userCourse->set('last_activity', $this->getNow());
         $userCourse->save();
 
+        /* training-license-core-v1: progress-sync */
+        $licensePath = rtrim((string)$this->modx->getOption(
+            'training.core_path',
+            null,
+            $this->modx->getOption('core_path') . 'components/training/'
+        ), '/\\') . '/model/training/services/traininglicense.class.php';
+
+        if (is_file($licensePath)) {
+            require_once $licensePath;
+        }
+
+        if (class_exists('TrainingLicenseService')) {
+            TrainingLicenseService::getInstance($this->modx, $this)->syncForEmployee($courseId, $userId);
+        }
         return $userCourse;
     }
 
@@ -1793,76 +1831,215 @@ public function syncModuleUserTestStatuses($courseId, $moduleId, $userId)
         $courseId = (int)$courseId;
         $targetUserId = (int)$targetUserId;
         $actorUserId = (int)$actorUserId;
-    
+
         if ($courseId <= 0 || $targetUserId <= 0 || $actorUserId <= 0) {
             return [
                 'success' => false,
                 'message' => 'Некорректные параметры назначения',
             ];
         }
-    
+
         if (!$this->canAssignCourseToUser($courseId, $actorUserId, $targetUserId)) {
             return [
                 'success' => false,
                 'message' => 'Недостаточно прав для назначения этого курса этому пользователю',
             ];
         }
-    
+
         $accessRole = isset($options['access_role'])
             ? $this->normalizeRole($options['access_role'])
             : 'employee';
-    
-        // Не-админ не может назначать director другим людям
+
         if (!$this->isAdminUser($actorUserId) && $actorUserId !== $targetUserId) {
             $accessRole = 'employee';
         }
-    
+
         $activeFrom = isset($options['active_from']) ? $this->normalizeDateTimeValue($options['active_from']) : null;
         $activeTo = isset($options['active_to']) ? $this->normalizeDateTimeValue($options['active_to']) : null;
         $isActive = isset($options['is_active']) ? (int)((string)$options['is_active'] === '0' ? 0 : 1) : 1;
-    
-        /** @var TrainingCourseAccess $access */
-        $access = $this->getDirectUserAccess($courseId, $targetUserId);
-        $created = false;
-    
-        if (!$access) {
-            $access = $this->modx->newObject('TrainingCourseAccess');
-            $created = true;
+
+        /*
+         * training-license-core-v1
+         */
+        $licensePath = rtrim((string)$this->modx->getOption(
+            'training.core_path',
+            null,
+            $this->modx->getOption('core_path') . 'components/training/'
+        ), '/\\') . '/model/training/services/traininglicense.class.php';
+
+        if (is_file($licensePath)) {
+            require_once $licensePath;
         }
-    
-        $access->fromArray([
-            'course_id' => $courseId,
-            'principal_type' => 'user',
-            'principal_id' => $targetUserId,
-            'access_role' => $accessRole,
-            'is_active' => $isActive,
-            'active_from' => $activeFrom,
-            'active_to' => $activeTo,
-            'assigned_by' => $actorUserId,
-        ], '', true, true);
-    
-        if ($created && !$access->get('createdon')) {
-            $access->set('createdon', $this->getNow());
-        }
-    
-        if (!$access->save()) {
+
+        $licenseService = class_exists('TrainingLicenseService')
+            ? TrainingLicenseService::getInstance($this->modx, $this)
+            : null;
+
+        $ownerResult = $licenseService
+            ? $licenseService->resolveOwnerForAssignment($courseId, $targetUserId, $actorUserId, $options)
+            : ['success' => true, 'owner' => null, 'mode' => 'legacy'];
+
+        if (empty($ownerResult['success'])) {
             return [
                 'success' => false,
-                'message' => 'Не удалось сохранить назначение курса',
+                'message' => !empty($ownerResult['message'])
+                    ? $ownerResult['message']
+                    : 'Не удалось определить владельца лицензии',
+                'needs_owner_selection' => !empty($ownerResult['needs_owner_selection']) ? 1 : 0,
             ];
         }
-    
-        $this->syncUserCourseForUser($courseId, $targetUserId);
-    
-        return [
-            'success' => true,
-            'created' => $created,
-            'access' => $access,
-            'user_course' => $this->modx->getObject('TrainingUserCourse', [
+
+        $owner = isset($ownerResult['owner']) ? $ownerResult['owner'] : null;
+        $usesLicense = $licenseService && $licenseService->isLicenseEnabledForOwner($owner);
+        $transactionStarted = false;
+
+        try {
+            if ($usesLicense) {
+                $transactionStarted = $licenseService->begin();
+
+                if (!$transactionStarted) {
+                    return [
+                        'success' => false,
+                        'message' => 'Не удалось начать резервирование лицензии',
+                    ];
+                }
+            }
+
+            /** @var TrainingCourseAccess $access */
+            $access = $this->getDirectUserAccess($courseId, $targetUserId);
+            $created = false;
+
+            if (!$access) {
+                $access = $this->modx->newObject('TrainingCourseAccess');
+                $created = true;
+            }
+
+            /*
+             * Сам директор проходит курс через ту же строку director,
+             * иначе право управления было бы перезаписано на employee.
+             */
+            if (
+                $owner
+                && (int)$owner['principal_id'] === $targetUserId
+                && $access
+                && $this->normalizeRole($access->get('access_role')) === 'director'
+            ) {
+                $accessRole = 'director';
+            }
+
+            $access->fromArray([
+                'course_id' => $courseId,
+                'principal_type' => 'user',
+                'principal_id' => $targetUserId,
+                'access_role' => $accessRole,
+                'is_active' => $isActive,
+                'active_from' => $activeFrom,
+                'active_to' => $activeTo,
+                'assigned_by' => $actorUserId,
+            ], '', true, true);
+
+            if ($created && !$access->get('createdon')) {
+                $access->set('createdon', $this->getNow());
+            }
+
+            if (!$access->save()) {
+                if ($transactionStarted) {
+                    $licenseService->rollback();
+                }
+
+                return [
+                    'success' => false,
+                    'message' => 'Не удалось сохранить назначение курса',
+                ];
+            }
+
+            /*
+             * Лицензия создаётся до итоговой синхронизации user_course:
+             * это важно для директора, который проходит курс сам.
+             */
+            $userCourse = $this->modx->getObject('TrainingUserCourse', [
                 'course_id' => $courseId,
                 'user_id' => $targetUserId,
-            ]),
-        ];
+            ]);
+
+            $reservation = [
+                'success' => true,
+                'licensed' => false,
+                'state' => 'legacy',
+            ];
+
+            if ($usesLicense) {
+                $reservation = $licenseService->reserveForAccess(
+                    $courseId,
+                    $targetUserId,
+                    $actorUserId,
+                    (int)$access->get('id'),
+                    $userCourse ? (int)$userCourse->get('id') : 0,
+                    $owner
+                );
+
+                if (empty($reservation['success'])) {
+                    if ($transactionStarted) {
+                        $licenseService->rollback();
+                    }
+
+                    return [
+                        'success' => false,
+                        'message' => !empty($reservation['message'])
+                            ? $reservation['message']
+                            : 'Не удалось зарезервировать лицензию',
+                        'license_summary' => isset($reservation['summary']) ? $reservation['summary'] : [],
+                    ];
+                }
+            }
+
+            $userCourse = $this->syncUserCourseForUser($courseId, $targetUserId);
+
+            if ($usesLicense && $userCourse) {
+                $licenseService->reserveForAccess(
+                    $courseId,
+                    $targetUserId,
+                    $actorUserId,
+                    (int)$access->get('id'),
+                    (int)$userCourse->get('id'),
+                    $owner
+                );
+
+                $licenseService->syncForEmployee($courseId, $targetUserId);
+            }
+
+            if ($transactionStarted && !$licenseService->commit()) {
+                $licenseService->rollback();
+
+                return [
+                    'success' => false,
+                    'message' => 'Не удалось подтвердить резервирование лицензии',
+                ];
+            }
+
+            return [
+                'success' => true,
+                'created' => $created,
+                'access' => $access,
+                'user_course' => $this->modx->getObject('TrainingUserCourse', [
+                    'course_id' => $courseId,
+                    'user_id' => $targetUserId,
+                ]),
+                'license' => $reservation,
+                'license_summary' => ($usesLicense && $owner)
+                    ? $licenseService->getDirectorSummary($courseId, (int)$owner['principal_id'])
+                    : [],
+            ];
+        } catch (Exception $e) {
+            if ($transactionStarted) {
+                $licenseService->rollback();
+            }
+
+            return [
+                'success' => false,
+                'message' => 'Ошибка лицензирования: ' . $e->getMessage(),
+            ];
+        }
     }
 
     public function revokeCourseAccessForUser($courseId, $targetUserId, $actorUserId)
@@ -1870,34 +2047,90 @@ public function syncModuleUserTestStatuses($courseId, $moduleId, $userId)
         $courseId = (int)$courseId;
         $targetUserId = (int)$targetUserId;
         $actorUserId = (int)$actorUserId;
-    
+
         if ($courseId <= 0 || $targetUserId <= 0 || $actorUserId <= 0) {
             return [
                 'success' => false,
                 'message' => 'Некорректные параметры снятия доступа',
             ];
         }
-    
+
         if (!$this->canAssignCourseToUser($courseId, $actorUserId, $targetUserId)) {
             return [
                 'success' => false,
                 'message' => 'Недостаточно прав для снятия доступа по этому курсу',
             ];
         }
-    
+
+        /*
+         * training-license-core-v1
+         */
+        $licensePath = rtrim((string)$this->modx->getOption(
+            'training.core_path',
+            null,
+            $this->modx->getOption('core_path') . 'components/training/'
+        ), '/\\') . '/model/training/services/traininglicense.class.php';
+
+        if (is_file($licensePath)) {
+            require_once $licensePath;
+        }
+
+        $licenseService = class_exists('TrainingLicenseService')
+            ? TrainingLicenseService::getInstance($this->modx, $this)
+            : null;
+
         /** @var TrainingCourseAccess $access */
         $access = $this->getDirectUserAccess($courseId, $targetUserId);
-        if ($access) {
-            $access->remove();
+        $isDirectorSelf = $access
+            && $targetUserId === $actorUserId
+            && $this->normalizeRole($access->get('access_role')) === 'director';
+
+        $licenseResult = $licenseService
+            ? $licenseService->closeForRevocation(
+                $courseId,
+                $targetUserId,
+                $actorUserId,
+                $isDirectorSelf ? $actorUserId : 0
+            )
+            : [
+                'success' => true,
+                'licensed' => false,
+                'license_state' => 'legacy',
+                'return_license' => false,
+            ];
+
+        if (empty($licenseResult['success'])) {
+            return [
+                'success' => false,
+                'message' => !empty($licenseResult['message'])
+                    ? $licenseResult['message']
+                    : 'Не удалось обработать лицензию',
+            ];
         }
-    
+
+        /*
+         * Директору нельзя удалять собственную строку director:
+         * она нужна для управления командой. При закрытии собственной
+         * лицензии hasCourseAccess() перестанет пускать его в обучение.
+         */
+        if ($access && !$isDirectorSelf) {
+            if (!$access->remove()) {
+                return [
+                    'success' => false,
+                    'message' => 'Не удалось снять доступ к курсу',
+                ];
+            }
+        }
+
         $userCourse = $this->syncUserCourseForUser($courseId, $targetUserId);
-    
+
         return [
             'success' => true,
-            'removed' => (bool)$access,
+            'removed' => $access && !$isDirectorSelf,
+            'director_self_closed' => $isDirectorSelf ? 1 : 0,
             'has_access_now' => $this->hasCourseAccess($courseId, $targetUserId),
             'user_course' => $userCourse,
+            'license' => $licenseResult,
         ];
     }
 
@@ -2008,10 +2241,28 @@ public function syncModuleUserTestStatuses($courseId, $moduleId, $userId)
             return false;
         }
 
-        return $this->modx->getCount('TrainingModuleVideo', array(
+        /*
+         * training-get-request-memo-v1:lesson-video
+         * The active-video flag cannot change during one normal page GET.
+         */
+        static $requestMemo = array();
+        $memoEnabled = isset($_SERVER['REQUEST_METHOD'])
+            && strtoupper((string)$_SERVER['REQUEST_METHOD']) === 'GET';
+
+        if ($memoEnabled && array_key_exists($lessonId, $requestMemo)) {
+            return $requestMemo[$lessonId];
+        }
+
+        $result = $this->modx->getCount('TrainingModuleVideo', array(
             'lesson_id' => $lessonId,
             'is_active' => 1,
         )) > 0;
+
+        if ($memoEnabled) {
+            $requestMemo[$lessonId] = $result;
+        }
+
+        return $result;
     }
 
     public function getModuleLessons($moduleId, $onlyActive = true, $onlyWithVideo = false)
@@ -2019,6 +2270,20 @@ public function syncModuleUserTestStatuses($courseId, $moduleId, $userId)
         $moduleId = (int)$moduleId;
         if ($moduleId <= 0) {
             return array();
+        }
+
+        /*
+         * training-get-request-memo-v1:module-lessons
+         * Course structure is immutable during a normal page GET. Reuse it
+         * only within this GET request; POST handlers always read fresh data.
+         */
+        static $requestMemo = array();
+        $memoEnabled = isset($_SERVER['REQUEST_METHOD'])
+            && strtoupper((string)$_SERVER['REQUEST_METHOD']) === 'GET';
+        $memoKey = $moduleId . '|' . ((int)(bool)$onlyActive) . '|' . ((int)(bool)$onlyWithVideo);
+
+        if ($memoEnabled && array_key_exists($memoKey, $requestMemo)) {
+            return $requestMemo[$memoKey];
         }
 
         $c = $this->modx->newQuery('TrainingModuleLesson');
@@ -2035,6 +2300,9 @@ public function syncModuleUserTestStatuses($courseId, $moduleId, $userId)
 
         $items = $this->modx->getCollection('TrainingModuleLesson', $c);
         if (!$onlyWithVideo) {
+            if ($memoEnabled) {
+                $requestMemo[$memoKey] = $items;
+            }
             return $items;
         }
 
@@ -2044,6 +2312,10 @@ public function syncModuleUserTestStatuses($courseId, $moduleId, $userId)
             if ($this->lessonHasActiveVideo((int)$item->get('id'))) {
                 $result[] = $item;
             }
+        }
+
+        if ($memoEnabled) {
+            $requestMemo[$memoKey] = $result;
         }
 
         return $result;
@@ -2114,11 +2386,31 @@ public function syncModuleUserTestStatuses($courseId, $moduleId, $userId)
             return null;
         }
 
-        return $this->modx->getObject('TrainingUserLessonProgress', array(
+        /*
+         * training-get-request-memo-v1:lesson-progress
+         * Page rendering does not update lesson progress. POST write paths
+         * bypass this memo entirely.
+         */
+        static $requestMemo = array();
+        $memoEnabled = isset($_SERVER['REQUEST_METHOD'])
+            && strtoupper((string)$_SERVER['REQUEST_METHOD']) === 'GET';
+        $memoKey = $courseId . '|' . $lessonId . '|' . $userId;
+
+        if ($memoEnabled && array_key_exists($memoKey, $requestMemo)) {
+            return $requestMemo[$memoKey];
+        }
+
+        $result = $this->modx->getObject('TrainingUserLessonProgress', array(
             'course_id' => $courseId,
             'lesson_id' => $lessonId,
             'user_id' => $userId,
         ));
+
+        if ($memoEnabled) {
+            $requestMemo[$memoKey] = $result;
+        }
+
+        return $result;
     }
 
     public function ensureLessonProgress($courseId, $lessonId, $userId, $durationSeconds = 0)
@@ -2217,6 +2509,20 @@ public function syncModuleUserTestStatuses($courseId, $moduleId, $userId)
             return $stats;
         }
 
+        /*
+         * training-get-request-memo-v1:module-gate-stats
+         * The same prior module is checked repeatedly while page cards and
+         * lessons are rendered. Cache this computed gate only during GET.
+         */
+        static $requestMemo = array();
+        $memoEnabled = isset($_SERVER['REQUEST_METHOD'])
+            && strtoupper((string)$_SERVER['REQUEST_METHOD']) === 'GET';
+        $memoKey = $courseId . '|' . $moduleId . '|' . $userId;
+
+        if ($memoEnabled && array_key_exists($memoKey, $requestMemo)) {
+            return $requestMemo[$memoKey];
+        }
+
         $lessons = $this->getModuleLessons($moduleId, true, true);
         /** @var TrainingModuleLesson $lesson */
         foreach ($lessons as $lesson) {
@@ -2257,6 +2563,10 @@ public function syncModuleUserTestStatuses($courseId, $moduleId, $userId)
             }
         }
 
+        if ($memoEnabled) {
+            $requestMemo[$memoKey] = $stats;
+        }
+
         return $stats;
     }
 
@@ -2270,8 +2580,30 @@ public function syncModuleUserTestStatuses($courseId, $moduleId, $userId)
             return false;
         }
 
+        /*
+         * training-get-request-memo-v1:module-access
+         * Every child lesson asks for its module access. For a GET page
+         * render, the answer cannot change mid-request.
+         */
+        static $requestMemo = array();
+        $memoEnabled = isset($_SERVER['REQUEST_METHOD'])
+            && strtoupper((string)$_SERVER['REQUEST_METHOD']) === 'GET';
+        $memoKey = $courseId . '|' . $moduleId . '|' . $userId;
+
+        if ($memoEnabled && array_key_exists($memoKey, $requestMemo)) {
+            return $requestMemo[$memoKey];
+        }
+
+        $remember = function ($value) use ($memoEnabled, $memoKey, &$requestMemo) {
+            $value = (bool)$value;
+            if ($memoEnabled) {
+                $requestMemo[$memoKey] = $value;
+            }
+            return $value;
+        };
+
         if (!$this->hasCourseAccess($courseId, $userId)) {
-            return false;
+            return $remember(false);
         }
 
         /** @var TrainingCourse $course */
@@ -2280,11 +2612,11 @@ public function syncModuleUserTestStatuses($courseId, $moduleId, $userId)
             'is_active' => 1,
         ));
         if (!$course) {
-            return false;
+            return $remember(false);
         }
 
         if (!(int)$course->get('is_sequential')) {
-            return true;
+            return $remember(true);
         }
 
         $modules = $this->getCourseModules($courseId, true, false);
@@ -2292,7 +2624,7 @@ public function syncModuleUserTestStatuses($courseId, $moduleId, $userId)
         foreach ($modules as $module) {
             $currentId = (int)$module->get('id');
             if ($currentId === $moduleId) {
-                return true;
+                return $remember(true);
             }
 
             $gateStats = $this->getModuleCompletionGateStats($courseId, $currentId, $userId);
@@ -2301,11 +2633,11 @@ public function syncModuleUserTestStatuses($courseId, $moduleId, $userId)
             }
 
             if ((int)$gateStats['required_completed'] < (int)$gateStats['required_total']) {
-                return false;
+                return $remember(false);
             }
         }
 
-        return false;
+        return $remember(false);
     }
 
     public function canAccessLesson($courseId, $moduleId, $lessonId, $userId)

@@ -21,6 +21,8 @@
                     </div>
                 </div>
 
+                <div class="training-course-access-modal__license-info is-hidden" data-access-modal-license-info></div>
+
                 <div class="training-course-access-modal__dates" data-access-modal-dates>
                     <div class="training-request-modal__row">
                         <label class="training-request-modal__field">
@@ -40,9 +42,9 @@
 
                 <div class="training-course-access-modal__alert d-none" data-access-modal-alert></div>
 
-                <div class="training-request-modal__actions">
+                <div class="training-request-modal__actions training-course-access-modal__actions">
                     <button type="button" class="training-course-access-modal__cancel" data-bs-dismiss="modal">Отмена</button>
-                    <button type="button" class="training-request-modal__submit" data-access-modal-confirm>Подтвердить</button>
+                    <button type="button" class="training-request-modal__submit training-course-access-modal__confirm" data-access-modal-confirm>Подтвердить</button>
                 </div>
             </div>
         </div>

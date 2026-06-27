@@ -32,12 +32,3 @@
     display:inline-block;
     margin:0 8px 4px 0;
 }
-#training-panel-practices .x-panel-body{
-    background:#fff;
-}
-#training-panel-practices .x-toolbar{
-    padding:8px;
-}
-#training-panel-practices .x-grid3-row-selected{
-    background:#f1f5f8 !important;
-}

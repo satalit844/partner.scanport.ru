@@ -14,7 +14,7 @@
 
         <div class="courses-available">
             <div class="courses-available__count">
-                Доступно лицензий: <strong>[[+available_count]]</strong>
+                <span data-license-counter-label>Доступно лицензий</span>: <strong data-license-free>[[+available_count]]</strong>
             </div>
             <button type="button"
                     class="courses-available__btn"

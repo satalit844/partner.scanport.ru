@@ -391,9 +391,148 @@ class TrainingCertificateService
             return false;
         }
 
-        return $this->getUserCertificate($courseId, $userId);
+        /* training-license-core-v1: certificate-sync */
+        $certificate = $this->getUserCertificate($courseId, $userId);
+
+        if ($certificate) {
+            $licensePath = dirname(__FILE__) . '/traininglicense.class.php';
+
+            if (is_file($licensePath)) {
+                require_once $licensePath;
+            }
+
+            if (class_exists('TrainingLicenseService')) {
+                TrainingLicenseService::getInstance($this->modx)->syncForEmployee(
+                    $courseId,
+                    $userId,
+                    (int)(isset($certificate['id']) ? $certificate['id'] : 0)
+                );
+            }
+        }
+
+        return $certificate;
     }
 
+    /**
+     * Принудительно пересоздаёт уже выданные сертификаты.
+     * Для повторного выпуска используется сохранённая дата завершения
+     * из записи сертификата — текущий статус прохождения курса не важен.
+     */
+    public function reissueForUsers($courseId, array $userIds)
+    {
+        $courseId = $this->normalizeCourseId($courseId);
+        if ($courseId <= 0) {
+            return array();
+        }
+
+        $cleanIds = array();
+        foreach ($userIds as $id) {
+            $id = (int)$id;
+            if ($id > 0 && !in_array($id, $cleanIds, true)) {
+                $cleanIds[] = $id;
+            }
+        }
+
+        $results = array();
+        foreach ($cleanIds as $userId) {
+            $certificate = $this->reissueUserCertificate($courseId, $userId);
+            if ($certificate) {
+                $results[] = $certificate;
+            }
+        }
+
+        return $results;
+    }
+
+    /**
+     * Перерисовывает существующий сертификат по текущему шаблону.
+     * Не меняет учебный прогресс и не требует, чтобы курс сейчас был completed.
+     */
+    public function reissueUserCertificate($courseId, $userId)
+    {
+        $courseId = $this->normalizeCourseId($courseId);
+        $userId = (int)$userId;
+
+        if ($courseId <= 0 || $userId <= 0) {
+            return false;
+        }
+
+        $existing = $this->getUserCertificate($courseId, $userId);
+        if (!$existing) {
+            return false;
+        }
+
+        $template = $this->getTemplate($courseId);
+        if (!$template || (int)$template['is_active'] !== 1) {
+            return false;
+        }
+
+        $preview = $this->ensureTemplatePreview($template, false);
+        if ($preview === '') {
+            return false;
+        }
+
+        $fullname = trim((string)$existing['fullname']);
+        if ($fullname === '') {
+            $fullname = $this->getUserDisplayName($userId);
+        }
+
+        $courseTitle = trim((string)$existing['course_title']);
+        if ($courseTitle === '') {
+            $courseTitle = $this->getCourseTitle($courseId);
+        }
+
+        $completedOn = trim((string)$existing['completedon']);
+        if ($completedOn === '' || $completedOn === '0000-00-00 00:00:00') {
+            $completedOn = trim((string)$existing['issuedon']);
+        }
+
+        $dateText = $this->formatDate(
+            $completedOn,
+            trim((string)$template['date_format']) !== '' ? $template['date_format'] : 'd.m.Y'
+        );
+
+        $generated = $this->generateCertificateImage($template, array(
+            'course_id' => $courseId,
+            'user_id' => $userId,
+            'fullname' => $fullname,
+            'course_title' => $courseTitle,
+            'completed_date' => $dateText,
+            'completed_raw' => $completedOn,
+        ), true);
+
+        if (!$generated) {
+            return false;
+        }
+
+        $params = array(
+            ':course_id' => $courseId,
+            ':template_id' => (int)$template['id'],
+            ':user_id' => $userId,
+            ':user_course_id' => (int)(isset($existing['user_course_id']) ? $existing['user_course_id'] : 0),
+            ':status' => 'issued',
+            ':fullname' => $fullname,
+            ':course_title' => $courseTitle,
+            ':completedon' => $completedOn,
+            ':issuedon' => date('Y-m-d H:i:s'),
+            ':file_path' => $generated['file_path'],
+            ':preview_image' => $generated['preview_image'],
+        );
+
+        $sql = 'UPDATE `' . $this->tables['user_certificates'] . '` SET '
+            . '`template_id` = :template_id, `user_course_id` = :user_course_id, `status` = :status, '
+            . '`fullname` = :fullname, `course_title` = :course_title, `completedon` = :completedon, '
+            . '`issuedon` = :issuedon, `file_path` = :file_path, `preview_image` = :preview_image, '
+            . '`updatedon` = NOW() '
+            . 'WHERE `course_id` = :course_id AND `user_id` = :user_id';
+
+        $stmt = $this->modx->prepare($sql);
+        if (!$stmt || !$stmt->execute($params)) {
+            return false;
+        }
+
+        return $this->getUserCertificate($courseId, $userId);
+    }
     public function generateAllForCourse($courseId, $force = false)
     {
         $courseId = $this->normalizeCourseId($courseId);
@@ -736,8 +875,9 @@ class TrainingCertificateService
             return false;
         }
 
-        $certificateFs = rtrim($userDirFs, '/\\') . '/certificate.png';
-        $certificateWeb = $userDirWeb . 'certificate.png';
+        $certificateName = 'certificate-' . date('YmdHis') . '-' . substr(sha1(uniqid((string)$data['user_id'], true)), 0, 10) . '.png';
+        $certificateFs = rtrim($userDirFs, '/\\') . '/' . $certificateName;
+        $certificateWeb = $userDirWeb . $certificateName;
 
         if (!$force && is_file($certificateFs)) {
             return array('file_path' => $certificateWeb, 'preview_image' => $certificateWeb);

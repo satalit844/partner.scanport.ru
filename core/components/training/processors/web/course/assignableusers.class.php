@@ -91,19 +91,50 @@ class TrainingWebCourseAssignableUsersProcessor extends modProcessor
         return $this->extractOrganization(isset($row['extended']) ? $row['extended'] : '');
     }
 
+    /**
+     * Быстрый расчёт для таблицы «Управление курсами».
+     *
+     * Использует сохранённый итог TrainingUserCourse и не пересчитывает
+     * видео, тесты и практики каждого сотрудника на каждый AJAX-запрос.
+     */
     protected function getCourseTrackProgress(TrainingProgressService $service, $courseId, $userId, array $userCourseRow = [])
     {
-        $courseId = (int)$courseId;
-        $userId = (int)$userId;
+        $progressPercent = isset($userCourseRow['progress_percent'])
+            ? (float)$userCourseRow['progress_percent']
+            : 0;
 
-        $fallbackProgress = isset($userCourseRow['progress_percent']) ? (float)$userCourseRow['progress_percent'] : 0;
-        $fallbackStatus = isset($userCourseRow['status']) ? (string)$userCourseRow['status'] : '';
+        $status = isset($userCourseRow['status'])
+            ? (string)$userCourseRow['status']
+            : '';
 
-        $data = [
-            'progress_percent' => (int)round($fallbackProgress),
-            'status' => $fallbackStatus,
-            'total_items' => 0,
-            'completed_items' => 0,
+        $totalModules = isset($userCourseRow['total_modules'])
+            ? max(0, (int)$userCourseRow['total_modules'])
+            : 0;
+
+        $completedModules = isset($userCourseRow['completed_modules'])
+            ? max(0, (int)$userCourseRow['completed_modules'])
+            : 0;
+
+        $progressPercent = max(0, min(100, (int)round($progressPercent)));
+
+        if ($progressPercent <= 0 && $totalModules > 0 && $completedModules > 0) {
+            $progressPercent = max(0, min(100, (int)round(($completedModules / $totalModules) * 100)));
+        }
+
+        if ($progressPercent >= 100) {
+            $status = 'completed';
+        } elseif (
+            $progressPercent > 0
+            && ($status === '' || $status === 'assigned' || $status === 'not_started')
+        ) {
+            $status = 'in_progress';
+        }
+
+        return [
+            'progress_percent' => $progressPercent,
+            'status' => $status,
+            'total_items' => $totalModules,
+            'completed_items' => min($completedModules, $totalModules),
             'videos_total' => 0,
             'videos_completed' => 0,
             'tests_total' => 0,
@@ -111,46 +142,6 @@ class TrainingWebCourseAssignableUsersProcessor extends modProcessor
             'practices_total' => 0,
             'practices_completed' => 0,
         ];
-
-        if ($courseId <= 0 || $userId <= 0) {
-            return $data;
-        }
-
-        $videoStats = TrainingWebHelper::getCourseVideoStats($this->modx, $service, $courseId, $userId);
-        $activityStats = $service->getCourseActivityStats($courseId, $userId);
-
-        $videosTotal = (int)$videoStats['total_videos'];
-        $videosCompleted = (int)$videoStats['completed_videos'];
-        $testsTotal = (int)$activityStats['tests_total'];
-        $testsPassed = (int)$activityStats['tests_passed'];
-        $practicesTotal = (int)$activityStats['practices_total'];
-        $practicesCompleted = (int)$activityStats['practices_completed'];
-
-        $totalItems = $videosTotal + $testsTotal + $practicesTotal;
-        $completedItems = $videosCompleted + $testsPassed + $practicesCompleted;
-
-        $data['total_items'] = $totalItems;
-        $data['completed_items'] = $completedItems;
-        $data['videos_total'] = $videosTotal;
-        $data['videos_completed'] = $videosCompleted;
-        $data['tests_total'] = $testsTotal;
-        $data['tests_passed'] = $testsPassed;
-        $data['practices_total'] = $practicesTotal;
-        $data['practices_completed'] = $practicesCompleted;
-
-        if ($totalItems > 0) {
-            $data['progress_percent'] = (int)round(($completedItems / $totalItems) * 100);
-        }
-
-        // Статус из TrainingUserCourse сохраняем, но процент для управления курсами
-        // считаем так же, как на странице курса: видео + практики + тесты.
-        if ($totalItems > 0 && $completedItems >= $totalItems) {
-            $data['status'] = 'completed';
-        } elseif ($data['progress_percent'] > 0 && ($data['status'] === '' || $data['status'] === 'assigned' || $data['status'] === 'not_started')) {
-            $data['status'] = 'in_progress';
-        }
-
-        return $data;
     }
 
     protected function buildState($hasAccess, array $userCourseRow = [], $directAccessId = 0)
@@ -211,6 +202,234 @@ class TrainingWebCourseAssignableUsersProcessor extends modProcessor
 
 
 
+
+    /*
+     * training-license-ui-v1
+     *
+     * Интерфейс директора получает состояние только его собственного пула:
+     * course_id + director_user_id. Доступы старого типа не расходуют
+     * лицензии и отмечаются отдельно как legacy.
+     */
+    protected function getLicenseAssignmentsTable()
+    {
+        $courseAccessTable = trim((string)$this->modx->getTableName('TrainingCourseAccess'), '`');
+        $suffix = '_course_access';
+
+        if (
+            $courseAccessTable === ''
+            || substr($courseAccessTable, -strlen($suffix)) !== $suffix
+        ) {
+            return '';
+        }
+
+        $table = substr($courseAccessTable, 0, -strlen($suffix)) . '_license_assignments';
+        $stmt = $this->modx->prepare('SHOW TABLES LIKE :table_name');
+
+        if (!$stmt) {
+            return '';
+        }
+
+        $stmt->bindValue(':table_name', $table, PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt->fetchColumn() ? $table : '';
+    }
+
+    protected function getDirectorLicenseSummary($courseId, $directorUserId)
+    {
+        $summary = [
+            'enabled' => 0,
+            'director_access_id' => 0,
+            'total' => 0,
+            'reserved' => 0,
+            'consumed' => 0,
+            'free' => 0,
+        ];
+
+        $courseId = (int)$courseId;
+        $directorUserId = (int)$directorUserId;
+
+        if ($courseId <= 0 || $directorUserId <= 0) {
+            return $summary;
+        }
+
+        /** @var TrainingCourseAccess|null $directorAccess */
+        $directorAccess = $this->modx->getObject('TrainingCourseAccess', [
+            'course_id' => $courseId,
+            'principal_type' => 'user',
+            'principal_id' => $directorUserId,
+            'access_role' => 'director',
+        ]);
+
+        if (!$directorAccess || (int)$directorAccess->get('licenses_enabled') !== 1) {
+            return $summary;
+        }
+
+        $summary['director_access_id'] = (int)$directorAccess->get('id');
+        $summary['total'] = max(0, (int)$directorAccess->get('licenses_total'));
+
+        if ($summary['total'] <= 0) {
+            return $summary;
+        }
+
+        $assignmentsTable = $this->getLicenseAssignmentsTable();
+        if ($assignmentsTable === '') {
+            return $summary;
+        }
+
+        $safeTable = str_replace('`', '``', $assignmentsTable);
+        $stmt = $this->modx->prepare(
+            'SELECT `state`, COUNT(*) AS `total` '
+            . 'FROM `' . $safeTable . '` '
+            . 'WHERE `course_id` = :course_id '
+            . 'AND `director_user_id` = :director_user_id '
+            . 'AND `state` IN ("reserved", "consumed") '
+            . 'GROUP BY `state`'
+        );
+
+        if ($stmt) {
+            $stmt->bindValue(':course_id', $courseId, PDO::PARAM_INT);
+            $stmt->bindValue(':director_user_id', $directorUserId, PDO::PARAM_INT);
+
+            if ($stmt->execute()) {
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    $state = (string)$row['state'];
+                    if ($state === 'reserved') {
+                        $summary['reserved'] = max(0, (int)$row['total']);
+                    } elseif ($state === 'consumed') {
+                        $summary['consumed'] = max(0, (int)$row['total']);
+                    }
+                }
+            }
+        }
+
+        $summary['enabled'] = 1;
+        $summary['free'] = max(0, $summary['total'] - $summary['reserved'] - $summary['consumed']);
+
+        return $summary;
+    }
+
+    protected function getDirectorLicenseAssignments($courseId, $directorUserId, array $employeeIds)
+    {
+        $result = [];
+        $courseId = (int)$courseId;
+        $directorUserId = (int)$directorUserId;
+
+        $ids = array_values(array_unique(array_filter(array_map('intval', $employeeIds))));
+        if ($courseId <= 0 || $directorUserId <= 0 || empty($ids)) {
+            return $result;
+        }
+
+        $assignmentsTable = $this->getLicenseAssignmentsTable();
+        if ($assignmentsTable === '') {
+            return $result;
+        }
+
+        $safeTable = str_replace('`', '``', $assignmentsTable);
+        $safeIds = implode(',', $ids);
+
+        $stmt = $this->modx->prepare(
+            'SELECT `id`, `employee_user_id`, `state`, `progress_percent`, '
+            . '`reservedon`, `threshold_reachedon`, `consumedon`, `releasedon`, `access_closedon` '
+            . 'FROM `' . $safeTable . '` '
+            . 'WHERE `course_id` = :course_id '
+            . 'AND `director_user_id` = :director_user_id '
+            . 'AND `employee_user_id` IN (' . $safeIds . ') '
+            . 'ORDER BY `id` DESC'
+        );
+
+        if (!$stmt) {
+            return $result;
+        }
+
+        $stmt->bindValue(':course_id', $courseId, PDO::PARAM_INT);
+        $stmt->bindValue(':director_user_id', $directorUserId, PDO::PARAM_INT);
+
+        if (!$stmt->execute()) {
+            return $result;
+        }
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $employeeUserId = (int)$row['employee_user_id'];
+
+            /*
+             * Для одного сотрудника нужен только последний жизненный цикл
+             * лицензии. Старые released-записи остаются историей.
+             */
+            if ($employeeUserId > 0 && !isset($result[$employeeUserId])) {
+                $result[$employeeUserId] = $row;
+            }
+        }
+
+        return $result;
+    }
+
+    protected function applyLicenseUiState(array $state, $hasAccess, $directAccessId, array $licenseRow, array $licenseSummary)
+    {
+        /*
+         * training-license-status-restore-v1
+         *
+         * Таблица сотрудников всегда показывает привычный статус обучения:
+         * «Не начат», «В процессе — N%», «Завершено».
+         *
+         * Состояние лицензии хранится только в служебных полях строки:
+         * license_state / license_action / license_note.
+         * По ним фронт выбирает кнопку и текст в подтверждающей модалке,
+         * но не заменяет прогресс обучения.
+         */
+        $state['license_state'] = '';
+        $state['license_action'] = '';
+        $state['license_note'] = '';
+
+        $hasAccess = (bool)$hasAccess;
+        $directAccessId = (int)$directAccessId;
+        $licenseEnabled = !empty($licenseSummary['enabled']);
+
+        if (!$licenseEnabled) {
+            return $state;
+        }
+
+        if (!$hasAccess) {
+            $state['license_action'] = 'assign';
+            return $state;
+        }
+
+        /*
+         * Групповой/унаследованный доступ на этой странице не закрываем:
+         * он не принадлежит личному пулу директора.
+         */
+        if ($directAccessId <= 0) {
+            return $state;
+        }
+
+        $licenseState = isset($licenseRow['state'])
+            ? (string)$licenseRow['state']
+            : '';
+
+        if ($licenseState === 'reserved') {
+            $state['license_state'] = 'reserved';
+            $state['license_action'] = 'unassign_return';
+            $state['license_note'] = 'При закрытии доступа лицензия вернётся в пул.';
+            return $state;
+        }
+
+        if ($licenseState === 'consumed') {
+            $state['license_state'] = 'consumed';
+            $state['license_action'] = 'unassign_close';
+            $state['license_note'] = 'При закрытии доступа лицензия не возвращается.';
+            return $state;
+        }
+
+        /*
+         * Доступ, созданный до системы лицензий или администратором.
+         * Он продолжает отображать нормальный прогресс обучения.
+         */
+        $state['license_state'] = 'legacy';
+        $state['license_action'] = 'unassign_legacy';
+        $state['license_note'] = 'Лицензии директора не затрагиваются.';
+
+        return $state;
+    }
     protected function actorHasDirectorManagementAccess($courseId, $actorUserId)
     {
         $courseId = (int)$courseId;
@@ -312,23 +531,33 @@ class TrainingWebCourseAssignableUsersProcessor extends modProcessor
             || $service->canManageCourse($courseId, $actorUserId)
         );
 
-        if ($service->isAdminUser($actorUserId)) {
-            $ids = $service->getAssignableUserIds($actorUserId, $courseId, true);
-        } else {
+        /*
+         * training-director-scope-v1
+         *
+         * Если у пользователя есть активные прямые подчинённые, это директор
+         * команды. Его список всегда ограничиваем своей командой, даже когда
+         * isAdminUser() по сессии/правам возвращает true.
+         *
+         * Настоящий администратор без связей директор → сотрудник по-прежнему
+         * получает полный список пользователей.
+         */
+        if (!empty($managedIds)) {
             $ids = $managedIds;
 
-            // Директор может управлять курсом даже при выключенном доступе к прохождению.
-            // Но в список пользователей добавляем самого директора только если его доступ к прохождению активен.
-            // Так выключенный директор не сможет выбрать себя и активировать курс себе "нахаляву".
-            if ($actorCanManageCourse) {
-                if ($this->actorHasActiveCoursePassingAccess($courseId, $actorUserId)) {
-                    $ids[] = $actorUserId;
-                }
+            if ($actorCanManageCourse && $this->actorHasActiveCoursePassingAccess($courseId, $actorUserId)) {
+                $ids[] = $actorUserId;
+            }
+        } elseif ($service->isAdminUser($actorUserId)) {
+            $ids = $service->getAssignableUserIds($actorUserId, $courseId, true);
+        } else {
+            $ids = [];
+
+            if ($actorCanManageCourse && $this->actorHasActiveCoursePassingAccess($courseId, $actorUserId)) {
+                $ids[] = $actorUserId;
             } elseif (empty($ids)) {
                 $ids = $service->getAssignableUserIds($actorUserId, $courseId, $includeSelf);
             }
         }
-
         $ids = array_values(array_unique(array_map('intval', $ids)));
         if (!$includeSelf && !$actorCanManageCourse && !$service->isAdminUser($actorUserId)) {
             $ids = array_values(array_diff($ids, [$actorUserId]));
@@ -368,6 +597,11 @@ class TrainingWebCourseAssignableUsersProcessor extends modProcessor
                 $directAccessMap[(int)$access->get('principal_id')] = $access;
             }
         }
+
+        $licenseSummary = $this->getDirectorLicenseSummary($courseId, $actorUserId);
+        $licenseAssignmentsMap = !empty($licenseSummary['enabled'])
+            ? $this->getDirectorLicenseAssignments($courseId, $actorUserId, $ids)
+            : [];
 
         $c = $this->modx->newQuery('modUser');
         $c->leftJoin('modUserProfile', 'Profile', 'Profile.internalKey = modUser.id');
@@ -431,6 +665,16 @@ class TrainingWebCourseAssignableUsersProcessor extends modProcessor
                 }
 
                 $state = $this->buildState($hasAccess, $userCourseRow, $directAccessId);
+                $licenseRow = isset($licenseAssignmentsMap[$userId])
+                    ? (array)$licenseAssignmentsMap[$userId]
+                    : [];
+                $state = $this->applyLicenseUiState(
+                    $state,
+                    $hasAccess,
+                    $directAccessId,
+                    $licenseRow,
+                    $licenseSummary
+                );
 
                 $progressPercent = (int)$trackProgress['progress_percent'];
                 $startedOn = $userCourse ? $userCourse->get('startedon') : null;
@@ -450,6 +694,11 @@ class TrainingWebCourseAssignableUsersProcessor extends modProcessor
                     'has_access' => $hasAccess ? 1 : 0,
                     'direct_access_id' => $directAccessId,
                     'direct_access_role' => $directAccess ? (string)$directAccess->get('access_role') : '',
+                    'license_enabled' => !empty($licenseSummary['enabled']) ? 1 : 0,
+                    'license_state' => isset($state['license_state']) ? (string)$state['license_state'] : '',
+                    'license_action' => isset($state['license_action']) ? (string)$state['license_action'] : '',
+                    'license_note' => isset($state['license_note']) ? (string)$state['license_note'] : '',
+                    'license_progress_percent' => isset($licenseRow['progress_percent']) ? (float)$licenseRow['progress_percent'] : 0,
                     'resolved_access_role' => $courseId > 0
                         ? $service->resolveUserAccessRoleForCourse($courseId, $userId, 'employee')
                         : 'employee',
@@ -488,6 +737,7 @@ class TrainingWebCourseAssignableUsersProcessor extends modProcessor
 
         return $this->success('', [
             'course_id' => $courseId,
+            'license_summary' => $licenseSummary,
             'total' => count($rows),
             'results' => $rows,
         ]);

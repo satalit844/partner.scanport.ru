@@ -19,6 +19,17 @@ class TrainingCourseAccessCreateProcessor extends modObjectCreateProcessor
         $principalId = (int)$this->getProperty('principal_id');
         $accessRole = trim((string)$this->getProperty('access_role', 'employee'));
         $isActive = (int)((string)$this->getProperty('is_active', '1') === '0' ? 0 : 1);
+        /* training-license-access-ui-v1 */
+        $licensesTotal = max(0, (int)$this->getProperty('licenses_total', 0));
+        $licensesEnabled = ($accessRole === 'director' && $principalType === 'user' && $licensesTotal > 0) ? 1 : 0;
+
+        if ($accessRole !== 'director' || $principalType !== 'user') {
+            $licensesTotal = 0;
+            $licensesEnabled = 0;
+        }
+
+        $this->setProperty('licenses_total', $licensesTotal);
+        $this->setProperty('licenses_enabled', $licensesEnabled);
 
         if ($courseId <= 0) {
             return 'Не указан курс';

@@ -10,6 +10,7 @@
         Ext.ns('Training');
         Ext.ns('Training.config');
         Ext.ns('Training.panel');
+        Ext.ns('Training.form');
         Ext.ns('Training.grid');
         Ext.ns('Training.window');
         Ext.ns('Training.combo');
@@ -73,10 +74,10 @@
             return null;
         };
 
-        Training.combo.PracticeStatus = function(config) {
+                Training.combo.PracticeStatus = function(config) {
             config = config || {};
+
             Ext.applyIf(config, {
-                hiddenName: config.name || 'status',
                 store: new Ext.data.SimpleStore({
                     fields: ['value', 'label'],
                     data: [
@@ -93,15 +94,15 @@
                 mode: 'local',
                 triggerAction: 'all',
                 editable: false,
-                emptyText: 'Все статусы',
-                anchor: '100%'
+                forceSelection: true,
+                emptyText: 'Все статусы'
             });
+
             Training.combo.PracticeStatus.superclass.constructor.call(this, config);
         };
-        Ext.extend(Training.combo.PracticeStatus, MODx.combo.ComboBox);
+        Ext.extend(Training.combo.PracticeStatus, Ext.form.ComboBox);
         Ext.reg('training-combo-practice-status', Training.combo.PracticeStatus);
-
-        Training.combo.PracticeActive = function(config) {
+Training.combo.PracticeActive = function(config) {
             config = config || {};
             Ext.applyIf(config, {
                 hiddenName: config.name || 'active',
@@ -198,37 +199,22 @@
         });
         Ext.reg('training-combo-practice-modules', Training.combo.PracticeModules);
 
-        Training.panel.Practices = function(config) {
+                Training.panel.Practices = function(config) {
             config = config || {};
 
-            Ext.applyIf(config, {
+            Ext.apply(config, {
                 id: 'training-panel-practices',
                 baseCls: 'modx-formpanel',
                 layout: 'anchor',
                 hideMode: 'offsets',
                 items: [{
                     html: '<h2>Практические задания</h2>',
-                    border: false,
-                    cls: 'modx-page-header'
+                    style: {margin: '15px 0'}
                 }, {
-                    xtype: 'modx-tabs',
-                    id: 'training-practices-tabs',
-                    cls: 'modx-tabs main-wrapper',
-                    border: true,
-                    deferredRender: false,
-                    defaults: {
-                        border: false,
-                        autoHeight: true
-                    },
-                    items: [{
-                        title: 'Задания',
-                        xtype: 'training-grid-practices',
-                        preventRender: true
-                    }, {
-                        title: 'Попытки и переписка',
-                        xtype: 'training-panel-practice-review',
-                        preventRender: true
-                    }]
+                    xtype: 'training-practice-tabs',
+                    cls: 'main-wrapper',
+                    preventRender: true,
+                    anchor: '100%'
                 }]
             });
 
@@ -237,7 +223,31 @@
         Ext.extend(Training.panel.Practices, MODx.Panel);
         Ext.reg('training-panel-practices', Training.panel.Practices);
 
-        Training.grid.Practices = function(config) {
+        Training.panel.PracticeTabs = function(config) {
+            config = config || {};
+
+            Ext.apply(config, {
+                id: 'training-practices-tabs',
+                border: true,
+                deferredRender: false,
+                defaults: {
+                    border: false,
+                    autoHeight: true
+                },
+                items: [{
+                    title: 'Задания',
+                    xtype: 'training-grid-practices'
+                }, {
+                    title: 'Попытки и переписка',
+                    xtype: 'training-panel-practice-review'
+                }]
+            });
+
+            Training.panel.PracticeTabs.superclass.constructor.call(this, config);
+        };
+        Ext.extend(Training.panel.PracticeTabs, MODx.Tabs);
+        Ext.reg('training-practice-tabs', Training.panel.PracticeTabs);
+Training.grid.Practices = function(config) {
             config = config || {};
             this.sm = new Ext.grid.CheckboxSelectionModel();
 
@@ -570,8 +580,7 @@
                 id: 'training-panel-practice-review',
                 layout: 'anchor',
                 border: false,
-                cls: 'main-wrapper',
-                items: [{
+items: [{
                     xtype: 'training-grid-practice-attempts',
                     preventRender: true,
                     anchor: '100%',
@@ -805,46 +814,64 @@
         });
         Ext.reg('training-grid-practice-attempts', Training.grid.PracticeAttempts);
 
-        Training.panel.PracticeReply = function(config) {
+                        Training.panel.PracticeReply = function(config) {
             config = config || {};
 
-            Ext.applyIf(config, {
+            Ext.apply(config, {
                 id: 'training-panel-practice-reply',
                 border: false,
-                cls: 'training-practice-reply-panel',
-                html: '' +
-                    '<div class="training-practice-reply-box">' +
-                        '<textarea id="training-practice-message-text-plain" class="x-form-textarea x-form-field training-practice-reply-text" placeholder="Ответ пользователю..."></textarea>' +
-                        '<label class="training-practice-reply-check">' +
-                            '<input type="checkbox" id="training-practice-message-done-plain" />' +
-                            '<span>Задание выполнено</span>' +
-                        '</label>' +
-                        '<button type="button" id="training-practice-message-send-plain" class="x-btn training-practice-reply-send">Отправить ответ</button>' +
-                    '</div>',
-                listeners: {
-                    afterrender: function() {
-                        var btn = Ext.get('training-practice-message-send-plain');
-                        if (btn) {
-                            btn.on('click', function(e) {
-                                if (e) {
-                                    e.preventDefault();
-                                }
-                                var messagesGrid = Ext.getCmp('training-grid-practice-messages');
-                                if (messagesGrid && messagesGrid.sendMessage) {
-                                    messagesGrid.sendMessage();
-                                }
-                            });
+                autoHeight: true,
+                layout: 'form',
+                labelAlign: 'top',
+                hideLabels: true,
+                bodyStyle: 'padding:0 0 8px 0;',
+                defaults: {
+                    anchor: '100%'
+                },
+                items: [{
+                    xtype: 'fieldset',
+                    title: 'Ответ пользователю',
+                    autoHeight: true,
+                    layout: 'form',
+                    labelAlign: 'top',
+                    hideLabels: true,
+                    defaults: {
+                        anchor: '100%'
+                    },
+                    items: [{
+                        xtype: 'textarea',
+                        id: 'training-practice-message-text',
+                        name: 'message',
+                        hideLabel: true,
+                        emptyText: 'Введите ответ пользователю...',
+                        height: 120,
+                        grow: false
+                    }, {
+                        xtype: 'xcheckbox',
+                        id: 'training-practice-message-done',
+                        name: 'mark_done',
+                        boxLabel: 'Задание выполнено',
+                        hideLabel: true,
+                        inputValue: 1
+                    }]
+                }],
+                buttons: [{
+                    id: 'training-practice-message-send',
+                    text: 'Отправить ответ',
+                    handler: function() {
+                        var messagesGrid = Ext.getCmp('training-grid-practice-messages');
+
+                        if (messagesGrid && messagesGrid.sendMessage) {
+                            messagesGrid.sendMessage();
                         }
                     }
-                }
+                }]
             });
 
             Training.panel.PracticeReply.superclass.constructor.call(this, config);
         };
         Ext.extend(Training.panel.PracticeReply, MODx.Panel);
-        Ext.reg('training-panel-practice-reply', Training.panel.PracticeReply);
-
-        Training.grid.PracticeMessages = function(config) {
+        Ext.reg('training-panel-practice-reply', Training.panel.PracticeReply);Training.grid.PracticeMessages = function(config) {
             config = config || {};
 
             Ext.applyIf(config, {
@@ -932,17 +959,10 @@
                 if (textField) {
                     textField.setValue('');
                 }
-                var textPlain = Ext.get('training-practice-message-text-plain');
-                if (textPlain && textPlain.dom) {
-                    textPlain.dom.value = '';
-                }
+
                 var doneField = Ext.getCmp('training-practice-message-done');
                 if (doneField) {
                     doneField.setValue(false);
-                }
-                var donePlain = Ext.get('training-practice-message-done-plain');
-                if (donePlain && donePlain.dom) {
-                    donePlain.dom.checked = false;
                 }
 
                 this.loadMessages();
@@ -1005,33 +1025,17 @@
                     btn.setDisabled(!!isBusy);
                     btn.setText(isBusy ? 'Отправляем...' : 'Отправить ответ');
                 }
-
-                var plainBtn = Ext.get('training-practice-message-send-plain');
-                if (plainBtn && plainBtn.dom) {
-                    plainBtn.dom.disabled = !!isBusy;
-                    plainBtn.dom.innerHTML = isBusy ? 'Отправляем...' : 'Отправить ответ';
-                }
             },
 
             sendMessage: function() {
                 var textField = Ext.getCmp('training-practice-message-text');
-                var textPlain = Ext.get('training-practice-message-text-plain');
                 var doneField = Ext.getCmp('training-practice-message-done');
-                var donePlain = Ext.get('training-practice-message-done-plain');
-                var text = '';
-                var markDone = false;
-
-                if (textPlain && textPlain.dom) {
-                    text = Ext.util.Format.trim(String(textPlain.dom.value || ''));
-                } else if (textField) {
-                    text = Ext.util.Format.trim(String(textField.getValue() || ''));
-                }
-
-                if (donePlain && donePlain.dom) {
-                    markDone = !!donePlain.dom.checked;
-                } else if (doneField && doneField.getValue) {
-                    markDone = !!doneField.getValue();
-                }
+                var text = textField
+                    ? Ext.util.Format.trim(String(textField.getValue() || ''))
+                    : '';
+                var markDone = doneField && doneField.getValue
+                    ? !!doneField.getValue()
+                    : false;
 
                 var attemptId = this.getCurrentAttemptId();
 
@@ -1078,14 +1082,8 @@
                         if (textField) {
                             textField.setValue('');
                         }
-                        if (textPlain && textPlain.dom) {
-                            textPlain.dom.value = '';
-                        }
                         if (doneField) {
                             doneField.setValue(false);
-                        }
-                        if (donePlain && donePlain.dom) {
-                            donePlain.dom.checked = false;
                         }
 
                         this.attemptId = attemptId;

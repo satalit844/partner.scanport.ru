@@ -233,7 +233,7 @@ Ext.extend(Training.form.CourseCertificate, MODx.FormPanel, {
         this.getEl().mask('Генерируем сертификаты...');
         MODx.Ajax.request({
             url: Training.config.connector_url,
-            params: {action: 'mgr/course/certificate/generate', course_id: this.courseId, force: 1},
+            params: {action: 'mgr/course/certificate/generate', course_id: this.courseId, force: 0},
             listeners: {
                 success: {fn: function(r) {
                     this.getEl().unmask();
@@ -355,6 +355,18 @@ Training.grid.CourseCertificates = function(config) {
                 this.generate(ids);
             },
             scope: this
+        }, {
+            text: 'Перегенерировать выбранные',
+            minWidth: 210,
+            handler: function() {
+                var ids = this.getSelectedUserIds();
+                if (!ids.length) {
+                    MODx.msg.alert('Сертификаты', 'Выберите пользователей');
+                    return;
+                }
+                this.reissue(ids);
+            },
+            scope: this
         }, '-', {
             text: 'Обновить',
             minWidth: 100,
@@ -407,6 +419,48 @@ Ext.extend(Training.grid.CourseCertificates, Ext.grid.GridPanel, {
         });
     },
 
+    reissue: function(ids) {
+        this.getEl().mask('Перегенерация сертификатов...');
+
+        Ext.Ajax.request({
+            url: Training.config.connector_url,
+            params: {
+                action: 'mgr/course/certificate/reissue',
+                course_id: this.courseId,
+                user_ids: ids.join(',')
+            },
+            success: function(response) {
+                this.getEl().unmask();
+                this.refresh();
+
+                var data = {};
+                try {
+                    data = Ext.decode(response.responseText || '{}') || {};
+                } catch (e) {}
+
+                var obj = data.object || data.results || data || {};
+                MODx.msg.alert(
+                    'Готово',
+                    'Перегенерировано сертификатов: ' + (obj.reissued_count || 0)
+                    + '. Пропущено: ' + (obj.skipped_count || 0)
+                );
+            },
+            failure: function(response) {
+                this.getEl().unmask();
+
+                var message = 'Не удалось перегенерировать сертификаты';
+                try {
+                    var data = Ext.decode(response.responseText || '{}') || {};
+                    if (data.message) {
+                        message = data.message;
+                    }
+                } catch (e) {}
+
+                MODx.msg.alert('Ошибка', message);
+            },
+            scope: this
+        });
+    },
     generate: function(ids) {
         this.getEl().mask('Генерация сертификатов...');
         Ext.Ajax.request({
@@ -414,7 +468,7 @@ Ext.extend(Training.grid.CourseCertificates, Ext.grid.GridPanel, {
             params: {
                 action: 'mgr/course/certificate/generate',
                 course_id: this.courseId,
-                force: 1,
+                force: 0,
                 user_ids: ids.join(',')
             },
             success: function(response) {

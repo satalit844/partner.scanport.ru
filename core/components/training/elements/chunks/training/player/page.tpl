@@ -1,3 +1,7 @@
+<!-- training-player-mobile-ui:start -->
+<link rel="stylesheet" href="/theme/css/training-player-mobile-ui.css?v=20260623145238">
+<script src="/theme/js/training-player-mobile-ui.js?v=20260623145238"></script>
+<!-- training-player-mobile-ui:end -->
 <div class="training-player w-100"
      data-training-page="player"
      data-training-connector="{$connector_url}"

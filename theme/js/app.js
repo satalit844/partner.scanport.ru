@@ -36,6 +36,23 @@ var App = (function () {
 
                     var $menuItem = $(this).closest('.menu-toggle');
                     if (!$menuItem.length) return;
+                /* training-sidebar-collapsed-toggle */
+                var isDesktopCollapsed = window.matchMedia &&
+                    window.matchMedia('(min-width: 991px)').matches &&
+                    $('body').hasClass('menu-Collapsed');
+
+                if (isDesktopCollapsed) {
+                    // В свёрнутом виде стрелка всегда открывает «Обучение».
+                    $menuItem.addClass('active');
+
+                    var $burger = $('.aside.fixed-top .burger-toggle').first();
+
+                    if ($burger.length) {
+                        $burger.trigger('click');
+                    }
+
+                    return;
+                }
 
                     $menuItem.toggleClass('active');
                 });

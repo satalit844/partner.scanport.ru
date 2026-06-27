@@ -615,6 +615,22 @@ class TrainingWebHelper
         $lessonId = (int)$lessonId;
         $userId = (int)$userId;
 
+        /*
+         * training-get-request-memo-v1:lesson-video-stats
+         *
+         * The same video stats are rendered in several course-page blocks.
+         * They are immutable while one ordinary GET is being rendered.
+         * POST progress updates deliberately bypass this request memo.
+         */
+        static $requestMemo = array();
+        $memoEnabled = isset($_SERVER['REQUEST_METHOD'])
+            && strtoupper((string)$_SERVER['REQUEST_METHOD']) === 'GET';
+        $memoKey = $courseId . '|' . $lessonId . '|' . $userId;
+
+        if ($memoEnabled && array_key_exists($memoKey, $requestMemo)) {
+            return $requestMemo[$memoKey];
+        }
+
         $rows = self::fetchLessonVideos($modx, $lessonId, true);
         $stats = array(
             'total_videos' => count($rows),
@@ -623,6 +639,9 @@ class TrainingWebHelper
         );
 
         if (empty($rows)) {
+            if ($memoEnabled) {
+                $requestMemo[$memoKey] = $stats;
+            }
             return $stats;
         }
 
@@ -641,6 +660,10 @@ class TrainingWebHelper
                     $stats['started_videos']++;
                 }
             }
+
+            if ($memoEnabled) {
+                $requestMemo[$memoKey] = $stats;
+            }
             return $stats;
         }
 
@@ -655,6 +678,10 @@ class TrainingWebHelper
             (string)$lessonProgress->get('status') !== 'not_started'
         )) {
             $stats['started_videos'] = min(1, $stats['total_videos']);
+        }
+
+        if ($memoEnabled) {
+            $requestMemo[$memoKey] = $stats;
         }
 
         return $stats;

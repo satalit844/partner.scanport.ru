@@ -16,6 +16,45 @@ class TrainingCourseAccessRemoveProcessor extends modProcessor
             return $this->failure('Не выбраны записи доступа для удаления');
         }
 
+        /* training-license-core-v1 */
+        $courseAccessTable = trim((string)$this->modx->getTableName('TrainingCourseAccess'), '`');
+        $licenseAssignmentsTable = preg_replace('/_course_access$/', '_license_assignments', $courseAccessTable);
+
+        if ($licenseAssignmentsTable && $licenseAssignmentsTable !== $courseAccessTable) {
+            $safeAssignmentsTable = str_replace('`', '``', $licenseAssignmentsTable);
+
+            foreach ($ids as $licenseCheckId) {
+                /** @var TrainingCourseAccess|null $licenseCheckAccess */
+                $licenseCheckAccess = $this->modx->getObject('TrainingCourseAccess', ['id' => (int)$licenseCheckId]);
+
+                if (
+                    !$licenseCheckAccess
+                    || (string)$licenseCheckAccess->get('access_role') !== 'director'
+                    || (string)$licenseCheckAccess->get('principal_type') !== 'user'
+                ) {
+                    continue;
+                }
+
+                $usedStmt = $this->modx->prepare(
+                    'SELECT COUNT(*) FROM `' . $safeAssignmentsTable . '` '
+                    . 'WHERE `director_access_id` = :director_access_id '
+                    . 'AND `state` IN ("reserved","consumed")'
+                );
+
+                $used = 0;
+                if ($usedStmt && $usedStmt->execute([
+                    ':director_access_id' => (int)$licenseCheckAccess->get('id'),
+                ])) {
+                    $used = (int)$usedStmt->fetchColumn();
+                }
+
+                if ($used > 0) {
+                    return $this->failure(
+                        'Нельзя удалить директора: у него есть занятые или потраченные лицензии (' . $used . ')'
+                    );
+                }
+            }
+        }
         $removed = 0;
         $courseIds = [];
 

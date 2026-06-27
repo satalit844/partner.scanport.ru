@@ -308,7 +308,7 @@ $hasCourses = !empty($courses);
 
 return trainingManageCoursesPageRenderFile($modx, $pageChunkPath, [
     'context_key' => $modx->context->get('key'),
-    'available_count' => count($courses),
+    'available_count' => '—',
     'courses_buttons' => $coursesButtons,
     'controls_disabled' => $hasCourses ? '' : ' disabled="disabled"',
     'request_modal' => trainingManageCoursesPageRenderFile($modx, $modalChunkPath, [

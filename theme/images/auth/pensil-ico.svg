@@ -1,0 +1,15 @@
+<svg width="24.000000" height="24.000000" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<desc>
+			Created with Pixso.
+	</desc>
+	<defs>
+		<clipPath id="clip4_6498">
+			<rect id="remix-icons/fill/design/edit-2-fill" width="16.000000" height="16.000000" transform="translate(4.000000 4.000000)" fill="white" fill-opacity="0"/>
+		</clipPath>
+	</defs>
+	<rect id="icon" rx="12.000000" width="24.000000" height="24.000000" fill="#FFFFFF" fill-opacity="1.000000"/>
+	<rect id="remix-icons/fill/design/edit-2-fill" width="16.000000" height="16.000000" transform="translate(4.000000 4.000000)" fill="#FFFFFF" fill-opacity="0"/>
+	<g clip-path="url(#clip4_6498)">
+		<path id="Vector" d="M10.1621 16.6667L18 16.6667L18 18L6 18L6 15.1713L12.5996 8.57132L15.4277 11.4007L10.1621 16.6667L10.1621 16.6667ZM13.543 7.62933L14.957 6.21466C15.082 6.08969 15.252 6.01947 15.4277 6.01947C15.6055 6.01947 15.7734 6.08969 15.8984 6.21466L17.7852 8.10065C17.9102 8.22568 17.9805 8.39523 17.9805 8.57199C17.9805 8.74878 17.9102 8.9183 17.7852 9.04333L16.3711 10.4573L13.543 7.62933L13.543 7.62933Z" fill="#84299A" fill-opacity="1.000000" fill-rule="nonzero"/>
+	</g>
+</svg>
