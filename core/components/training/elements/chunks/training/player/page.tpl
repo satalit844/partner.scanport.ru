@@ -141,7 +141,7 @@
         <div class="player-resume-modal__overlay"></div>
         <div class="player-resume-modal__dialog">
             <button type="button" class="player-resume-modal__close js-player-resume-close" aria-label="Закрыть">×</button>
-            <div class="player-resume-modal__title">Возобновить тест</div>
+            <div class="player-resume-modal__title">Возобновить видео</div>
             <div class="player-resume-modal__text js-player-resume-text">Продолжить курс со слайда, на котором вы остановились?</div>
             <div class="player-resume-modal__actions">
                 <button type="button" class="btn btn-player-nav js-player-start-over">Сначала</button>
