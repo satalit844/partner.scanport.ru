@@ -734,7 +734,7 @@ foreach ($messages as $messageRow) {
 if ($messagesHtml === '') {
     $messagesHtml = '
         <div class="practice-empty">
-            <div class="practice-empty__ico"><img src="/theme/images/practic/mail.svg" class="img-svg" alt=""></div>
+            <div class="practice-empty__ico"><img src="theme/images/practic/mail.svg" class="" alt=""></div>
             <div class="practice-empty__title">Нет истории сообщений</div>
             <div class="practice-empty__text">Напишите в чат, чтобы начать общение</div>
         </div>
@@ -744,7 +744,7 @@ if ($messagesHtml === '') {
 if ($commentsHtml === '') {
     $commentsHtml = '
         <div class="practice-empty">
-            <div class="practice-empty__ico"><img src="/theme/images/practic/mail.svg" class="img-svg" alt=""></div>
+            <div class="practice-empty__ico"><img src="theme/images/practic/mail.svg" class="" alt=""></div>
             <div class="practice-empty__title">Комментариев пока нет</div>
             <div class="practice-empty__text">Ответ ментора появится здесь после проверки</div>
         </div>
