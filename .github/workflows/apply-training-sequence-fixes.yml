@@ -24,52 +24,71 @@ jobs:
         run: |
           from pathlib import Path
 
+          def function_range(source, signature):
+              start = source.index(signature)
+              open_pos = source.index('{', start)
+              depth = 0
+              state = 'code'
+              escaped = False
+              i = open_pos
+
+              while i < len(source):
+                  ch = source[i]
+                  nxt = source[i + 1] if i + 1 < len(source) else ''
+
+                  if state in ('single', 'double'):
+                      if escaped:
+                          escaped = False
+                      elif ch == '\\':
+                          escaped = True
+                      elif state == 'single' and ch == "'":
+                          state = 'code'
+                      elif state == 'double' and ch == '"':
+                          state = 'code'
+                      i += 1
+                      continue
+
+                  if state == 'line':
+                      if ch == '\n':
+                          state = 'code'
+                      i += 1
+                      continue
+
+                  if state == 'block':
+                      if ch == '*' and nxt == '/':
+                          state = 'code'
+                          i += 2
+                          continue
+                      i += 1
+                      continue
+
+                  if ch == "'":
+                      state = 'single'
+                  elif ch == '"':
+                      state = 'double'
+                  elif ch == '/' and nxt == '/':
+                      state = 'line'
+                      i += 1
+                  elif ch == '#':
+                      state = 'line'
+                  elif ch == '/' and nxt == '*':
+                      state = 'block'
+                      i += 1
+                  elif ch == '{':
+                      depth += 1
+                  elif ch == '}':
+                      depth -= 1
+                      if depth == 0:
+                          return start, i + 1
+                  i += 1
+
+              raise RuntimeError('Function end not found')
+
           helpers_path = Path('core/components/training/processors/web/_helpers.php')
           helpers = helpers_path.read_text(encoding='utf-8')
+          marker = 'TRAINING_FIRST_INCOMPLETE_VIDEO_FIX_V1'
 
-          old_helpers = '''public static function getPreferredLessonVideoId(modX $modx, $courseId, $lessonId, $userId, $requestedVideoId = 0)
-              {
-                  $courseId = (int)$courseId;
-                  $lessonId = (int)$lessonId;
-                  $userId = (int)$userId;
-                  $requestedVideoId = (int)$requestedVideoId;
-
-                  if ($requestedVideoId > 0) {
-                      $row = self::fetchLessonVideo($modx, $requestedVideoId, $lessonId, true);
-                      if ($row) {
-                          return (int)$row['id'];
-                      }
-                  }
-
-                  if (self::hasUserVideoProgressTable($modx)) {
-                      $sql = 'SELECT p.`lesson_video_id` FROM `' . self::userVideoProgressTable($modx) . '` p '
-                          . 'INNER JOIN `' . self::lessonVideosTable($modx) . '` lv ON lv.`id` = p.`lesson_video_id` AND lv.`is_active` = 1 '
-                          . 'WHERE p.`course_id` = :course_id AND p.`lesson_id` = :lesson_id AND p.`user_id` = :user_id '
-                          . 'ORDER BY COALESCE(p.`last_watch`, \'0000-00-00 00:00:00\') DESC, p.`max_time` DESC, p.`current_time` DESC, p.`id` DESC LIMIT 1';
-                      $stmt = $modx->prepare($sql);
-                      if ($stmt && $stmt->execute(array(':course_id' => $courseId, ':lesson_id' => $lessonId, ':user_id' => $userId))) {
-                          $value = (int)$stmt->fetchColumn();
-                          if ($value > 0) {
-                              return $value;
-                          }
-                      }
-                  }
-
-                  $rows = self::fetchLessonVideos($modx, $lessonId, true);
-                  foreach ($rows as $row) {
-                      if (!empty($row['is_default'])) {
-                          return (int)$row['id'];
-                      }
-                  }
-                  if (!empty($rows)) {
-                      $first = reset($rows);
-                      return (int)$first['id'];
-                  }
-
-                  return 0;
-              }'''
-
-          new_helpers = '''public static function getPreferredLessonVideoId(modX $modx, $courseId, $lessonId, $userId, $requestedVideoId = 0)
+          replacement = '''public static function getPreferredLessonVideoId(modX $modx, $courseId, $lessonId, $userId, $requestedVideoId = 0)
               {
                   // TRAINING_FIRST_INCOMPLETE_VIDEO_FIX_V1
                   $courseId = (int)$courseId;
@@ -168,30 +187,19 @@ jobs:
                   return $first ? (int)$first['id'] : 0;
               }'''
 
-          if 'TRAINING_FIRST_INCOMPLETE_VIDEO_FIX_V1' not in helpers:
-              if helpers.count(old_helpers) != 1:
-                  raise SystemExit('Expected original getPreferredLessonVideoId block was not found exactly once')
-              helpers = helpers.replace(old_helpers, new_helpers, 1)
+          if marker not in helpers:
+              start, end = function_range(
+                  helpers,
+                  'public static function getPreferredLessonVideoId'
+              )
+              helpers = helpers[:start] + replacement + helpers[end:]
               helpers_path.write_text(helpers, encoding='utf-8')
 
           app_path = Path('theme/js/app-training.js')
           app = app_path.read_text(encoding='utf-8')
+          app_marker = "? (res.object.nav.next_url || '')"
 
-          old_app = '''                .off('ended.appTrainingPlayer')
-                          .on('ended.appTrainingPlayer', function () {
-                              updatePlayUi();
-                              stopSaveInterval();
-                              completeSent = true;
-                              var nextVideoId = getAdjacentVideoId('next');
-                              saveProgress(true, {silent: true, skipUiSync: false});
-                              if (nextVideoId > 0) {
-                                  setTimeout(function () {
-                                      switchToVideo(nextVideoId, {});
-                                  }, 120);
-                              }
-                          })'''
-
-          new_app = '''                .off('ended.appTrainingPlayer')
+          new_handler = '''                .off('ended.appTrainingPlayer')
                           .on('ended.appTrainingPlayer', function () {
                               updatePlayUi();
                               stopSaveInterval();
@@ -227,12 +235,15 @@ jobs:
                                       }, 120);
                                   });
                               }
-                          })'''
+                          })
+'''
 
-          if "? (res.object.nav.next_url || '')" not in app:
-              if app.count(old_app) != 1:
-                  raise SystemExit('Expected original ended handler was not found exactly once')
-              app = app.replace(old_app, new_app, 1)
+          if app_marker not in app:
+              start_marker = "                .off('ended.appTrainingPlayer')"
+              end_marker = "                .off('volumechange.appTrainingPlayer')"
+              start = app.index(start_marker)
+              end = app.index(end_marker, start)
+              app = app[:start] + new_handler + app[end:]
               app_path.write_text(app, encoding='utf-8')
 
       - name: Validate syntax
