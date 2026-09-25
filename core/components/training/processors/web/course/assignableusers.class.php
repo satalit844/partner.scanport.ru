@@ -91,19 +91,50 @@ class TrainingWebCourseAssignableUsersProcessor extends modProcessor
         return $this->extractOrganization(isset($row['extended']) ? $row['extended'] : '');
     }
 
+    /**
+     * Быстрый расчёт для таблицы «Управление курсами».
+     *
+     * Использует сохранённый итог TrainingUserCourse и не пересчитывает
+     * видео, тесты и практики каждого сотрудника на каждый AJAX-запрос.
+     */
     protected function getCourseTrackProgress(TrainingProgressService $service, $courseId, $userId, array $userCourseRow = [])
     {
-        $courseId = (int)$courseId;
-        $userId = (int)$userId;
+        $progressPercent = isset($userCourseRow['progress_percent'])
+            ? (float)$userCourseRow['progress_percent']
+            : 0;
 
-        $fallbackProgress = isset($userCourseRow['progress_percent']) ? (float)$userCourseRow['progress_percent'] : 0;
-        $fallbackStatus = isset($userCourseRow['status']) ? (string)$userCourseRow['status'] : '';
+        $status = isset($userCourseRow['status'])
+            ? (string)$userCourseRow['status']
+            : '';
 
-        $data = [
-            'progress_percent' => (int)round($fallbackProgress),
-            'status' => $fallbackStatus,
-            'total_items' => 0,
-            'completed_items' => 0,
+        $totalModules = isset($userCourseRow['total_modules'])
+            ? max(0, (int)$userCourseRow['total_modules'])
+            : 0;
+
+        $completedModules = isset($userCourseRow['completed_modules'])
+            ? max(0, (int)$userCourseRow['completed_modules'])
+            : 0;
+
+        $progressPercent = max(0, min(100, (int)round($progressPercent)));
+
+        if ($progressPercent <= 0 && $totalModules > 0 && $completedModules > 0) {
+            $progressPercent = max(0, min(100, (int)round(($completedModules / $totalModules) * 100)));
+        }
+
+        if ($progressPercent >= 100) {
+            $status = 'completed';
+        } elseif (
+            $progressPercent > 0
+            && ($status === '' || $status === 'assigned' || $status === 'not_started')
+        ) {
+            $status = 'in_progress';
+        }
+
+        return [
+            'progress_percent' => $progressPercent,
+            'status' => $status,
+            'total_items' => $totalModules,
+            'completed_items' => min($completedModules, $totalModules),
             'videos_total' => 0,
             'videos_completed' => 0,
             'tests_total' => 0,
@@ -111,46 +142,6 @@ class TrainingWebCourseAssignableUsersProcessor extends modProcessor
             'practices_total' => 0,
             'practices_completed' => 0,
         ];
-
-        if ($courseId <= 0 || $userId <= 0) {
-            return $data;
-        }
-
-        $videoStats = TrainingWebHelper::getCourseVideoStats($this->modx, $service, $courseId, $userId);
-        $activityStats = $service->getCourseActivityStats($courseId, $userId);
-
-        $videosTotal = (int)$videoStats['total_videos'];
-        $videosCompleted = (int)$videoStats['completed_videos'];
-        $testsTotal = (int)$activityStats['tests_total'];
-        $testsPassed = (int)$activityStats['tests_passed'];
-        $practicesTotal = (int)$activityStats['practices_total'];
-        $practicesCompleted = (int)$activityStats['practices_completed'];
-
-        $totalItems = $videosTotal + $testsTotal + $practicesTotal;
-        $completedItems = $videosCompleted + $testsPassed + $practicesCompleted;
-
-        $data['total_items'] = $totalItems;
-        $data['completed_items'] = $completedItems;
-        $data['videos_total'] = $videosTotal;
-        $data['videos_completed'] = $videosCompleted;
-        $data['tests_total'] = $testsTotal;
-        $data['tests_passed'] = $testsPassed;
-        $data['practices_total'] = $practicesTotal;
-        $data['practices_completed'] = $practicesCompleted;
-
-        if ($totalItems > 0) {
-            $data['progress_percent'] = (int)round(($completedItems / $totalItems) * 100);
-        }
-
-        // Статус из TrainingUserCourse сохраняем, но процент для управления курсами
-        // считаем так же, как на странице курса: видео + практики + тесты.
-        if ($totalItems > 0 && $completedItems >= $totalItems) {
-            $data['status'] = 'completed';
-        } elseif ($data['progress_percent'] > 0 && ($data['status'] === '' || $data['status'] === 'assigned' || $data['status'] === 'not_started')) {
-            $data['status'] = 'in_progress';
-        }
-
-        return $data;
     }
 
     protected function buildState($hasAccess, array $userCourseRow = [], $directAccessId = 0)
@@ -211,6 +202,7 @@ class TrainingWebCourseAssignableUsersProcessor extends modProcessor
 
 
 
+
     protected function actorHasDirectorManagementAccess($courseId, $actorUserId)
     {
         $courseId = (int)$courseId;
@@ -239,6 +231,7 @@ class TrainingWebCourseAssignableUsersProcessor extends modProcessor
 
         return $userCourse && (string)$userCourse->get('status') !== 'revoked';
     }
+
 
 
     protected function isDirectAccessActiveNow($access)
@@ -312,18 +305,29 @@ class TrainingWebCourseAssignableUsersProcessor extends modProcessor
             || $service->canManageCourse($courseId, $actorUserId)
         );
 
-        if ($service->isAdminUser($actorUserId)) {
-            $ids = $service->getAssignableUserIds($actorUserId, $courseId, true);
-        } else {
+        /*
+         * training-director-scope-v1
+         *
+         * Если у пользователя есть активные прямые подчинённые, это директор
+         * команды. Его список всегда ограничиваем своей командой, даже когда
+         * isAdminUser() по сессии/правам возвращает true.
+         *
+         * Настоящий администратор без связей директор → сотрудник по-прежнему
+         * получает полный список пользователей.
+         */
+        if (!empty($managedIds)) {
             $ids = $managedIds;
 
-            // Директор может управлять курсом даже при выключенном доступе к прохождению.
-            // Но в список пользователей добавляем самого директора только если его доступ к прохождению активен.
-            // Так выключенный директор не сможет выбрать себя и активировать курс себе "нахаляву".
-            if ($actorCanManageCourse) {
-                if ($this->actorHasActiveCoursePassingAccess($courseId, $actorUserId)) {
-                    $ids[] = $actorUserId;
-                }
+            if ($actorCanManageCourse && $this->actorHasActiveCoursePassingAccess($courseId, $actorUserId)) {
+                $ids[] = $actorUserId;
+            }
+        } elseif ($service->isAdminUser($actorUserId)) {
+            $ids = $service->getAssignableUserIds($actorUserId, $courseId, true);
+        } else {
+            $ids = [];
+
+            if ($actorCanManageCourse && $this->actorHasActiveCoursePassingAccess($courseId, $actorUserId)) {
+                $ids[] = $actorUserId;
             } elseif (empty($ids)) {
                 $ids = $service->getAssignableUserIds($actorUserId, $courseId, $includeSelf);
             }
@@ -363,135 +367,97 @@ class TrainingWebCourseAssignableUsersProcessor extends modProcessor
                 'principal_type' => 'user',
                 'principal_id:IN' => $ids,
             ]);
-            /** @var TrainingCourseAccess $access */
-            foreach ($directAccesses as $access) {
-                $directAccessMap[(int)$access->get('principal_id')] = $access;
+            /** @var TrainingCourseAccess $directAccess */
+            foreach ($directAccesses as $directAccess) {
+                $directAccessMap[(int)$directAccess->get('principal_id')] = $directAccess;
             }
         }
 
-        $c = $this->modx->newQuery('modUser');
-        $c->leftJoin('modUserProfile', 'Profile', 'Profile.internalKey = modUser.id');
-        $c->where([
-            'modUser.id:IN' => $ids,
+        $users = $this->modx->getIterator('modUser', [
+            'id:IN' => $ids,
+            'active' => 1,
         ]);
+
+        $results = [];
+        /** @var modUser $user */
+        foreach ($users as $user) {
+            $userId = (int)$user->get('id');
+            $profile = $user->getOne('Profile');
+            $userCourse = isset($userCourseMap[$userId]) ? $userCourseMap[$userId] : null;
+            $directAccess = isset($directAccessMap[$userId]) ? $directAccessMap[$userId] : null;
+
+            $hasAccess = isset($accessibleMap[$userId]);
+            $userCourseRow = $userCourse ? $userCourse->toArray() : [];
+            $directAccessId = $directAccess ? (int)$directAccess->get('id') : 0;
+            $state = $this->buildState($hasAccess, $userCourseRow, $directAccessId);
+            $track = $this->getCourseTrackProgress($service, $courseId, $userId, $userCourseRow);
+            $state = $this->buildState($hasAccess, array_merge($userCourseRow, [
+                'progress_percent' => $track['progress_percent'],
+                'status' => $track['status'],
+            ]), $directAccessId);
+
+            $fullname = $profile ? trim((string)$profile->get('fullname')) : '';
+            $email = $profile ? trim((string)$profile->get('email')) : '';
+            $extended = $profile ? $profile->get('extended') : '';
+            $organization = $this->extractOrganizationFromRow($userCourseRow);
+            if ($organization === '') {
+                $organization = $this->extractOrganization($extended);
+            }
+
+            $results[] = [
+                'id' => $userId,
+                'username' => (string)$user->get('username'),
+                'fullname' => $fullname,
+                'email' => $email,
+                'organization' => $organization,
+                'has_access' => $hasAccess ? 1 : 0,
+                'progress_percent' => $track['progress_percent'],
+                'status' => $track['status'],
+                'resolved_access_role' => $courseId > 0
+                    ? $service->resolveUserAccessRoleForCourse($courseId, $userId, 'employee')
+                    : 'employee',
+                'direct_access_id' => $directAccessId,
+                'access_role' => $userCourse ? (string)$userCourse->get('access_role') : '',
+                'access_status' => $userCourse ? (string)$userCourse->get('status') : '',
+                'last_activity' => $userCourse ? $this->formatDateValue($userCourse->get('last_activity')) : '—',
+                'state' => $state['state'],
+                'status_text' => $state['status_text'],
+                'status_class' => $state['status_class'],
+                'button_text' => $state['button_text'],
+                'button_class' => $state['button_class'],
+                'show_assign_button' => $state['show_assign_button'],
+                'show_status_chip' => $state['show_status_chip'],
+                'can_unassign' => $state['can_unassign'],
+                'can_assign' => ($courseId > 0 && !$hasAccess && (
+                    $service->canAssignCourseToUser($courseId, $actorUserId, $userId)
+                    || ($actorCanManageCourse && $userId !== $actorUserId && in_array($userId, $managedIds, true))
+                )) ? 1 : 0,
+            ];
+        }
+
+        usort($results, function ($a, $b) {
+            $aName = mb_strtolower((string)($a['fullname'] ?: $a['username']), 'UTF-8');
+            $bName = mb_strtolower((string)($b['fullname'] ?: $b['username']), 'UTF-8');
+            return strcmp($aName, $bName);
+        });
 
         if ($query !== '') {
-            $c->where([
-                'modUser.username:LIKE' => '%' . $query . '%',
-                'OR:Profile.fullname:LIKE' => '%' . $query . '%',
-                'OR:Profile.email:LIKE' => '%' . $query . '%',
-            ]);
-        }
-
-        $c->select([
-            'modUser.id AS id',
-            'modUser.username AS username',
-            'Profile.fullname AS fullname',
-            'Profile.email AS email',
-            'Profile.extended AS extended',
-            'Profile.field_company AS field_company',
-            'Profile.field_list_company AS field_list_company',
-            'Profile.lastlogin AS lastlogin',
-        ]);
-        $c->sortby('Profile.fullname', 'ASC');
-        $c->sortby('modUser.username', 'ASC');
-
-        $rows = [];
-
-        if ($c->prepare() && $c->stmt->execute()) {
-            while ($row = $c->stmt->fetch(PDO::FETCH_ASSOC)) {
-                $userId = (int)$row['id'];
-                $fullname = trim((string)$row['fullname']);
-                $email = trim((string)$row['email']);
-                $username = trim((string)$row['username']);
-                $organization = $this->extractOrganizationFromRow($row);
-
-                $displayName = $fullname !== '' ? $fullname : $username;
-                $label = '#' . $userId . ' ' . $username;
-                if ($fullname !== '') {
-                    $label .= ' (' . $fullname . ')';
-                }
-                if ($email !== '') {
-                    $label .= ' [' . $email . ']';
-                }
-
-                /** @var TrainingUserCourse|null $userCourse */
-                $userCourse = isset($userCourseMap[$userId]) ? $userCourseMap[$userId] : null;
-                /** @var TrainingCourseAccess|null $directAccess */
-                $directAccess = isset($directAccessMap[$userId]) ? $directAccessMap[$userId] : null;
-
-                $hasAccess = $courseId > 0 ? isset($accessibleMap[$userId]) : 0;
-                $directAccessId = $directAccess ? (int)$directAccess->get('id') : 0;
-
-                $userCourseRow = $userCourse ? $userCourse->toArray() : [];
-                $trackProgress = $this->getCourseTrackProgress($service, $courseId, $userId, $userCourseRow);
-                $userCourseRow['progress_percent'] = $trackProgress['progress_percent'];
-                if ($trackProgress['status'] !== '') {
-                    $userCourseRow['status'] = $trackProgress['status'];
-                }
-
-                $state = $this->buildState($hasAccess, $userCourseRow, $directAccessId);
-
-                $progressPercent = (int)$trackProgress['progress_percent'];
-                $startedOn = $userCourse ? $userCourse->get('startedon') : null;
-
-                $rows[] = [
-                    'id' => $userId,
-                    'name' => $label,
-                    'display' => $label,
-                    'display_name' => $displayName,
-                    'username' => $username,
-                    'fullname' => $fullname,
-                    'email' => $email,
-                    'organization' => $organization !== '' ? $organization : '—',
-                    'scope' => $userId === $actorUserId ? 'self' : 'managed',
-
-                    'course_id' => $courseId,
-                    'has_access' => $hasAccess ? 1 : 0,
-                    'direct_access_id' => $directAccessId,
-                    'direct_access_role' => $directAccess ? (string)$directAccess->get('access_role') : '',
-                    'resolved_access_role' => $courseId > 0
-                        ? $service->resolveUserAccessRoleForCourse($courseId, $userId, 'employee')
-                        : 'employee',
-
-                    'user_course_status' => $userCourse ? (string)$userCourse->get('status') : '',
-                    'progress_percent' => $progressPercent,
-                    'track_total_items' => (int)$trackProgress['total_items'],
-                    'track_completed_items' => (int)$trackProgress['completed_items'],
-                    'videos_total' => (int)$trackProgress['videos_total'],
-                    'videos_completed' => (int)$trackProgress['videos_completed'],
-                    'tests_total' => (int)$trackProgress['tests_total'],
-                    'tests_passed' => (int)$trackProgress['tests_passed'],
-                    'practices_total' => (int)$trackProgress['practices_total'],
-                    'practices_completed' => (int)$trackProgress['practices_completed'],
-                    'startedon' => $startedOn,
-                    'startedon_formatted' => $this->formatDateValue($startedOn),
-                    'last_login' => $row['lastlogin'],
-                    'last_login_formatted' => $this->formatDateValue($row['lastlogin']),
-
-                    'state' => $state['state'],
-                    'status_text' => $state['status_text'],
-                    'status_class' => $state['status_class'],
-                    'show_assign_button' => $state['show_assign_button'],
-                    'show_status_chip' => $state['show_status_chip'],
-                    'button_text' => $state['button_text'],
-                    'button_class' => $state['button_class'],
-
-                    'can_assign' => ($courseId > 0 && !$hasAccess && (
-                        $service->canAssignCourseToUser($courseId, $actorUserId, $userId)
-                        || ($actorCanManageCourse && $userId !== $actorUserId && in_array($userId, $managedIds, true))
-                    )) ? 1 : 0,
-                    'can_unassign' => $state['can_unassign'],
-                ];
-            }
+            $needle = mb_strtolower($query, 'UTF-8');
+            $results = array_values(array_filter($results, function ($row) use ($needle) {
+                $haystack = mb_strtolower(implode(' ', [
+                    isset($row['fullname']) ? $row['fullname'] : '',
+                    isset($row['username']) ? $row['username'] : '',
+                    isset($row['email']) ? $row['email'] : '',
+                    isset($row['organization']) ? $row['organization'] : '',
+                ]), 'UTF-8');
+                return mb_strpos($haystack, $needle, 0, 'UTF-8') !== false;
+            }));
         }
 
         return $this->success('', [
             'course_id' => $courseId,
-            'total' => count($rows),
-            'results' => $rows,
+            'total' => count($results),
+            'results' => $results,
         ]);
     }
 }
-
-return 'TrainingWebCourseAssignableUsersProcessor';
