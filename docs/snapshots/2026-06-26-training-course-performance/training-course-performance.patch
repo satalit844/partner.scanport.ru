@@ -1,0 +1,301 @@
+--- a/core/components/training/model/training/services/trainingprogress.class.php
++++ b/core/components/training/model/training/services/trainingprogress.class.php
+@@ -1057,6 +1057,24 @@
+         $courseId = (int)$courseId;
+         $moduleId = (int)$moduleId;
+         $userId = (int)$userId;
++
++        /*
++         * training-get-request-memo-v2:module-activity-rows
++         *
++         * In a course page GET, the same module rows are requested by the
++         * page, its summary and access-gate calculations. The first call still
++         * executes syncModuleUserTestStatuses(); subsequent identical calls
++         * reuse the same calculated result. POST handlers are never cached.
++         */
++        static $requestMemo = array();
++        $memoEnabled = isset($_SERVER['REQUEST_METHOD'])
++            && strtoupper((string)$_SERVER['REQUEST_METHOD']) === 'GET';
++        $memoKey = $courseId . '|' . $moduleId . '|' . $userId;
++
++        if ($memoEnabled && array_key_exists($memoKey, $requestMemo)) {
++            return $requestMemo[$memoKey];
++        }
++
+         $rows = [];
+ 
+         $links = $this->getModuleActivityLinks($moduleId, $courseId);
+@@ -1174,6 +1192,10 @@
+             ];
+         }
+ 
++        if ($memoEnabled) {
++            $requestMemo[$memoKey] = $rows;
++        }
++
+         return $rows;
+     }
+ 
+@@ -2219,10 +2241,28 @@
+             return false;
+         }
+ 
+-        return $this->modx->getCount('TrainingModuleVideo', array(
++        /*
++         * training-get-request-memo-v1:lesson-video
++         * The active-video flag cannot change during one normal page GET.
++         */
++        static $requestMemo = array();
++        $memoEnabled = isset($_SERVER['REQUEST_METHOD'])
++            && strtoupper((string)$_SERVER['REQUEST_METHOD']) === 'GET';
++
++        if ($memoEnabled && array_key_exists($lessonId, $requestMemo)) {
++            return $requestMemo[$lessonId];
++        }
++
++        $result = $this->modx->getCount('TrainingModuleVideo', array(
+             'lesson_id' => $lessonId,
+             'is_active' => 1,
+         )) > 0;
++
++        if ($memoEnabled) {
++            $requestMemo[$lessonId] = $result;
++        }
++
++        return $result;
+     }
+ 
+     public function getModuleLessons($moduleId, $onlyActive = true, $onlyWithVideo = false)
+@@ -2232,6 +2272,20 @@
+             return array();
+         }
+ 
++        /*
++         * training-get-request-memo-v1:module-lessons
++         * Course structure is immutable during a normal page GET. Reuse it
++         * only within this GET request; POST handlers always read fresh data.
++         */
++        static $requestMemo = array();
++        $memoEnabled = isset($_SERVER['REQUEST_METHOD'])
++            && strtoupper((string)$_SERVER['REQUEST_METHOD']) === 'GET';
++        $memoKey = $moduleId . '|' . ((int)(bool)$onlyActive) . '|' . ((int)(bool)$onlyWithVideo);
++
++        if ($memoEnabled && array_key_exists($memoKey, $requestMemo)) {
++            return $requestMemo[$memoKey];
++        }
++
+         $c = $this->modx->newQuery('TrainingModuleLesson');
+         $c->where(array(
+             'module_id' => $moduleId,
+@@ -2246,6 +2300,9 @@
+ 
+         $items = $this->modx->getCollection('TrainingModuleLesson', $c);
+         if (!$onlyWithVideo) {
++            if ($memoEnabled) {
++                $requestMemo[$memoKey] = $items;
++            }
+             return $items;
+         }
+ 
+@@ -2257,6 +2314,10 @@
+             }
+         }
+ 
++        if ($memoEnabled) {
++            $requestMemo[$memoKey] = $result;
++        }
++
+         return $result;
+     }
+ 
+@@ -2325,11 +2386,31 @@
+             return null;
+         }
+ 
+-        return $this->modx->getObject('TrainingUserLessonProgress', array(
++        /*
++         * training-get-request-memo-v1:lesson-progress
++         * Page rendering does not update lesson progress. POST write paths
++         * bypass this memo entirely.
++         */
++        static $requestMemo = array();
++        $memoEnabled = isset($_SERVER['REQUEST_METHOD'])
++            && strtoupper((string)$_SERVER['REQUEST_METHOD']) === 'GET';
++        $memoKey = $courseId . '|' . $lessonId . '|' . $userId;
++
++        if ($memoEnabled && array_key_exists($memoKey, $requestMemo)) {
++            return $requestMemo[$memoKey];
++        }
++
++        $result = $this->modx->getObject('TrainingUserLessonProgress', array(
+             'course_id' => $courseId,
+             'lesson_id' => $lessonId,
+             'user_id' => $userId,
+         ));
++
++        if ($memoEnabled) {
++            $requestMemo[$memoKey] = $result;
++        }
++
++        return $result;
+     }
+ 
+     public function ensureLessonProgress($courseId, $lessonId, $userId, $durationSeconds = 0)
+@@ -2428,6 +2509,20 @@
+             return $stats;
+         }
+ 
++        /*
++         * training-get-request-memo-v1:module-gate-stats
++         * The same prior module is checked repeatedly while page cards and
++         * lessons are rendered. Cache this computed gate only during GET.
++         */
++        static $requestMemo = array();
++        $memoEnabled = isset($_SERVER['REQUEST_METHOD'])
++            && strtoupper((string)$_SERVER['REQUEST_METHOD']) === 'GET';
++        $memoKey = $courseId . '|' . $moduleId . '|' . $userId;
++
++        if ($memoEnabled && array_key_exists($memoKey, $requestMemo)) {
++            return $requestMemo[$memoKey];
++        }
++
+         $lessons = $this->getModuleLessons($moduleId, true, true);
+         /** @var TrainingModuleLesson $lesson */
+         foreach ($lessons as $lesson) {
+@@ -2468,6 +2563,10 @@
+             }
+         }
+ 
++        if ($memoEnabled) {
++            $requestMemo[$memoKey] = $stats;
++        }
++
+         return $stats;
+     }
+ 
+@@ -2481,8 +2580,30 @@
+             return false;
+         }
+ 
++        /*
++         * training-get-request-memo-v1:module-access
++         * Every child lesson asks for its module access. For a GET page
++         * render, the answer cannot change mid-request.
++         */
++        static $requestMemo = array();
++        $memoEnabled = isset($_SERVER['REQUEST_METHOD'])
++            && strtoupper((string)$_SERVER['REQUEST_METHOD']) === 'GET';
++        $memoKey = $courseId . '|' . $moduleId . '|' . $userId;
++
++        if ($memoEnabled && array_key_exists($memoKey, $requestMemo)) {
++            return $requestMemo[$memoKey];
++        }
++
++        $remember = function ($value) use ($memoEnabled, $memoKey, &$requestMemo) {
++            $value = (bool)$value;
++            if ($memoEnabled) {
++                $requestMemo[$memoKey] = $value;
++            }
++            return $value;
++        };
++
+         if (!$this->hasCourseAccess($courseId, $userId)) {
+-            return false;
++            return $remember(false);
+         }
+ 
+         /** @var TrainingCourse $course */
+@@ -2491,11 +2612,11 @@
+             'is_active' => 1,
+         ));
+         if (!$course) {
+-            return false;
++            return $remember(false);
+         }
+ 
+         if (!(int)$course->get('is_sequential')) {
+-            return true;
++            return $remember(true);
+         }
+ 
+         $modules = $this->getCourseModules($courseId, true, false);
+@@ -2503,7 +2624,7 @@
+         foreach ($modules as $module) {
+             $currentId = (int)$module->get('id');
+             if ($currentId === $moduleId) {
+-                return true;
++                return $remember(true);
+             }
+ 
+             $gateStats = $this->getModuleCompletionGateStats($courseId, $currentId, $userId);
+@@ -2512,11 +2633,11 @@
+             }
+ 
+             if ((int)$gateStats['required_completed'] < (int)$gateStats['required_total']) {
+-                return false;
++                return $remember(false);
+             }
+         }
+ 
+-        return false;
++        return $remember(false);
+     }
+ 
+     public function canAccessLesson($courseId, $moduleId, $lessonId, $userId)
+--- a/core/components/training/processors/web/_helpers.php
++++ b/core/components/training/processors/web/_helpers.php
+@@ -615,6 +615,22 @@
+         $lessonId = (int)$lessonId;
+         $userId = (int)$userId;
+ 
++        /*
++         * training-get-request-memo-v1:lesson-video-stats
++         *
++         * The same video stats are rendered in several course-page blocks.
++         * They are immutable while one ordinary GET is being rendered.
++         * POST progress updates deliberately bypass this request memo.
++         */
++        static $requestMemo = array();
++        $memoEnabled = isset($_SERVER['REQUEST_METHOD'])
++            && strtoupper((string)$_SERVER['REQUEST_METHOD']) === 'GET';
++        $memoKey = $courseId . '|' . $lessonId . '|' . $userId;
++
++        if ($memoEnabled && array_key_exists($memoKey, $requestMemo)) {
++            return $requestMemo[$memoKey];
++        }
++
+         $rows = self::fetchLessonVideos($modx, $lessonId, true);
+         $stats = array(
+             'total_videos' => count($rows),
+@@ -623,6 +639,9 @@
+         );
+ 
+         if (empty($rows)) {
++            if ($memoEnabled) {
++                $requestMemo[$memoKey] = $stats;
++            }
+             return $stats;
+         }
+ 
+@@ -641,6 +660,10 @@
+                     $stats['started_videos']++;
+                 }
+             }
++
++            if ($memoEnabled) {
++                $requestMemo[$memoKey] = $stats;
++            }
+             return $stats;
+         }
+ 
+@@ -657,6 +680,10 @@
+             $stats['started_videos'] = min(1, $stats['total_videos']);
+         }
+ 
++        if ($memoEnabled) {
++            $requestMemo[$memoKey] = $stats;
++        }
++
+         return $stats;
+     }
+ 
