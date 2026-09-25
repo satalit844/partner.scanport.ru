@@ -13,13 +13,17 @@ class TrainingCourseProgressSummaryProcessor extends modProcessor
     {
         $courseId = trainingProgressCmpCourseId($this);
         $userId = (int)$this->getProperty('user_id', 0);
+        $detail = (int)$this->getProperty('detail', 0) === 1;
 
         if ($courseId <= 0 || $userId <= 0) {
             return $this->failure('Выберите пользователя');
         }
 
         try {
-            $summary = trainingProgressCmpGetService($this->modx)->getUserSummary($courseId, $userId);
+            $service = trainingProgressCmpGetService($this->modx);
+            $summary = $detail
+                ? $service->getUserProgressDetails($courseId, $userId)
+                : $service->getUserSummary($courseId, $userId);
 
             return $this->success('', $summary);
         } catch (Throwable $e) {
